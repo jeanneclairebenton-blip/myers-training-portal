@@ -1,219 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TREC Licensing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;700&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --font-sans: 'Mulish', system-ui, sans-serif;
-            --font-serif: 'DM Serif Display', Georgia, serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --color-gold: #C9941F;
-            --color-gold-deep: #8B6B1A;
-            --color-cream: #FBE8B7;
-            --color-cream-soft: #FDF1D0;
-            --color-ink: #1A1815;
-            --color-ink-2: #3D362A;
-            --color-muted: #7A7263;
-            --color-surface: #FFFDF6;
-            --color-bg-soft: #F7F4ED;
-            --color-hairline: #E8E2D4;
-            --color-green: #4F7A3A;
-            --color-accent: #e74c3c;
-        }
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--color-bg-soft);
-            color: var(--color-ink);
-            line-height: 1.6;
-            margin: 0;
-            padding: 2rem 1rem;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .badge {
-            display: inline-block;
-            background-color: var(--color-accent);
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            margin-bottom: 1rem;
-        }
-        h1 {
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            color: var(--color-ink);
-            margin: 0 0 0.5rem 0;
-            font-weight: normal;
-        }
-        .meta {
-            font-family: var(--font-mono);
-            color: var(--color-muted);
-            font-size: 0.9rem;
-        }
-        .card {
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-hairline);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        }
-        h2 {
-            font-family: var(--font-serif);
-            font-size: 1.75rem;
-            color: var(--color-ink-2);
-            margin-top: 0;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--color-cream);
-            padding-bottom: 0.5rem;
-            font-weight: normal;
-        }
-        .why-matters {
-            font-weight: 600;
-            color: var(--color-gold-deep);
-            background-color: var(--color-cream-soft);
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--color-gold);
-            margin-bottom: 1.5rem;
-        }
-        a {
-            color: var(--color-gold-deep);
-            text-decoration: underline;
-            font-weight: 600;
-        }
-        a:hover {
-            color: var(--color-gold);
-        }
-        ul, ol {
-            padding-left: 1.5rem;
-        }
-        li {
-            margin-bottom: 0.5rem;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.25rem;
-            font-weight: 600;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid var(--color-hairline);
-            border-radius: 4px;
-            font-family: var(--font-sans);
-            box-sizing: border-box;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        .checkbox-group input {
-            margin-right: 0.5rem;
-            width: 1.25rem;
-            height: 1.25rem;
-            cursor: pointer;
-        }
-        .checkbox-group label {
-            margin-bottom: 0;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        .nav-links {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-        .nav-button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--color-ink);
-            color: var(--color-surface);
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-        .nav-button:hover {
-            background-color: var(--color-ink-2);
-            color: var(--color-surface);
-        }
-        .nav-button.disabled {
-            background-color: var(--color-hairline);
-            color: var(--color-muted);
-            pointer-events: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TREC Licensing — Myers Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sans: 'Mulish', system-ui, sans-serif;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+    --gold: #C9941F;
+    --gold-deep: #8B6B1A;
+    --cream: #FBE8B7;
+    --cream-soft: #FDF1D0;
+    --cream-deep: #F5D782;
+    --ink: #1A1815;
+    --ink-2: #3D362A;
+    --muted: #7A7263;
+    --surface: #FFFDF6;
+    --bg-soft: #F7F4ED;
+    --hairline: #E8E2D4;
+    --green: #4F7A3A;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--surface); color: var(--ink); line-height: 1.55; margin: 0; padding: 0; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 253, 246, 0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--hairline);
+    padding: 0 32px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar-brand { font-family: var(--serif); font-size: 20px; color: var(--ink); }
+  .topbar-brand span { color: var(--gold); }
+  .topbar-tag { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .hero { max-width: 720px; margin: 0 auto; padding: 56px 24px 32px; }
+  .hero-kicker { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 12px; }
+  .hero h1 { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 560px; }
+
+  .content { max-width: 720px; margin: 0 auto; padding: 0 24px 48px; }
+
+  .task-card {
+    background: #fff; border: 1px solid var(--hairline); border-radius: 14px;
+    padding: 20px 24px; margin-bottom: 16px;
+    display: flex; align-items: flex-start; gap: 16px;
+    transition: box-shadow 0.2s ease;
+  }
+  .task-card:hover { box-shadow: 0 2px 12px rgba(26, 24, 21, 0.06); }
+  .task-card.completed { opacity: 0.55; }
+  .task-card.completed .task-title { text-decoration: line-through; }
+
+  .task-checkbox { flex-shrink: 0; position: relative; width: 22px; height: 22px; margin-top: 1px; }
+  .task-checkbox input { position: absolute; opacity: 0; width: 22px; height: 22px; cursor: pointer; z-index: 2; margin: 0; }
+  .task-checkbox .checkmark {
+    width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--hairline);
+    background: #fff; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .task-checkbox input:checked + .checkmark { background: var(--gold); border-color: var(--gold); }
+  .task-checkbox input:checked + .checkmark::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 700; }
+
+  .task-body { flex: 1; min-width: 0; }
+  .task-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .task-desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  .task-action {
+    display: inline-block; margin-top: 12px; padding: 8px 18px;
+    background: var(--gold); color: #fff; font-size: 13px; font-weight: 700;
+    border-radius: 8px; text-decoration: none; letter-spacing: 0.01em;
+    transition: background 0.2s ease;
+  }
+  .task-action:hover { background: var(--gold-deep); }
+
+  .callout {
+    background: var(--cream-soft); border: 1px solid var(--cream-deep);
+    border-left: 4px solid var(--gold-deep); border-radius: 10px;
+    padding: 18px 22px; margin: 28px 0;
+  }
+  .callout-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold-deep); margin-bottom: 6px; }
+  .callout p { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+
+  .nav-footer {
+    max-width: 720px; margin: 0 auto; padding: 0 24px 64px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700;
+    text-decoration: none; color: var(--ink-2); border: 1px solid var(--hairline);
+    background: transparent; transition: all 0.2s ease;
+  }
+  .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="badge">Onboarding Milestone</div>
-            <h1>Module 5.2: TREC Licensing</h1>
-            <div class="meta">Duration: 5-10 min</div>
-        </div>
 
-        <div class="why-matters">
-            WHY THIS MATTERS: You legally cannot access the MLS or participate in real estate transactions until your license is actively sponsored by our broker.
-        </div>
+<div class="topbar">
+  <div class="topbar-brand">Myers<span>.</span></div>
+  <div class="topbar-tag">Onboarding Checklist</div>
+</div>
 
-        <div class="card">
-            <h2>📖 LEARN</h2>
-            
-            <p>You cannot access MLS until your license is active.</p>
-            <p><strong>Steps:</strong> Follow official TREC Guide. Create Realm Portal account (<a href="https://aca-prod.accela.com/TREC/Default.aspx" target="_blank">https://aca-prod.accela.com/TREC/Default.aspx</a>).</p>
-            <p style="color: var(--color-accent); font-weight: bold;">CRITICAL: Choose your sponsoring broker as ONLY: "Myers The Home Buyers - License #9005311-BB" (Do NOT use Josh DeShong).</p>
-            <p><strong>Contact:</strong> Phone 512.936.3000, Email <a href="mailto:realportal@trec.texas.gov">realportal@trec.texas.gov</a>.</p>
-        </div>
+<div class="hero">
+  <div class="hero-kicker">Onboarding · Step 2 of 10</div>
+  <h1>TREC Licensing</h1>
+  <p>Transfer your real estate license to Myers. You cannot access MLS until your license is active.</p>
+</div>
 
-        <div class="card">
-            <h2>🔨 DO</h2>
-            <p>Initiate your license transfer.</p>
-        </div>
+<div class="content">
 
-        <div class="card">
-            <h2>✅ PROVE</h2>
-            <div class="form-group">
-                <label for="license-num">Paste your active License Number:</label>
-                <input type="text" id="license-num" placeholder="e.g., 1234567">
-            </div>
-        </div>
-
-        <div class="card" style="background-color: var(--color-cream-soft); border-color: var(--color-cream);">
-            <h2>🔁 REVIEW</h2>
-            <p>Spaced repetition schedule to ensure this sticks:</p>
-            <ul>
-                <li><strong>Day 3:</strong> Review key concepts</li>
-                <li><strong>Day 7:</strong> Practice application</li>
-                <li><strong>Day 14:</strong> Self-assessment</li>
-                <li><strong>Day 30:</strong> Final check</li>
-            </ul>
-        </div>
-
-        <div class="nav-links">
-            <a href="module-ob-1.html" class="nav-button">← Previous</a>
-            <a href="module-ob-3.html" class="nav-button">Next →</a>
-        </div>
+  <div class="task-card" id="task-ob2-1-card">
+    <label class="task-checkbox">
+      <input type="checkbox" id="task-ob2-1">
+      <span class="checkmark"></span>
+    </label>
+    <div class="task-body">
+      <div class="task-title">Follow the Official TREC Step-by-Step Guide</div>
+      <div class="task-desc">Create your Realm Portal account if you don't have one.</div>
+      <a href="https://aca-prod.accela.com/TREC/Default.aspx" target="_blank" class="task-action">TREC Portal</a>
     </div>
+  </div>
+
+  <div class="task-card" id="task-ob2-2-card">
+    <label class="task-checkbox">
+      <input type="checkbox" id="task-ob2-2">
+      <span class="checkmark"></span>
+    </label>
+    <div class="task-body">
+      <div class="task-title">Transfer Your License to Myers</div>
+      <div class="task-desc">Choose: Myers "The Home Buyers" — License #9005311-BB, 16479 N. Dallas Pkwy, Suite, Addison, TX 75001</div>
+    </div>
+  </div>
+
+  <div class="task-card" id="task-ob2-3-card">
+    <label class="task-checkbox">
+      <input type="checkbox" id="task-ob2-3">
+      <span class="checkmark"></span>
+    </label>
+    <div class="task-body">
+      <div class="task-title">Obtain Your License Number</div>
+      <div class="task-desc">You'll need this for MLS, ForeWarn, and ZipForms.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Need Help?</div>
+    <p>Phone: <strong>512.936.3000</strong> · Email: <strong>realportal@trec.texas.gov</strong></p>
+  </div>
+
+</div>
+
+<div class="nav-footer">
+  <a href="module-ob-1.html" class="nav-btn">← Welcome &amp; Paperwork</a>
+  <a href="module-ob-3.html" class="nav-btn">Next: MLS &amp; Realtor Association →</a>
+</div>
+
+<script>
+  document.querySelectorAll('.task-checkbox input').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.closest('.task-card').classList.toggle('completed', this.checked);
+    });
+  });
+</script>
 <script src="../persistence.js"></script>
 </body>
 </html>
