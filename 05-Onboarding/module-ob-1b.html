@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Step 1 — Welcome & Paperwork | Myers Onboarding</title>
+<title>Membership Dues | Myers Onboarding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,12 +28,6 @@
   .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
   .top-nav a:hover { color: #C9941F; }
   .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
-
-  /* ─── Progress ─── */
-  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
-  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
 
   /* ─── Hero ─── */
   .hero {
@@ -72,13 +66,49 @@
     margin-bottom: 2rem; max-width: 760px;
   }
 
-  /* ─── Document Grid (side-by-side cards like the PPTX) ─── */
-  .doc-grid {
+  /* ─── Stat Grid ─── */
+  .stat-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
+  .stat-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    transition: transform 200ms, box-shadow 200ms;
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .stat-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
+  }
+  .stat-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .stat-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.35rem;
+  }
+  .stat-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2.5rem; color: #C9941F; line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-desc {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
+  }
+
+  /* ─── Doc Card ─── */
   .doc-card {
     background: #FFFDF6;
     border: 1px solid #E8E2D4;
@@ -88,6 +118,7 @@
     box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
     flex-direction: column;
+    margin-bottom: 1.25rem;
   }
   .doc-card:hover {
     transform: translateY(-3px);
@@ -112,9 +143,6 @@
     font-size: 1rem; color: #3D362A; line-height: 1.6;
     flex: 1;
   }
-  .doc-card .highlight {
-    color: #C9941F; font-weight: 700;
-  }
   .doc-card .doc-check {
     margin-top: 1.25rem;
     padding-top: 1rem;
@@ -127,35 +155,38 @@
   .doc-card .doc-check label {
     font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
   }
-  .doc-card .doc-action {
+
+  /* ─── Action Button ─── */
+  .action-btn {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    margin-top: 1rem; padding: 0.55rem 1.1rem;
+    padding: 0.75rem 1.5rem;
     background: linear-gradient(135deg, #C9941F, #8B6B1A);
-    color: #FFFDF6; border-radius: 8px; text-decoration: none;
-    font-size: 0.9rem; font-weight: 700;
-    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+    color: #FFFDF6; border-radius: 10px; text-decoration: none;
+    font-size: 1rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.3);
     transition: all 0.2s;
   }
-  .doc-card .doc-action:hover {
+  .action-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.4);
   }
-  .doc-card .doc-action svg {
-    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+  .action-btn svg {
+    width: 18px; height: 18px; stroke: #FFFDF6; fill: none;
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
 
-  /* ─── Yellow Callout Box (matches PPTX) ─── */
+  /* ─── Yellow Callout Box ─── */
   .yellow-callout {
     background: #FBE8B7;
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
+    display: flex; align-items: flex-start; gap: 1rem;
     margin: 1.5rem 0;
   }
   .yellow-callout-icon {
     width: 40px; height: 40px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
   }
   .yellow-callout-icon svg {
     width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
@@ -165,56 +196,6 @@
     color: #3D362A; font-size: 1.05rem; font-weight: 500;
   }
   .yellow-callout strong { color: #1A1815; }
-  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
-
-  /* ─── Section Divider ─── */
-  .section-divider {
-    display: flex; align-items: center; gap: 1rem;
-    margin: 2.5rem 0 1.5rem;
-  }
-  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
-  .section-divider .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.12em; color: #7A7263;
-  }
-
-  /* ─── Info Block ─── */
-  .info-block {
-    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
-    overflow: hidden; margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-  }
-  .info-block-header {
-    background: #1A1815; padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .info-block-header .ib-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    background: rgba(201,148,31,0.2);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .info-block-header h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.3rem; color: #FFFDF6;
-  }
-  .info-block-body { padding: 1.5rem; }
-  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
-  .info-block-body .detail-row {
-    display: flex; gap: 2rem; margin-top: 1rem;
-  }
-  .info-block-body .detail-item {
-    flex: 1;
-  }
-  .info-block-body .detail-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
-  }
-  .info-block-body .detail-value {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.4rem; color: #C9941F;
-  }
 
   /* ─── Navigation ─── */
   .module-nav {
@@ -235,13 +216,13 @@
   .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
 
   @media (max-width: 768px) {
-    .doc-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 1.75rem; }
     .hero { padding: 2rem 1.25rem; }
     .container { padding: 1.5rem 1rem 2rem; }
     .module-nav { flex-direction: column; gap: 0.75rem; }
     .module-nav a { width: 100%; justify-content: center; }
-    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
+    .stat-value { font-size: 2rem; }
   }
 </style>
 </head>
@@ -250,88 +231,80 @@
 <!-- Top Navigation -->
 <nav class="top-nav">
   <a href="../index.html">← Back to Dashboard</a>
-  <span class="cert-label">Onboarding — Step 1 of 10</span>
+  <span class="cert-label">Onboarding — Membership Dues</span>
 </nav>
-
-<!-- Progress Bar -->
-<div class="progress-wrap">
-  <div class="progress-label">Step 1 of 10</div>
-  <div class="progress-track">
-    <div class="progress-fill" style="width: 10%"></div>
-  </div>
-</div>
 
 <!-- Hero -->
 <header class="hero">
   <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    Step 1
+    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    Membership
   </div>
-  <h1>Your First Steps: Essential Documents</h1>
-  <div class="subtitle">Complete your paperwork to officially join Myers Home Buyers.</div>
+  <h1>Membership Dues</h1>
+  <div class="subtitle">Your monthly investment in tools, access, and support.</div>
 </header>
 
 <!-- Main Content -->
 <div class="container">
 
-  <p class="intro-text">After filling out the online application form, you will automatically receive the following three documents via email. Please ensure all three are fully completed before proceeding.</p>
+  <p class="intro-text">All agents are required to pay a monthly membership fee to maintain access to essential tools and services. Please review the details below and ensure your payment method is up to date.</p>
 
-  <!-- 3 Documents in a Row -->
-  <div class="doc-grid">
+  <!-- 2-Column Stat Cards -->
+  <div class="stat-grid">
 
-    <!-- Document 1 -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
-      </div>
-      <h3>Agent License Sponsorship & Contractor Agreement</h3>
-      <p>This outlines your official affiliation with Myers and your working relationship.</p>
-      <div class="doc-check">
-        <input type="checkbox" id="ob1-doc1">
-        <label for="ob1-doc1">Completed</label>
-      </div>
-    </div>
-
-    <!-- Document 2 -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      </div>
-      <h3>W-9 Form</h3>
-      <p>Required for tax purposes as an independent contractor.</p>
-      <div class="doc-check">
-        <input type="checkbox" id="ob1-doc2">
-        <label for="ob1-doc2">Completed</label>
-      </div>
-    </div>
-
-    <!-- Document 3 -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
+    <!-- Monthly Dues -->
+    <div class="stat-card">
+      <div class="stat-card-icon">
         <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
       </div>
-      <h3>Credit Card Authorization Form</h3>
-      <p>Includes authorization for a <span class="highlight">$149/month fee</span> for essential tools and services.</p>
-      <div class="doc-check">
-        <input type="checkbox" id="ob1-doc3">
-        <label for="ob1-doc3">Completed</label>
+      <div class="stat-label">Monthly Dues</div>
+      <div class="stat-value">$150</div>
+      <p class="stat-desc">Per agent, per month. Covers essential tools, CRM access, MLS support, and marketing resources.</p>
+    </div>
+
+    <!-- Late Fee -->
+    <div class="stat-card">
+      <div class="stat-card-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       </div>
+      <div class="stat-label">Late / Declined Payment Fee</div>
+      <div class="stat-value">$100</div>
+      <p class="stat-desc">Additional fee if payment is not updated after a declined card notice. Keep your payment method current to avoid this charge.</p>
     </div>
 
   </div>
 
-  <!-- Yellow Callout (matching PPTX) -->
+  <!-- Payment Action -->
+  <div class="doc-card">
+    <div class="doc-card-icon">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    </div>
+    <h3>Credit Card Authorization</h3>
+    <p>Submit or update your credit card for automatic monthly billing. Your card will be charged on the 1st of each month.</p>
+    <div style="margin-top: 1.25rem;">
+      <a href="https://buy.stripe.com/fZudR2aR37Y92C87Ue5AQ00" target="_blank" class="action-btn">
+        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Manage Your Payment Method
+      </a>
+    </div>
+    <div class="doc-check">
+      <input type="checkbox" id="ob1b-payment">
+      <label for="ob1b-payment">Payment method submitted</label>
+    </div>
+  </div>
+
+  <!-- Yellow Callout -->
   <div class="yellow-callout">
     <div class="yellow-callout-icon">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     </div>
-    <p>Once the above documents are completed, kindly notify Jeanne via text at <a href="sms:3372581093"><strong>337-258-1093</strong></a>.</p>
+    <p><strong>Important:</strong> If your credit card is declined, you will be notified. Failure to update your payment method will result in an additional $100 fee. If you have any billing questions, contact Michael DeMott at <strong>mdemott@trelly.com</strong> or text <strong>(972) 849-7495</strong>.</p>
   </div>
 
   <!-- Navigation -->
   <nav class="module-nav">
-    <a href="../index.html" class="nav-prev">← Back to Portal</a>
-    <a href="module-ob-1b.html" class="nav-next">Next: Membership Dues →</a>
+    <a href="module-ob-1.html" class="nav-prev">← Welcome & Paperwork</a>
+    <a href="module-ob-2.html" class="nav-next">Next: TREC Licensing →</a>
   </nav>
 </div>
 
