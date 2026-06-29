@@ -282,7 +282,7 @@
       <h3>Agent License Sponsorship & Contractor Agreement</h3>
       <p>This outlines your official affiliation with Myers and your working relationship.</p>
       <div class="doc-check">
-        <input type="checkbox" id="ob1-doc1">
+        <input type="checkbox" onchange="checkConfetti()" id="ob1-doc1">
         <label for="ob1-doc1">Completed</label>
       </div>
     </div>
@@ -295,7 +295,7 @@
       <h3>W-9 Form</h3>
       <p>Required for tax purposes as an independent contractor.</p>
       <div class="doc-check">
-        <input type="checkbox" id="ob1-doc2">
+        <input type="checkbox" onchange="checkConfetti()" id="ob1-doc2">
         <label for="ob1-doc2">Completed</label>
       </div>
     </div>
@@ -308,7 +308,7 @@
       <h3>Credit Card Authorization Form</h3>
       <p>Includes authorization for a <span class="highlight">$149/month fee</span> for essential tools and services.</p>
       <div class="doc-check">
-        <input type="checkbox" id="ob1-doc3">
+        <input type="checkbox" onchange="checkConfetti()" id="ob1-doc3">
         <label for="ob1-doc3">Completed</label>
       </div>
     </div>
@@ -323,6 +323,57 @@
     <p>Once the above documents are completed, kindly notify Jeanne via text at <a href="sms:3372581093"><strong>337-258-1093</strong></a>.</p>
   </div>
 </div>
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+
+<script>
+function checkConfetti() {
+  const boxes = document.querySelectorAll('input[type="checkbox"]');
+  const allChecked = Array.from(boxes).every(b => b.checked);
+  if (allChecked) launchConfetti();
+}
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#C9941F','#FBE8B7','#8B6B1A','#F5D782','#1A1815','#4F7A3A'];
+  for (let i = 0; i < 150; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rv: (Math.random() - 0.5) * 8,
+      opacity: 1
+    });
+  }
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+      if (frame > 120) p.opacity -= 0.01;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+</script>
 <script src="../persistence.js"></script>
 </body>
 </html>

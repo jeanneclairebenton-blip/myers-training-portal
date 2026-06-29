@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Announcement Templates | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Mulish', system-ui, sans-serif; background: #FAFAF8; color: #1A1815; line-height: 1.6; min-height: 100vh; font-size: 16px; }
+
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem; position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4; text-align: center;
+  }
+  .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%); border-radius: 50%; }
+  .hero-badge { display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-left: auto; margin-right: auto; width: fit-content; background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3); border-radius: 99px; padding: 0.4rem 1.1rem; font-size: 0.8rem; color: #8B6B1A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815; line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.1rem; font-weight: 600; }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+  .intro-text { font-size: 1.05rem; color: #3D362A; line-height: 1.7; margin-bottom: 2rem; max-width: 700px; text-align: center; margin-left: auto; margin-right: auto; }
+
+  .template-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; max-width: 800px; margin: 0 auto 2rem;
+  }
+  .template-card {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06); text-align: left;
+  }
+  .template-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,24,21,0.08); }
+
+  .template-preview {
+    width: 100%; aspect-ratio: 1/1; display: flex;
+    align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', Georgia, serif;
+    position: relative; overflow: hidden;
+  }
+  .template-preview .tp-badge {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 0.5rem; font-family: 'Mulish', sans-serif;
+    font-size: 0.6rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; text-align: center;
+  }
+  .template-preview .tp-title {
+    font-size: 1.1rem; line-height: 1.2; padding: 1rem;
+    text-align: center;
+  }
+  .template-preview .tp-sub {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 0.5rem 0.75rem; font-family: 'Mulish', sans-serif;
+    font-size: 0.55rem; line-height: 1.4; text-align: center;
+  }
+
+  /* Template Styles */
+  .t-dark { background: #1A1815; }
+  .t-dark .tp-badge { color: #C9941F; }
+  .t-dark .tp-title { color: #FAF7F0; }
+  .t-dark .tp-sub { color: #7A7263; }
+
+  .t-light { background: #FAF7F0; }
+  .t-light .tp-badge { color: #C9941F; }
+  .t-light .tp-title { color: #1A1815; }
+  .t-light .tp-sub { color: #7A7263; }
+
+  .t-gold { background: linear-gradient(135deg, #C9941F, #8B6B1A); }
+  .t-gold .tp-badge { color: #FAF7F0; }
+  .t-gold .tp-title { color: #FFFDF6; }
+  .t-gold .tp-sub { color: #FBE8B7; }
+
+  .template-info { padding: 1rem 1.25rem; }
+  .template-info h3 { font-size: 0.95rem; font-weight: 800; color: #1A1815; margin-bottom: 0.25rem; }
+  .template-info p { font-size: 0.85rem; color: #7A7263; }
+
+  .steps-box {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    padding: 1.5rem; max-width: 600px; margin: 0 auto 1.5rem;
+    text-align: left;
+  }
+  .steps-box h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.2rem; color: #1A1815; margin-bottom: 1rem; text-align: center;
+  }
+  .step-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.6rem 0; border-bottom: 1px solid #F0EDE5;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(201,148,31,0.12); color: #C9941F;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.8rem; flex-shrink: 0;
+  }
+  .step-item p { font-size: 0.95rem; color: #3D362A; }
+
+  .yellow-callout {
+    background: #FBE8B7; border-radius: 12px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1rem auto; max-width: 700px; text-align: left;
+  }
+  .yellow-callout-icon { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .yellow-callout-icon svg { width: 24px; height: 24px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .yellow-callout p { color: #3D362A; font-size: 1rem; font-weight: 500; }
+  .yellow-callout strong { color: #1A1815; }
+
+  @media (max-width: 640px) { .template-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Marketing
+  </div>
+  <h1>Welcome Announcement Templates</h1>
+  <div class="subtitle">Pick a design, add your photo, and post to social media.</div>
+</header>
+
+<div class="container">
+
+  <p class="intro-text">Choose from six premium announcement designs. Each template can be customized with your headshot, name, and title before downloading and posting.</p>
+
+  <div class="template-grid">
+    <div class="template-card">
+      <div class="template-preview t-dark">
+        <div class="tp-badge">Myers Home Buyers</div>
+        <div class="tp-title">Welcome<br>to the Team</div>
+        <div class="tp-sub">Your Name · Investment Specialist</div>
+      </div>
+      <div class="template-info"><h3>Editorial</h3><p>Classic dark with serif type</p></div>
+    </div>
+
+    <div class="template-card">
+      <div class="template-preview t-light">
+        <div class="tp-badge">Myers Home Buyers</div>
+        <div class="tp-title" style="font-size: 1.3rem;">Agent<br>Spotlight</div>
+        <div class="tp-sub">Licensed under Myers Home Buyers</div>
+      </div>
+      <div class="template-info"><h3>Headline</h3><p>Light background, bold headline</p></div>
+    </div>
+
+    <div class="template-card">
+      <div class="template-preview t-gold">
+        <div class="tp-badge">New Agent</div>
+        <div class="tp-title">Your Name<br>Here</div>
+        <div class="tp-sub">Where Agents Become Investors</div>
+      </div>
+      <div class="template-info"><h3>Photo First</h3><p>Gold gradient, photo-centric</p></div>
+    </div>
+
+    <div class="template-card">
+      <div class="template-preview t-dark">
+        <div class="tp-badge" style="font-size: 0.5rem;">Officially Licensed</div>
+        <div class="tp-title" style="border: 2px solid #C9941F; padding: 0.5rem; margin: 0.5rem; font-size: 0.9rem;">CERTIFIED<br>AGENT</div>
+        <div class="tp-sub">Myers Home Buyers · DFW</div>
+      </div>
+      <div class="template-info"><h3>Stamp</h3><p>Badge-style certification look</p></div>
+    </div>
+
+    <div class="template-card">
+      <div class="template-preview t-light" style="flex-direction: column;">
+        <div class="tp-title" style="font-style: italic; font-size: 0.9rem;">"Where agents<br>become investors."</div>
+        <div class="tp-sub">— Your Name, Myers Home Buyers</div>
+      </div>
+      <div class="template-info"><h3>Quote</h3><p>Quote-style with attribution</p></div>
+    </div>
+
+    <div class="template-card">
+      <div class="template-preview t-dark" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;">
+        <div style="background: #C9941F; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #FFFDF6; font-weight: 800; padding: 0.25rem;">MYERS</div>
+        <div style="display: flex; align-items: center; justify-content: center; font-size: 0.5rem; color: #7A7263; padding: 0.25rem;">Your Photo</div>
+        <div style="display: flex; align-items: center; justify-content: center; font-size: 0.5rem; color: #7A7263; padding: 0.25rem;">Your Name</div>
+        <div style="background: rgba(201,148,31,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.5rem; color: #C9941F; padding: 0.25rem;">DFW</div>
+      </div>
+      <div class="template-info"><h3>Grid</h3><p>Modern 4-panel grid layout</p></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <h3>How to Create Your Announcement</h3>
+    <div class="step-item"><div class="step-num">1</div><p>Choose your preferred template style above</p></div>
+    <div class="step-item"><div class="step-num">2</div><p>Have a professional headshot ready (or use your phone with good lighting)</p></div>
+    <div class="step-item"><div class="step-num">3</div><p>Contact Jeanne to request your customized announcement</p></div>
+    <div class="step-item"><div class="step-num">4</div><p>Download your finished design and post to LinkedIn, Facebook, and Instagram</p></div>
+  </div>
+
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    </div>
+    <p><strong>Tip:</strong> Post your announcement across all your social media platforms — LinkedIn, Facebook, and Instagram. Tag @MyersHomeBuyers for a reshare!</p>
+  </div>
+
+</div>
+
+<script src="../persistence.js"></script>
+</body>
+</html>

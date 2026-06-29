@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Card Designer | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Mulish', system-ui, sans-serif; background: #FAFAF8; color: #1A1815; line-height: 1.6; min-height: 100vh; font-size: 16px; }
+
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem; position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4; text-align: center;
+  }
+  .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%); border-radius: 50%; }
+  .hero-badge { display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-left: auto; margin-right: auto; width: fit-content; background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3); border-radius: 99px; padding: 0.4rem 1.1rem; font-size: 0.8rem; color: #8B6B1A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815; line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.1rem; font-weight: 600; }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+  .intro-text { font-size: 1.05rem; color: #3D362A; line-height: 1.7; margin-bottom: 2rem; max-width: 700px; text-align: center; margin-left: auto; margin-right: auto; }
+
+  .card-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; max-width: 800px; margin: 0 auto 2rem;
+  }
+  .card-option {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06); text-align: left;
+  }
+  .card-option:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,24,21,0.08); }
+
+  /* Business Card Preview — 3.5:2 aspect ratio */
+  .card-preview {
+    width: 100%; aspect-ratio: 3.5/2;
+    position: relative; overflow: hidden;
+    font-family: 'Mulish', sans-serif;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 1rem;
+  }
+
+  .c-minimal { background: #FAF7F0; border-bottom: 3px solid #C9941F; }
+  .c-minimal .cp-name { font-family: 'DM Serif Display', serif; font-size: 0.9rem; color: #1A1815; margin-bottom: 0.15rem; }
+  .c-minimal .cp-title { font-size: 0.5rem; color: #C9941F; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .c-minimal .cp-contact { position: absolute; bottom: 0.5rem; left: 1rem; right: 1rem; font-size: 0.4rem; color: #7A7263; }
+
+  .c-centered { background: #FAF7F0; text-align: center; }
+  .c-centered .cp-logo { font-size: 0.45rem; font-weight: 800; color: #C9941F; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
+  .c-centered .cp-name { font-family: 'DM Serif Display', serif; font-size: 0.85rem; color: #1A1815; }
+  .c-centered .cp-title { font-size: 0.45rem; color: #7A7263; margin-top: 0.15rem; }
+  .c-centered .cp-divider { width: 30px; height: 2px; background: #C9941F; margin: 0.4rem auto; }
+
+  .c-pattern { background: #1A1815; border-left: 4px solid #C9941F; }
+  .c-pattern .cp-name { font-family: 'DM Serif Display', serif; font-size: 0.85rem; color: #FAF7F0; }
+  .c-pattern .cp-title { font-size: 0.45rem; color: #C9941F; font-weight: 700; text-transform: uppercase; }
+  .c-pattern .cp-contact { position: absolute; bottom: 0.5rem; left: 1rem; font-size: 0.4rem; color: #7A7263; }
+
+  .c-split { background: linear-gradient(90deg, #1A1815 50%, #FAF7F0 50%); display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
+  .c-split-left { padding: 0.75rem; display: flex; flex-direction: column; justify-content: center; }
+  .c-split-right { padding: 0.75rem; display: flex; flex-direction: column; justify-content: center; }
+  .c-split .cp-name { font-family: 'DM Serif Display', serif; font-size: 0.7rem; color: #FAF7F0; }
+  .c-split .cp-title { font-size: 0.4rem; color: #C9941F; }
+  .c-split .cp-contact { font-size: 0.35rem; color: #7A7263; line-height: 1.5; }
+
+  .c-tile { background: #FAF7F0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; padding: 0; }
+  .c-tile > div { display: flex; align-items: center; justify-content: center; padding: 0.4rem; }
+  .c-tile .tl-gold { background: #C9941F; color: #FFFDF6; font-size: 0.45rem; font-weight: 800; }
+  .c-tile .tl-name { font-family: 'DM Serif Display', serif; font-size: 0.6rem; color: #1A1815; }
+  .c-tile .tl-title { font-size: 0.4rem; color: #7A7263; }
+  .c-tile .tl-accent { background: rgba(201,148,31,0.1); font-size: 0.4rem; color: #C9941F; font-weight: 700; }
+
+  .c-framed { background: #FAF7F0; border: 2px solid #C9941F; margin: 4px; border-radius: 4px; text-align: center; }
+  .c-framed .cp-name { font-family: 'DM Serif Display', serif; font-size: 0.8rem; color: #1A1815; }
+  .c-framed .cp-title { font-size: 0.4rem; color: #C9941F; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem; }
+
+  .card-info { padding: 1rem 1.25rem; }
+  .card-info h3 { font-size: 0.95rem; font-weight: 800; color: #1A1815; margin-bottom: 0.25rem; }
+  .card-info p { font-size: 0.85rem; color: #7A7263; }
+
+  .specs-box {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    padding: 1.5rem; max-width: 700px; margin: 0 auto 1.5rem; text-align: left;
+  }
+  .specs-box h3 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.2rem; color: #1A1815; margin-bottom: 1rem; text-align: center; }
+  .spec-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #F0EDE5; }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-label { font-size: 0.9rem; font-weight: 700; color: #7A7263; }
+  .spec-value { font-size: 0.9rem; font-weight: 700; color: #1A1815; }
+
+  .yellow-callout {
+    background: #FBE8B7; border-radius: 12px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1rem auto; max-width: 700px; text-align: left;
+  }
+  .yellow-callout-icon { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .yellow-callout-icon svg { width: 24px; height: 24px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .yellow-callout p { color: #3D362A; font-size: 1rem; font-weight: 500; }
+  .yellow-callout strong { color: #1A1815; }
+
+  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    Marketing
+  </div>
+  <h1>Business Card Designer</h1>
+  <div class="subtitle">Choose a layout and order your professional cards.</div>
+</header>
+
+<div class="container">
+
+  <p class="intro-text">Select from six premium business card layouts. Each design features your name, title, license number, and contact info on a soft-touch matte finish.</p>
+
+  <div class="card-grid">
+
+    <!-- Minimal -->
+    <div class="card-option">
+      <div class="card-preview c-minimal">
+        <div class="cp-name">Your Name</div>
+        <div class="cp-title">Investment Specialist</div>
+        <div class="cp-contact">yourname@myershomebuyers.com · (xxx) xxx-xxxx</div>
+      </div>
+      <div class="card-info"><h3>Minimal</h3><p>Clean, understated elegance</p></div>
+    </div>
+
+    <!-- Centered -->
+    <div class="card-option">
+      <div class="card-preview c-centered">
+        <div class="cp-logo">Myers Home Buyers</div>
+        <div class="cp-name">Your Name</div>
+        <div class="cp-divider"></div>
+        <div class="cp-title">Investment Specialist</div>
+      </div>
+      <div class="card-info"><h3>Centered</h3><p>Balanced, logo-forward design</p></div>
+    </div>
+
+    <!-- Pattern -->
+    <div class="card-option">
+      <div class="card-preview c-pattern">
+        <div class="cp-name">Your Name</div>
+        <div class="cp-title">Investment Specialist</div>
+        <div class="cp-contact">myershomebuyers.com</div>
+      </div>
+      <div class="card-info"><h3>Pattern</h3><p>Dark with gold accent stripe</p></div>
+    </div>
+
+    <!-- Split -->
+    <div class="card-option">
+      <div class="card-preview c-split">
+        <div class="c-split-left">
+          <div class="cp-name">Your<br>Name</div>
+          <div class="cp-title">Specialist</div>
+        </div>
+        <div class="c-split-right">
+          <div class="cp-contact">Myers Home Buyers<br>yourname@myers...<br>(xxx) xxx-xxxx</div>
+        </div>
+      </div>
+      <div class="card-info"><h3>Split</h3><p>Two-tone dark/light layout</p></div>
+    </div>
+
+    <!-- Tile -->
+    <div class="card-option">
+      <div class="card-preview c-tile">
+        <div class="tl-gold">MYERS</div>
+        <div class="tl-name">Your Name</div>
+        <div class="tl-title">Specialist</div>
+        <div class="tl-accent">DFW</div>
+      </div>
+      <div class="card-info"><h3>Tile</h3><p>Modern 4-panel grid</p></div>
+    </div>
+
+    <!-- Framed -->
+    <div class="card-option">
+      <div class="card-preview c-framed">
+        <div class="cp-name">Your Name</div>
+        <div class="cp-title">Investment Specialist</div>
+      </div>
+      <div class="card-info"><h3>Framed</h3><p>Elegant gold border accent</p></div>
+    </div>
+
+  </div>
+
+  <div class="specs-box">
+    <h3>Card Specifications</h3>
+    <div class="spec-row"><span class="spec-label">Quantity</span><span class="spec-value">250 cards</span></div>
+    <div class="spec-row"><span class="spec-label">Finish</span><span class="spec-value">Soft-Touch Matte</span></div>
+    <div class="spec-row"><span class="spec-label">Size</span><span class="spec-value">3.5" × 2" (Standard)</span></div>
+    <div class="spec-row"><span class="spec-label">Includes</span><span class="spec-value">Name, Title, License #, Contact, Photo</span></div>
+  </div>
+
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    </div>
+    <p><strong>To order:</strong> Select your preferred layout and contact Jeanne with your choice, headshot, and license number. Cards typically arrive within 5-7 business days.</p>
+  </div>
+
+</div>
+
+<script src="../persistence.js"></script>
+</body>
+</html>

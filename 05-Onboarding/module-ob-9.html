@@ -322,7 +322,7 @@
         Marketing Drive
       </a>
       <div class="doc-check">
-        <input type="checkbox" id="ob9-brand">
+        <input type="checkbox" onchange="checkConfetti()" id="ob9-brand">
         <label for="ob9-brand">Completed</label>
       </div>
     </div>
@@ -334,12 +334,12 @@
       </div>
       <h3>Welcome Announcement</h3>
       <p>Pick from six premium announcement templates. Add your headshot, customize your details, download, and post to social media.</p>
-      <a href="https://jeanneclairebenton-blip.github.io/myers-onboarding/" target="_blank" class="doc-action">
+      <a href="welcome-templates.html" target="_blank" class="doc-action">
         <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Open Template Builder
+        View Templates
       </a>
       <div class="doc-check">
-        <input type="checkbox" id="ob9-announcement">
+        <input type="checkbox" onchange="checkConfetti()" id="ob9-announcement">
         <label for="ob9-announcement">Completed</label>
       </div>
     </div>
@@ -356,7 +356,7 @@
         Signature Template
       </a>
       <div class="doc-check">
-        <input type="checkbox" id="ob9-signature">
+        <input type="checkbox" onchange="checkConfetti()" id="ob9-signature">
         <label for="ob9-signature">Completed</label>
       </div>
     </div>
@@ -368,18 +368,69 @@
       </div>
       <h3>Business Cards</h3>
       <p>Choose from six professional layouts. Preview front and back, then order 250 soft-touch matte cards.</p>
-      <a href="https://jeanneclairebenton-blip.github.io/myers-onboarding/" target="_blank" class="doc-action">
+      <a href="business-cards.html" target="_blank" class="doc-action">
         <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Open Card Designer
+        View Card Designs
       </a>
       <div class="doc-check">
-        <input type="checkbox" id="ob9-cards">
+        <input type="checkbox" onchange="checkConfetti()" id="ob9-cards">
         <label for="ob9-cards">Completed</label>
       </div>
     </div>
 
   </div>
 </div>
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+
+<script>
+function checkConfetti() {
+  const boxes = document.querySelectorAll('input[type="checkbox"]');
+  const allChecked = Array.from(boxes).every(b => b.checked);
+  if (allChecked) launchConfetti();
+}
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#C9941F','#FBE8B7','#8B6B1A','#F5D782','#1A1815','#4F7A3A'];
+  for (let i = 0; i < 150; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rv: (Math.random() - 0.5) * 8,
+      opacity: 1
+    });
+  }
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+      if (frame > 120) p.opacity -= 0.01;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+</script>
 <script src="../persistence.js"></script>
 </body>
 </html>
