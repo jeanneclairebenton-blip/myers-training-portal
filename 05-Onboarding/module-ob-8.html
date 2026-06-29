@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5.8: ForeWarn & ZipForms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --font-sans: 'Mulish', system-ui, sans-serif;
+        --font-serif: 'DM Serif Display', Georgia, serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+        --ink: #1A1815; --ink-2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+        --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e74c3c;
+    }
+    body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); margin: 0; padding: 0; line-height: 1.6; }
+    .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+    .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    h1, h2, h3 { font-family: var(--font-serif); font-weight: normal; margin-top: 0; }
+    h1 { font-size: 2.5rem; color: var(--ink); margin-bottom: 0.5rem; }
+    h2 { font-size: 1.75rem; color: var(--ink-2); border-bottom: 2px solid var(--hairline); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+    .badge { display: inline-block; background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.875rem; font-weight: bold; margin-bottom: 1rem; }
+    .meta { font-family: var(--font-mono); font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; }
+    .why-it-matters { font-style: italic; color: var(--muted); margin-bottom: 2rem; font-size: 1.1rem; border-left: 4px solid var(--gold); padding-left: 1rem; }
+    .nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--hairline); }
+    .btn { display: inline-block; background: var(--ink); color: var(--cream); padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: 600; transition: background 0.2s; }
+    .btn:hover { background: var(--ink-2); }
+    .btn-outline { background: transparent; border: 1px solid var(--ink); color: var(--ink); }
+    .btn-outline:hover { background: var(--bg-soft); }
+    a { color: var(--gold-deep); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { padding-left: 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+    label { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; cursor: pointer; }
+    input[type="checkbox"] { margin-top: 0.25rem; }
+    .video-placeholder { background:#1A1815; color:#FBE8B7; padding:4rem 2rem; text-align:center; border-radius:8px; margin-bottom:2rem; font-family:'JetBrains Mono'; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="badge">ONBOARDING MILESTONE</div>
+    <h1>Module 5.8: ForeWarn & ZipForms</h1>
+    <div class="meta">Duration: 10 min • Tools Setup</div>
+
+    <div class="why-it-matters">
+        <strong>WHY THIS MATTERS:</strong> Safety and compliance are non-negotiable. ForeWarn keeps you safe on showings by instantly verifying identities, while ZipForms is the official standard for fully compliant transaction paperwork.
+    </div>
+
+    <div class="card">
+        <h2>📖 LEARN</h2>
+        <div class="video-placeholder">[ VIDEO PLACEHOLDER ]</div>
+        <h3>ZipForms Activation:</h3>
+        <ul>
+            <li>Log into NTREIS (<a href="http://ntreis.clareity.net" target="_blank">http://ntreis.clareity.net</a>).</li>
+            <li>Locate and click the ZipForms icon.</li>
+            <li>You will need your NRDS# to proceed. Call <strong>1-800-874-6500</strong> to activate your account.</li>
+        </ul>
+        <h3>ForeWarn Activation:</h3>
+        <ul>
+            <li>Log into NTREIS and click the ForeWarn link.</li>
+            <li>Sign up directly or call <strong>(855) 518-0897</strong>.</li>
+            <li><strong>DISCLAIMER:</strong> Do not exceed 200 searches per day or your account will be permanently banned.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🔨 DO</h2>
+        <p>Follow the steps above to fully activate both your ZipForms and ForeWarn accounts today.</p>
+    </div>
+
+    <div class="card">
+        <h2>✅ PROVE</h2>
+        <form>
+            <label>
+                <input id="input_1" type="checkbox" required>
+                <span>I have activated ZipForms with my NRDS#.</span>
+            </label>
+            <label>
+                <input id="input_2" type="checkbox" required>
+                <span>I have activated ForeWarn and acknowledge the 200 search limit per day.</span>
+            </label>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>🔁 REVIEW</h2>
+        <p>Spaced repetition schedule:</p>
+        <ul>
+            <li><strong>Day 3:</strong> Do a practice search in ForeWarn for your next appointment.</li>
+            <li><strong>Day 7:</strong> Prepare a mock transaction in ZipForms.</li>
+            <li><strong>Day 14:</strong> Review document compliance protocols.</li>
+            <li><strong>Day 30:</strong> Mastery check.</li>
+        </ul>
+    </div>
+
+    <div class="nav">
+        <a href="module-ob-7.html" class="btn btn-outline">← Previous</a>
+        <a href="module-ob-9.html" class="btn">Next Module →</a>
+    </div>
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

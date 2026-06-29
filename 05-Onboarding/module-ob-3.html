@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLS & Realtor Association</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;700&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-sans: 'Mulish', system-ui, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --color-gold: #C9941F;
+            --color-gold-deep: #8B6B1A;
+            --color-cream: #FBE8B7;
+            --color-cream-soft: #FDF1D0;
+            --color-ink: #1A1815;
+            --color-ink-2: #3D362A;
+            --color-muted: #7A7263;
+            --color-surface: #FFFDF6;
+            --color-bg-soft: #F7F4ED;
+            --color-hairline: #E8E2D4;
+            --color-green: #4F7A3A;
+            --color-accent: #e74c3c;
+        }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-soft);
+            color: var(--color-ink);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .badge {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-ink);
+            margin: 0 0 0.5rem 0;
+            font-weight: normal;
+        }
+        .meta {
+            font-family: var(--font-mono);
+            color: var(--color-muted);
+            font-size: 0.9rem;
+        }
+        .card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-hairline);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            color: var(--color-ink-2);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--color-cream);
+            padding-bottom: 0.5rem;
+            font-weight: normal;
+        }
+        .why-matters {
+            font-weight: 600;
+            color: var(--color-gold-deep);
+            background-color: var(--color-cream-soft);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-gold);
+            margin-bottom: 1.5rem;
+        }
+        a {
+            color: var(--color-gold-deep);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        a:hover {
+            color: var(--color-gold);
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--color-hairline);
+            border-radius: 4px;
+            font-family: var(--font-sans);
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .checkbox-group input {
+            margin-right: 0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-ink);
+            color: var(--color-surface);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .nav-button:hover {
+            background-color: var(--color-ink-2);
+            color: var(--color-surface);
+        }
+        .nav-button.disabled {
+            background-color: var(--color-hairline);
+            color: var(--color-muted);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge">Onboarding Milestone</div>
+            <h1>Module 5.3: MLS & Realtor Association</h1>
+            <div class="meta">Duration: 5-10 min</div>
+        </div>
+
+        <div class="why-matters">
+            WHY THIS MATTERS: The MLS is your primary database for finding properties and pulling comps. Without it, you cannot accurately price homes or show listings to clients.
+        </div>
+
+        <div class="card">
+            <h2>📖 LEARN</h2>
+            <div style="background:#1A1815; color:#FBE8B7; padding:4rem 2rem; text-align:center; border-radius:8px; margin-bottom:2rem; font-family:'JetBrains Mono'">[ VIDEO PLACEHOLDER ]</div>
+            <p>Must join Collin County Association of Realtors via mymetrotex.com.</p>
+            <p><strong>Fill Out Form:</strong> <a href="https://forms.metrotex.com/97c3ba26-f01e-11ef-9c1d-12264f22cfd5" target="_blank">https://forms.metrotex.com/97c3ba26-f01e-11ef-9c1d-12264f22cfd5</a>.<br>
+            <strong>Help:</strong> (972) 618-3800.</p>
+            <p>Add Supra Key Access via portal.metrotex.com/home (Menu -> Subscriptions -> Add New).</p>
+        </div>
+
+        <div class="card">
+            <h2>🔨 DO</h2>
+            <p>Complete your MLS and Supra registration.</p>
+        </div>
+
+        <div class="card">
+            <h2>✅ PROVE</h2>
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="mls-reg">
+                    <label for="mls-reg">I confirm my MLS and Supra registrations are complete.</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background-color: var(--color-cream-soft); border-color: var(--color-cream);">
+            <h2>🔁 REVIEW</h2>
+            <p>Spaced repetition schedule to ensure this sticks:</p>
+            <ul>
+                <li><strong>Day 3:</strong> Review key concepts</li>
+                <li><strong>Day 7:</strong> Practice application</li>
+                <li><strong>Day 14:</strong> Self-assessment</li>
+                <li><strong>Day 30:</strong> Final check</li>
+            </ul>
+        </div>
+
+        <div class="nav-links">
+            <a href="module-ob-2.html" class="nav-button">← Previous</a>
+            <a href="module-ob-4.html" class="nav-button">Next →</a>
+        </div>
+    </div>
+<script src="../persistence.js"></script>
+</body>
+</html>
