@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slack Communication — Myers Onboarding</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Step 6: Slack Communication — Myers Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --sans: 'Mulish', system-ui, sans-serif;
@@ -24,221 +23,325 @@
     --hairline: #E8E2D4;
     --green: #4F7A3A;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--sans); background: var(--surface); color: var(--ink); line-height: 1.55; margin: 0; padding: 0; }
 
-  /* ── Topbar ── */
-  .topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 253, 246, 0.85);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--hairline);
-    padding: 14px 32px;
-    display: flex; align-items: center; justify-content: space-between;
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .topbar-brand { font-family: var(--serif); font-size: 20px; color: var(--ink); }
-  .topbar-brand span { color: var(--gold); }
-  .topbar-label { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
 
-  /* ── Hero ── */
+  .page-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  /* Progress Dots */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .progress-bar .step-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 8px;
+  }
+  .progress-bar .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--hairline);
+    transition: all 0.3s ease;
+  }
+  .progress-bar .dot.completed {
+    background: var(--green);
+  }
+  .progress-bar .dot.active {
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.25);
+    transform: scale(1.2);
+  }
+
+  /* Hero */
   .hero {
-    max-width: 720px; margin: 0 auto;
-    padding: 56px 32px 32px;
     text-align: center;
+    margin-bottom: 40px;
   }
-  .hero-kicker {
-    font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 12px;
+  .hero-icon {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
   }
   .hero h1 {
-    font-family: var(--serif); font-size: 40px; font-weight: 400;
-    color: var(--ink); margin-bottom: 12px; line-height: 1.15;
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
   }
-  .hero p {
-    font-size: 16px; color: var(--muted); max-width: 540px; margin: 0 auto; line-height: 1.6;
+  .hero .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
   }
 
-  /* ── Task Cards ── */
-  .tasks { max-width: 720px; margin: 0 auto; padding: 0 32px 24px; display: flex; flex-direction: column; gap: 16px; }
+  /* Task Cards */
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
   .task-card {
-    background: #fff; border: 1px solid var(--hairline); border-radius: 14px;
-    padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;
-    transition: box-shadow 0.2s ease;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .task-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-  .task-card.is-checked { opacity: 0.65; }
-  .task-card.is-checked .task-title { text-decoration: line-through; }
+  .task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  .task-card.checked {
+    opacity: 0.6;
+  }
+  .task-card.checked .task-title strong {
+    text-decoration: line-through;
+  }
 
-  /* Custom Checkbox */
-  .checkbox-wrap { flex-shrink: 0; position: relative; width: 22px; height: 22px; margin-top: 1px; }
-  .checkbox-wrap input { position: absolute; opacity: 0; width: 22px; height: 22px; cursor: pointer; z-index: 2; margin: 0; }
-  .checkbox-visual {
-    width: 22px; height: 22px; border-radius: 6px;
-    border: 2px solid var(--hairline); background: #fff;
-    display: flex; align-items: center; justify-content: center;
+  .task-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .task-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .task-content label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
+  .task-content label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .task-title strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
     transition: all 0.2s ease;
   }
-  .checkbox-visual svg { opacity: 0; transform: scale(0.5); transition: all 0.15s ease; }
-  .checkbox-wrap input:checked + .checkbox-visual {
-    background: var(--gold); border-color: var(--gold);
+  .task-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 10px;
+    margin-left: 28px;
   }
-  .checkbox-wrap input:checked + .checkbox-visual svg { opacity: 1; transform: scale(1); }
-
-  .task-body { flex: 1; min-width: 0; }
-  .task-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .task-desc { font-size: 14px; color: var(--muted); line-height: 1.55; }
-  .task-action {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin-top: 10px; padding: 8px 16px;
-    background: var(--gold); color: #fff; border: none; border-radius: 8px;
-    font-family: var(--sans); font-size: 13px; font-weight: 700;
-    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  .task-desc:last-child {
+    margin-bottom: 0;
   }
-  .task-action:hover { background: var(--gold-deep); }
-  .task-action svg { width: 14px; height: 14px; }
 
-  /* ── Callout ── */
-  .callout-wrap { max-width: 720px; margin: 0 auto; padding: 0 32px 24px; }
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: var(--sans);
+    transition: background 0.2s ease;
+    margin-left: 28px;
+  }
+  .action-btn:hover {
+    background: var(--gold-deep);
+  }
+
+  /* Callout */
   .callout {
-    background: var(--cream-soft); border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold-deep);
-    border-radius: 10px; padding: 18px 22px;
-    font-size: 14px; color: var(--ink-2); line-height: 1.6;
+    background: var(--cream-soft);
+    border: 1px solid var(--cream-deep);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 32px;
   }
 
-  /* ── Bottom Nav ── */
-  .bottom-nav {
-    max-width: 720px; margin: 0 auto; padding: 32px 32px 64px;
-    display: flex; justify-content: space-between; align-items: center;
+  /* Navigation */
+  .nav-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    margin-top: 16px;
   }
-  .nav-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px; border: 1.5px solid var(--hairline); border-radius: 10px;
-    background: transparent; color: var(--ink-2);
-    font-family: var(--sans); font-size: 14px; font-weight: 700;
-    text-decoration: none; transition: all 0.2s;
+  .nav-footer a {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
-  .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  @media (max-width: 600px) {
-    .hero { padding: 40px 20px 24px; }
-    .hero h1 { font-size: 30px; }
-    .tasks, .callout-wrap, .bottom-nav { padding-left: 20px; padding-right: 20px; }
-    .task-card { padding: 16px; }
+  .nav-footer a:hover {
+    color: var(--gold-deep);
   }
 </style>
 </head>
 <body>
+<div class="page-wrapper">
 
-<!-- ── Topbar ── -->
-<header class="topbar">
-  <div class="topbar-brand">Myers <span>Home Buyers</span></div>
-  <div class="topbar-label">Onboarding</div>
-</header>
-
-<!-- ── Hero ── -->
-<section class="hero">
-  <div class="hero-kicker">Onboarding · Step 6 of 10</div>
-  <h1>Slack Communication</h1>
-  <p>Download the Slack app on both your laptop and mobile device to stay connected with the team.</p>
-</section>
-
-<!-- ── Tasks ── -->
-<div class="tasks">
-
-  <!-- Task 1 -->
-  <div class="task-card" id="ob6-task1-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob6-task1">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Download &amp; Join Slack</div>
-      <div class="task-desc">Install on laptop and mobile.</div>
-      <a href="https://myershomebuyers.slack.com" target="_blank" class="task-action">
-        Open Slack
-        <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
+  <!-- Progress Dots -->
+  <div class="progress-bar">
+    <span class="step-label">Step 6 of 10</span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </div>
 
-  <!-- Task 2 -->
-  <div class="task-card" id="ob6-task2-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob6-task2">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Join #myers</div>
-      <div class="task-desc">General announcements and daily communications between teams. Your primary channel for company-wide updates.</div>
-    </div>
+  <!-- Hero -->
+  <div class="hero">
+    <span class="hero-icon">💬</span>
+    <h1>Slack Communication</h1>
+    <p class="subtitle">Download the Slack app on both your laptop and mobile device to stay connected with the Myers team.</p>
   </div>
 
-  <!-- Task 3 -->
-  <div class="task-card" id="ob6-task3-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob6-task3">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <!-- Task Cards -->
+  <div class="task-list">
+
+    <!-- Task 1: Download & Join Slack -->
+    <div class="task-card" id="card-ob6-1">
+      <div class="task-icon" style="background: linear-gradient(135deg, #4F7A3A, #6B9E52)">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Join #askmeanything2026</div>
-      <div class="task-desc">For new and existing agents to ask any questions. No question is too small.</div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob6-task1" onchange="toggleCard(this, 'card-ob6-1')"> <strong class="task-title">Download &amp; Join Slack</strong></label>
+        <p class="task-desc">Install the Slack app on both your laptop and mobile device.</p>
+        <a href="https://myershomebuyers.slack.com" target="_blank" class="action-btn">Open Slack →</a>
+      </div>
     </div>
+
+    <!-- Task 2: Join #myers -->
+    <div class="task-card" id="card-ob6-2">
+      <div class="task-icon" style="background: linear-gradient(135deg, #4F7A3A, #6B9E52)">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob6-task2" onchange="toggleCard(this, 'card-ob6-2')"> <strong class="task-title">Join #myers</strong></label>
+        <p class="task-desc">General announcements and daily communications between teams. This is your primary channel for company-wide updates.</p>
+      </div>
+    </div>
+
+    <!-- Task 3: Join #askmeanything2026 -->
+    <div class="task-card" id="card-ob6-3">
+      <div class="task-icon" style="background: linear-gradient(135deg, #4F7A3A, #6B9E52)">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob6-task3" onchange="toggleCard(this, 'card-ob6-3')"> <strong class="task-title">Join #askmeanything2026</strong></label>
+        <p class="task-desc">For new and existing agents to ask any questions they need answered. No question is too small — use this channel freely.</p>
+      </div>
+    </div>
+
+    <!-- Task 4: Add Phone Number -->
+    <div class="task-card" id="card-ob6-4">
+      <div class="task-icon" style="background: linear-gradient(135deg, #4F7A3A, #6B9E52)">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob6-task4" onchange="toggleCard(this, 'card-ob6-4')"> <strong class="task-title">Add Your Phone Number to Your Profile</strong></label>
+        <p class="task-desc">Agents must add their phone number to their Slack profile. This is required and mandatory.</p>
+      </div>
+    </div>
+
+    <!-- Task 5: Turn On Notifications -->
+    <div class="task-card" id="card-ob6-5">
+      <div class="task-icon" style="background: linear-gradient(135deg, #4F7A3A, #6B9E52)">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob6-task5" onchange="toggleCard(this, 'card-ob6-5')"> <strong class="task-title">Turn On Notifications</strong></label>
+        <p class="task-desc">Enable Slack notifications on both your laptop and mobile device. If notifications are turned off, you will miss time-sensitive opportunities to make money.</p>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Task 4 -->
-  <div class="task-card" id="ob6-task4-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob6-task4">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Add Your Phone Number to Your Profile</div>
-      <div class="task-desc">This is mandatory.</div>
-    </div>
+  <!-- Callout -->
+  <div class="callout">
+    ⚠️ Do not miss messages. Do not miss leads. Do not miss opportunities.
   </div>
 
-  <!-- Task 5 -->
-  <div class="task-card" id="ob6-task5-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob6-task5">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Turn On Notifications</div>
-      <div class="task-desc">Enable on both laptop and mobile. If notifications are turned off, you will miss time-sensitive opportunities to make money.</div>
-    </div>
+  <!-- Navigation -->
+  <div class="nav-footer">
+    <a href="module-ob-5.html">← Gmail, Calendars &amp; Shared Drives</a>
+    <a href="module-ob-7.html">Next: Zoho CRM →</a>
   </div>
 
 </div>
-
-<!-- ── Callout ── -->
-<div class="callout-wrap">
-  <div class="callout">⚠️ Do not miss messages. Do not miss leads. Do not miss opportunities.</div>
-</div>
-
-<!-- ── Bottom Nav ── -->
-<nav class="bottom-nav">
-  <a href="module-ob-5.html" class="nav-btn">← Gmail, Calendars &amp; Shared Drives</a>
-  <a href="module-ob-7.html" class="nav-btn">Next: Zoho CRM →</a>
-</nav>
 
 <script>
-  document.querySelectorAll('.task-card input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      cb.closest('.task-card').classList.toggle('is-checked', cb.checked);
-    });
-  });
+function toggleCard(checkbox, cardId) {
+  const card = document.getElementById(cardId);
+  if (checkbox.checked) {
+    card.classList.add('checked');
+  } else {
+    card.classList.remove('checked');
+  }
+}
 </script>
 <script src="../persistence.js"></script>
 </body>

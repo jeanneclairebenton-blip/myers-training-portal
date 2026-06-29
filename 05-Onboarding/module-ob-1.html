@@ -24,170 +24,300 @@
     --green: #4F7A3A;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--sans); background: var(--surface); color: var(--ink); line-height: 1.55; margin: 0; padding: 0; }
-
-  /* ── Topbar ── */
-  .topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 253, 246, 0.85);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--hairline);
-    padding: 0 32px; height: 56px;
-    display: flex; align-items: center; justify-content: space-between;
+  body {
+    font-family: var(--sans);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .topbar-brand { font-family: var(--serif); font-size: 20px; color: var(--ink); }
-  .topbar-brand span { color: var(--gold); }
-  .topbar-tag { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .page-wrapper {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
 
-  /* ── Hero ── */
+  /* Hero */
   .hero {
-    max-width: 720px; margin: 0 auto; padding: 56px 24px 32px;
+    text-align: center;
+    margin-bottom: 40px;
   }
-  .hero-kicker {
-    font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--gold-deep); margin-bottom: 12px;
+  .hero-icon {
+    width: 80px; height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--cream-soft), var(--cream));
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px;
+    box-shadow: 0 4px 16px rgba(201,148,31,0.12);
   }
   .hero h1 {
-    font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--ink); margin-bottom: 12px; line-height: 1.2;
+    font-family: var(--serif);
+    font-size: 32px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
   }
-  .hero p { font-size: 16px; color: var(--muted); max-width: 560px; }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 24px;
+    line-height: 1.65;
+  }
 
-  /* ── Content ── */
-  .content { max-width: 720px; margin: 0 auto; padding: 0 24px 48px; }
+  /* Progress Dots */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .progress-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--hairline);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .progress-dot.active {
+    background: var(--gold);
+    transform: scale(1.25);
+    box-shadow: 0 0 0 3px rgba(201,148,31,0.18);
+  }
+  .progress-dot.completed {
+    background: var(--green);
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    text-align: center;
+  }
 
-  /* ── Task Card ── */
+  /* Section Title */
+  .section-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  /* Task Card */
   .task-card {
-    background: #fff; border: 1px solid var(--hairline); border-radius: 14px;
-    padding: 20px 24px; margin-bottom: 16px;
-    display: flex; align-items: flex-start; gap: 16px;
-    transition: box-shadow 0.2s ease;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.3s ease;
   }
-  .task-card:hover { box-shadow: 0 2px 12px rgba(26, 24, 21, 0.06); }
-  .task-card.completed { opacity: 0.55; }
-  .task-card.completed .task-title { text-decoration: line-through; }
-
-  /* Checkbox */
-  .task-checkbox { flex-shrink: 0; position: relative; width: 22px; height: 22px; margin-top: 1px; }
-  .task-checkbox input { position: absolute; opacity: 0; width: 22px; height: 22px; cursor: pointer; z-index: 2; margin: 0; }
-  .task-checkbox .checkmark {
-    width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--hairline);
-    background: #fff; display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s ease;
+  .task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.07);
   }
-  .task-checkbox input:checked + .checkmark {
-    background: var(--gold); border-color: var(--gold);
+  .task-card.checked {
+    opacity: 0.6;
   }
-  .task-checkbox input:checked + .checkmark::after {
-    content: '✓'; color: #fff; font-size: 13px; font-weight: 700;
+  .task-card.checked .task-title {
+    text-decoration: line-through;
+    color: var(--muted);
   }
-
-  .task-body { flex: 1; min-width: 0; }
-  .task-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .task-desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
-
-  .task-action {
-    display: inline-block; margin-top: 12px; padding: 8px 18px;
-    background: var(--gold); color: #fff; font-size: 13px; font-weight: 700;
-    border-radius: 8px; text-decoration: none; letter-spacing: 0.01em;
+  .task-icon {
+    width: 48px; height: 48px;
+    min-width: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-icon svg {
+    width: 22px; height: 22px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .task-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .task-content label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
+  .task-content label input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--green);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .task-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    transition: color 0.3s, text-decoration 0.3s;
+  }
+  .task-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 4px 0 12px 28px;
+  }
+  .action-btn {
+    display: inline-flex;
+    padding: 8px 16px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: var(--sans);
     transition: background 0.2s ease;
+    margin-left: 28px;
   }
-  .task-action:hover { background: var(--gold-deep); }
+  .action-btn:hover {
+    background: var(--gold-deep);
+  }
 
-  /* ── Callout ── */
+  /* Callout */
   .callout {
-    background: var(--cream-soft); border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold-deep); border-radius: 10px;
-    padding: 18px 22px; margin: 28px 0;
+    background: var(--cream-soft);
+    border: 1px solid var(--cream-deep);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 28px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
   }
-  .callout-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold-deep); margin-bottom: 6px; }
-  .callout p { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+  .callout strong { color: var(--ink); }
 
-  /* ── Nav ── */
+  /* Navigation */
   .nav-footer {
-    max-width: 720px; margin: 0 auto; padding: 0 24px 64px;
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
   }
-  .nav-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700;
-    text-decoration: none; color: var(--ink-2); border: 1px solid var(--hairline);
-    background: transparent; transition: all 0.2s ease;
+  .nav-link {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    transition: background 0.2s;
   }
-  .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .nav-link:hover {
+    background: var(--cream-soft);
+  }
+  .nav-link.next {
+    background: var(--gold);
+    color: #fff;
+  }
+  .nav-link.next:hover {
+    background: var(--gold-deep);
+  }
 </style>
 </head>
 <body>
+<div class="page-wrapper">
 
-<!-- Topbar -->
-<div class="topbar">
-  <div class="topbar-brand">Myers<span>.</span></div>
-  <div class="topbar-tag">Onboarding Checklist</div>
-</div>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-icon">📋</div>
+    <h1>Welcome & Paperwork</h1>
+    <p class="hero-sub">Complete your essential documents to officially join Myers Home Buyers.</p>
+    <div class="progress-bar">
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+    </div>
+    <p class="progress-label">Step 1 of 10</p>
+  </div>
 
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-kicker">Onboarding · Step 1 of 10</div>
-  <h1>Welcome &amp; Paperwork</h1>
-  <p>Complete your essential documents to officially join Myers Home Buyers.</p>
-</div>
+  <!-- Tasks -->
+  <h2 class="section-title">Your Checklist</h2>
 
-<!-- Task Cards -->
-<div class="content">
-
-  <div class="task-card" id="task-ob1-1-card">
-    <label class="task-checkbox">
-      <input type="checkbox" id="task-ob1-1">
-      <span class="checkmark"></span>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Agent License Sponsorship &amp; Contractor Agreement</div>
-      <div class="task-desc">This outlines your official affiliation with Myers and your working relationship.</div>
+  <!-- Task 1: Contractor Agreement -->
+  <div class="task-card" id="card-ob1-1">
+    <div class="task-icon" style="background: linear-gradient(135deg, #6B4E8E, #8B6BAE)">
+      <svg viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+    </div>
+    <div class="task-content">
+      <label><input type="checkbox" id="ob1-task1" onchange="toggleCard(this)"> <strong class="task-title">Agent License Sponsorship & Contractor Agreement</strong></label>
+      <p class="task-desc">This outlines your official affiliation with Myers and your working relationship.</p>
     </div>
   </div>
 
-  <div class="task-card" id="task-ob1-2-card">
-    <label class="task-checkbox">
-      <input type="checkbox" id="task-ob1-2">
-      <span class="checkmark"></span>
-    </label>
-    <div class="task-body">
-      <div class="task-title">W-9 Form</div>
-      <div class="task-desc">Required for tax purposes as an independent contractor.</div>
+  <!-- Task 2: W-9 -->
+  <div class="task-card" id="card-ob1-2">
+    <div class="task-icon" style="background: linear-gradient(135deg, #6B4E8E, #8B6BAE)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+    </div>
+    <div class="task-content">
+      <label><input type="checkbox" id="ob1-task2" onchange="toggleCard(this)"> <strong class="task-title">W-9 Form</strong></label>
+      <p class="task-desc">Required for tax purposes as an independent contractor.</p>
     </div>
   </div>
 
-  <div class="task-card" id="task-ob1-3-card">
-    <label class="task-checkbox">
-      <input type="checkbox" id="task-ob1-3">
-      <span class="checkmark"></span>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Membership Dues ($150/mo)</div>
-      <div class="task-desc">Covers essential tools and services. If your card is declined, failure to update payment results in an additional $100 fee.</div>
-      <a href="https://buy.stripe.com/fZudR2aR37Y92C87Ue5AQ00" target="_blank" class="task-action">Update Payment Method</a>
+  <!-- Task 3: Membership Dues -->
+  <div class="task-card" id="card-ob1-3">
+    <div class="task-icon" style="background: linear-gradient(135deg, #C9941F, #D4A94A)">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    </div>
+    <div class="task-content">
+      <label><input type="checkbox" id="ob1-task3" onchange="toggleCard(this)"> <strong class="task-title">Membership Dues ($150/mo)</strong></label>
+      <p class="task-desc">Covers essential tools and services. If your credit card is declined, you will be notified. Failure to update payment will result in an additional $100 fee.</p>
+      <a href="https://buy.stripe.com/fZudR2aR37Y92C87Ue5AQ00" target="_blank" class="action-btn">Update Payment Method →</a>
     </div>
   </div>
 
   <!-- Callout -->
   <div class="callout">
-    <div class="callout-label">Important</div>
-    <p>Once the above documents are completed, notify Jeanne via text at <strong>337-258-1093</strong>.</p>
+    ✅ <strong>Once all three documents are completed,</strong> notify Jeanne via text at <strong>337-258-1093</strong>.
+  </div>
+
+  <!-- Nav Footer -->
+  <div class="nav-footer">
+    <a href="../index.html" class="nav-link">← Back to Portal</a>
+    <a href="module-ob-2.html" class="nav-link next">Next: TREC Licensing →</a>
   </div>
 
 </div>
 
-<!-- Navigation -->
-<div class="nav-footer">
-  <a href="../index.html" class="nav-btn">← Back to Portal</a>
-  <a href="module-ob-2.html" class="nav-btn">Next: TREC Licensing →</a>
-</div>
-
 <script>
-  document.querySelectorAll('.task-checkbox input').forEach(cb => {
-    cb.addEventListener('change', function() {
-      this.closest('.task-card').classList.toggle('completed', this.checked);
-    });
-  });
+function toggleCard(cb) {
+  const card = cb.closest('.task-card');
+  if (cb.checked) {
+    card.classList.add('checked');
+  } else {
+    card.classList.remove('checked');
+  }
+}
 </script>
 <script src="../persistence.js"></script>
 </body>

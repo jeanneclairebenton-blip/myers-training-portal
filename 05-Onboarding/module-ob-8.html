@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ForeWarn &amp; ZipForms — Myers Onboarding</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Step 8: ForeWarn &amp; ZipForms — Myers Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --sans: 'Mulish', system-ui, sans-serif;
@@ -24,167 +23,293 @@
     --hairline: #E8E2D4;
     --green: #4F7A3A;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--sans); background: var(--surface); color: var(--ink); line-height: 1.55; margin: 0; padding: 0; }
 
-  .topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 253, 246, 0.85);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--hairline);
-    padding: 14px 32px;
-    display: flex; align-items: center; justify-content: space-between;
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .topbar-brand { font-family: var(--serif); font-size: 20px; color: var(--ink); }
-  .topbar-brand span { color: var(--gold); }
-  .topbar-label { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
 
+  .page-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  /* Progress Dots */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .progress-bar .step-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 8px;
+  }
+  .progress-bar .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--hairline);
+    transition: all 0.3s ease;
+  }
+  .progress-bar .dot.completed {
+    background: var(--green);
+  }
+  .progress-bar .dot.active {
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.25);
+    transform: scale(1.2);
+  }
+
+  /* Hero */
   .hero {
-    max-width: 720px; margin: 0 auto;
-    padding: 56px 32px 32px; text-align: center;
+    text-align: center;
+    margin-bottom: 40px;
   }
-  .hero-kicker {
-    font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 12px;
+  .hero-icon {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
   }
   .hero h1 {
-    font-family: var(--serif); font-size: 40px; font-weight: 400;
-    color: var(--ink); margin-bottom: 12px; line-height: 1.15;
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
   }
-  .hero p { font-size: 16px; color: var(--muted); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+  .hero .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
 
-  .tasks { max-width: 720px; margin: 0 auto; padding: 0 32px 24px; display: flex; flex-direction: column; gap: 16px; }
+  /* Task Cards */
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
   .task-card {
-    background: #fff; border: 1px solid var(--hairline); border-radius: 14px;
-    padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;
-    transition: box-shadow 0.2s ease;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .task-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-  .task-card.is-checked { opacity: 0.65; }
-  .task-card.is-checked .task-title { text-decoration: line-through; }
+  .task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  .task-card.checked {
+    opacity: 0.6;
+  }
+  .task-card.checked .task-title strong {
+    text-decoration: line-through;
+  }
 
-  .checkbox-wrap { flex-shrink: 0; position: relative; width: 22px; height: 22px; margin-top: 1px; }
-  .checkbox-wrap input { position: absolute; opacity: 0; width: 22px; height: 22px; cursor: pointer; z-index: 2; margin: 0; }
-  .checkbox-visual {
-    width: 22px; height: 22px; border-radius: 6px;
-    border: 2px solid var(--hairline); background: #fff;
-    display: flex; align-items: center; justify-content: center;
+  .task-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .task-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .task-content label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
+  .task-content label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .task-title strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
     transition: all 0.2s ease;
   }
-  .checkbox-visual svg { opacity: 0; transform: scale(0.5); transition: all 0.15s ease; }
-  .checkbox-wrap input:checked + .checkbox-visual { background: var(--gold); border-color: var(--gold); }
-  .checkbox-wrap input:checked + .checkbox-visual svg { opacity: 1; transform: scale(1); }
-
-  .task-body { flex: 1; min-width: 0; }
-  .task-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .task-desc { font-size: 14px; color: var(--muted); line-height: 1.55; }
-  .task-action {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin-top: 10px; padding: 8px 16px;
-    background: var(--gold); color: #fff; border: none; border-radius: 8px;
-    font-family: var(--sans); font-size: 13px; font-weight: 700;
-    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  .task-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 10px;
+    margin-left: 28px;
   }
-  .task-action:hover { background: var(--gold-deep); }
-  .task-action svg { width: 14px; height: 14px; }
+  .task-desc:last-child {
+    margin-bottom: 0;
+  }
 
-  .callout-wrap { max-width: 720px; margin: 0 auto; padding: 0 32px 24px; }
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: var(--sans);
+    transition: background 0.2s ease;
+    margin-left: 28px;
+  }
+  .action-btn:hover {
+    background: var(--gold-deep);
+  }
+
+  /* Callout */
   .callout {
-    background: var(--cream-soft); border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold-deep);
-    border-radius: 10px; padding: 18px 22px;
-    font-size: 14px; color: var(--ink-2); line-height: 1.6;
+    background: var(--cream-soft);
+    border: 1px solid var(--cream-deep);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 32px;
   }
 
-  .bottom-nav {
-    max-width: 720px; margin: 0 auto; padding: 32px 32px 64px;
-    display: flex; justify-content: space-between; align-items: center;
+  /* Navigation */
+  .nav-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    margin-top: 16px;
   }
-  .nav-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px; border: 1.5px solid var(--hairline); border-radius: 10px;
-    background: transparent; color: var(--ink-2);
-    font-family: var(--sans); font-size: 14px; font-weight: 700;
-    text-decoration: none; transition: all 0.2s;
+  .nav-footer a {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
-  .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  @media (max-width: 600px) {
-    .hero { padding: 40px 20px 24px; }
-    .hero h1 { font-size: 30px; }
-    .tasks, .callout-wrap, .bottom-nav { padding-left: 20px; padding-right: 20px; }
-    .task-card { padding: 16px; }
+  .nav-footer a:hover {
+    color: var(--gold-deep);
   }
 </style>
 </head>
 <body>
+<div class="page-wrapper">
 
-<header class="topbar">
-  <div class="topbar-brand">Myers <span>Home Buyers</span></div>
-  <div class="topbar-label">Onboarding</div>
-</header>
-
-<section class="hero">
-  <div class="hero-kicker">Onboarding · Step 8 of 10</div>
-  <h1>ForeWarn &amp; ZipForms</h1>
-  <p>Set up your safety and contract tools so you can start working deals immediately.</p>
-</section>
-
-<div class="tasks">
-
-  <!-- Task 1 -->
-  <div class="task-card" id="ob8-task1-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob8-task1">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Activate ForeWarn</div>
-      <div class="task-desc">Log in to NTREIS at ntreis.clareity.net. Scroll to the bottom and click 'ForeWarn.' Sign up online or call (855) 518-0897. You will need your License # and Email Address.</div>
-      <a href="http://ntreis.clareity.net" target="_blank" class="task-action">
-        NTREIS Portal
-        <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
+  <!-- Progress Dots -->
+  <div class="progress-bar">
+    <span class="step-label">Step 8 of 10</span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </div>
 
-  <!-- Task 2 -->
-  <div class="task-card" id="ob8-task2-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob8-task2">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <!-- Hero -->
+  <div class="hero">
+    <span class="hero-icon">🛡️</span>
+    <h1>ForeWarn &amp; ZipForms</h1>
+    <p class="subtitle">Set up your safety and contract tools so you can start working deals immediately.</p>
+  </div>
+
+  <!-- Task Cards -->
+  <div class="task-list">
+
+    <!-- Task 1: Activate ForeWarn -->
+    <div class="task-card" id="card-ob8-1">
+      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Activate ZipForms</div>
-      <div class="task-desc">Log into NTREIS. Scroll to the bottom and select the 'ZipForms' icon. Find your NRDS # in the Member Portal. Call ZipForms to activate: 1-800-874-6500.</div>
-      <a href="http://portal.metrotex.com/home" target="_blank" class="task-action">
-        Look Up NRDS #
-        <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob8-task1" onchange="toggleCard(this, 'card-ob8-1')"> <strong class="task-title">Activate ForeWarn</strong></label>
+        <p class="task-desc">1. Log in to NTREIS at ntreis.clareity.net.<br>2. Scroll to the bottom of the page and click 'ForeWarn.'<br>3. Sign up online or call (855) 518-0897.<br>You will need your License # and Email Address.</p>
+        <a href="http://ntreis.clareity.net" target="_blank" class="action-btn">NTREIS Portal →</a>
+      </div>
     </div>
+
+    <!-- Task 2: Activate ZipForms -->
+    <div class="task-card" id="card-ob8-2">
+      <div class="task-icon" style="background: linear-gradient(135deg, #3A6B7A, #5193A6)">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob8-task2" onchange="toggleCard(this, 'card-ob8-2')"> <strong class="task-title">Activate ZipForms</strong></label>
+        <p class="task-desc">1. Log in to NTREIS at ntreis.clareity.net.<br>2. Scroll to the bottom and select the 'ZipForms' icon.<br>3. Find your NRDS # in the Member Portal.<br>4. Call ZipForms Support to activate: 1-800-874-6500.<br><em>Note: You need your NRDS number in order for ZipForms to activate your account.</em></p>
+        <a href="http://portal.metrotex.com/home" target="_blank" class="action-btn">Look Up NRDS # →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Callout -->
+  <div class="callout">
+    ⚠️ <strong>ForeWarn DISCLAIMER:</strong> Do not exceed 200 searches per day or your account will be banned.
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-footer">
+    <a href="module-ob-7.html">← Zoho CRM</a>
+    <a href="module-ob-9.html">Next: Marketing &amp; Brand →</a>
   </div>
 
 </div>
-
-<div class="callout-wrap">
-  <div class="callout">⚠️ ForeWarn DISCLAIMER: Do not exceed 200 searches per day or your account will be banned.</div>
-</div>
-
-<nav class="bottom-nav">
-  <a href="module-ob-7.html" class="nav-btn">← Zoho CRM</a>
-  <a href="module-ob-9.html" class="nav-btn">Next: Marketing &amp; Brand →</a>
-</nav>
 
 <script>
-  document.querySelectorAll('.task-card input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      cb.closest('.task-card').classList.toggle('is-checked', cb.checked);
-    });
-  });
+function toggleCard(checkbox, cardId) {
+  const card = document.getElementById(cardId);
+  if (checkbox.checked) {
+    card.classList.add('checked');
+  } else {
+    card.classList.remove('checked');
+  }
+}
 </script>
 <script src="../persistence.js"></script>
 </body>

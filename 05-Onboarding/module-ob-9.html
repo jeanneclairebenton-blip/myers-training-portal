@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketing &amp; Brand — Myers Onboarding</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Step 9: Marketing &amp; Brand — Myers Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --sans: 'Mulish', system-ui, sans-serif;
@@ -24,210 +23,355 @@
     --hairline: #E8E2D4;
     --green: #4F7A3A;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--sans); background: var(--surface); color: var(--ink); line-height: 1.55; margin: 0; padding: 0; }
 
-  .topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 253, 246, 0.85);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--hairline);
-    padding: 14px 32px;
-    display: flex; align-items: center; justify-content: space-between;
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .topbar-brand { font-family: var(--serif); font-size: 20px; color: var(--ink); }
-  .topbar-brand span { color: var(--gold); }
-  .topbar-label { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
 
+  .page-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  /* Progress Dots */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .progress-bar .step-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 8px;
+  }
+  .progress-bar .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--hairline);
+    transition: all 0.3s ease;
+  }
+  .progress-bar .dot.completed {
+    background: var(--green);
+  }
+  .progress-bar .dot.active {
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.25);
+    transform: scale(1.2);
+  }
+
+  /* Hero */
   .hero {
-    max-width: 720px; margin: 0 auto;
-    padding: 56px 32px 32px; text-align: center;
+    text-align: center;
+    margin-bottom: 40px;
   }
-  .hero-kicker {
-    font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 12px;
+  .hero-icon {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
   }
   .hero h1 {
-    font-family: var(--serif); font-size: 40px; font-weight: 400;
-    color: var(--ink); margin-bottom: 12px; line-height: 1.15;
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
   }
-  .hero p { font-size: 16px; color: var(--muted); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+  .hero .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
 
-  .tasks { max-width: 720px; margin: 0 auto; padding: 0 32px 24px; display: flex; flex-direction: column; gap: 16px; }
+  /* Task Cards */
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
   .task-card {
-    background: #fff; border: 1px solid var(--hairline); border-radius: 14px;
-    padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;
-    transition: box-shadow 0.2s ease;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .task-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-  .task-card.is-checked { opacity: 0.65; }
-  .task-card.is-checked .task-title { text-decoration: line-through; }
+  .task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  .task-card.checked {
+    opacity: 0.6;
+  }
+  .task-card.checked .task-title strong {
+    text-decoration: line-through;
+  }
 
-  .checkbox-wrap { flex-shrink: 0; position: relative; width: 22px; height: 22px; margin-top: 1px; }
-  .checkbox-wrap input[type="checkbox"] { position: absolute; opacity: 0; width: 22px; height: 22px; cursor: pointer; z-index: 2; margin: 0; }
-  .checkbox-visual {
-    width: 22px; height: 22px; border-radius: 6px;
-    border: 2px solid var(--hairline); background: #fff;
-    display: flex; align-items: center; justify-content: center;
+  .task-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .task-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .task-content label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
+  .task-content label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .task-title strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
     transition: all 0.2s ease;
   }
-  .checkbox-visual svg { opacity: 0; transform: scale(0.5); transition: all 0.15s ease; }
-  .checkbox-wrap input[type="checkbox"]:checked + .checkbox-visual { background: var(--gold); border-color: var(--gold); }
-  .checkbox-wrap input[type="checkbox"]:checked + .checkbox-visual svg { opacity: 1; transform: scale(1); }
-
-  .task-body { flex: 1; min-width: 0; }
-  .task-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .task-desc { font-size: 14px; color: var(--muted); line-height: 1.55; }
-  .task-action {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin-top: 10px; padding: 8px 16px;
-    background: var(--gold); color: #fff; border: none; border-radius: 8px;
-    font-family: var(--sans); font-size: 13px; font-weight: 700;
-    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  .task-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 10px;
+    margin-left: 28px;
   }
-  .task-action:hover { background: var(--gold-deep); }
-  .task-action svg { width: 14px; height: 14px; }
-
-  /* Text Input */
-  .text-input-wrap { max-width: 720px; margin: 0 auto; padding: 0 32px 24px; }
-  .text-input-card {
-    background: #fff; border: 1px solid var(--hairline); border-radius: 14px;
-    padding: 20px 24px;
+  .task-desc:last-child {
+    margin-bottom: 0;
   }
-  .text-input-card label {
-    display: block; font-size: 14px; font-weight: 700; color: var(--ink);
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: var(--sans);
+    transition: background 0.2s ease;
+    margin-left: 28px;
+  }
+  .action-btn:hover {
+    background: var(--gold-deep);
+  }
+
+  /* Text Input Card */
+  .input-card {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  .input-card .input-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
     margin-bottom: 10px;
   }
-  .text-input-card input[type="text"] {
-    width: 100%; padding: 12px 16px;
-    border: 1.5px solid var(--hairline); border-radius: 8px;
-    font-family: var(--sans); font-size: 14px; color: var(--ink);
-    background: var(--surface); outline: none; transition: border-color 0.2s;
+  .input-card input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--ink);
+    background: var(--bg-soft);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .text-input-card input[type="text"]:focus { border-color: var(--gold); }
-  .text-input-card input[type="text"]::placeholder { color: var(--muted); }
+  .input-card input[type="text"]:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.15);
+  }
+  .input-card input[type="text"]::placeholder {
+    color: var(--muted);
+    opacity: 0.6;
+  }
 
-  .bottom-nav {
-    max-width: 720px; margin: 0 auto; padding: 32px 32px 64px;
-    display: flex; justify-content: space-between; align-items: center;
+  /* Navigation */
+  .nav-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    margin-top: 16px;
   }
-  .nav-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px; border: 1.5px solid var(--hairline); border-radius: 10px;
-    background: transparent; color: var(--ink-2);
-    font-family: var(--sans); font-size: 14px; font-weight: 700;
-    text-decoration: none; transition: all 0.2s;
+  .nav-footer a {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
-  .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  @media (max-width: 600px) {
-    .hero { padding: 40px 20px 24px; }
-    .hero h1 { font-size: 30px; }
-    .tasks, .text-input-wrap, .bottom-nav { padding-left: 20px; padding-right: 20px; }
-    .task-card, .text-input-card { padding: 16px; }
+  .nav-footer a:hover {
+    color: var(--gold-deep);
   }
 </style>
 </head>
 <body>
+<div class="page-wrapper">
 
-<header class="topbar">
-  <div class="topbar-brand">Myers <span>Home Buyers</span></div>
-  <div class="topbar-label">Onboarding</div>
-</header>
-
-<section class="hero">
-  <div class="hero-kicker">Onboarding · Step 9 of 10</div>
-  <h1>Marketing &amp; Brand</h1>
-  <p>Launch your professional brand. Create your announcement, set up your signature, and get your presence established.</p>
-</section>
-
-<div class="tasks">
-
-  <!-- Task 1 -->
-  <div class="task-card" id="ob9-task1-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob9-task1">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Review Brand Guidelines &amp; Logos</div>
-      <div class="task-desc">Download official logos for your marketing materials.</div>
-      <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="task-action">
-        Marketing Drive
-        <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
+  <!-- Progress Dots -->
+  <div class="progress-bar">
+    <span class="step-label">Step 9 of 10</span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot completed"></span>
+    <span class="dot active"></span>
+    <span class="dot"></span>
   </div>
 
-  <!-- Task 2 -->
-  <div class="task-card" id="ob9-task2-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob9-task2">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Create Welcome Announcement</div>
-      <div class="task-desc">Pick a template, add your headshot, download, and post to social media.</div>
-    </div>
+  <!-- Hero -->
+  <div class="hero">
+    <span class="hero-icon">🎨</span>
+    <h1>Marketing &amp; Brand</h1>
+    <p class="subtitle">Launch your professional brand. Create your announcement, set up your signature, and get your presence established.</p>
   </div>
 
-  <!-- Task 3 -->
-  <div class="task-card" id="ob9-task3-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob9-task3">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <!-- Task Cards -->
+  <div class="task-list">
+
+    <!-- Task 1: Review Brand Guidelines & Logos -->
+    <div class="task-card" id="card-ob9-1">
+      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
+        <!-- palette icon -->
+        <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/><circle cx="17.5" cy="10.5" r="0.5" fill="#fff" stroke="none"/><circle cx="8.5" cy="7.5" r="0.5" fill="#fff" stroke="none"/><circle cx="6.5" cy="12" r="0.5" fill="#fff" stroke="none"/><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10a2 2 0 0 0 2-2v-1a2 2 0 0 1 2-2h1.5A4.5 4.5 0 0 0 22 12.5C22 6.82 17.52 2 12 2z"/></svg>
       </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Set Up Email Signature</div>
-      <div class="task-desc">Build a branded Gmail signature with your photo, title, and license number.</div>
-      <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="task-action">
-        Email Signature Template
-        <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob9-task1" onchange="toggleCard(this, 'card-ob9-1')"> <strong class="task-title">Review Brand Guidelines &amp; Logos</strong></label>
+        <p class="task-desc">Review the brand guidelines and download official logos to use in your own marketing materials.</p>
+        <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="action-btn">Marketing Drive →</a>
+      </div>
     </div>
+
+    <!-- Task 2: Create Welcome Announcement -->
+    <div class="task-card" id="card-ob9-2">
+      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
+        <!-- megaphone icon -->
+        <svg viewBox="0 0 24 24"><path d="M21 15V5a2 2 0 0 0-2-2H9"/><path d="M3 11v4a2 2 0 0 0 2 2h2"/><path d="M7 17l-2 4"/><path d="M18 3l-6 4H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h7l6 4V3z"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob9-task2" onchange="toggleCard(this, 'card-ob9-2')"> <strong class="task-title">Create Welcome Announcement</strong></label>
+        <p class="task-desc">Pick a template, add your headshot, download, and post to social media. Six premium designs available.</p>
+      </div>
+    </div>
+
+    <!-- Task 3: Set Up Email Signature -->
+    <div class="task-card" id="card-ob9-3">
+      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
+        <!-- mail icon -->
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob9-task3" onchange="toggleCard(this, 'card-ob9-3')"> <strong class="task-title">Set Up Email Signature</strong></label>
+        <p class="task-desc">Build a branded Gmail signature with your photo, title, and license number.</p>
+        <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="action-btn">Email Signature Template →</a>
+      </div>
+    </div>
+
+    <!-- Task 4: Order Business Cards -->
+    <div class="task-card" id="card-ob9-4">
+      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
+        <!-- card/credit-card icon -->
+        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <div class="task-content">
+        <label><input type="checkbox" id="ob9-task4" onchange="toggleCard(this, 'card-ob9-4')"> <strong class="task-title">Order Business Cards</strong></label>
+        <p class="task-desc">Choose a layout, preview front and back, and order 250 soft-touch matte cards.</p>
+      </div>
+    </div>
+
+    <!-- Text Input Card: Social Media Link -->
+    <div class="input-card">
+      <div class="task-icon" style="background: linear-gradient(135deg, #7A7263, #9E968A)">
+        <!-- link icon -->
+        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </div>
+      <div class="task-content" style="flex: 1;">
+        <div class="input-label">Paste the link to your social media announcement post</div>
+        <input type="text" id="ob9-social-link" placeholder="https://...">
+      </div>
+    </div>
+
   </div>
 
-  <!-- Task 4 -->
-  <div class="task-card" id="ob9-task4-card">
-    <label class="checkbox-wrap">
-      <input type="checkbox" id="ob9-task4">
-      <div class="checkbox-visual">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </label>
-    <div class="task-body">
-      <div class="task-title">Order Business Cards</div>
-      <div class="task-desc">Choose a layout, preview front and back.</div>
-    </div>
+  <!-- Navigation -->
+  <div class="nav-footer">
+    <a href="module-ob-8.html">← ForeWarn &amp; ZipForms</a>
+    <a href="module-ob-10.html">Next: Payout Process →</a>
   </div>
 
 </div>
-
-<!-- Text Input -->
-<div class="text-input-wrap">
-  <div class="text-input-card">
-    <label for="ob9-social-link">Paste the link to your social media announcement post</label>
-    <input type="text" id="ob9-social-link" placeholder="https://…">
-  </div>
-</div>
-
-<nav class="bottom-nav">
-  <a href="module-ob-8.html" class="nav-btn">← ForeWarn &amp; ZipForms</a>
-  <a href="module-ob-10.html" class="nav-btn">Next: Payout Process →</a>
-</nav>
 
 <script>
-  document.querySelectorAll('.task-card input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      cb.closest('.task-card').classList.toggle('is-checked', cb.checked);
-    });
-  });
+function toggleCard(checkbox, cardId) {
+  const card = document.getElementById(cardId);
+  if (checkbox.checked) {
+    card.classList.add('checked');
+  } else {
+    card.classList.remove('checked');
+  }
+}
 </script>
 <script src="../persistence.js"></script>
 </body>
