@@ -30,19 +30,19 @@ function launchConfetti() {
 
   for (var i = 0; i < 400; i++) {
     pieces.push({
-      x: canvas.width * 0.5 + (Math.random() - 0.5) * canvas.width * 0.4,
-      y: canvas.height * 0.3,
+      x: Math.random() * canvas.width,
+      y: -(Math.random() * canvas.height),
       w: Math.random() * 12 + 4,
       h: Math.random() * 8 + 3,
       color: colors[Math.floor(Math.random() * colors.length)],
       shape: shapes[Math.floor(Math.random() * shapes.length)],
-      vx: (Math.random() - 0.5) * 12,
-      vy: -(Math.random() * 14 + 4),
-      gravity: 0.25 + Math.random() * 0.1,
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 4 + 2,
+      gravity: 0.08 + Math.random() * 0.05,
       rot: Math.random() * 360,
       rv: (Math.random() - 0.5) * 12,
       opacity: 1,
-      delay: Math.random() * 15
+      delay: Math.random() * 40
     });
   }
 
