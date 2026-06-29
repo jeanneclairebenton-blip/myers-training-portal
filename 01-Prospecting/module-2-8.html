@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2.8 — Objections &amp; Rebuttals | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A;
+    --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263;
+    --surface: #FFFDF6; --bg-soft: #F7F4ED; --hairline: #E8E2D4;
+    --green: #4F7A3A;
+    --accent: #2980b9; --accent-light: #d6eaf8; --accent-dark: #1a5276;
+    --font-sans: 'Mulish', system-ui, sans-serif;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06);
+    --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px; --radius-sm: 8px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .top-nav { background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+  .top-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .top-nav a:hover { color: var(--accent-dark); }
+  .nav-group { display: flex; gap: 16px; }
+
+  .progress-bar-wrap { background: var(--hairline); height: 4px; width: 100%; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 0 4px 4px 0; }
+
+  .module-hero { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; padding: 48px 24px 40px; text-align: center; }
+  .module-hero .cert-badge { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .module-hero h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 8px; font-weight: 400; }
+  .module-hero .meta { font-size: 0.92rem; opacity: 0.9; display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 8px; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .why-card { background: linear-gradient(135deg, var(--cream-soft) 0%, var(--cream) 100%); border: 1px solid var(--gold); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+  .why-card .label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 6px; }
+  .why-card p { color: var(--ink2); font-size: 1rem; font-weight: 500; line-height: 1.7; }
+
+  .section-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .section-title { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); }
+  .learn-icon { background: var(--accent-light); }
+  .do-icon { background: #fef3e2; }
+  .prove-icon { background: #e8f5e9; }
+  .review-icon { background: #f3e5f5; }
+
+  .section-card h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--ink); margin: 20px 0 8px; }
+  .section-card h3:first-child { margin-top: 0; }
+  .section-card p, .section-card li { font-size: 0.95rem; color: var(--ink2); line-height: 1.7; }
+
+  .highlight-box { background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .highlight-box strong { color: var(--accent-dark); }
+
+  .tip-box { background: #e8f5e9; border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .tip-box strong { color: var(--green); }
+
+  /* Objection Cards */
+  .objection-list { margin: 20px 0; }
+  .objection-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .objection-card:hover { box-shadow: var(--shadow-md); }
+  .obj-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--hairline);
+    cursor: pointer;
+  }
+  .obj-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e74c3c;
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .obj-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+    flex: 1;
+  }
+  .obj-body { padding: 16px 18px; }
+  .rebuttal-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: #e8f5e9;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .rebuttal-text { font-size: 0.93rem; color: var(--ink2); line-height: 1.7; }
+  .rebuttal-text em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  .exercise-area { width: 100%; min-height: 100px; border: 1.5px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; font-family: var(--font-sans); font-size: 0.95rem; color: var(--ink); background: var(--surface); resize: vertical; transition: border-color 0.2s; }
+  .exercise-area:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(41,128,185,0.12); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+  .btn-record { background: #e74c3c; color: #fff; }
+  .btn-record:hover { background: #c0392b; }
+
+  .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .review-item { flex: 1; min-width: 120px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+  .review-item .day-label { font-weight: 800; font-size: 0.82rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .review-item .day-task { font-size: 0.85rem; color: var(--ink2); margin-top: 6px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: 1.5px solid var(--accent); border-radius: var(--radius-sm); transition: all 0.2s; }
+  .bottom-nav a:hover { background: var(--accent); color: #fff; }
+
+  .milestone-badge { text-align: center; padding: 32px; margin-top: 24px; }
+  .milestone-badge .badge-icon { font-size: 2.4rem; margin-bottom: 8px; }
+  .milestone-badge .badge-text { font-family: var(--font-serif); font-size: 1.1rem; color: var(--accent-dark); }
+  .milestone-badge .badge-sub { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    .module-hero { padding: 36px 18px 28px; }
+    .section-card { padding: 24px 18px; }
+    .container { padding: 24px 14px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="module-2-7.html">← 2.7 Investor Finder</a>
+  <div class="nav-group">
+    <a href="../index.html">Program Home</a>
+    <a href="module-2-9.html">Next →</a>
+  </div>
+</nav>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" style="width: 88.8%"></div>
+</div>
+
+<header class="module-hero">
+  <div class="cert-badge">Certificate 2 — Prospecting Specialist</div>
+  <h1>Objections &amp; Rebuttals</h1>
+  <div class="meta">
+    <span>📘 Module 2.8</span>
+    <span>⏱ 10 min</span>
+    <span>🏅 Objection Handler</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="why-card">
+    <div class="label">💰 Why This Matters</div>
+    <p>Every objection you can handle = <strong>one more deal that doesn't walk away</strong>. The difference between a good agent and a great agent is what happens when the investor says "no" or pushes back.</p>
+  </div>
+
+  <!-- LEARN -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon learn-icon">📖</div>
+      <div class="section-title">Learn</div>
+    </div>
+
+    <h3>The Top 8 Objections (and Exactly How to Handle Them)</h3>
+    <p>You will hear these objections. It's not a matter of "if" — it's "when." Memorize the rebuttals so they become <strong>automatic</strong>.</p>
+
+    <div class="objection-list">
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">1</div>
+          <div class="obj-text">"The market is slowing down…"</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"I hear you — <em>what have you been seeing in your area?</em> Here's what we're seeing: there are opportunities in every market. When the market slows, motivated sellers come out. Our investors are finding some of the best margins right now because there's less competition. Would you rather buy when everyone else is buying, or when the deals are actually good?"</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">2</div>
+          <div class="obj-text">"I don't like working with wholesalers."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"I totally understand — and honestly, most wholesalers don't operate the way we do. <em>Would you be mad if I found you a deal at your price?</em> We have over 200 five-star Google reviews. We're licensed agents running a professional operation. If the numbers work for you, does it matter where the deal came from?"</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">3</div>
+          <div class="obj-text">"I can't make it to the showing."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"I get it — you're busy. But let me ask you this: <em>is $XX,000 in profit worth 2 hours of your time?</em> Our showings are one-time events. You walk through, assess the property, and submit your bid. If it doesn't work, you've lost 2 hours. If it does, you've found your next deal."</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">4</div>
+          <div class="obj-text">"I don't do showings / I buy sight unseen."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"Understood. Here's what's great about our process — <em>silent bids</em>. You walk the property, submit your number, and your bid stays completely private. No bidding wars, no pressure. Your number is your number. And you can send a rep if you can't attend personally."</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">5</div>
+          <div class="obj-text">"Your ARV / comps are off."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"That's a fair point — <em>what do you have it at?</em> I'd love to see your numbers. Here's why ours might differ: Zillow uses algorithms. We use actual MLS data — recent sold comps, active listings, and pending contracts. If your numbers are better, I want to learn from that. Let's compare."</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">6</div>
+          <div class="obj-text">"I only buy at 70% of ARV."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"Totally respect that. <em>Where are you finding those deals consistently?</em> Honestly, if you can find 70% ARV deals all day, I'll buy those too. In today's market, most of our investors are buying at 75–80% and still making strong returns. The key is volume and speed — we bring you 3–5 deals per week."</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">7</div>
+          <div class="obj-text">"I don't want to pay double close costs."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"Great question. Our closing costs typically run <em>2–2.5%</em>, which is standard. And here's the upside: a double close guarantees you get <strong>clear title</strong>. There's no daisy-chain, no assignment risk. You're buying directly from us with a clean chain of title. That's worth the small premium."</div>
+        </div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-header">
+          <div class="obj-num">8</div>
+          <div class="obj-text">"I have my own title company."</div>
+        </div>
+        <div class="obj-body">
+          <div class="rebuttal-label">✅ Your Rebuttal</div>
+          <div class="rebuttal-text">"I appreciate that. Our terms are set with our title company to ensure a smooth, standardized process for everyone. <em>Escrow fees are only $250</em>, and we handle all the coordination. It keeps things clean and fast for both sides."</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="highlight-box">
+      <strong>The Pattern:</strong> Notice every rebuttal follows the same structure — <strong>Acknowledge → Reframe → Redirect to Value</strong>. Never argue. Never get defensive. Always bring it back to the deal.
+    </div>
+  </div>
+
+  <!-- DO -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon do-icon">🔨</div>
+      <div class="section-title">Do</div>
+    </div>
+
+    <h3>Role-Play: 3 Random Objections</h3>
+    <p>Grab a partner (or use a timer and respond to yourself). Have someone throw <strong>3 random objections</strong> at you from the list above. Respond in real-time without looking at the rebuttals.</p>
+
+    <div class="tip-box">
+      <strong>💡 Practice Method:</strong> Write each objection on a separate card or sticky note. Shuffle them. Pull one, start your timer, and respond within 10 seconds. The goal is <em>speed</em> and <em>confidence</em>, not perfection.
+    </div>
+
+    <textarea id="auto_dd37b328" class="exercise-area" placeholder="After your role-play, note which objections you nailed and which ones tripped you up:
+
+Nailed it: #___, #___
+Need work: #___, #___
+Notes: ..."></textarea>
+  </div>
+
+  <!-- PROVE -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon prove-icon">✅</div>
+      <div class="section-title">Prove</div>
+    </div>
+
+    <h3>🎤 Record Yourself Handling 3 Objections</h3>
+    <p>Record yourself responding to <strong>3 objections in real-time</strong> — no scripts, no notes. Have a partner read objections from the list, or play them from your phone.</p>
+    <ul>
+      <li>Respond within 5 seconds of hearing the objection</li>
+      <li>Use the Acknowledge → Reframe → Redirect pattern</li>
+      <li>Sound confident and conversational, not rehearsed</li>
+    </ul>
+
+    <button class="btn btn-record">🎤 Submit Recording</button>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon review-icon">🔁</div>
+      <div class="section-title">Review — Spaced Repetition</div>
+    </div>
+
+    <div class="review-timeline">
+      <div class="review-item">
+        <div class="day-label">Day 3</div>
+        <div class="day-task">2 random objections — respond from memory</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 7</div>
+        <div class="day-task">2 random objections — respond from memory</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 14</div>
+        <div class="day-task">2 random objections — respond from memory</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 30</div>
+        <div class="day-task">Full role-play: all 8 objections</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone-badge">
+    <div class="badge-icon">🛡️</div>
+    <div class="badge-text">Objection Handler — Unlocked</div>
+    <div class="badge-sub">No objection can stop you now. You've heard them all and you know exactly what to say.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="module-2-7.html">← 2.7 Investor Finder</a>
+    <a href="module-2-9.html">2.9 USP Development →</a>
+  </div>
+</main>
+
+<script src="../persistence.js"></script>
+</body>
+</html>

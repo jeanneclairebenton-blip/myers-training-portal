@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3.1 — Investor Sit-Down Framework | Myers Home Buyers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --gold: #C9941F;
+            --gold-deep: #8B6B1A;
+            --cream: #FBE8B7;
+            --cream-soft: #FDF1D0;
+            --ink: #1A1815;
+            --ink2: #3D362A;
+            --muted: #7A7263;
+            --surface: #FFFDF6;
+            --bg-soft: #F7F4ED;
+            --hairline: #E8E2D4;
+            --green: #4F7A3A;
+            --accent: #8e44ad;
+            --accent-light: #f3e8f9;
+            --accent-soft: #ecdaf5;
+            --font-sans: 'Mulish', system-ui, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-soft);
+            color: var(--ink);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ——— Top Progress Bar ——— */
+        .progress-bar-container {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--hairline);
+            padding: 0;
+        }
+        .progress-track {
+            height: 4px;
+            background: var(--hairline);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 12.5%; /* Module 1 of 8 */
+            background: linear-gradient(90deg, var(--accent), #a855c7);
+            border-radius: 0 4px 4px 0;
+            transition: width 0.5s ease;
+        }
+
+        /* ——— Navigation ——— */
+        .top-nav {
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .top-nav a {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .top-nav a:hover { color: var(--gold-deep); }
+        .top-nav .nav-center {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ——— Main Container ——— */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+
+        /* ——— Module Header ——— */
+        .module-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .module-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+        .module-header h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .module-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ——— Why This Matters ——— */
+        .why-card {
+            background: linear-gradient(135deg, var(--accent), #7b3a9e);
+            color: #fff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 32px rgba(142, 68, 173, 0.18);
+        }
+        .why-card h2 {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .why-card p {
+            font-size: 0.97rem;
+            line-height: 1.65;
+            opacity: 0.95;
+        }
+
+        /* ——— Section Cards ——— */
+        .section-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid var(--hairline);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .section-card .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            padding: 5px 14px;
+            border-radius: 100px;
+        }
+        .learn-label {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        .do-label {
+            background: #e8f5e1;
+            color: var(--green);
+        }
+        .prove-label {
+            background: var(--cream-soft);
+            color: var(--gold-deep);
+        }
+        .review-label {
+            background: #e3eefe;
+            color: #2c5ea8;
+        }
+
+        .section-card h2 {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            color: var(--ink);
+            margin-bottom: 16px;
+        }
+        .section-card p, .section-card li {
+            font-size: 0.93rem;
+            color: var(--ink2);
+            line-height: 1.7;
+        }
+        .section-card ul, .section-card ol {
+            padding-left: 20px;
+            margin: 12px 0;
+        }
+        .section-card li {
+            margin-bottom: 8px;
+        }
+
+        /* ——— Callout Boxes ——— */
+        .callout {
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        .callout-purple {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+        }
+        .callout-gold {
+            background: var(--cream-soft);
+            border-left: 4px solid var(--gold);
+        }
+        .callout-green {
+            background: #e8f5e1;
+            border-left: 4px solid var(--green);
+        }
+        .callout strong {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        /* ——— Format Table ——— */
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .format-card {
+            background: var(--bg-soft);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .format-card .format-icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+        .format-card h4 {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--ink);
+        }
+        .format-card p {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        /* ——— Pillar Grid ——— */
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .pillar {
+            background: var(--accent-light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .pillar .pillar-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border-radius: 50%;
+            margin-bottom: 8px;
+        }
+        .pillar h4 {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .pillar p {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        /* ——— Activity Box ——— */
+        .activity-box {
+            background: var(--bg-soft);
+            border: 2px dashed var(--hairline);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+        .activity-box h4 {
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .activity-box textarea {
+            width: 100%;
+            min-height: 140px;
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 14px;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            background: var(--surface);
+            color: var(--ink);
+            resize: vertical;
+            margin-top: 8px;
+        }
+        .activity-box textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.12);
+        }
+
+        /* ——— Button ——— */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-accent:hover {
+            background: #7b3a9e;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(142, 68, 173, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--accent-light);
+        }
+
+        /* ——— Review Timeline ——— */
+        .review-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .review-day {
+            flex: 1;
+            min-width: 140px;
+            background: var(--bg-soft);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .review-day .day-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 12px;
+            border-radius: 100px;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+        .review-day p {
+            font-size: 0.82rem;
+            color: var(--ink2);
+        }
+
+        /* ——— Bottom Nav ——— */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--hairline);
+        }
+        .bottom-nav a {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .bottom-nav a:hover { color: var(--gold-deep); }
+        .bottom-nav .disabled {
+            color: var(--muted);
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ——— Responsive ——— */
+        @media (max-width: 600px) {
+            .container { padding: 20px 14px 40px; }
+            .section-card { padding: 22px 18px; }
+            .why-card { padding: 22px 20px; }
+            .module-meta { gap: 12px; }
+            .format-grid, .pillar-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar-container">
+    <div class="progress-track">
+        <div class="progress-fill"></div>
+    </div>
+</div>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+    <a href="../index.html">← Certificate Home</a>
+    <span class="nav-center">Module 1 of 8</span>
+    <a href="module-3-2.html">Next →</a>
+</nav>
+
+<div class="container">
+
+    <!-- Module Header -->
+    <header class="module-header">
+        <div class="module-badge">📋 Module 3.1</div>
+        <h1>Investor Sit-Down Framework</h1>
+        <div class="module-meta">
+            <span>⏱ 10 min</span>
+            <span>🏆 Milestone: Sit-Down Ready</span>
+        </div>
+    </header>
+
+    <!-- Why This Matters -->
+    <div class="why-card">
+        <h2>💰 Why This Matters</h2>
+        <p>Every sit-down you conduct puts <strong style="display:inline;">1–3 deals</strong> in your pipeline within 30 days. This is your single most powerful investor acquisition tool — master the framework and you'll never wonder where your next deal is coming from.</p>
+    </div>
+
+    <!-- LEARN Section -->
+    <section class="section-card">
+        <div class="section-label learn-label">📖 LEARN</div>
+        <h2>The Sit-Down: Your Discovery Call</h2>
+
+        <p>The <strong>sit-down</strong> is our version of a discovery call. It's rapport-building backed by pointed questions — a structured conversation designed to turn a stranger into a partner.</p>
+
+        <div class="callout callout-purple">
+            <strong>🎯 The 5 Goals of Every Sit-Down</strong>
+            <ol style="margin-top: 8px; padding-left: 20px;">
+                <li><strong>Review the Myers workflow</strong> — Show how we find, evaluate, and deliver deals</li>
+                <li><strong>Understand their preferences</strong> — Pain points, objectives, buy-box criteria</li>
+                <li><strong>Dig into their last project numbers</strong> — Real data reveals real opportunities</li>
+                <li><strong>Get buy-in</strong> — Use the <em>"If I can, will you?"</em> close</li>
+                <li><strong>Create a relationship</strong> — Not a transaction. A partnership.</li>
+            </ol>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 24px 0 12px;">Meeting Formats</h3>
+
+        <div class="format-grid">
+            <div class="format-card">
+                <div class="format-icon">🏢</div>
+                <h4>Office Visit</h4>
+                <p>45 min – 1 hour</p>
+                <p style="margin-top: 6px; font-size: 0.78rem; color: var(--accent);">Most professional, highest conversion</p>
+            </div>
+            <div class="format-card">
+                <div class="format-icon">☕</div>
+                <h4>Coffee Meeting</h4>
+                <p>45 min – 1 hour</p>
+                <p style="margin-top: 6px; font-size: 0.78rem; color: var(--accent);">Relaxed rapport, great for new investors</p>
+            </div>
+            <div class="format-card">
+                <div class="format-icon">💻</div>
+                <h4>Google Hangout</h4>
+                <p>20 min max</p>
+                <p style="margin-top: 6px; font-size: 0.78rem; color: var(--accent);">Quick & efficient for out-of-market</p>
+            </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 24px 0 12px;">What the Sit-Down Builds</h3>
+
+        <div class="pillar-grid">
+            <div class="pillar">
+                <div class="pillar-num">1</div>
+                <h4>Establishing Trust</h4>
+                <p>You become a person, not a pitch. They see competence and reliability.</p>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num">2</div>
+                <h4>Understanding Needs</h4>
+                <p>Their buy-box, deal velocity, and pain points become crystal clear.</p>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num">3</div>
+                <h4>Long-Term Relationships</h4>
+                <p>One great sit-down creates a buyer who stays for years.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-gold">
+            <strong>💡 The "If I Can, Will You?" Close</strong>
+            This is not a hard close. It's a commitment micro-test. Example: <em>"If I can consistently bring you properties in your buy-box at the right numbers, would you be open to working with us exclusively?"</em> — Let them say yes to a reasonable ask.
+        </div>
+    </section>
+
+    <!-- DO Section -->
+    <section class="section-card">
+        <div class="section-label do-label">🔨 DO</div>
+        <h2>Build Your Sit-Down Agenda</h2>
+
+        <p>You have a hypothetical meeting with a <strong>new investor</strong> who owns 3 rental properties and wants to scale. Write your sit-down agenda covering all 5 goals.</p>
+
+        <div class="activity-box">
+            <h4>✍️ Your Sit-Down Agenda</h4>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 4px;">Include: opening rapport, Myers workflow overview, discovery questions, numbers review, and your close. Allocate time for each section.</p>
+            <textarea id="auto_359ab451" placeholder="Example:&#10;&#10;0:00-0:05 — Rapport & Welcome&#10;  - Thank them for meeting&#10;  - Ask about their investing background&#10;&#10;0:05-0:15 — Myers Workflow Overview&#10;  - How we source deals...&#10;&#10;(continue your agenda)"></textarea>
+        </div>
+    </section>
+
+    <!-- PROVE Section -->
+    <section class="section-card">
+        <div class="section-label prove-label">✅ PROVE</div>
+        <h2>Submit Your Sit-Down Agenda</h2>
+
+        <p>Your agenda should demonstrate you understand:</p>
+        <ul>
+            <li>How to open with rapport (not a pitch)</li>
+            <li>When and how to present the Myers workflow</li>
+            <li>Which discovery questions to ask and when</li>
+            <li>How to dig into their past project numbers</li>
+            <li>How to use the "If I can, will you?" close naturally</li>
+        </ul>
+
+        <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-accent" onclick="alert('In a live environment, your agenda would be submitted to your team lead for review.')">📤 Submit Agenda</button>
+        </div>
+    </section>
+
+    <!-- REVIEW Section -->
+    <section class="section-card">
+        <div class="section-label review-label">🔁 REVIEW</div>
+        <h2>Spaced Repetition Schedule</h2>
+        <p>Lock this framework into long-term memory with scheduled practice:</p>
+
+        <div class="review-timeline">
+            <div class="review-day">
+                <div class="day-badge">DAY 3</div>
+                <p>Role-play a sit-down with a partner. Time each section.</p>
+            </div>
+            <div class="review-day">
+                <div class="day-badge">DAY 7</div>
+                <p>Role-play again. Focus on natural transitions between sections.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-green" style="margin-top: 16px;">
+            <strong>🎯 Mastery Marker</strong>
+            You've mastered this module when you can run a full sit-down from memory in under 45 minutes — with natural conversation flow, not a rigid script.
+        </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a class="disabled">← Previous Module</a>
+        <a href="module-3-2.html">Module 3.2: Discovery Questions →</a>
+    </div>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.5 — Closing Statements & Objection Isolation | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; }
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* Two columns */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 16px 0; }
+  .col-card { background: var(--bg-soft); border-radius: 10px; padding: 20px; }
+  .col-card h3 { font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 12px; font-weight: 400; display: flex; align-items: center; gap: 8px; }
+  .col-card h3 .emoji { font-size: 1.2rem; }
+  .col-card ul { list-style: none; }
+  .col-card li { padding: 8px 0; border-bottom: 1px solid var(--hairline); font-size: 0.88rem; color: var(--ink2); line-height: 1.6; }
+  .col-card li:last-child { border-bottom: none; }
+  .script-line { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink2); background: var(--cream-soft); padding: 3px 8px; border-radius: 4px; display: inline; line-height: 2.2; }
+
+  .value-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .value-pill { background: var(--cream); color: var(--gold-deep); font-size: 0.78rem; font-weight: 700; padding: 6px 14px; border-radius: 99px; }
+
+  .scenario-rp { background: var(--bg-soft); border-radius: 8px; padding: 16px 18px; margin-bottom: 10px; }
+  .scenario-rp h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 6px; font-weight: 700; }
+  .scenario-rp p { font-size: 0.88rem; color: var(--ink2); }
+
+  .task-list { list-style: none; margin: 12px 0 0; }
+  .task-list li { padding: 10px 14px 10px 40px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; position: relative; }
+  .task-list li::before { content: '☐'; position: absolute; left: 14px; top: 10px; font-size: 1rem; color: var(--accent); }
+
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="module-4-4.html"><span class="nav-arrow">←</span> Module 4.4</a>
+    <a href="module-4-6.html">Module 4.6 <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 5 of 8</span><span>62% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:62.5%"></div></div>
+  </div>
+
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.5</div>
+    <h1>Closing Statements &amp; Objection Isolation</h1>
+    <div class="mod-meta">
+      <span>⏱ 10 min</span>
+      <span>🏅 Milestone: Deal Closer</span>
+    </div>
+  </header>
+
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> Every objection isolated is a deal saved — every closing statement is a deal won. These are the tools that turn "I need to think about it" into a signed contract.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>Two Sides of Closing</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:16px;">Closing isn't one thing — it's a <strong>combination</strong> of isolating objections and delivering confident value statements. Master both.</p>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h3><span class="emoji">🎯</span> Objection Isolation</h3>
+        <p style="font-size:0.84rem;color:var(--muted);margin-bottom:10px;">Find the ONE thing holding them back. If you can solve it, the deal moves.</p>
+        <ul>
+          <li><span class="script-line">"If it wasn't for that, would you move forward?"</span></li>
+          <li><span class="script-line">"Is there anything preventing you from going through the process with us?"</span></li>
+          <li><span class="script-line">"What's holding you back?"</span></li>
+          <li><span class="script-line">"If I can [solve their problem], will you [commit]?"</span></li>
+        </ul>
+      </div>
+
+      <div class="col-card">
+        <h3><span class="emoji">🤝</span> Closing Statements</h3>
+        <p style="font-size:0.84rem;color:var(--muted);margin-bottom:10px;">Articulate value with confidence. Paint the picture of a smooth, stress-free closing.</p>
+        <ul>
+          <li><strong>Peace of mind</strong> — "No more worrying about this property."</li>
+          <li><strong>Value articulation</strong> — Frame the offer in context of their situation.</li>
+          <li><strong>As-is condition</strong> — "We buy it exactly as it sits. No repairs needed."</li>
+          <li><strong>No inspection/appraisal</strong> — "No hoops to jump through."</li>
+          <li><strong>Cash + Proof of funds</strong> — "We have the money ready."</li>
+          <li><strong>Transparency</strong> — "No surprises, no hidden fees."</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-serif);font-size:1.05rem;margin:18px 0 10px;">Value Language You Should Use</h3>
+    <div class="value-pills">
+      <div class="value-pill">Peace of mind</div>
+      <div class="value-pill">As-is, no repairs</div>
+      <div class="value-pill">Cash buyer</div>
+      <div class="value-pill">No inspection</div>
+      <div class="value-pill">No appraisal</div>
+      <div class="value-pill">Proof of funds</div>
+      <div class="value-pill">Full transparency</div>
+      <div class="value-pill">Close in days</div>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Practice Isolation + Closing</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">With a partner, practice all 4 isolation questions and at least 3 closing statement themes.</p>
+    <ol class="task-list">
+      <li>Drill the 4 isolation questions until they feel natural.</li>
+      <li>Practice 3 different closing statement angles (e.g., peace of mind, as-is, cash).</li>
+      <li>Combine them: partner gives an objection → you isolate → you close.</li>
+      <li>Switch roles and repeat.</li>
+    </ol>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>Role-Play Quiz</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Your Team Lead will throw you <strong>3 scenarios</strong>. For each one, you must:</p>
+    <div style="display:grid;gap:10px;margin-bottom:14px;">
+      <div class="scenario-rp">
+        <h4>Scenario 1</h4>
+        <p>Seller says: "I need to talk to my daughter before I decide anything."</p>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:4px;"><em>Your job: Isolate the real objection → close.</em></p>
+      </div>
+      <div class="scenario-rp">
+        <h4>Scenario 2</h4>
+        <p>Seller says: "Your offer is too low. My neighbor sold his for $50K more."</p>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:4px;"><em>Your job: Isolate → reframe value → close.</em></p>
+      </div>
+      <div class="scenario-rp">
+        <h4>Scenario 3</h4>
+        <p>Seller says: "I've already had 3 investors fall through. Why should I trust you?"</p>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:4px;"><em>Your job: Isolate → use P.O.E.T. → close.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:12px;">Have someone throw you 2 random objections. Isolate and close on the spot.</p>
+    <div class="review-grid">
+      <div class="review-day"><div class="day">7</div><div class="label">Days</div><div class="task">2 random objections</div></div>
+      <div class="review-day"><div class="day">14</div><div class="label">Days</div><div class="task">2 random objections</div></div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="module-4-4.html" class="btn-prev"><span>←</span> Module 4.4</a>
+    <a href="module-4-6.html" class="btn-next">Module 4.6 <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

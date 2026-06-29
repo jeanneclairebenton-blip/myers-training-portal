@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3.5 — Calculator Mastery: Rentals & Break-Even | Myers Home Buyers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+            --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+            --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A;
+            --accent: #8e44ad; --accent-light: #f3e8f9; --accent-soft: #ecdaf5;
+            --font-sans: 'Mulish', system-ui, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+        .progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .progress-track { height: 4px; background: var(--hairline); }
+        .progress-fill { height: 100%; width: 62.5%; background: linear-gradient(90deg, var(--accent), #a855c7); border-radius: 0 4px 4px 0; }
+        .top-nav { margin-top: 4px; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .top-nav a { font-size: 0.82rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .top-nav a:hover { color: var(--gold-deep); }
+        .top-nav .nav-center { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+        .container { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; }
+        .module-header { text-align: center; margin-bottom: 40px; }
+        .module-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; }
+        .module-header h1 { font-family: var(--font-serif); font-size: clamp(1.7rem, 5vw, 2.3rem); color: var(--ink); line-height: 1.2; margin-bottom: 12px; }
+        .module-meta { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .module-meta span { display: flex; align-items: center; gap: 6px; }
+        .why-card { background: linear-gradient(135deg, var(--accent), #7b3a9e); color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 8px 32px rgba(142,68,173,0.18); }
+        .why-card h2 { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px; }
+        .why-card p { font-size: 0.97rem; line-height: 1.65; opacity: 0.95; }
+        .section-card { background: var(--surface); border-radius: 16px; padding: 32px; margin-bottom: 24px; border: 1px solid var(--hairline); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding: 5px 14px; border-radius: 100px; }
+        .learn-label { background: var(--accent-light); color: var(--accent); }
+        .do-label { background: #e8f5e1; color: var(--green); }
+        .prove-label { background: var(--cream-soft); color: var(--gold-deep); }
+        .review-label { background: #e3eefe; color: #2c5ea8; }
+        .section-card h2 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
+        .section-card h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); margin: 24px 0 12px; }
+        .section-card p, .section-card li { font-size: 0.93rem; color: var(--ink2); line-height: 1.7; }
+        .section-card ul, .section-card ol { padding-left: 20px; margin: 12px 0; }
+        .section-card li { margin-bottom: 8px; }
+        .callout { border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-size: 0.9rem; }
+        .callout-purple { background: var(--accent-light); border-left: 4px solid var(--accent); }
+        .callout-gold { background: var(--cream-soft); border-left: 4px solid var(--gold); }
+        .callout-green { background: #e8f5e1; border-left: 4px solid var(--green); }
+        .callout strong { display: block; margin-bottom: 4px; font-weight: 700; }
+
+        .formula-block {
+            background: var(--ink); color: #e8e2d4; font-family: var(--font-mono);
+            font-size: 0.88rem; padding: 20px 24px; border-radius: 12px;
+            margin: 16px 0; line-height: 1.8; overflow-x: auto;
+        }
+        .formula-block .hl { color: var(--gold); font-weight: 500; }
+        .formula-block .cm { color: var(--muted); font-style: italic; }
+
+        /* Expense Breakdown */
+        .expense-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .expense-item {
+            background: var(--bg-soft);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+        .expense-item .expense-icon { font-size: 1.4rem; margin-bottom: 6px; }
+        .expense-item h5 { font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+        .expense-item p { font-size: 0.75rem; color: var(--muted); }
+
+        /* Net Sheet */
+        .net-sheet {
+            background: var(--bg-soft);
+            border: 2px solid var(--accent-soft);
+            border-radius: 14px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+        .net-sheet h4 { font-family: var(--font-serif); font-size: 1rem; margin-bottom: 12px; color: var(--accent); }
+        .net-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0; border-bottom: 1px solid var(--hairline);
+            font-size: 0.88rem;
+        }
+        .net-row:last-child { border-bottom: none; font-weight: 800; font-size: 0.95rem; padding-top: 12px; border-top: 2px solid var(--accent); margin-top: 4px; }
+        .net-row .label { color: var(--ink2); }
+        .net-row .value { font-family: var(--font-mono); color: var(--ink); font-weight: 600; }
+        .net-row:last-child .value { color: var(--green); }
+
+        .practice-card {
+            background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px;
+            padding: 24px; margin: 16px 0;
+        }
+        .practice-card h4 { font-weight: 700; font-size: 0.92rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .practice-card .prop-detail { font-size: 0.85rem; color: var(--ink2); margin-bottom: 4px; }
+        .practice-card textarea {
+            width: 100%; min-height: 120px; border: 1px solid var(--hairline); border-radius: 8px;
+            padding: 12px; font-family: var(--font-mono); font-size: 0.85rem;
+            background: var(--surface); color: var(--ink); resize: vertical; margin-top: 12px;
+        }
+        .practice-card textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(142,68,173,0.12); }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 10px; font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { background: #7b3a9e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(142,68,173,0.25); }
+
+        .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+        .review-day { flex: 1; min-width: 140px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px; padding: 16px; text-align: center; }
+        .review-day .day-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 100px; margin-bottom: 8px; }
+        .review-day p { font-size: 0.82rem; color: var(--ink2); }
+
+        .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+        .bottom-nav a { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .bottom-nav a:hover { color: var(--gold-deep); }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 14px 40px; }
+            .section-card { padding: 22px 18px; }
+            .why-card { padding: 22px 20px; }
+            .expense-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar-container">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+</div>
+
+<nav class="top-nav">
+    <a href="module-3-4.html">← Previous</a>
+    <span class="nav-center">Module 5 of 8</span>
+    <a href="module-3-6.html">Next →</a>
+</nav>
+
+<div class="container">
+
+    <header class="module-header">
+        <div class="module-badge">🏘️ Module 3.5</div>
+        <h1>Calculator Mastery: Rentals &amp; Break-Even</h1>
+        <div class="module-meta">
+            <span>⏱ 10 min</span>
+            <span>🏆 Milestone: Rental Analyst</span>
+        </div>
+    </header>
+
+    <div class="why-card">
+        <h2>💰 Why This Matters</h2>
+        <p>Buy-and-hold investors are the <strong style="display:inline;">most loyal buyers</strong> in the business — they purchase 5–10 properties from you over time. Master rental analysis and you'll build a repeat-buyer army.</p>
+    </div>
+
+    <!-- LEARN -->
+    <section class="section-card">
+        <div class="section-label learn-label">📖 LEARN</div>
+        <h2>Rental Analysis Fundamentals</h2>
+
+        <h3>Cap Rate</h3>
+        <p>Cap Rate tells an investor the annual return based on the property's income — <strong>ignoring financing</strong>. It's the universal language of rental evaluation.</p>
+
+        <div class="formula-block">
+            <span class="cm">// Cap Rate Formula</span><br>
+            <span class="hl">Cap Rate</span> = NOI ÷ Purchase Price × 100<br><br>
+            <span class="cm">// Example: NOI = $8,400 / Purchase = $120,000</span><br>
+            Cap Rate = $8,400 ÷ $120,000 = <span class="hl">7.0%</span>
+        </div>
+
+        <h3>Gross Yield</h3>
+        <p>A quick screening metric — doesn't account for expenses, but useful for fast comparisons:</p>
+
+        <div class="formula-block">
+            <span class="cm">// Gross Yield Formula</span><br>
+            <span class="hl">Gross Yield</span> = Annual Rent ÷ Purchase Price × 100<br><br>
+            <span class="cm">// Example: Rent = $1,200/mo / Purchase = $120,000</span><br>
+            Gross Yield = $14,400 ÷ $120,000 = <span class="hl">12.0%</span>
+        </div>
+
+        <h3>Net Operating Income (NOI)</h3>
+        <p>NOI is the true performance number — what's left after all operating expenses:</p>
+
+        <div class="formula-block">
+            <span class="hl">NOI</span> = Annual Rent − Operating Expenses<br><br>
+            <span class="cm">// Operating Expenses include:</span>
+        </div>
+
+        <div class="expense-grid">
+            <div class="expense-item">
+                <div class="expense-icon">🏛️</div>
+                <h5>Property Taxes</h5>
+                <p>Varies by county</p>
+            </div>
+            <div class="expense-item">
+                <div class="expense-icon">🛡️</div>
+                <h5>Insurance</h5>
+                <p>Landlord policy</p>
+            </div>
+            <div class="expense-item">
+                <div class="expense-icon">🔧</div>
+                <h5>Maintenance</h5>
+                <p>~5-10% of rent</p>
+            </div>
+            <div class="expense-item">
+                <div class="expense-icon">🚪</div>
+                <h5>Vacancy</h5>
+                <p>~5-8% allowance</p>
+            </div>
+            <div class="expense-item">
+                <div class="expense-icon">👤</div>
+                <h5>Management</h5>
+                <p>8-10% if PM used</p>
+            </div>
+        </div>
+
+        <h3>Break-Even Analysis</h3>
+        <p>Break-even tells the investor: <em>"What's the minimum rent I need to cover all costs?"</em> This is critical for risk assessment.</p>
+
+        <div class="formula-block">
+            <span class="hl">Break-Even Rent</span> = (All Annual Costs) ÷ 12<br><br>
+            <span class="cm">// If total annual costs = $12,600</span><br>
+            Break-Even = $12,600 ÷ 12 = <span class="hl">$1,050/mo</span><br>
+            <span class="cm">// If market rent = $1,200/mo → $150/mo cash flow cushion ✅</span>
+        </div>
+
+        <h3>Seller Net Sheet</h3>
+        <p>A transparency tool that shows the seller exactly what they walk away with after all costs. Builds trust instantly.</p>
+
+        <div class="net-sheet">
+            <h4>📋 Sample Seller Net Sheet</h4>
+            <div class="net-row">
+                <span class="label">Sale Price</span>
+                <span class="value">$120,000</span>
+            </div>
+            <div class="net-row">
+                <span class="label">Mortgage Payoff</span>
+                <span class="value">−$72,000</span>
+            </div>
+            <div class="net-row">
+                <span class="label">Agent Commission (6%)</span>
+                <span class="value">−$7,200</span>
+            </div>
+            <div class="net-row">
+                <span class="label">Title & Closing</span>
+                <span class="value">−$2,400</span>
+            </div>
+            <div class="net-row">
+                <span class="label">Property Tax Proration</span>
+                <span class="value">−$1,200</span>
+            </div>
+            <div class="net-row">
+                <span class="label"><strong>Seller Walks Away With</strong></span>
+                <span class="value">$37,200</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- DO -->
+    <section class="section-card">
+        <div class="section-label do-label">🔨 DO</div>
+        <h2>Analyze 2 Rental Properties</h2>
+
+        <p>Calculate Cap Rate, Gross Yield, NOI, and break-even for each property.</p>
+
+        <div class="practice-card">
+            <h4>🏠 Rental A — Oak Cliff, Dallas</h4>
+            <p class="prop-detail"><strong>Purchase Price:</strong> $110,000</p>
+            <p class="prop-detail"><strong>Monthly Rent:</strong> $1,150</p>
+            <p class="prop-detail"><strong>Property Taxes:</strong> $2,640/yr</p>
+            <p class="prop-detail"><strong>Insurance:</strong> $1,100/yr</p>
+            <p class="prop-detail"><strong>Maintenance:</strong> 8% of rent</p>
+            <p class="prop-detail"><strong>Vacancy:</strong> 6% allowance</p>
+            <p class="prop-detail"><strong>Management:</strong> 10% of rent</p>
+            <textarea id="auto_f21b358a" placeholder="Calculate NOI, Cap Rate, Gross Yield, and Break-Even Rent..."></textarea>
+        </div>
+
+        <div class="practice-card">
+            <h4>🏠 Rental B — South Dallas</h4>
+            <p class="prop-detail"><strong>Purchase Price:</strong> $85,000</p>
+            <p class="prop-detail"><strong>Monthly Rent:</strong> $950</p>
+            <p class="prop-detail"><strong>Property Taxes:</strong> $2,040/yr</p>
+            <p class="prop-detail"><strong>Insurance:</strong> $900/yr</p>
+            <p class="prop-detail"><strong>Maintenance:</strong> 10% of rent</p>
+            <p class="prop-detail"><strong>Vacancy:</strong> 8% allowance</p>
+            <p class="prop-detail"><strong>Management:</strong> 10% of rent</p>
+            <textarea id="auto_57a4aa0b" placeholder="Calculate NOI, Cap Rate, Gross Yield, and Break-Even Rent..."></textarea>
+        </div>
+    </section>
+
+    <!-- PROVE -->
+    <section class="section-card">
+        <div class="section-label prove-label">✅ PROVE</div>
+        <h2>Submit Your Rental Analysis</h2>
+
+        <p>Your analysis for each property should include:</p>
+        <ul>
+            <li>Annual Gross Rent</li>
+            <li>Itemized operating expenses</li>
+            <li>NOI calculation</li>
+            <li>Cap Rate and Gross Yield</li>
+            <li>Break-even rent and monthly cash flow</li>
+        </ul>
+
+        <div style="margin-top: 20px;">
+            <button class="btn btn-accent" onclick="alert('In a live environment, your rental analysis would be submitted and compared to the answer key.')">📤 Submit Analysis</button>
+        </div>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="section-card">
+        <div class="section-label review-label">🔁 REVIEW</div>
+        <h2>Spaced Repetition Schedule</h2>
+
+        <div class="review-timeline">
+            <div class="review-day">
+                <div class="day-badge">DAY 7</div>
+                <p>Analyze a new rental property end-to-end. Time yourself — aim for under 5 minutes.</p>
+            </div>
+            <div class="review-day">
+                <div class="day-badge">DAY 14</div>
+                <p>Present a rental analysis to a partner as if they're a buy-and-hold investor.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-green" style="margin-top: 16px;">
+            <strong>🎯 Mastery Marker</strong>
+            You've mastered this module when you can evaluate a rental property's NOI, Cap Rate, and break-even in under 5 minutes — and explain to an investor whether it's a good deal.
+        </div>
+    </section>
+
+    <div class="bottom-nav">
+        <a href="module-3-4.html">← Module 3.4: Cash ROI & Hard Money</a>
+        <a href="module-3-6.html">Module 3.6: Repair Estimation →</a>
+    </div>
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

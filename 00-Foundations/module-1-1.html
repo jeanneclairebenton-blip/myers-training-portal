@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.1 — Welcome to Myers | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #F7F4ED;
+    color: #1A1815;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .top-nav {
+    background: #1A1815;
+    padding: 0.75rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-nav a {
+    color: #FBE8B7;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label {
+    color: #7A7263;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Progress Bar */
+  .progress-wrap {
+    background: #FFFDF6;
+    border-bottom: 1px solid #E8E2D4;
+    padding: 1rem 2rem;
+  }
+  .progress-label {
+    font-size: 0.75rem;
+    color: #7A7263;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .progress-track {
+    width: 100%;
+    height: 8px;
+    background: #E8E2D4;
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 12.5%;
+    background: linear-gradient(90deg, #C9941F, #8B6B1A);
+    border-radius: 99px;
+    transition: width 0.6s ease;
+  }
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  .progress-steps span {
+    font-size: 0.65rem;
+    color: #7A7263;
+    font-weight: 600;
+  }
+  .progress-steps span.active {
+    color: #C9941F;
+    font-weight: 800;
+  }
+
+  /* Hero Header */
+  .hero {
+    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,148,31,0.15);
+    border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px;
+    padding: 0.35rem 1rem;
+    font-size: 0.75rem;
+    color: #FBE8B7;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2.5rem;
+    color: #FFFDF6;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .hero .subtitle {
+    color: #C9941F;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: #E8E2D4;
+    font-weight: 500;
+  }
+  .hero-meta .tag .icon { font-size: 1rem; }
+
+  /* Why Box */
+  .why-box {
+    background: linear-gradient(90deg, rgba(201,148,31,0.1), rgba(201,148,31,0.03));
+    border-left: 4px solid #C9941F;
+    margin: 2rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 12px 12px 0;
+  }
+  .why-box .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8B6B1A;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+  }
+  .why-box p {
+    color: #3D362A;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* Content Container */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* Section Cards */
+  .card {
+    background: #FFFDF6;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06), 0 4px 12px rgba(26,24,21,0.04);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    border: 1px solid #E8E2D4;
+  }
+  .card-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid #E8E2D4;
+  }
+  .card-header .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .card-header h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem;
+    color: #1A1815;
+  }
+  .card-header .card-tag {
+    margin-left: auto;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+  }
+  .card-body { padding: 1.5rem; }
+
+  /* LEARN Card */
+  .card.learn .card-icon { background: #FDF1D0; }
+  .card.learn .card-tag { background: #FDF1D0; color: #8B6B1A; }
+  .card.learn .card-body { background: linear-gradient(180deg, #FFFDF6, #FDF1D0 120%); }
+  .card.learn h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    color: #1A1815;
+    font-size: 1.15rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+  .card.learn h3:first-child { margin-top: 0; }
+  .card.learn p { color: #3D362A; margin-bottom: 0.75rem; font-size: 0.95rem; }
+  .card.learn ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+  .card.learn li { color: #3D362A; margin-bottom: 0.4rem; font-size: 0.95rem; }
+
+  .highlight-box {
+    background: rgba(201,148,31,0.1);
+    border: 1px solid rgba(201,148,31,0.25);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .highlight-box .hl-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    color: #8B6B1A;
+    margin-bottom: 0.35rem;
+  }
+  .highlight-box p {
+    font-family: 'DM Serif Display', Georgia, serif;
+    color: #1A1815;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+
+  /* DO Card */
+  .card.do-card .card-icon { background: #FBE8B7; }
+  .card.do-card .card-tag { background: #FBE8B7; color: #8B6B1A; }
+  .card.do-card .card-body { background: #FFFDF6; }
+  .activity-prompt {
+    background: #FDF1D0;
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #C9941F;
+  }
+  .activity-prompt p { color: #3D362A; font-size: 0.95rem; font-weight: 600; margin: 0; }
+  textarea.activity-input {
+    width: 100%;
+    min-height: 120px;
+    border: 2px solid #E8E2D4;
+    border-radius: 10px;
+    padding: 1rem;
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 0.95rem;
+    color: #1A1815;
+    background: #FFFDF6;
+    resize: vertical;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  textarea.activity-input:focus {
+    outline: none;
+    border-color: #C9941F;
+    box-shadow: 0 0 0 3px rgba(201,148,31,0.15);
+  }
+  textarea.activity-input::placeholder { color: #7A7263; }
+  .char-count {
+    text-align: right;
+    font-size: 0.75rem;
+    color: #7A7263;
+    margin-top: 0.35rem;
+  }
+
+  /* PROVE Card */
+  .card.prove .card-icon { background: rgba(79,122,58,0.15); }
+  .card.prove .card-tag { background: rgba(79,122,58,0.12); color: #4F7A3A; }
+  .prove-task {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(79,122,58,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(79,122,58,0.15);
+    margin-bottom: 0.75rem;
+  }
+  .prove-task input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #4F7A3A;
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .prove-task label {
+    font-size: 0.95rem;
+    color: #3D362A;
+    cursor: pointer;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 10px;
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.4);
+  }
+  .btn-green {
+    background: linear-gradient(135deg, #4F7A3A, #3d5f2d);
+    color: #FFFDF6;
+    box-shadow: 0 2px 8px rgba(79,122,58,0.3);
+  }
+  .btn-green:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(79,122,58,0.4);
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* REVIEW Card */
+  .card.review .card-icon { background: rgba(122,114,99,0.15); }
+  .card.review .card-tag { background: rgba(122,114,99,0.12); color: #7A7263; }
+  .review-schedule {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .review-day {
+    text-align: center;
+    padding: 1rem;
+    background: #F7F4ED;
+    border-radius: 10px;
+    border: 1px solid #E8E2D4;
+  }
+  .review-day .day-num {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: #C9941F;
+  }
+  .review-day .day-label {
+    font-size: 0.7rem;
+    color: #7A7263;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .review-question {
+    background: #F7F4ED;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #3D362A;
+    border-left: 3px solid #7A7263;
+    font-style: italic;
+  }
+
+  /* Navigation */
+  .module-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    margin-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+  }
+  .module-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+  .nav-prev {
+    color: #7A7263;
+    background: #F7F4ED;
+    border: 1px solid #E8E2D4;
+  }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next {
+    color: #FFFDF6;
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+  }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    color: #7A7263;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-top: 1px solid #E8E2D4;
+    margin-top: 2rem;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #1A1815;
+    color: #FBE8B7;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transform: translateY(120%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    z-index: 999;
+  }
+  .toast.show { transform: translateY(0); }
+
+  /* Expandable */
+  .expandable { margin-bottom: 0.75rem; }
+  .expand-trigger {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: #F7F4ED;
+    border: 1px solid #E8E2D4;
+    border-radius: 10px;
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #3D362A;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+  }
+  .expand-trigger:hover { background: #E8E2D4; }
+  .expand-trigger .arrow { transition: transform 0.3s; }
+  .expand-trigger.open .arrow { transform: rotate(180deg); }
+  .expand-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+  .expand-content.open {
+    max-height: 600px;
+    padding: 1rem;
+  }
+  .expand-content p {
+    font-size: 0.9rem;
+    color: #3D362A;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .why-box { margin: 1.5rem 1rem; }
+    .container { padding: 0 1rem 2rem; }
+    .card-header h2 { font-size: 1.1rem; }
+    .review-schedule { grid-template-columns: repeat(3, 1fr); }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-label">Module 1 of 8</div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: 12.5%"></div>
+  </div>
+  <div class="progress-steps">
+    <span class="active">1.1</span><span>1.2</span><span>1.3</span><span>1.4</span><span>1.5</span><span>1.6</span><span>1.7</span><span>1.8</span>
+  </div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">🏠 Module 1.1</div>
+  <h1>Welcome to Myers</h1>
+  <div class="subtitle">Where Agents Become Investors</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 5 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Brand Ambassador</span>
+  </div>
+</header>
+
+<!-- Why This Matters -->
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>Understanding the company story builds confidence that converts to deals. When you believe in what Myers does, sellers and investors feel it — and trust follows.</p>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- LEARN Section -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Core Knowledge</span>
+    </div>
+    <div class="card-body">
+      <h3>The Myers Home Buyers Story</h3>
+      <p>Myers Home Buyers was founded in the DFW Metroplex as a wholesale real estate company with a clear mission: help homeowners sell distressed properties fast while giving real estate agents a real path to building wealth.</p>
+      <p>Our tagline — <strong>"Where Agents Become Investors"</strong> — isn't just marketing. It's our operating system. At Myers, you don't just earn commissions. You learn the wholesale business from the inside out, building skills and capital to become an investor yourself.</p>
+
+      <h3>What We Actually Do</h3>
+      <ul>
+        <li><strong>Buy distressed properties</strong> — homes that are tired, behind on payments, or need significant repair</li>
+        <li><strong>Create transparent showing processes</strong> — every investor sees the same property at the same time</li>
+        <li><strong>Connect sellers with qualified investors</strong> — matching motivated sellers to our buyer network</li>
+        <li><strong>Double close transactions</strong> — we buy and sell same-day through title companies</li>
+      </ul>
+
+      <h3>Our Track Record</h3>
+      <p>Hundreds of deals closed. <strong>200+ positive Google reviews.</strong> That reputation wasn't built by accident — it was built by agents like you showing up professionally, over-disclosing, and treating every seller like a person, not a transaction.</p>
+
+      <div class="highlight-box">
+        <div class="hl-label">🔑 Key Insight</div>
+        <p>We don't sell houses. We sell PEACE OF MIND.</p>
+      </div>
+
+      <div class="expandable">
+        <button class="expand-trigger" onclick="toggleExpand(this)">
+          What makes Myers different from other wholesalers?
+          <span class="arrow">▾</span>
+        </button>
+        <div class="expand-content">
+          <p>Most wholesalers are transaction machines — they lock up contracts and flip them without caring about the seller's experience. Myers is different. We over-disclose, we bring professionalism to every interaction, and we've built a brand that sellers actually trust. That's why we have 200+ Google reviews. That's why agents come to us — because the deals are real and the process is clean.</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <button class="expand-trigger" onclick="toggleExpand(this)">
+          What does "Where Agents Become Investors" mean for YOU?
+          <span class="arrow">▾</span>
+        </button>
+        <div class="expand-content">
+          <p>As a Myers agent, you earn commissions on every deal. But more importantly, you're learning the wholesale real estate business from the inside. You'll learn how to find deals, negotiate with sellers, work with investors, and understand the numbers. Eventually, you'll have the skills and capital to start investing yourself. This isn't just a job — it's a launchpad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DO Section -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Activity</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>✍️ Write a 30-second elevator pitch about Myers Home Buyers in your own words. Imagine someone at a networking event asks you: "So what does your company do?"</p>
+      </div>
+      <p style="font-size:0.85rem; color:#7A7263; margin-bottom:0.75rem;">Your pitch should include: what Myers does, who we help, and what makes us different. Aim for 3-5 sentences.</p>
+      <textarea class="activity-input" id="elevatorPitch" placeholder="Hi, I'm [your name] with Myers Home Buyers. We..." oninput="updateCharCount(this)"></textarea>
+      <div class="char-count"><span id="pitchCount">0</span> / 500 characters</div>
+    </div>
+  </section>
+
+  <!-- PROVE Section -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Submission</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem; color:#3D362A; font-size:0.95rem;">Complete the following to mark this module as done:</p>
+
+      <div class="prove-task">
+        <input type="checkbox" id="prove1" onchange="checkProve()">
+        <label for="prove1">I have written my 30-second elevator pitch above</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="prove2" onchange="checkProve()">
+        <label for="prove2">I understand that Myers sells <strong>peace of mind</strong>, not just houses</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="prove3" onchange="checkProve()">
+        <label for="prove3">I can explain what "Where Agents Become Investors" means</label>
+      </div>
+
+      <div style="margin-top:1.25rem;">
+        <button class="btn btn-green" id="submitBtn" disabled onclick="submitModule()">
+          ✅ Submit Module 1.1
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW Section -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Spaced Repetition</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem; color:#3D362A; font-size:0.95rem;">Come back and answer these questions on the scheduled review days to lock this knowledge in:</p>
+
+      <div class="review-schedule">
+        <div class="review-day">
+          <div class="day-num">3</div>
+          <div class="day-label">Day</div>
+        </div>
+        <div class="review-day">
+          <div class="day-num">7</div>
+          <div class="day-label">Day</div>
+        </div>
+        <div class="review-day">
+          <div class="day-num">14</div>
+          <div class="day-label">Day</div>
+        </div>
+      </div>
+
+      <div class="review-question">"What does Myers sell?"</div>
+      <div class="review-question">"What makes Myers different from other wholesalers?"</div>
+      <div class="review-question">"Recite your elevator pitch from memory."</div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <nav class="module-nav">
+    <span></span>
+    <a href="module-1-2.html" class="nav-next">Module 1.2: How a Deal Works →</a>
+  </nav>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  Myers Home Buyers — Agent Training Program Draft 1
+</footer>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+function toggleExpand(btn) {
+  btn.classList.toggle('open');
+  const content = btn.nextElementSibling;
+  content.classList.toggle('open');
+}
+
+function updateCharCount(el) {
+  document.getElementById('pitchCount').textContent = el.value.length;
+}
+
+function checkProve() {
+  const boxes = document.querySelectorAll('.prove-task input[type="checkbox"]');
+  const allChecked = Array.from(boxes).every(b => b.checked);
+  document.getElementById('submitBtn').disabled = !allChecked;
+}
+
+function submitModule() {
+  const pitch = document.getElementById('elevatorPitch').value.trim();
+  if (pitch.length < 20) {
+    showToast('✏️ Please write your elevator pitch first (at least a few sentences)');
+    return;
+  }
+  showToast('🎉 Module 1.1 Complete — Welcome to Myers!');
+  document.getElementById('submitBtn').textContent = '✅ Completed!';
+  document.getElementById('submitBtn').disabled = true;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

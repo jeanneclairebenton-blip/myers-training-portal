@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.2 — MIOSI$ Framework | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; }
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .mod-meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* Framework Letters */
+  .fw-grid { display: grid; gap: 14px; margin: 16px 0; }
+  .fw-letter { display: flex; gap: 16px; background: var(--bg-soft); border-radius: 10px; padding: 18px 20px; align-items: flex-start; }
+  .fw-letter .letter-icon { flex-shrink: 0; width: 48px; height: 48px; border-radius: 10px; background: var(--accent); color: #fff; font-family: var(--font-serif); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }
+  .fw-letter .letter-body h3 { font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 4px; font-weight: 400; }
+  .fw-letter .letter-body p { font-size: 0.88rem; color: var(--ink2); line-height: 1.6; }
+  .fw-letter .letter-body .example { font-family: var(--font-mono); font-size: 0.8rem; background: var(--cream-soft); padding: 3px 8px; border-radius: 4px; display: inline; line-height: 2.2; color: var(--ink2); }
+  .motivations { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .motivations span { background: var(--cream); color: var(--gold-deep); font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+
+  .scenario-box { background: var(--bg-soft); border-radius: 8px; padding: 16px 18px; margin-bottom: 10px; }
+  .scenario-box h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 6px; font-weight: 700; }
+  .scenario-box p { font-size: 0.88rem; color: var(--ink2); }
+
+  /* Quiz */
+  .quiz-q { background: var(--bg-soft); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
+  .quiz-q p { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .quiz-q .options { list-style: none; }
+  .quiz-q .options li { padding: 6px 0; font-size: 0.88rem; color: var(--ink2); cursor: pointer; }
+  .quiz-q .options li::before { content: '○ '; color: var(--accent); font-weight: 700; }
+
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+    .fw-letter { flex-direction: column; gap: 10px; }
+    .review-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="module-4-1.html"><span class="nav-arrow">←</span> Module 4.1</a>
+    <a href="module-4-3.html">Module 4.3 <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 2 of 8</span><span>25% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:25%"></div></div>
+  </div>
+
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.2</div>
+    <h1>MIOSI$ Framework</h1>
+    <div class="mod-meta">
+      <span>⏱ 8 min</span>
+      <span>🏅 Milestone: Closer Mindset</span>
+    </div>
+  </header>
+
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> MIOSI$ is the difference between an average agent and a closer — it works on EVERY appointment. Master this and you'll close more deals than anyone on the team.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>The MIOSI$ Framework</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:16px;">Six letters. One system. Works on every seller appointment. Internalize each component and apply them in order.</p>
+
+    <div class="fw-grid">
+      <div class="fw-letter">
+        <div class="letter-icon">M</div>
+        <div class="letter-body">
+          <h3>Motivation</h3>
+          <p><strong>WHY are they selling?</strong> You must uncover the real reason. It's rarely what they say first.</p>
+          <div class="motivations">
+            <span>Financial Woes</span><span>Foreclosure</span><span>Inheritance</span><span>Relocation</span>
+            <span>Death</span><span>Divorce</span><span>Disability</span><span>Disagreement</span>
+          </div>
+          <p style="margin-top:8px;font-size:0.82rem;color:var(--muted);">The 4 D's — Death, Divorce, Disability, Disagreement — are the most common deep motivators.</p>
+        </div>
+      </div>
+
+      <div class="fw-letter">
+        <div class="letter-icon">IO</div>
+        <div class="letter-body">
+          <h3>Isolate the Objection</h3>
+          <p>Pinpoint the ONE thing holding them back. If you can solve it, the deal moves.</p>
+          <p style="margin-top:8px;"><span class="example">"If it wasn't for that, would you move forward?"</span></p>
+          <p><span class="example">"What's holding you back?"</span></p>
+        </div>
+      </div>
+
+      <div class="fw-letter">
+        <div class="letter-icon">SI</div>
+        <div class="letter-body">
+          <h3>Statement of Impact</h3>
+          <p>Connect your solution back to their pain. Make them FEEL the relief.</p>
+          <p style="margin-top:8px;"><span class="example">"We are here with you every step of the way."</span></p>
+          <p><span class="example">"This is going to take care of [their pain point]."</span></p>
+        </div>
+      </div>
+
+      <div class="fw-letter">
+        <div class="letter-icon">$</div>
+        <div class="letter-body">
+          <h3>Money</h3>
+          <p>Paint the financial picture clearly. Show them what they'll walk away with.</p>
+          <p style="margin-top:8px;"><span class="example">"This should take care of the liens and back taxes."</span></p>
+          <p><span class="example">"You'll walk away with $X."</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Write MIOSI$ Responses for 3 Scenarios</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">For each scenario, write out what you'd say for M, IO, SI, and $.</p>
+
+    <div class="scenario-box">
+      <h4>Scenario 1: Inherited Property</h4>
+      <p>Seller inherited a home from their mother 2 years ago. It's in rough shape, they live out of state, and property taxes are piling up. They've had two other "investors" fall through.</p>
+    </div>
+    <div class="scenario-box">
+      <h4>Scenario 2: Divorce</h4>
+      <p>A couple is divorcing. Both want to sell fast but can't agree on a price. There's a lien from an old HVAC contractor. One spouse is cooperative, the other is hostile.</p>
+    </div>
+    <div class="scenario-box">
+      <h4>Scenario 3: Pre-Foreclosure</h4>
+      <p>Homeowner lost their job 6 months ago. They're 3 months behind on mortgage. The house needs about $40K in repairs. They want to save their credit if possible.</p>
+    </div>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>Framework Quiz</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Match each letter to its meaning, then apply the full framework to one scenario.</p>
+
+    <div class="quiz-q">
+      <p>1. What does the "M" in MIOSI$ stand for?</p>
+      <ul class="options">
+        <li>Money</li>
+        <li>Motivation</li>
+        <li>Management</li>
+        <li>Mitigation</li>
+      </ul>
+    </div>
+    <div class="quiz-q">
+      <p>2. What does "IO" accomplish?</p>
+      <ul class="options">
+        <li>It opens the negotiation</li>
+        <li>It isolates the one objection holding them back</li>
+        <li>It introduces the offer</li>
+        <li>It identifies the owner</li>
+      </ul>
+    </div>
+    <div class="quiz-q">
+      <p>3. The Statement of Impact should connect to what?</p>
+      <ul class="options">
+        <li>The market value</li>
+        <li>The seller's pain point</li>
+        <li>The commission structure</li>
+        <li>The closing date</li>
+      </ul>
+    </div>
+    <div class="quiz-q">
+      <p>4. Name three of the "4 D's" that drive seller motivation.</p>
+      <div style="background:var(--cream-soft);border-radius:6px;padding:10px 14px;font-size:0.85rem;color:var(--muted);margin-top:6px;">Write your answer: ___________________________</div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:12px;">Flash-card style: "What does the I stand for?"</p>
+    <div class="review-grid">
+      <div class="review-day"><div class="day">3</div><div class="label">Days</div><div class="task">Recall all letters</div></div>
+      <div class="review-day"><div class="day">7</div><div class="label">Days</div><div class="task">Apply to scenario</div></div>
+      <div class="review-day"><div class="day">14</div><div class="label">Days</div><div class="task">Teach a teammate</div></div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="module-4-1.html" class="btn-prev"><span>←</span> Module 4.1</a>
+    <a href="module-4-3.html" class="btn-next">Module 4.3 <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

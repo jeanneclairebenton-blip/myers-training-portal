@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2.4 — SA Call Script Full | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A;
+    --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263;
+    --surface: #FFFDF6; --bg-soft: #F7F4ED; --hairline: #E8E2D4;
+    --green: #4F7A3A;
+    --accent: #2980b9; --accent-light: #d6eaf8; --accent-dark: #1a5276;
+    --font-sans: 'Mulish', system-ui, sans-serif;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06);
+    --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px; --radius-sm: 8px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .top-nav { background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+  .top-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .top-nav a:hover { color: var(--accent-dark); }
+  .nav-group { display: flex; gap: 16px; }
+
+  .progress-bar-wrap { background: var(--hairline); height: 4px; width: 100%; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 0 4px 4px 0; }
+
+  .module-hero { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; padding: 48px 24px 40px; text-align: center; }
+  .module-hero .cert-badge { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .module-hero h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 8px; font-weight: 400; }
+  .module-hero .meta { font-size: 0.92rem; opacity: 0.9; display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 8px; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .why-card { background: linear-gradient(135deg, var(--cream-soft) 0%, var(--cream) 100%); border: 1px solid var(--gold); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+  .why-card .label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 6px; }
+  .why-card p { color: var(--ink2); font-size: 1rem; font-weight: 500; line-height: 1.7; }
+
+  .section-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .section-title { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); }
+  .learn-icon { background: var(--accent-light); }
+  .do-icon { background: #fef3e2; }
+  .prove-icon { background: #e8f5e9; }
+  .review-icon { background: #f3e5f5; }
+
+  .section-card h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--ink); margin: 20px 0 8px; }
+  .section-card h3:first-child { margin-top: 0; }
+  .section-card p, .section-card li { font-size: 0.95rem; color: var(--ink2); line-height: 1.7; }
+  .section-card ul, .section-card ol { padding-left: 20px; margin: 8px 0 12px; }
+  .section-card li { margin-bottom: 6px; }
+
+  .highlight-box { background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .highlight-box strong { color: var(--accent-dark); }
+
+  .script-block { background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 20px; margin: 16px 0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.8; color: var(--ink2); position: relative; }
+  .script-block::before { content: attr(data-label); position: absolute; top: -10px; left: 16px; background: var(--accent); color: #fff; font-family: var(--font-sans); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; padding: 2px 10px; border-radius: 4px; }
+  .script-block em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  .convo-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 8px; }
+  .convo-tab { padding: 6px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1.5px solid var(--hairline); background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.15s; }
+  .convo-tab.active, .convo-tab:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .tip-box { background: #e8f5e9; border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .tip-box strong { color: var(--green); }
+
+  .question-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .q-card { background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 0.88rem; color: var(--ink2); }
+  .q-card .q-type { font-size: 0.72rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+
+  .exercise-area { width: 100%; min-height: 120px; border: 1.5px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; font-family: var(--font-sans); font-size: 0.95rem; color: var(--ink); background: var(--surface); resize: vertical; transition: border-color 0.2s; }
+  .exercise-area:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(41,128,185,0.12); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .review-item { flex: 1; min-width: 140px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+  .review-item .day-label { font-weight: 800; font-size: 0.82rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .review-item .day-task { font-size: 0.85rem; color: var(--ink2); margin-top: 6px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: 1.5px solid var(--accent); border-radius: var(--radius-sm); transition: all 0.2s; }
+  .bottom-nav a:hover { background: var(--accent); color: #fff; }
+
+  .milestone-badge { text-align: center; padding: 32px; margin-top: 24px; }
+  .milestone-badge .badge-icon { font-size: 2.4rem; margin-bottom: 8px; }
+  .milestone-badge .badge-text { font-family: var(--font-serif); font-size: 1.1rem; color: var(--accent-dark); }
+  .milestone-badge .badge-sub { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    .module-hero { padding: 36px 18px 28px; }
+    .section-card { padding: 24px 18px; }
+    .container { padding: 24px 14px 48px; }
+    .question-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="module-2-3.html">← 2.3 Cold Script</a>
+  <div class="nav-group">
+    <a href="../index.html">Program Home</a>
+    <a href="module-2-5.html">Next →</a>
+  </div>
+</nav>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" style="width: 44.4%"></div>
+</div>
+
+<header class="module-hero">
+  <div class="cert-badge">Certificate 2 — Prospecting Specialist</div>
+  <h1>SA Call Script Full</h1>
+  <div class="meta">
+    <span>📘 Module 2.4</span>
+    <span>⏱ 10 min</span>
+    <span>🏅 Script Master</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="why-card">
+    <div class="label">💰 Why This Matters</div>
+    <p>This is your <strong>complete investor conversation framework</strong> — the backbone of every call, text, and follow-up. Master this module and you'll never freeze on a call again.</p>
+  </div>
+
+  <!-- LEARN -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon learn-icon">📖</div>
+      <div class="section-title">Learn</div>
+    </div>
+
+    <h3>6 Cold Text Templates</h3>
+    <p>Text messages open doors that calls can't. Use these templates to start conversations:</p>
+
+    <div class="convo-tabs">
+      <span class="convo-tab active">CONVO #1</span>
+      <span class="convo-tab">CONVO #2</span>
+      <span class="convo-tab">CONVO #3</span>
+      <span class="convo-tab">CONVO #4</span>
+      <span class="convo-tab">CONVO #5</span>
+      <span class="convo-tab">CONVO #6</span>
+    </div>
+
+    <div class="script-block" data-label="💬 CONVO #1 — DIRECT OPENER">
+      <em>"Hey [Name], this is [You] with Myers Home Buyers.</em> We find off-market investment properties in [area] — typically 3-5 deals per week. Are you actively looking for deals right now?"
+    </div>
+
+    <div class="script-block" data-label="💬 CONVO #2 — PROPERTY-SPECIFIC">
+      <em>"Hey [Name], I saw you recently purchased [address].</em> We find similar off-market deals in that area regularly. Would you be interested in seeing what we've got coming up?"
+    </div>
+
+    <div class="script-block" data-label="💬 CONVO #3 — VALUE-FIRST">
+      <em>"Hey [Name], we just picked up a property in [area]</em> that might fit your buy box. Before I send details — are you still actively buying investment properties?"
+    </div>
+
+    <div class="script-block" data-label="💬 CONVO #4 — SOCIAL PROOF">
+      <em>"Hey [Name], I work with a company that's closed 200+ investor deals.</em> We're always looking for serious buyers who want first look at our off-market inventory. Interested?"
+    </div>
+
+    <div class="script-block" data-label="💬 CONVO #5 — REFERRAL ASK">
+      <em>"Hey [Name], a colleague mentioned you're active in [area] real estate.</em> We source off-market deals for investors — would it be worth a quick conversation?"
+    </div>
+
+    <div class="script-block" data-label="💬 CONVO #6 — FOLLOW-UP">
+      <em>"Hey [Name], just following up from my earlier message.</em> We just listed 3 new off-market properties this week. Want me to send you the details on any of them?"
+    </div>
+
+    <h3>Skip Tracing / Likely Buyers Script</h3>
+    <div class="script-block" data-label="📜 SKIP TRACED CONTACTS">
+      <em>"Hey [Name], I found your info through some property research I was doing in [area].</em> It looks like you've been active with investment properties. We source off-market deals for investors — are you currently buying?"
+    </div>
+
+    <h3>Discovery Questions</h3>
+    <p>Once they're engaged, learn about them with these questions:</p>
+
+    <div class="question-grid">
+      <div class="q-card">
+        <div class="q-type">🎯 Strategy</div>
+        What's your investment strategy — flips, rentals, or both?
+      </div>
+      <div class="q-card">
+        <div class="q-type">📍 Area</div>
+        What areas are you focusing on right now?
+      </div>
+      <div class="q-card">
+        <div class="q-type">💰 Funding</div>
+        How do you typically fund your deals — cash, hard money, conventional?
+      </div>
+      <div class="q-card">
+        <div class="q-type">⏰ Timeline</div>
+        When are you looking to close on your next deal?
+      </div>
+      <div class="q-card">
+        <div class="q-type">📊 Volume</div>
+        How many flips have you done this year?
+      </div>
+      <div class="q-card">
+        <div class="q-type">🏠 Portfolio</div>
+        How many rental doors do you currently have?
+      </div>
+    </div>
+
+    <h3>"Our Process" — How to Explain Myers</h3>
+    <p>When investors ask how Myers works, use these talking points:</p>
+    <ul>
+      <li><strong>Showings:</strong> "We schedule one-time group showings. You walk through, assess the property, and decide."</li>
+      <li><strong>Bidding:</strong> "After the showing, you submit a silent bid. Your number stays completely private."</li>
+      <li><strong>Deposits:</strong> "Once we accept an offer, there's a standard earnest money deposit to secure the contract."</li>
+      <li><strong>Contracts:</strong> "We use a standard Texas contract. Clear title guaranteed through our title company."</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>💡 Sales Questions to Qualify:</strong> "How many flips have you done?" and "How many doors do you have?" tell you instantly whether you're talking to a beginner or a seasoned buyer. Adjust your pitch accordingly.
+    </div>
+  </div>
+
+  <!-- DO -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon do-icon">🔨</div>
+      <div class="section-title">Do</div>
+    </div>
+
+    <h3>Customize Your 2 Favorite Templates</h3>
+    <p>Choose your <strong>2 favorite text templates</strong> from the 6 above. Customize them with your name, your area, and your personal touch.</p>
+
+    <textarea id="auto_24558230" class="exercise-area" placeholder="Template 1 (my customized version):
+'Hey [Name], this is [Your actual name] with Myers Home Buyers...'
+
+Template 2 (my customized version):
+'Hey [Name], ...'"></textarea>
+    <button class="btn btn-primary">💾 Save My Templates</button>
+  </div>
+
+  <!-- PROVE -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon prove-icon">✅</div>
+      <div class="section-title">Prove</div>
+    </div>
+
+    <h3>Submit Your Customized Text Templates</h3>
+    <p>Submit your 2 customized text templates for review. They should include:</p>
+    <ul>
+      <li>Your actual name and area</li>
+      <li>A natural, conversational tone</li>
+      <li>A clear call to action (question that invites a response)</li>
+    </ul>
+
+    <button class="btn btn-primary">📤 Submit Templates</button>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon review-icon">🔁</div>
+      <div class="section-title">Review — Spaced Repetition</div>
+    </div>
+
+    <div class="review-timeline">
+      <div class="review-item">
+        <div class="day-label">Day 7</div>
+        <div class="day-task">Send 5 texts using your customized templates</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 14</div>
+        <div class="day-task">Review response rates — which template works best?</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 30</div>
+        <div class="day-task">Refine templates based on real-world results</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone-badge">
+    <div class="badge-icon">📋</div>
+    <div class="badge-text">Script Master — Unlocked</div>
+    <div class="badge-sub">You now have a complete conversation toolkit for any investor call or text.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="module-2-3.html">← 2.3 Cold Script</a>
+    <a href="module-2-5.html">2.5 HML Scrape →</a>
+  </div>
+</main>
+
+<script src="../persistence.js"></script>
+</body>
+</html>

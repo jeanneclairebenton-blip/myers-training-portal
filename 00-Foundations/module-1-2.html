@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.2 — How a Myers Deal Works | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body { font-family: 'Mulish', system-ui, sans-serif; background: #F7F4ED; color: #1A1815; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #1A1815; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label { color: #7A7263; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
+  .progress-label { font-size: 0.75rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 25%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; }
+  .progress-steps { display: flex; justify-content: space-between; margin-top: 0.5rem; }
+  .progress-steps span { font-size: 0.65rem; color: #7A7263; font-weight: 600; }
+  .progress-steps span.active { color: #C9941F; font-weight: 800; }
+  .progress-steps span.done { color: #4F7A3A; font-weight: 800; }
+  .hero { background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%); padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3); border-radius: 99px; padding: 0.35rem 1rem; font-size: 0.75rem; color: #FBE8B7; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+  .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.5rem; color: #FFFDF6; line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero .subtitle { color: #C9941F; font-size: 1.1rem; font-weight: 600; }
+  .hero-meta { display: flex; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+  .hero-meta .tag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #E8E2D4; font-weight: 500; }
+  .why-box { background: linear-gradient(90deg, rgba(201,148,31,0.1), rgba(201,148,31,0.03)); border-left: 4px solid #C9941F; margin: 2rem; padding: 1.25rem 1.5rem; border-radius: 0 12px 12px 0; }
+  .why-box .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #8B6B1A; font-weight: 800; margin-bottom: 0.25rem; }
+  .why-box p { color: #3D362A; font-size: 0.95rem; font-weight: 500; }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+  .card { background: #FFFDF6; border-radius: 16px; box-shadow: 0 1px 3px rgba(26,24,21,0.06), 0 4px 12px rgba(26,24,21,0.04); margin-bottom: 1.5rem; overflow: hidden; border: 1px solid #E8E2D4; }
+  .card-header { padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid #E8E2D4; }
+  .card-header .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .card-header h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.3rem; color: #1A1815; }
+  .card-header .card-tag { margin-left: auto; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.25rem 0.75rem; border-radius: 99px; }
+  .card-body { padding: 1.5rem; }
+  .card.learn .card-icon { background: #FDF1D0; }
+  .card.learn .card-tag { background: #FDF1D0; color: #8B6B1A; }
+  .card.learn .card-body { background: linear-gradient(180deg, #FFFDF6, #FDF1D0 120%); }
+  .card.learn h3 { font-family: 'DM Serif Display', Georgia, serif; color: #1A1815; font-size: 1.15rem; margin: 1.5rem 0 0.75rem; }
+  .card.learn h3:first-child { margin-top: 0; }
+  .card.learn p { color: #3D362A; margin-bottom: 0.75rem; font-size: 0.95rem; }
+  .card.do-card .card-icon { background: #FBE8B7; }
+  .card.do-card .card-tag { background: #FBE8B7; color: #8B6B1A; }
+  .card.prove .card-icon { background: rgba(79,122,58,0.15); }
+  .card.prove .card-tag { background: rgba(79,122,58,0.12); color: #4F7A3A; }
+  .card.review .card-icon { background: rgba(122,114,99,0.15); }
+  .card.review .card-tag { background: rgba(122,114,99,0.12); color: #7A7263; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 2.5rem; margin: 1.5rem 0; }
+  .timeline::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #C9941F, #8B6B1A); border-radius: 2px; }
+  .tl-step { position: relative; margin-bottom: 1.25rem; padding-bottom: 0.25rem; }
+  .tl-step:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #C9941F;
+    color: #FFFDF6;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #FFFDF6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+  .tl-content { background: #F7F4ED; border-radius: 10px; padding: 0.85rem 1rem; border: 1px solid #E8E2D4; }
+  .tl-content strong { color: #1A1815; font-size: 0.9rem; }
+  .tl-content p { color: #7A7263; font-size: 0.82rem; margin: 0.2rem 0 0; }
+
+  /* Fill-in-the-blank */
+  .blank-exercise { margin: 1rem 0; }
+  .blank-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: #FDF1D0;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .blank-row .step-num {
+    background: #C9941F;
+    color: #FFFDF6;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .blank-row span { font-size: 0.9rem; color: #3D362A; font-weight: 500; }
+  .blank-input {
+    border: 2px dashed #C9941F;
+    background: #FFFDF6;
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.85rem;
+    color: #1A1815;
+    width: 160px;
+    transition: border-color 0.2s;
+  }
+  .blank-input:focus { outline: none; border-color: #8B6B1A; border-style: solid; box-shadow: 0 0 0 3px rgba(201,148,31,0.15); }
+  .blank-input.correct { border-color: #4F7A3A; border-style: solid; background: rgba(79,122,58,0.08); }
+  .blank-input.incorrect { border-color: #c0392b; border-style: solid; background: rgba(192,57,43,0.05); }
+
+  /* Drag & Drop Quiz */
+  .dnd-container { margin: 1rem 0; }
+  .dnd-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #F7F4ED;
+    border: 2px dashed #E8E2D4;
+    border-radius: 12px;
+    min-height: 60px;
+    margin-bottom: 1rem;
+  }
+  .dnd-item {
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  }
+  .dnd-item:active { cursor: grabbing; transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .dnd-item.placed { opacity: 0.4; pointer-events: none; }
+  .dnd-slots { list-style: none; counter-reset: slot; }
+  .dnd-slot {
+    counter-increment: slot;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    background: #FFFDF6;
+    border: 2px dashed #E8E2D4;
+    border-radius: 10px;
+    margin-bottom: 0.4rem;
+    min-height: 44px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .dnd-slot::before { content: counter(slot); background: #E8E2D4; color: #7A7263; width: 26px; height: 26px; border-radius: 50%; font-size: 0.7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .dnd-slot.drag-over { background: #FDF1D0; border-color: #C9941F; }
+  .dnd-slot.correct { border-color: #4F7A3A; background: rgba(79,122,58,0.06); }
+  .dnd-slot.correct::before { background: #4F7A3A; color: #fff; }
+  .dnd-slot.incorrect { border-color: #c0392b; background: rgba(192,57,43,0.04); }
+  .dnd-slot .placed-item {
+    background: #C9941F;
+    color: #FFFDF6;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .highlight-box { background: rgba(201,148,31,0.1); border: 1px solid rgba(201,148,31,0.25); border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .highlight-box .hl-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; color: #8B6B1A; margin-bottom: 0.35rem; }
+  .highlight-box p { font-family: 'DM Serif Display', Georgia, serif; color: #1A1815; font-size: 1.1rem; margin-bottom: 0; }
+
+  .activity-prompt { background: #FDF1D0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; border-left: 4px solid #C9941F; }
+  .activity-prompt p { color: #3D362A; font-size: 0.95rem; font-weight: 600; margin: 0; }
+  .prove-task { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: rgba(79,122,58,0.05); border-radius: 10px; border: 1px solid rgba(79,122,58,0.15); margin-bottom: 0.75rem; }
+  .prove-task input[type="checkbox"] { width: 20px; height: 20px; accent-color: #4F7A3A; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .prove-task label { font-size: 0.95rem; color: #3D362A; cursor: pointer; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 10px; font-family: 'Mulish', sans-serif; font-size: 0.9rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: linear-gradient(135deg, #C9941F, #8B6B1A); color: #FFFDF6; box-shadow: 0 2px 8px rgba(201,148,31,0.3); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,148,31,0.4); }
+  .btn-green { background: linear-gradient(135deg, #4F7A3A, #3d5f2d); color: #FFFDF6; box-shadow: 0 2px 8px rgba(79,122,58,0.3); }
+  .btn-green:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,122,58,0.4); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+  .review-schedule { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem; }
+  .review-day { text-align: center; padding: 1rem; background: #F7F4ED; border-radius: 10px; border: 1px solid #E8E2D4; }
+  .review-day .day-num { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.5rem; color: #C9941F; }
+  .review-day .day-label { font-size: 0.7rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .review-question { background: #F7F4ED; border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: #3D362A; border-left: 3px solid #7A7263; font-style: italic; }
+  .module-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4; }
+  .module-nav a { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 0.6rem 1.25rem; border-radius: 10px; transition: all 0.2s; }
+  .nav-prev { color: #7A7263; background: #F7F4ED; border: 1px solid #E8E2D4; }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
+  .toast { position: fixed; bottom: 2rem; right: 2rem; background: #1A1815; color: #FBE8B7; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 8px 32px rgba(0,0,0,0.3); transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); z-index: 999; }
+  .toast.show { transform: translateY(0); }
+  .score-display { text-align: center; padding: 1.5rem; background: rgba(79,122,58,0.08); border-radius: 12px; margin-top: 1rem; display: none; }
+  .score-display .score-num { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.5rem; }
+  .score-display .score-label { font-size: 0.85rem; color: #7A7263; font-weight: 600; }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .why-box { margin: 1.5rem 1rem; }
+    .container { padding: 0 1rem 2rem; }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+    .blank-input { width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-label">Module 2 of 8</div>
+  <div class="progress-track"><div class="progress-fill" style="width: 25%"></div></div>
+  <div class="progress-steps">
+    <span class="done">1.1</span><span class="active">1.2</span><span>1.3</span><span>1.4</span><span>1.5</span><span>1.6</span><span>1.7</span><span>1.8</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-badge">🔄 Module 1.2</div>
+  <h1>How a Myers Deal Works</h1>
+  <div class="subtitle">The 10-Step Deal Lifecycle</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 8 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Deal Navigator</span>
+  </div>
+</header>
+
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>Understanding the deal lifecycle end-to-end means you never get lost mid-deal. When you know every step, you project confidence — and confidence closes deals.</p>
+</div>
+
+<div class="container">
+
+  <!-- LEARN -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Core Knowledge</span>
+    </div>
+    <div class="card-body">
+      <h3>The 10-Step Myers Deal Lifecycle</h3>
+      <p>Every deal at Myers follows the same proven process. Learn these 10 steps and you'll always know exactly where a deal stands and what happens next.</p>
+
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-dot">1</div>
+          <div class="tl-content">
+            <strong>Lead Comes In</strong>
+            <p>A motivated seller contacts Myers through marketing, referrals, or agent prospecting (D4D, cold calls, etc.)</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">2</div>
+          <div class="tl-content">
+            <strong>AA — Appointment with Seller</strong>
+            <p>Acquisition Agent meets the seller at the property. Build rapport, assess the property, understand motivation.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">3</div>
+          <div class="tl-content">
+            <strong>Signed Listing Agreement</strong>
+            <p>Seller signs the Myers listing agreement, giving us permission to market the property to our investor network.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">4</div>
+          <div class="tl-content">
+            <strong>Property Marketed</strong>
+            <p>Property goes out to our investor database, Slack channels, and marketing campaigns.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">5</div>
+          <div class="tl-content">
+            <strong>SA Generates Investor Interest</strong>
+            <p>Sales Agent fields investor inquiries, answers questions, and schedules the one-time showing.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">6</div>
+          <div class="tl-content">
+            <strong>One-Time Investor Walkthrough/Showing</strong>
+            <p>All interested investors see the property at the same time. Transparent, fair, competitive process.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">7</div>
+          <div class="tl-content">
+            <strong>Seller Accepts Highest Bid</strong>
+            <p>Bids are collected and the seller selects the highest and best offer.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">8</div>
+          <div class="tl-content">
+            <strong>$5K Deposit Collected Within 1 Hour</strong>
+            <p>The winning investor submits a $5,000 earnest money deposit within 1 hour of acceptance. This is non-negotiable.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">9</div>
+          <div class="tl-content">
+            <strong>TREC Contract via DocuSign</strong>
+            <p>The official Texas Real Estate Commission contract is sent and executed through DocuSign.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot">10</div>
+          <div class="tl-content">
+            <strong>Title Company Closes</strong>
+            <p>Title company handles the closing. We do a <strong>double close</strong> — we buy from the seller and sell to the investor same day.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Understanding GP (Gross Profit)</h3>
+      <p>The <strong>GP</strong> is the difference between what we buy the property for and what the investor pays. This is the company's revenue on the deal — and your commission is calculated from it.</p>
+
+      <div class="highlight-box">
+        <div class="hl-label">🔑 Key Concept</div>
+        <p>Double Close = We buy from seller, then sell to investor, same day. Two separate transactions through the title company.</p>
+      </div>
+
+      <p>Agents earn commission on the GP. The bigger the spread between buy price and sell price, the more everyone earns. That's why smart negotiations and strong investor relationships matter.</p>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Activity</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>📝 Fill in the missing parts of each deal step. Type the key word or phrase that completes each step.</p>
+      </div>
+
+      <div class="blank-exercise">
+        <div class="blank-row">
+          <span class="step-num">1</span>
+          <span><input id="auto_29a6bfc3" class="blank-input" data-answer="lead" placeholder="______"> comes in</span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">2</span>
+          <span>AA — <input id="auto_9e4af1a0" class="blank-input" data-answer="appointment" placeholder="______"> with seller</span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">3</span>
+          <span>Signed <input id="auto_38170e63" class="blank-input" data-answer="listing agreement" placeholder="______"></span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">4</span>
+          <span>Property <input id="auto_564f0f9e" class="blank-input" data-answer="marketed" placeholder="______"></span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">5</span>
+          <span>SA generates <input id="auto_73df4da7" class="blank-input" data-answer="investor" placeholder="______"> interest</span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">6</span>
+          <span>One-time investor <input id="auto_e35ea3d1" class="blank-input" data-answer="walkthrough" placeholder="______"></span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">7</span>
+          <span>Seller accepts <input id="auto_b5919569" class="blank-input" data-answer="highest bid" placeholder="______"></span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">8</span>
+          <span>$<input id="auto_7cb20fbe" class="blank-input" data-answer="5k" placeholder="______" style="width:80px"> deposit within 1 hour</span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">9</span>
+          <span><input id="auto_15f6c382" class="blank-input" data-answer="trec" placeholder="______"> contract via DocuSign</span>
+        </div>
+        <div class="blank-row">
+          <span class="step-num">10</span>
+          <span><input id="auto_717126b5" class="blank-input" data-answer="title company" placeholder="______"> closes</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="checkBlanks()">✔ Check My Answers</button>
+    </div>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Knowledge Check</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem; color:#3D362A; font-size:0.95rem;"><strong>Put the 10 steps in the correct order.</strong> Drag each step from the bank and drop it into the numbered slots below.</p>
+
+      <div class="dnd-bank" id="dndBank">
+        <div class="dnd-item" draggable="true" data-step="3">Signed Listing Agreement</div>
+        <div class="dnd-item" draggable="true" data-step="7">Seller Accepts Highest Bid</div>
+        <div class="dnd-item" draggable="true" data-step="1">Lead Comes In</div>
+        <div class="dnd-item" draggable="true" data-step="9">TREC Contract via DocuSign</div>
+        <div class="dnd-item" draggable="true" data-step="5">SA Generates Investor Interest</div>
+        <div class="dnd-item" draggable="true" data-step="10">Title Company Closes</div>
+        <div class="dnd-item" draggable="true" data-step="2">AA Appointment with Seller</div>
+        <div class="dnd-item" draggable="true" data-step="8">$5K Deposit Within 1 Hour</div>
+        <div class="dnd-item" draggable="true" data-step="4">Property Marketed</div>
+        <div class="dnd-item" draggable="true" data-step="6">One-Time Investor Showing</div>
+      </div>
+
+      <ol class="dnd-slots" id="dndSlots">
+        <li class="dnd-slot" data-correct="1"></li>
+        <li class="dnd-slot" data-correct="2"></li>
+        <li class="dnd-slot" data-correct="3"></li>
+        <li class="dnd-slot" data-correct="4"></li>
+        <li class="dnd-slot" data-correct="5"></li>
+        <li class="dnd-slot" data-correct="6"></li>
+        <li class="dnd-slot" data-correct="7"></li>
+        <li class="dnd-slot" data-correct="8"></li>
+        <li class="dnd-slot" data-correct="9"></li>
+        <li class="dnd-slot" data-correct="10"></li>
+      </ol>
+
+      <div style="margin-top:1.25rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+        <button class="btn btn-green" onclick="checkDnD()">✅ Check Order</button>
+        <button class="btn btn-primary" onclick="resetDnD()">🔄 Reset</button>
+      </div>
+
+      <div class="score-display" id="scoreDisplay">
+        <div class="score-num" id="scoreNum"></div>
+        <div class="score-label" id="scoreLabel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Spaced Repetition</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem; color:#3D362A; font-size:0.95rem;">Review these questions on the scheduled days:</p>
+      <div class="review-schedule">
+        <div class="review-day"><div class="day-num">3</div><div class="day-label">Day</div></div>
+        <div class="review-day"><div class="day-num">7</div><div class="day-label">Day</div></div>
+      </div>
+      <div class="review-question">"What happens after the winning bid is accepted?"</div>
+      <div class="review-question">"What is GP and how does it affect your commission?"</div>
+      <div class="review-question">"List all 10 steps of a Myers deal from memory."</div>
+    </div>
+  </section>
+
+  <nav class="module-nav">
+    <a href="module-1-1.html" class="nav-prev">← Module 1.1</a>
+    <a href="module-1-3.html" class="nav-next">Module 1.3: Code of Conduct →</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Agent Training Program Draft 1</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+// Fill-in-the-blank checker
+function checkBlanks() {
+  const inputs = document.querySelectorAll('.blank-input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const answer = inp.dataset.answer.toLowerCase();
+    const val = inp.value.trim().toLowerCase();
+    if (val && (val.includes(answer) || answer.includes(val))) {
+      inp.classList.add('correct');
+      inp.classList.remove('incorrect');
+      correct++;
+    } else if (val) {
+      inp.classList.add('incorrect');
+      inp.classList.remove('correct');
+    }
+  });
+  showToast(`${correct} of ${inputs.length} correct!`);
+}
+
+// Drag & Drop
+const bank = document.getElementById('dndBank');
+const slots = document.querySelectorAll('.dnd-slot');
+let draggedItem = null;
+
+document.querySelectorAll('.dnd-item').forEach(item => {
+  item.addEventListener('dragstart', e => {
+    draggedItem = item;
+    setTimeout(() => item.style.opacity = '0.5', 0);
+  });
+  item.addEventListener('dragend', () => {
+    draggedItem = null;
+    item.style.opacity = '';
+  });
+});
+
+slots.forEach(slot => {
+  slot.addEventListener('dragover', e => { e.preventDefault(); slot.classList.add('drag-over'); });
+  slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+  slot.addEventListener('drop', e => {
+    e.preventDefault();
+    slot.classList.remove('drag-over');
+    if (!draggedItem) return;
+    // Remove existing item in this slot
+    const existing = slot.querySelector('.placed-item');
+    if (existing) {
+      const oldItem = document.querySelector(`.dnd-item[data-step="${existing.dataset.step}"]`);
+      if (oldItem) oldItem.classList.remove('placed');
+      existing.remove();
+    }
+    const placed = document.createElement('span');
+    placed.className = 'placed-item';
+    placed.textContent = draggedItem.textContent;
+    placed.dataset.step = draggedItem.dataset.step;
+    placed.onclick = () => { placed.remove(); draggedItem.classList.remove('placed'); const orig = document.querySelector(`.dnd-item[data-step="${placed.dataset.step}"]`); if(orig) orig.classList.remove('placed'); slot.classList.remove('correct','incorrect'); };
+    slot.appendChild(placed);
+    draggedItem.classList.add('placed');
+  });
+
+  // Touch support
+  slot.addEventListener('click', () => {
+    if (!draggedItem) {
+      // Select first unplaced item from bank for mobile tap
+      const unplaced = document.querySelector('.dnd-item:not(.placed)');
+      if (unplaced) {
+        draggedItem = unplaced;
+        const existing = slot.querySelector('.placed-item');
+        if (existing) {
+          const oldItem = document.querySelector(`.dnd-item[data-step="${existing.dataset.step}"]`);
+          if (oldItem) oldItem.classList.remove('placed');
+          existing.remove();
+        }
+        const placed = document.createElement('span');
+        placed.className = 'placed-item';
+        placed.textContent = unplaced.textContent;
+        placed.dataset.step = unplaced.dataset.step;
+        placed.onclick = () => { placed.remove(); const orig = document.querySelector(`.dnd-item[data-step="${placed.dataset.step}"]`); if(orig) orig.classList.remove('placed'); slot.classList.remove('correct','incorrect'); };
+        slot.appendChild(placed);
+        unplaced.classList.add('placed');
+        draggedItem = null;
+      }
+    }
+  });
+});
+
+// Mobile: click item in bank to "select" it, then click slot to place
+let selectedItem = null;
+document.querySelectorAll('.dnd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (selectedItem) {
+      document.querySelectorAll('.dnd-item').forEach(i => i.style.outline = '');
+    }
+    selectedItem = item;
+    item.style.outline = '3px solid #4F7A3A';
+  });
+});
+slots.forEach(slot => {
+  slot.addEventListener('click', () => {
+    if (selectedItem && !selectedItem.classList.contains('placed')) {
+      const existing = slot.querySelector('.placed-item');
+      if (existing) {
+        const oldItem = document.querySelector(`.dnd-item[data-step="${existing.dataset.step}"]`);
+        if (oldItem) oldItem.classList.remove('placed');
+        existing.remove();
+      }
+      const placed = document.createElement('span');
+      placed.className = 'placed-item';
+      placed.textContent = selectedItem.textContent;
+      placed.dataset.step = selectedItem.dataset.step;
+      placed.onclick = (e) => { e.stopPropagation(); placed.remove(); const orig = document.querySelector(`.dnd-item[data-step="${placed.dataset.step}"]`); if(orig) orig.classList.remove('placed'); slot.classList.remove('correct','incorrect'); };
+      slot.appendChild(placed);
+      selectedItem.classList.add('placed');
+      selectedItem.style.outline = '';
+      selectedItem = null;
+    }
+  });
+});
+
+function checkDnD() {
+  let correct = 0;
+  slots.forEach(slot => {
+    const placed = slot.querySelector('.placed-item');
+    if (placed && placed.dataset.step === slot.dataset.correct) {
+      slot.classList.add('correct');
+      slot.classList.remove('incorrect');
+      correct++;
+    } else if (placed) {
+      slot.classList.add('incorrect');
+      slot.classList.remove('correct');
+    }
+  });
+  const display = document.getElementById('scoreDisplay');
+  display.style.display = 'block';
+  document.getElementById('scoreNum').textContent = `${correct}/10`;
+  document.getElementById('scoreNum').style.color = correct === 10 ? '#4F7A3A' : '#C9941F';
+  document.getElementById('scoreLabel').textContent = correct === 10 ? '🎉 Perfect! You know the deal lifecycle!' : `Keep going — review the steps and try again!`;
+}
+
+function resetDnD() {
+  slots.forEach(s => { s.classList.remove('correct','incorrect'); const p = s.querySelector('.placed-item'); if(p) p.remove(); });
+  document.querySelectorAll('.dnd-item').forEach(i => { i.classList.remove('placed'); i.style.outline = ''; });
+  document.getElementById('scoreDisplay').style.display = 'none';
+  selectedItem = null;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

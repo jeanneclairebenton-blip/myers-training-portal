@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2.3 — Cold Prospecting Script | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A;
+    --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263;
+    --surface: #FFFDF6; --bg-soft: #F7F4ED; --hairline: #E8E2D4;
+    --green: #4F7A3A;
+    --accent: #2980b9; --accent-light: #d6eaf8; --accent-dark: #1a5276;
+    --font-sans: 'Mulish', system-ui, sans-serif;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06);
+    --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px; --radius-sm: 8px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .top-nav { background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+  .top-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .top-nav a:hover { color: var(--accent-dark); }
+  .nav-group { display: flex; gap: 16px; }
+
+  .progress-bar-wrap { background: var(--hairline); height: 4px; width: 100%; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 0 4px 4px 0; }
+
+  .module-hero { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; padding: 48px 24px 40px; text-align: center; }
+  .module-hero .cert-badge { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .module-hero h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 8px; font-weight: 400; }
+  .module-hero .meta { font-size: 0.92rem; opacity: 0.9; display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 8px; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .why-card { background: linear-gradient(135deg, var(--cream-soft) 0%, var(--cream) 100%); border: 1px solid var(--gold); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+  .why-card .label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 6px; }
+  .why-card p { color: var(--ink2); font-size: 1rem; font-weight: 500; line-height: 1.7; }
+
+  .section-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .section-title { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); }
+  .learn-icon { background: var(--accent-light); }
+  .do-icon { background: #fef3e2; }
+  .prove-icon { background: #e8f5e9; }
+  .review-icon { background: #f3e5f5; }
+
+  .section-card h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--ink); margin: 20px 0 8px; }
+  .section-card p, .section-card li { font-size: 0.95rem; color: var(--ink2); line-height: 1.7; }
+  .section-card ul, .section-card ol { padding-left: 20px; margin: 8px 0 12px; }
+  .section-card li { margin-bottom: 6px; }
+
+  .highlight-box { background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .highlight-box strong { color: var(--accent-dark); }
+
+  .script-block { background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 20px; margin: 16px 0; font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.8; color: var(--ink2); position: relative; }
+  .script-block::before { content: attr(data-label); position: absolute; top: -10px; left: 16px; background: var(--accent); color: #fff; font-family: var(--font-sans); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; padding: 2px 10px; border-radius: 4px; }
+  .script-block em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  .usp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .usp-item { background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px 16px; text-align: center; }
+  .usp-item .usp-icon { font-size: 1.4rem; margin-bottom: 4px; }
+  .usp-item .usp-text { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+
+  .tip-box { background: #e8f5e9; border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .tip-box strong { color: var(--green); }
+
+  .exercise-area { width: 100%; min-height: 100px; border: 1.5px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; font-family: var(--font-sans); font-size: 0.95rem; color: var(--ink); background: var(--surface); resize: vertical; transition: border-color 0.2s; }
+  .exercise-area:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(41,128,185,0.12); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn-record { background: #e74c3c; color: #fff; }
+  .btn-record:hover { background: #c0392b; }
+
+  .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .review-item { flex: 1; min-width: 140px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+  .review-item .day-label { font-weight: 800; font-size: 0.82rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .review-item .day-task { font-size: 0.85rem; color: var(--ink2); margin-top: 6px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: 1.5px solid var(--accent); border-radius: var(--radius-sm); transition: all 0.2s; }
+  .bottom-nav a:hover { background: var(--accent); color: #fff; }
+
+  .milestone-badge { text-align: center; padding: 32px; margin-top: 24px; }
+  .milestone-badge .badge-icon { font-size: 2.4rem; margin-bottom: 8px; }
+  .milestone-badge .badge-text { font-family: var(--font-serif); font-size: 1.1rem; color: var(--accent-dark); }
+  .milestone-badge .badge-sub { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    .module-hero { padding: 36px 18px 28px; }
+    .section-card { padding: 24px 18px; }
+    .container { padding: 24px 14px 48px; }
+    .usp-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="module-2-2.html">← 2.2 Warm Script</a>
+  <div class="nav-group">
+    <a href="../index.html">Program Home</a>
+    <a href="module-2-4.html">Next →</a>
+  </div>
+</nav>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" style="width: 33.3%"></div>
+</div>
+
+<header class="module-hero">
+  <div class="cert-badge">Certificate 2 — Prospecting Specialist</div>
+  <h1>Cold Prospecting Script</h1>
+  <div class="meta">
+    <span>📘 Module 2.3</span>
+    <span>⏱ 10 min</span>
+    <span>🏅 Cold Caller</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="why-card">
+    <div class="label">💰 Why This Matters</div>
+    <p>Cold calling scraped lists is how you build <strong>YOUR OWN</strong> investor database from scratch. Every top agent started with zero contacts — cold calling is how they built empires.</p>
+  </div>
+
+  <!-- LEARN -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon learn-icon">📖</div>
+      <div class="section-title">Learn</div>
+    </div>
+
+    <h3>Cold Prospecting Script — Team Honey Badger Style</h3>
+    <p>Cold calls are different from warm calls. These people don't know you, haven't seen your emails, and aren't expecting your call. Your job: <strong>earn their attention in 10 seconds</strong>.</p>
+
+    <div class="script-block" data-label="📜 COLD SCRIPT — SCRAPED LISTS">
+      <em>"Hey [Name], my name is [Your Name].</em><br><br>
+      I work with a local investment company that finds <em>3–5 deals a week</em> for investors in the [City/Area] market.<br><br>
+      We source off-market properties — stuff that's not on the MLS — and bring them directly to cash buyers and investors.<br><br>
+      <em>Are you actively looking at deals right now, or is this something you'd be open to hearing about?</em>"
+    </div>
+
+    <h3>Driving for Dollars Script</h3>
+    <p>When you find a property in the field that looks like an investor opportunity:</p>
+
+    <div class="script-block" data-label="📜 DRIVING FOR DOLLARS">
+      <em>"Hey [Name], this is [Your Name] with Myers Home Buyers.</em><br><br>
+      We noticed your property at <em>[address]</em> and were curious if you'd consider an offer on it.<br><br>
+      We work with a network of cash buyers, and we can typically close in <em>2–3 weeks</em>. We pay top dollar, cover closing costs, and keep the process completely transparent.<br><br>
+      <em>Would you be open to discussing it?</em>"
+    </div>
+
+    <h3>The 5 USPs — Your Ammunition</h3>
+    <p>When an investor asks "Why should I work with you?" — these are your answers:</p>
+
+    <div class="usp-grid">
+      <div class="usp-item">
+        <div class="usp-icon">💰</div>
+        <div class="usp-text">Top Dollar</div>
+      </div>
+      <div class="usp-item">
+        <div class="usp-icon">💵</div>
+        <div class="usp-text">Cash Offers</div>
+      </div>
+      <div class="usp-item">
+        <div class="usp-icon">⚡</div>
+        <div class="usp-text">Quick Close</div>
+      </div>
+      <div class="usp-item">
+        <div class="usp-icon">🏠</div>
+        <div class="usp-text">Pay Closing Costs</div>
+      </div>
+      <div class="usp-item">
+        <div class="usp-icon">🔍</div>
+        <div class="usp-text">Full Transparency</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Key Difference:</strong> On cold calls, you'll get more "no's" and hang-ups. That's normal. The goal isn't to close on the first call — it's to <strong>open a door</strong>. Even a "not right now" is a future follow-up. Log everything in Zoho.
+    </div>
+  </div>
+
+  <!-- DO -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon do-icon">🔨</div>
+      <div class="section-title">Do</div>
+    </div>
+
+    <h3>Practice Both Scripts</h3>
+    <ol>
+      <li>Read the <strong>cold/scraped list script</strong> 3 times out loud</li>
+      <li>Read the <strong>Driving for Dollars script</strong> 3 times out loud</li>
+      <li>Deliver each one without looking — focus on sounding natural and direct</li>
+    </ol>
+
+    <div class="highlight-box">
+      <strong>Challenge:</strong> Time yourself. A good cold script delivery is 20–30 seconds. Any longer and you lose them.
+    </div>
+
+    <textarea id="auto_271d3c51" class="exercise-area" placeholder="Practice notes — How did the cold script feel different from the warm script? What phrases felt most natural?"></textarea>
+  </div>
+
+  <!-- PROVE -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon prove-icon">✅</div>
+      <div class="section-title">Prove</div>
+    </div>
+
+    <h3>🎤 Record Your Cold Script</h3>
+    <p>Record yourself delivering the <strong>cold prospecting script</strong> from memory — no notes, no peeking.</p>
+    <ul>
+      <li>Pick either the scraped list version OR the Driving for Dollars version</li>
+      <li>Keep it under 30 seconds</li>
+      <li>Sound confident, direct, and natural</li>
+    </ul>
+
+    <button class="btn btn-record">🎤 Submit Recording</button>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon review-icon">🔁</div>
+      <div class="section-title">Review — Spaced Repetition</div>
+    </div>
+
+    <div class="review-timeline">
+      <div class="review-item">
+        <div class="day-label">Day 3</div>
+        <div class="day-task">Re-deliver both scripts from memory</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 7</div>
+        <div class="day-task">Re-deliver from memory; role-play with partner</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 14</div>
+        <div class="day-task">Use the cold script on 5 real calls</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone-badge">
+    <div class="badge-icon">🧊</div>
+    <div class="badge-text">Cold Caller — Unlocked</div>
+    <div class="badge-sub">You can now confidently call scraped lists and field-sourced leads.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="module-2-2.html">← 2.2 Warm Script</a>
+    <a href="module-2-4.html">2.4 Full Call Script →</a>
+  </div>
+</main>
+
+<script src="../persistence.js"></script>
+</body>
+</html>

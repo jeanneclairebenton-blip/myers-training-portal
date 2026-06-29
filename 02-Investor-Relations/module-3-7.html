@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3.7 — Math 101: Comps, ROI & ARV | Myers Home Buyers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+            --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+            --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A;
+            --accent: #8e44ad; --accent-light: #f3e8f9; --accent-soft: #ecdaf5;
+            --font-sans: 'Mulish', system-ui, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+        .progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .progress-track { height: 4px; background: var(--hairline); }
+        .progress-fill { height: 100%; width: 87.5%; background: linear-gradient(90deg, var(--accent), #a855c7); border-radius: 0 4px 4px 0; }
+        .top-nav { margin-top: 4px; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .top-nav a { font-size: 0.82rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .top-nav a:hover { color: var(--gold-deep); }
+        .top-nav .nav-center { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+        .container { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; }
+        .module-header { text-align: center; margin-bottom: 40px; }
+        .module-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; }
+        .module-header h1 { font-family: var(--font-serif); font-size: clamp(1.7rem, 5vw, 2.3rem); color: var(--ink); line-height: 1.2; margin-bottom: 12px; }
+        .module-meta { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .module-meta span { display: flex; align-items: center; gap: 6px; }
+        .why-card { background: linear-gradient(135deg, var(--accent), #7b3a9e); color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 8px 32px rgba(142,68,173,0.18); }
+        .why-card h2 { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px; }
+        .why-card p { font-size: 0.97rem; line-height: 1.65; opacity: 0.95; }
+        .section-card { background: var(--surface); border-radius: 16px; padding: 32px; margin-bottom: 24px; border: 1px solid var(--hairline); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding: 5px 14px; border-radius: 100px; }
+        .learn-label { background: var(--accent-light); color: var(--accent); }
+        .do-label { background: #e8f5e1; color: var(--green); }
+        .prove-label { background: var(--cream-soft); color: var(--gold-deep); }
+        .review-label { background: #e3eefe; color: #2c5ea8; }
+        .section-card h2 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
+        .section-card h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); margin: 24px 0 12px; }
+        .section-card p, .section-card li { font-size: 0.93rem; color: var(--ink2); line-height: 1.7; }
+        .section-card ul, .section-card ol { padding-left: 20px; margin: 12px 0; }
+        .section-card li { margin-bottom: 8px; }
+        .callout { border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-size: 0.9rem; }
+        .callout-purple { background: var(--accent-light); border-left: 4px solid var(--accent); }
+        .callout-gold { background: var(--cream-soft); border-left: 4px solid var(--gold); }
+        .callout-green { background: #e8f5e1; border-left: 4px solid var(--green); }
+        .callout strong { display: block; margin-bottom: 4px; font-weight: 700; }
+
+        /* CMA Rules */
+        .cma-rules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .cma-rule {
+            background: var(--bg-soft);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .cma-rule .rule-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .cma-rule p { font-size: 0.85rem; color: var(--ink2); }
+        .cma-rule strong { color: var(--ink); }
+
+        /* 4-Step Process */
+        .step-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin: 20px 0;
+            position: relative;
+        }
+        .step-flow::before {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: 15%;
+            right: 15%;
+            height: 3px;
+            background: var(--accent-soft);
+            z-index: 0;
+        }
+        .step-item {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px; height: 48px;
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(142,68,173,0.2);
+        }
+        .step-item h4 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .step-item p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            padding: 0 4px;
+        }
+
+        /* Comp Comparison */
+        .comp-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85rem;
+        }
+        .comp-table th {
+            background: var(--accent); color: #fff; padding: 12px 12px;
+            text-align: left; font-weight: 700; font-size: 0.78rem;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .comp-table th:first-child { border-radius: 10px 0 0 0; }
+        .comp-table th:last-child { border-radius: 0 10px 0 0; }
+        .comp-table td {
+            padding: 10px 12px; border-bottom: 1px solid var(--hairline); color: var(--ink2);
+        }
+        .comp-table tr:nth-child(even) { background: var(--bg-soft); }
+        .comp-table .subj-row { background: var(--cream-soft) !important; font-weight: 600; }
+
+        .formula-block {
+            background: var(--ink); color: #e8e2d4; font-family: var(--font-mono);
+            font-size: 0.88rem; padding: 20px 24px; border-radius: 12px;
+            margin: 16px 0; line-height: 1.8; overflow-x: auto;
+        }
+        .formula-block .hl { color: var(--gold); font-weight: 500; }
+        .formula-block .cm { color: var(--muted); font-style: italic; }
+
+        .practice-card {
+            background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px;
+            padding: 24px; margin: 16px 0;
+        }
+        .practice-card h4 { font-weight: 700; font-size: 0.92rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .practice-card p { font-size: 0.85rem; color: var(--ink2); margin-bottom: 4px; }
+        .practice-card textarea {
+            width: 100%; min-height: 140px; border: 1px solid var(--hairline); border-radius: 8px;
+            padding: 12px; font-family: var(--font-mono); font-size: 0.85rem;
+            background: var(--surface); color: var(--ink); resize: vertical; margin-top: 12px;
+        }
+        .practice-card textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(142,68,173,0.12); }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 10px; font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { background: #7b3a9e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(142,68,173,0.25); }
+
+        .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+        .review-day { flex: 1; min-width: 140px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px; padding: 16px; text-align: center; }
+        .review-day .day-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 100px; margin-bottom: 8px; }
+        .review-day p { font-size: 0.82rem; color: var(--ink2); }
+
+        .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+        .bottom-nav a { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .bottom-nav a:hover { color: var(--gold-deep); }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 14px 40px; }
+            .section-card { padding: 22px 18px; }
+            .why-card { padding: 22px 20px; }
+            .step-flow { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .step-flow::before { display: none; }
+            .cma-rules { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar-container">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+</div>
+
+<nav class="top-nav">
+    <a href="module-3-6.html">← Previous</a>
+    <span class="nav-center">Module 7 of 8</span>
+    <a href="module-3-8.html">Next →</a>
+</nav>
+
+<div class="container">
+
+    <header class="module-header">
+        <div class="module-badge">📊 Module 3.7</div>
+        <h1>Math 101 — Comps, ROI &amp; ARV</h1>
+        <div class="module-meta">
+            <span>⏱ 10 min</span>
+            <span>🏆 Milestone: Comp Analyst</span>
+        </div>
+    </header>
+
+    <div class="why-card">
+        <h2>💰 Why This Matters</h2>
+        <p>This is the math that turns <em>"I found a house"</em> into <strong style="display:inline;">"$50K profit for your investor."</strong> If you can't run comps and determine ARV, you can't evaluate deals — and you can't make money.</p>
+    </div>
+
+    <!-- LEARN -->
+    <section class="section-card">
+        <div class="section-label learn-label">📖 LEARN</div>
+        <h2>CMA Best Practices</h2>
+
+        <p>A <strong>Comparative Market Analysis (CMA)</strong> is how you determine what a property is worth after repairs. Here are the rules:</p>
+
+        <div class="cma-rules">
+            <div class="cma-rule">
+                <span class="rule-icon">📅</span>
+                <div>
+                    <strong>Last 6 Months</strong>
+                    <p>Only use properties sold within the last 6 months. Older data = bad data.</p>
+                </div>
+            </div>
+            <div class="cma-rule">
+                <span class="rule-icon">🛣️</span>
+                <div>
+                    <strong>Don't Cross Major Roads</strong>
+                    <p>Highways, interstates, and major thoroughfares create different neighborhoods.</p>
+                </div>
+            </div>
+            <div class="cma-rule">
+                <span class="rule-icon">🏘️</span>
+                <div>
+                    <strong>Stay in the Subdivision</strong>
+                    <p>Same neighborhood, same school district, same feel.</p>
+                </div>
+            </div>
+            <div class="cma-rule">
+                <span class="rule-icon">🏗️</span>
+                <div>
+                    <strong>Like Year & Structure</strong>
+                    <p>Compare similar age, style, and construction type.</p>
+                </div>
+            </div>
+            <div class="cma-rule">
+                <span class="rule-icon">3️⃣</span>
+                <div>
+                    <strong>Minimum 3 Comps</strong>
+                    <p>Always use at least 3 comparable properties. More is better.</p>
+                </div>
+            </div>
+            <div class="cma-rule">
+                <span class="rule-icon">📐</span>
+                <div>
+                    <strong>Peg Comp Selection</strong>
+                    <p>Match sqft, bed/bath, and lot size as closely as possible.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>Determining ARV from Comps</h3>
+
+        <p>After-Repair Value (ARV) is what the property will be worth <strong>after all repairs are completed</strong>. Here's how to determine it:</p>
+
+        <div class="callout callout-purple">
+            <strong>ARV = Average of your best comparable sold prices</strong>
+            Select 3-5 comps that match your subject property post-renovation. Weight comps that are most similar (same street, same style) more heavily. Adjust for differences in sqft, condition, and features.
+        </div>
+
+        <h3>Sample CMA</h3>
+
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>SqFt</th>
+                    <th>Bed/Bath</th>
+                    <th>Year</th>
+                    <th>Sold Price</th>
+                    <th>$/SqFt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="subj-row">
+                    <td>🎯 Subject Property</td>
+                    <td>1,450</td>
+                    <td>3/2</td>
+                    <td>1978</td>
+                    <td>TBD</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Comp 1 — 123 Oak St</td>
+                    <td>1,500</td>
+                    <td>3/2</td>
+                    <td>1976</td>
+                    <td>$195,000</td>
+                    <td>$130</td>
+                </tr>
+                <tr>
+                    <td>Comp 2 — 456 Elm St</td>
+                    <td>1,400</td>
+                    <td>3/2</td>
+                    <td>1980</td>
+                    <td>$188,000</td>
+                    <td>$134</td>
+                </tr>
+                <tr>
+                    <td>Comp 3 — 789 Pine St</td>
+                    <td>1,475</td>
+                    <td>3/2</td>
+                    <td>1979</td>
+                    <td>$192,000</td>
+                    <td>$130</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="formula-block">
+            <span class="cm">// ARV Determination</span><br>
+            Average Sold Price = ($195K + $188K + $192K) ÷ 3<br>
+            <span class="hl">ARV = $191,667</span> → Round to <span class="hl">$190,000</span> (conservative)
+        </div>
+
+        <h3>The 4-Step Deal Evaluation</h3>
+
+        <div class="step-flow">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <h4>Run Comps</h4>
+                <p>Pull sold comps → Determine ARV</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <h4>Discount Rate</h4>
+                <p>What % below ARV to buy at</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <h4>Determine Repairs</h4>
+                <p>Use $/sqft or contractor bid</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">4</div>
+                <h4>Master Eval</h4>
+                <p>Verify 20%+ ROI for investor</p>
+            </div>
+        </div>
+
+        <div class="callout callout-gold">
+            <strong>💡 As-Is Value vs ARV</strong>
+            <strong style="display:inline;">As-Is Value</strong> = What the property is worth today in its current condition.<br>
+            <strong style="display:inline;">ARV</strong> = What it will be worth after all repairs.<br>
+            The gap between them is where the investor's profit lives — your job is to quantify that gap accurately.
+        </div>
+    </section>
+
+    <!-- DO -->
+    <section class="section-card">
+        <div class="section-label do-label">🔨 DO</div>
+        <h2>Run Comps on a Sample Property</h2>
+
+        <p>Using the comp data below, determine the ARV for the subject property and evaluate the deal.</p>
+
+        <div class="practice-card">
+            <h4>🎯 Subject Property — 1,600 sqft, 3/2, built 1982, Garland TX</h4>
+            <p><strong>Asking Price:</strong> $110,000</p>
+            <p><strong>Condition:</strong> Average rehab needed (est. $35,000)</p>
+            <p style="margin-top: 12px;"><strong>Available Comps:</strong></p>
+            <p>• 101 Maple — 1,550 sqft, 3/2, 1980, Sold $205,000 (renovated)</p>
+            <p>• 203 Cedar — 1,625 sqft, 3/2, 1983, Sold $212,000 (renovated)</p>
+            <p>• 305 Birch — 1,580 sqft, 3/2, 1981, Sold $198,000 (renovated)</p>
+            <p>• 407 Willow — 1,700 sqft, 4/2, 1985, Sold $225,000 (renovated)</p>
+            <textarea id="auto_84385999" placeholder="1. Which comps would you select and why?&#10;2. What is the ARV?&#10;3. Calculate total investment (purchase + repairs + closing)&#10;4. What is the investor's ROI?&#10;5. Does this deal pass the 20% ROI test?"></textarea>
+        </div>
+    </section>
+
+    <!-- PROVE -->
+    <section class="section-card">
+        <div class="section-label prove-label">✅ PROVE</div>
+        <h2>Submit Your CMA Report</h2>
+
+        <p>Your submission should include:</p>
+        <ul>
+            <li>Comp selections with justification (why you chose/excluded each)</li>
+            <li>ARV determination with supporting math</li>
+            <li>4-step deal evaluation (comps → discount → repairs → ROI check)</li>
+            <li>Final recommendation: Pass or Buy?</li>
+        </ul>
+
+        <div style="margin-top: 20px;">
+            <button class="btn btn-accent" onclick="alert('In a live environment, your CMA report would be submitted for team lead review.')">📤 Submit CMA Report</button>
+        </div>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="section-card">
+        <div class="section-label review-label">🔁 REVIEW</div>
+        <h2>Spaced Repetition Schedule</h2>
+
+        <div class="review-timeline">
+            <div class="review-day">
+                <div class="day-badge">DAY 7</div>
+                <p>Run comps on a new property. Practice comp selection and ARV determination.</p>
+            </div>
+            <div class="review-day">
+                <div class="day-badge">DAY 14</div>
+                <p>Full 4-step evaluation on a new deal. Present your findings as if pitching an investor.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-green" style="margin-top: 16px;">
+            <strong>🎯 Mastery Marker</strong>
+            You've mastered this module when you can run comps, determine ARV, and complete a full deal evaluation in under 10 minutes — and confidently present your numbers to any investor.
+        </div>
+    </section>
+
+    <div class="bottom-nav">
+        <a href="module-3-6.html">← Module 3.6: Repair Estimation</a>
+        <a href="module-3-8.html">Module 3.8: Math 201 →</a>
+    </div>
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

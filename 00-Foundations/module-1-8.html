@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.8 — Goal Setting & Income Calculator | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Mulish',system-ui,sans-serif;background:#F7F4ED;color:#1A1815;line-height:1.6;min-height:100vh}
+  .top-nav{background:#1A1815;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center}
+  .top-nav a{color:#FBE8B7;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.03em;transition:color .2s}
+  .top-nav a:hover{color:#C9941F}
+  .top-nav .cert-label{color:#7A7263;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+  .progress-wrap{background:#FFFDF6;border-bottom:1px solid #E8E2D4;padding:1rem 2rem}
+  .progress-label{font-size:.75rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+  .progress-track{width:100%;height:8px;background:#E8E2D4;border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;width:100%;background:linear-gradient(90deg,#C9941F,#4F7A3A);border-radius:99px}
+  .progress-steps{display:flex;justify-content:space-between;margin-top:.5rem}
+  .progress-steps span{font-size:.65rem;color:#7A7263;font-weight:600}
+  .progress-steps span.active{color:#C9941F;font-weight:800}
+  .progress-steps span.done{color:#4F7A3A;font-weight:800}
+  .hero{background:linear-gradient(135deg,#1A1815,#3D362A);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,148,31,.15),transparent 70%);border-radius:50%}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(79,122,58,.15);border:1px solid rgba(79,122,58,.3);border-radius:99px;padding:.35rem 1rem;font-size:.75rem;color:#FBE8B7;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;color:#FFFDF6;line-height:1.15;margin-bottom:.5rem}
+  .hero .subtitle{color:#C9941F;font-size:1.1rem;font-weight:600}
+  .hero-meta{display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap}
+  .hero-meta .tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:#E8E2D4;font-weight:500}
+  .why-box{background:linear-gradient(90deg,rgba(201,148,31,.1),rgba(201,148,31,.03));border-left:4px solid #C9941F;margin:2rem;padding:1.25rem 1.5rem;border-radius:0 12px 12px 0}
+  .why-box .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#8B6B1A;font-weight:800;margin-bottom:.25rem}
+  .why-box p{color:#3D362A;font-size:.95rem;font-weight:500}
+  .container{max-width:800px;margin:0 auto;padding:0 1.5rem 3rem}
+  .card{background:#FFFDF6;border-radius:16px;box-shadow:0 1px 3px rgba(26,24,21,.06),0 4px 12px rgba(26,24,21,.04);margin-bottom:1.5rem;overflow:hidden;border:1px solid #E8E2D4}
+  .card-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid #E8E2D4}
+  .card-header .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .card-header h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#1A1815}
+  .card-header .card-tag{margin-left:auto;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .75rem;border-radius:99px}
+  .card-body{padding:1.5rem}
+  .card.learn .card-icon{background:#FDF1D0}
+  .card.learn .card-tag{background:#FDF1D0;color:#8B6B1A}
+  .card.learn .card-body{background:linear-gradient(180deg,#FFFDF6,#FDF1D0 120%)}
+  .card.learn h3{font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.15rem;margin:1.5rem 0 .75rem}
+  .card.learn h3:first-child{margin-top:0}
+  .card.learn p{color:#3D362A;margin-bottom:.75rem;font-size:.95rem}
+  .card.do-card .card-icon{background:#FBE8B7}
+  .card.do-card .card-tag{background:#FBE8B7;color:#8B6B1A}
+  .card.prove .card-icon{background:rgba(79,122,58,.15)}
+  .card.prove .card-tag{background:rgba(79,122,58,.12);color:#4F7A3A}
+  .card.review .card-icon{background:rgba(122,114,99,.15)}
+  .card.review .card-tag{background:rgba(122,114,99,.12);color:#7A7263}
+  .activity-prompt{background:#FDF1D0;border-radius:10px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid #C9941F}
+  .activity-prompt p{color:#3D362A;font-size:.95rem;font-weight:600;margin:0}
+  .prove-task{display:flex;align-items:flex-start;gap:.75rem;padding:1rem;background:rgba(79,122,58,.05);border-radius:10px;border:1px solid rgba(79,122,58,.15);margin-bottom:.75rem}
+  .prove-task input[type="checkbox"]{width:20px;height:20px;accent-color:#4F7A3A;margin-top:2px;flex-shrink:0;cursor:pointer}
+  .prove-task label{font-size:.95rem;color:#3D362A;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-family:'Mulish',sans-serif;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+  .btn-primary{background:linear-gradient(135deg,#C9941F,#8B6B1A);color:#FFFDF6;box-shadow:0 2px 8px rgba(201,148,31,.3)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,148,31,.4)}
+  .btn-green{background:linear-gradient(135deg,#4F7A3A,#3d5f2d);color:#FFFDF6;box-shadow:0 2px 8px rgba(79,122,58,.3)}
+  .btn-green:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(79,122,58,.4)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+  .review-schedule{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1.25rem}
+  .review-day{text-align:center;padding:1rem;background:#F7F4ED;border-radius:10px;border:1px solid #E8E2D4}
+  .review-day .day-num{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;color:#C9941F}
+  .review-day .day-label{font-size:.7rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .review-question{background:#F7F4ED;border-radius:8px;padding:.85rem 1rem;margin-bottom:.5rem;font-size:.9rem;color:#3D362A;border-left:3px solid #7A7263;font-style:italic}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:1px solid #E8E2D4}
+  .module-nav a{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1.25rem;border-radius:10px;transition:all .2s}
+  .nav-prev{color:#7A7263;background:#F7F4ED;border:1px solid #E8E2D4}
+  .nav-prev:hover{background:#E8E2D4}
+  .nav-next{color:#FFFDF6;background:linear-gradient(135deg,#4F7A3A,#3d5f2d);box-shadow:0 2px 8px rgba(79,122,58,.25)}
+  .nav-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,122,58,.35)}
+  .footer{text-align:center;padding:2rem;color:#7A7263;font-size:.75rem;font-weight:600;letter-spacing:.05em;border-top:1px solid #E8E2D4;margin-top:2rem}
+  .toast{position:fixed;bottom:2rem;right:2rem;background:#1A1815;color:#FBE8B7;padding:1rem 1.5rem;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:999}
+  .toast.show{transform:translateY(0)}
+
+  /* Commission scale */
+  .commission-scale{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.25rem 0}
+  .comm-tier{background:#F7F4ED;border-radius:12px;padding:1.25rem;border:1px solid #E8E2D4;text-align:center}
+  .comm-tier .tier-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#7A7263;font-weight:700;margin-bottom:.25rem}
+  .comm-tier .tier-amount{font-family:'DM Serif Display',Georgia,serif;font-size:1.75rem;color:#C9941F}
+  .comm-tier .tier-desc{font-size:.8rem;color:#7A7263;margin-top:.25rem}
+
+  /* Goal milestones */
+  .goal-milestones{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.25rem 0}
+  .goal-ms{background:#F7F4ED;border-radius:12px;padding:1.25rem;border:1px solid #E8E2D4;text-align:center;position:relative}
+  .goal-ms .ms-days{font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#C9941F;line-height:1}
+  .goal-ms .ms-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#7A7263;font-weight:700;margin:.25rem 0 .5rem}
+  .goal-ms .ms-target{font-size:.85rem;color:#3D362A;font-weight:600}
+  .goal-ms .ms-detail{font-size:.78rem;color:#7A7263;margin-top:.25rem}
+
+  /* Calculator */
+  .calculator{background:linear-gradient(135deg,#1A1815,#3D362A);border-radius:16px;padding:2rem;margin:1.5rem 0;color:#FBE8B7}
+  .calculator h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#FFFDF6;margin-bottom:1.25rem;text-align:center}
+  .calc-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+  .calc-label{font-size:.85rem;color:#FBE8B7;font-weight:600;min-width:180px}
+  .calc-input{background:rgba(255,255,255,.1);border:2px solid rgba(201,148,31,.4);border-radius:8px;padding:.6rem 1rem;color:#FFFDF6;font-family:'JetBrains Mono',monospace;font-size:1rem;width:150px;text-align:right;transition:border-color .2s}
+  .calc-input:focus{outline:none;border-color:#C9941F;box-shadow:0 0 0 3px rgba(201,148,31,.2)}
+  .calc-input::placeholder{color:rgba(251,232,183,.4)}
+  .calc-divider{border-top:1px solid rgba(201,148,31,.3);margin:1.25rem 0}
+  .calc-result{text-align:center;padding:1.5rem 0 .5rem}
+  .calc-result .result-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#7A7263;margin-bottom:.25rem}
+  .calc-result .result-value{font-family:'DM Serif Display',Georgia,serif;font-size:3rem;color:#C9941F;line-height:1}
+  .calc-result .result-sub{font-size:.85rem;color:#FBE8B7;margin-top:.35rem}
+
+  /* 30/60/90 Goal Sheet */
+  .goal-sheet{margin:1.5rem 0}
+  .goal-period{background:#F7F4ED;border-radius:12px;padding:1.25rem;border:1px solid #E8E2D4;margin-bottom:.75rem}
+  .goal-period h4{font-family:'DM Serif Display',Georgia,serif;font-size:1.05rem;color:#1A1815;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+  .goal-period h4 .period-badge{background:#C9941F;color:#FFFDF6;font-family:'Mulish',sans-serif;font-size:.65rem;font-weight:800;padding:.2rem .6rem;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
+  .goal-input{width:100%;border:2px solid #E8E2D4;border-radius:8px;padding:.6rem .85rem;font-family:'Mulish',sans-serif;font-size:.9rem;color:#1A1815;background:#FFFDF6;transition:border-color .2s;margin-bottom:.5rem}
+  .goal-input:focus{outline:none;border-color:#C9941F;box-shadow:0 0 0 3px rgba(201,148,31,.15)}
+  .goal-input::placeholder{color:#7A7263}
+  textarea.goal-input{min-height:80px;resize:vertical;line-height:1.6}
+
+  @media(max-width:640px){
+    .hero h1{font-size:1.75rem}
+    .hero{padding:2rem 1.25rem}
+    .why-box{margin:1.5rem 1rem}
+    .container{padding:0 1rem 2rem}
+    .module-nav{flex-direction:column;gap:.75rem}
+    .module-nav a{width:100%;justify-content:center}
+    .goal-milestones{grid-template-columns:1fr}
+    .commission-scale{grid-template-columns:1fr}
+    .calc-row{flex-direction:column;align-items:flex-start;gap:.35rem}
+    .calc-input{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-label">Module 8 of 8 — Final Module! 🎉</div>
+  <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+  <div class="progress-steps">
+    <span class="done">1.1</span><span class="done">1.2</span><span class="done">1.3</span><span class="done">1.4</span><span class="done">1.5</span><span class="done">1.6</span><span class="done">1.7</span><span class="active">1.8</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-badge">🎯 Module 1.8 — Final Module</div>
+  <h1>Goal Setting & Income Calculator</h1>
+  <div class="subtitle">Turn Your Ambition into a Number</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 10 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Foundation Certified</span>
+  </div>
+</header>
+
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>Agents who set clear income goals close 40% more deals in their first 90 days. When you know your number, every call, every showing, every follow-up has purpose behind it.</p>
+</div>
+
+<div class="container">
+
+  <!-- LEARN -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Core Knowledge</span>
+    </div>
+    <div class="card-body">
+      <h3>How You Get Paid</h3>
+      <p>At Myers, agents earn commission based on <strong>GP (Gross Profit)</strong> — the difference between what we buy and sell a property for. Your commission is a percentage of the GP on each deal you're involved in.</p>
+
+      <h3>Typical Deal Range</h3>
+      <div class="commission-scale">
+        <div class="comm-tier">
+          <div class="tier-label">Low End</div>
+          <div class="tier-amount">$8K</div>
+          <div class="tier-desc">Smaller spread deals</div>
+        </div>
+        <div class="comm-tier">
+          <div class="tier-label">Average</div>
+          <div class="tier-amount">$15K</div>
+          <div class="tier-desc">Typical Myers deal</div>
+        </div>
+        <div class="comm-tier">
+          <div class="tier-label">High End</div>
+          <div class="tier-amount">$22K+</div>
+          <div class="tier-desc">Premium spread deals</div>
+        </div>
+      </div>
+
+      <h3>Your 30 / 60 / 90 Day Roadmap</h3>
+      <div class="goal-milestones">
+        <div class="goal-ms">
+          <div class="ms-days">30</div>
+          <div class="ms-label">Days</div>
+          <div class="ms-target">Build the Pipeline</div>
+          <div class="ms-detail">X sit-downs scheduled<br>X showings completed<br>First leads in Zoho</div>
+        </div>
+        <div class="goal-ms">
+          <div class="ms-days">60</div>
+          <div class="ms-label">Days</div>
+          <div class="ms-target">First Deal Closed</div>
+          <div class="ms-detail">Close your first deal<br>Build investor relationships<br>Refine your process</div>
+        </div>
+        <div class="goal-ms">
+          <div class="ms-days">90</div>
+          <div class="ms-label">Days</div>
+          <div class="ms-target">Consistent Pipeline</div>
+          <div class="ms-detail">2+ deals per month<br>Reliable lead flow<br>Self-sustaining production</div>
+        </div>
+      </div>
+
+      <p>The agents who succeed at Myers are the ones who <strong>know their number</strong>. They know exactly how much they want to earn, how many deals that requires, and how many calls/showings they need to generate those deals.</p>
+
+      <div style="background:rgba(201,148,31,.1);border:1px solid rgba(201,148,31,.25);border-radius:10px;padding:1rem 1.25rem;margin:1rem 0">
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:#8B6B1A;margin-bottom:.35rem">💡 The Math Is Simple</div>
+        <p style="font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.05rem;margin:0">Annual Income Goal ÷ 12 months ÷ Average Commission per Deal = Deals You Need Per Month</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DO — Income Calculator -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Income Calculator</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>🧮 Fill out the Income Calculator with YOUR numbers. Be honest, be ambitious, and then do the math.</p>
+      </div>
+
+      <div class="calculator">
+        <h3>💰 Myers Income Calculator</h3>
+
+        <div class="calc-row">
+          <span class="calc-label">Annual Income Goal ($)</span>
+          <input type="number" class="calc-input" id="annualGoal" placeholder="120,000" oninput="calculate()">
+        </div>
+        <div class="calc-row">
+          <span class="calc-label">Average Commission / Deal ($)</span>
+          <input type="number" class="calc-input" id="avgCommission" placeholder="15,000" value="15000" oninput="calculate()">
+        </div>
+
+        <div class="calc-divider"></div>
+
+        <div class="calc-result">
+          <div class="result-label">Deals Needed Per Month</div>
+          <div class="result-value" id="dealsPerMonth">—</div>
+          <div class="result-sub" id="resultSub"></div>
+        </div>
+
+        <div class="calc-divider"></div>
+
+        <div class="calc-row">
+          <span class="calc-label">Showings to Close Ratio</span>
+          <input type="number" class="calc-input" id="showingRatio" placeholder="5" value="5" oninput="calculateActivity()" style="width:80px">
+          <span style="font-size:.8rem;color:#7A7263">showings per deal</span>
+        </div>
+        <div class="calc-row">
+          <span class="calc-label">Calls to Showing Ratio</span>
+          <input type="number" class="calc-input" id="callRatio" placeholder="10" value="10" oninput="calculateActivity()" style="width:80px">
+          <span style="font-size:.8rem;color:#7A7263">calls per showing</span>
+        </div>
+
+        <div class="calc-divider"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;text-align:center">
+          <div>
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#7A7263;margin-bottom:.15rem">Showings / Month</div>
+            <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.75rem;color:#C9941F" id="showingsMonth">—</div>
+          </div>
+          <div>
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#7A7263;margin-bottom:.15rem">Calls / Day (20 work days)</div>
+            <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.75rem;color:#C9941F" id="callsDay">—</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:.85rem;color:#7A7263;text-align:center;margin-top:.5rem"><em>Adjust the ratios based on your Team Lead's guidance — these are starting estimates.</em></p>
+    </div>
+  </section>
+
+  <!-- PROVE — 30/60/90 Goal Sheet -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Goal Sheet Submission</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1.25rem;color:#3D362A;font-size:.95rem;">Complete your <strong>30/60/90 Day Goal Sheet</strong> based on the calculator results above. Be specific!</p>
+
+      <div class="goal-sheet">
+        <div class="goal-period">
+          <h4><span class="period-badge">30 Days</span> Build the Pipeline</h4>
+          <input id="auto_d5e7f798" class="goal-input" placeholder="Number of sit-downs I'll schedule per week:">
+          <input id="auto_8bca78de" class="goal-input" placeholder="Number of showings I'll complete:">
+          <textarea id="auto_0e6d246b" class="goal-input" placeholder="My specific 30-day action plan (daily activities, lead sources, etc.):"></textarea>
+        </div>
+
+        <div class="goal-period">
+          <h4><span class="period-badge">60 Days</span> First Deal Closed</h4>
+          <input id="auto_4080855d" class="goal-input" placeholder="Number of deals I'll have in pipeline:">
+          <input id="auto_987d6c0c" class="goal-input" placeholder="Monthly income target by Day 60: $">
+          <textarea id="auto_8dee97d0" class="goal-input" placeholder="What I'll do differently in month 2 based on month 1 learning:"></textarea>
+        </div>
+
+        <div class="goal-period">
+          <h4><span class="period-badge">90 Days</span> Consistent Pipeline</h4>
+          <input id="auto_ea915c90" class="goal-input" placeholder="Deals per month target:">
+          <input id="auto_a053ab75" class="goal-input" placeholder="Monthly income target by Day 90: $">
+          <textarea id="auto_0acac641" class="goal-input" placeholder="My vision for my Myers career at 90 days and beyond:"></textarea>
+        </div>
+      </div>
+
+      <div class="prove-task">
+        <input type="checkbox" id="prove1" onchange="checkProve()">
+        <label for="prove1">I have completed the Income Calculator with my real numbers</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="prove2" onchange="checkProve()">
+        <label for="prove2">I have filled out all three goal periods (30/60/90 days)</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="prove3" onchange="checkProve()">
+        <label for="prove3">I know exactly how many deals per month I need to hit my income goal</label>
+      </div>
+
+      <div style="margin-top:1.25rem">
+        <button class="btn btn-green" id="submitBtn" disabled onclick="submitModule()" style="font-size:1rem;padding:1rem 2rem">
+          🎓 Complete Certificate 1: MHB Foundations
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Goal Check-In</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem;color:#3D362A;font-size:.95rem;">Come back on these days to revisit your goals and track your progress:</p>
+      <div class="review-schedule">
+        <div class="review-day"><div class="day-num">14</div><div class="day-label">Day</div></div>
+        <div class="review-day"><div class="day-num">30</div><div class="day-label">Day</div></div>
+      </div>
+      <div class="review-question">"Am I on track for my 30-day goals? What needs to change?"</div>
+      <div class="review-question">"How many deals do I need per month? How many calls per day?"</div>
+      <div class="review-question">"What's my biggest obstacle right now, and what's my plan to overcome it?"</div>
+      <div class="review-question">"Have my income goals changed? Update the calculator if so."</div>
+    </div>
+  </section>
+
+  <!-- Certificate Completion Banner -->
+  <div id="certBanner" style="display:none;background:linear-gradient(135deg,#1A1815,#3D362A);border-radius:16px;padding:2.5rem;text-align:center;margin-bottom:1.5rem;border:2px solid #C9941F">
+    <div style="font-size:3rem;margin-bottom:.75rem">🎓</div>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;color:#FFFDF6;font-size:1.75rem;margin-bottom:.5rem">Certificate 1 Complete!</h2>
+    <p style="color:#C9941F;font-size:1.1rem;font-weight:600;margin-bottom:.25rem">MHB Foundations — All 8 Modules Finished</p>
+    <p style="color:#7A7263;font-size:.85rem">You're now ready to begin Certificate 2. Talk to your Team Lead about next steps.</p>
+  </div>
+
+  <nav class="module-nav">
+    <a href="module-1-7.html" class="nav-prev">← Module 1.7</a>
+    <a href="index.html" class="nav-next" style="background:linear-gradient(135deg,#4F7A3A,#3d5f2d)">🎓 Back to Dashboard</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Agent Training Program Draft 1</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+function calculate() {
+  const annual = parseFloat(document.getElementById('annualGoal').value);
+  const avg = parseFloat(document.getElementById('avgCommission').value);
+  if (annual && avg && avg > 0) {
+    const monthly = annual / 12;
+    const deals = monthly / avg;
+    document.getElementById('dealsPerMonth').textContent = deals.toFixed(1);
+    document.getElementById('resultSub').textContent = `$${(monthly).toLocaleString()} per month ÷ $${avg.toLocaleString()} per deal`;
+    calculateActivity();
+  } else {
+    document.getElementById('dealsPerMonth').textContent = '—';
+    document.getElementById('resultSub').textContent = '';
+  }
+}
+
+function calculateActivity() {
+  const annual = parseFloat(document.getElementById('annualGoal').value);
+  const avg = parseFloat(document.getElementById('avgCommission').value);
+  const showRatio = parseFloat(document.getElementById('showingRatio').value) || 5;
+  const callRatio = parseFloat(document.getElementById('callRatio').value) || 10;
+
+  if (annual && avg && avg > 0) {
+    const dealsPerMonth = (annual / 12) / avg;
+    const showingsPerMonth = dealsPerMonth * showRatio;
+    const callsPerMonth = showingsPerMonth * callRatio;
+    const callsPerDay = callsPerMonth / 20;
+
+    document.getElementById('showingsMonth').textContent = Math.ceil(showingsPerMonth);
+    document.getElementById('callsDay').textContent = Math.ceil(callsPerDay);
+  } else {
+    document.getElementById('showingsMonth').textContent = '—';
+    document.getElementById('callsDay').textContent = '—';
+  }
+}
+
+function checkProve() {
+  const boxes = ['prove1','prove2','prove3'];
+  const allChecked = boxes.every(id => document.getElementById(id).checked);
+  document.getElementById('submitBtn').disabled = !allChecked;
+}
+
+function submitModule() {
+  showToast('🎓 Certificate 1: MHB Foundations — COMPLETE! 🎉');
+  document.getElementById('submitBtn').textContent = '🎓 Certificate Complete!';
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('certBanner').style.display = 'block';
+  document.getElementById('certBanner').scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4500);
+}
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

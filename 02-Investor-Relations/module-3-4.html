@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3.4 — Calculator Mastery: Cash ROI & Hard Money | Myers Home Buyers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+            --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+            --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A;
+            --accent: #8e44ad; --accent-light: #f3e8f9; --accent-soft: #ecdaf5;
+            --font-sans: 'Mulish', system-ui, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+        .progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .progress-track { height: 4px; background: var(--hairline); }
+        .progress-fill { height: 100%; width: 50%; background: linear-gradient(90deg, var(--accent), #a855c7); border-radius: 0 4px 4px 0; }
+        .top-nav { margin-top: 4px; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .top-nav a { font-size: 0.82rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .top-nav a:hover { color: var(--gold-deep); }
+        .top-nav .nav-center { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+        .container { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; }
+        .module-header { text-align: center; margin-bottom: 40px; }
+        .module-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; }
+        .module-header h1 { font-family: var(--font-serif); font-size: clamp(1.7rem, 5vw, 2.3rem); color: var(--ink); line-height: 1.2; margin-bottom: 12px; }
+        .module-meta { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .module-meta span { display: flex; align-items: center; gap: 6px; }
+        .why-card { background: linear-gradient(135deg, var(--accent), #7b3a9e); color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 8px 32px rgba(142,68,173,0.18); }
+        .why-card h2 { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px; }
+        .why-card p { font-size: 0.97rem; line-height: 1.65; opacity: 0.95; }
+        .section-card { background: var(--surface); border-radius: 16px; padding: 32px; margin-bottom: 24px; border: 1px solid var(--hairline); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding: 5px 14px; border-radius: 100px; }
+        .learn-label { background: var(--accent-light); color: var(--accent); }
+        .do-label { background: #e8f5e1; color: var(--green); }
+        .prove-label { background: var(--cream-soft); color: var(--gold-deep); }
+        .review-label { background: #e3eefe; color: #2c5ea8; }
+        .section-card h2 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
+        .section-card h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); margin: 24px 0 12px; }
+        .section-card p, .section-card li { font-size: 0.93rem; color: var(--ink2); line-height: 1.7; }
+        .section-card ul, .section-card ol { padding-left: 20px; margin: 12px 0; }
+        .section-card li { margin-bottom: 8px; }
+        .callout { border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-size: 0.9rem; }
+        .callout-purple { background: var(--accent-light); border-left: 4px solid var(--accent); }
+        .callout-gold { background: var(--cream-soft); border-left: 4px solid var(--gold); }
+        .callout-green { background: #e8f5e1; border-left: 4px solid var(--green); }
+        .callout strong { display: block; margin-bottom: 4px; font-weight: 700; }
+
+        /* Formula Blocks */
+        .formula-block {
+            background: var(--ink);
+            color: #e8e2d4;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin: 16px 0;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+        .formula-block .formula-highlight {
+            color: var(--gold);
+            font-weight: 500;
+        }
+        .formula-block .formula-comment {
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* Deal Comparison Table */
+        .deal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88rem;
+        }
+        .deal-table th {
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .deal-table th:first-child { border-radius: 10px 0 0 0; }
+        .deal-table th:last-child { border-radius: 0 10px 0 0; }
+        .deal-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--hairline);
+            color: var(--ink2);
+        }
+        .deal-table tr:last-child td { border-bottom: none; }
+        .deal-table tr:nth-child(even) { background: var(--bg-soft); }
+        .deal-table .row-highlight {
+            background: var(--cream-soft) !important;
+            font-weight: 700;
+        }
+        .deal-table .val-green { color: var(--green); font-weight: 700; }
+        .deal-table .val-gold { color: var(--gold-deep); font-weight: 700; }
+
+        /* Practice Card */
+        .practice-card {
+            background: var(--bg-soft);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+        .practice-card h4 { font-weight: 700; font-size: 0.92rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .practice-card .prop-detail { font-size: 0.85rem; color: var(--ink2); margin-bottom: 4px; }
+        .practice-card textarea {
+            width: 100%; min-height: 100px; border: 1px solid var(--hairline); border-radius: 8px;
+            padding: 12px; font-family: var(--font-mono); font-size: 0.85rem;
+            background: var(--surface); color: var(--ink); resize: vertical; margin-top: 12px;
+        }
+        .practice-card textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(142,68,173,0.12); }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 10px; font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { background: #7b3a9e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(142,68,173,0.25); }
+
+        .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+        .review-day { flex: 1; min-width: 140px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px; padding: 16px; text-align: center; }
+        .review-day .day-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 100px; margin-bottom: 8px; }
+        .review-day p { font-size: 0.82rem; color: var(--ink2); }
+
+        .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+        .bottom-nav a { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .bottom-nav a:hover { color: var(--gold-deep); }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 14px 40px; }
+            .section-card { padding: 22px 18px; }
+            .why-card { padding: 22px 20px; }
+            .deal-table { font-size: 0.8rem; }
+            .deal-table th, .deal-table td { padding: 10px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar-container">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+</div>
+
+<nav class="top-nav">
+    <a href="module-3-3.html">← Previous</a>
+    <span class="nav-center">Module 4 of 8</span>
+    <a href="module-3-5.html">Next →</a>
+</nav>
+
+<div class="container">
+
+    <header class="module-header">
+        <div class="module-badge">🧮 Module 3.4</div>
+        <h1>Calculator Mastery: Cash ROI &amp; Hard Money</h1>
+        <div class="module-meta">
+            <span>⏱ 10 min</span>
+            <span>🏆 Milestone: Number Cruncher</span>
+        </div>
+    </header>
+
+    <div class="why-card">
+        <h2>💰 Why This Matters</h2>
+        <p>Running numbers <strong style="display:inline;">LIVE</strong> in a sit-down makes you indispensable to investors. When you can pull out a calculator and show them exactly what a deal looks like — cash vs leveraged — you become their go-to acquisition source.</p>
+    </div>
+
+    <!-- LEARN -->
+    <section class="section-card">
+        <div class="section-label learn-label">📖 LEARN</div>
+        <h2>Cash ROI Calculator</h2>
+
+        <p>Cash ROI tells an investor: <em>"If you put $X of your own money into this deal, you'll make $Y back — that's Z% return."</em></p>
+
+        <div class="formula-block">
+            <span class="formula-comment">// Cash Deal Formula</span><br>
+            <span class="formula-highlight">Total Investment</span> = Purchase Price + Repairs + Closing Costs<br>
+            <span class="formula-highlight">Profit</span> = ARV − Total Investment − Selling Costs<br>
+            <span class="formula-highlight">Cash ROI</span> = (Profit ÷ Total Investment) × 100<br><br>
+            <span class="formula-comment">// Target: 20%+ ROI minimum on cash deals</span>
+        </div>
+
+        <h3>Hard Money Calculator</h3>
+
+        <p>Same deal, but now we add the cost of borrowed money. Hard money <strong>amplifies returns</strong> because you're using less of your own cash — but it also adds cost:</p>
+
+        <div class="formula-block">
+            <span class="formula-comment">// Hard Money Formula — Additional Variables</span><br>
+            <span class="formula-highlight">Loan Amount</span> = Typically 70-90% of purchase price<br>
+            <span class="formula-highlight">Points</span> = 1-3 points upfront (1 point = 1% of loan)<br>
+            <span class="formula-highlight">Interest</span> = Monthly rate × Loan Amount × Holding Period<br>
+            <span class="formula-highlight">Cash Out of Pocket</span> = Down Payment + Repairs + Points + Interest + Closing<br><br>
+            <span class="formula-highlight">Hard Money ROI</span> = (Profit ÷ Cash Out of Pocket) × 100
+        </div>
+
+        <div class="callout callout-purple">
+            <strong>⚡ The Power of Leverage</strong>
+            A deal that returns 20% ROI with cash can return <strong style="display:inline;">105%+ ROI</strong> with hard money — because your out-of-pocket is much smaller. Show investors this side-by-side and you'll blow their minds.
+        </div>
+
+        <h3>Example Deal: Side-by-Side Comparison</h3>
+
+        <table class="deal-table">
+            <thead>
+                <tr>
+                    <th>Line Item</th>
+                    <th>Cash Deal</th>
+                    <th>Hard Money</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Purchase Price</td>
+                    <td>$120,000</td>
+                    <td>$120,000</td>
+                </tr>
+                <tr>
+                    <td>Repairs</td>
+                    <td>$30,000</td>
+                    <td>$30,000</td>
+                </tr>
+                <tr>
+                    <td>Closing Costs (Buy)</td>
+                    <td>$3,600</td>
+                    <td>$3,600</td>
+                </tr>
+                <tr>
+                    <td>Loan Amount (85%)</td>
+                    <td>—</td>
+                    <td>$102,000</td>
+                </tr>
+                <tr>
+                    <td>Down Payment (15%)</td>
+                    <td>—</td>
+                    <td>$18,000</td>
+                </tr>
+                <tr>
+                    <td>Points (2 pts)</td>
+                    <td>—</td>
+                    <td>$2,040</td>
+                </tr>
+                <tr>
+                    <td>Interest (12%, 5 mo)</td>
+                    <td>—</td>
+                    <td>$5,100</td>
+                </tr>
+                <tr>
+                    <td>ARV</td>
+                    <td>$210,000</td>
+                    <td>$210,000</td>
+                </tr>
+                <tr>
+                    <td>Selling Costs (8%)</td>
+                    <td>$16,800</td>
+                    <td>$16,800</td>
+                </tr>
+                <tr class="row-highlight">
+                    <td><strong>Total Out of Pocket</strong></td>
+                    <td class="val-gold">$153,600</td>
+                    <td class="val-gold">$58,740</td>
+                </tr>
+                <tr class="row-highlight">
+                    <td><strong>Profit</strong></td>
+                    <td class="val-green">$39,600</td>
+                    <td class="val-green">$32,460</td>
+                </tr>
+                <tr class="row-highlight">
+                    <td><strong>ROI</strong></td>
+                    <td class="val-green">25.8%</td>
+                    <td class="val-green">55.3%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-gold">
+            <strong>💡 Key Insight</strong>
+            The hard money deal makes slightly less profit ($32K vs $39K) — but the ROI is <strong style="display:inline;">more than double</strong> because the investor only put ~$59K of their own money at risk instead of ~$154K. That freed-up capital can fund another deal.
+        </div>
+    </section>
+
+    <!-- DO -->
+    <section class="section-card">
+        <div class="section-label do-label">🔨 DO</div>
+        <h2>Calculate ROI on 2 Sample Properties</h2>
+
+        <p>Run both Cash ROI and Hard Money ROI on each property. Show your work.</p>
+
+        <div class="practice-card">
+            <h4>🏠 Property A — Garland, TX</h4>
+            <p class="prop-detail"><strong>Purchase Price:</strong> $95,000</p>
+            <p class="prop-detail"><strong>Repairs:</strong> $25,000</p>
+            <p class="prop-detail"><strong>Closing Costs:</strong> $2,850 (3%)</p>
+            <p class="prop-detail"><strong>ARV:</strong> $175,000</p>
+            <p class="prop-detail"><strong>Selling Costs:</strong> 8% of ARV</p>
+            <p class="prop-detail"><strong>Hard Money:</strong> 85% LTV, 2 points, 12% interest, 4-month hold</p>
+            <textarea id="auto_c6d035ab" placeholder="Show your Cash ROI and Hard Money ROI calculations here..."></textarea>
+        </div>
+
+        <div class="practice-card">
+            <h4>🏠 Property B — Mesquite, TX</h4>
+            <p class="prop-detail"><strong>Purchase Price:</strong> $140,000</p>
+            <p class="prop-detail"><strong>Repairs:</strong> $45,000</p>
+            <p class="prop-detail"><strong>Closing Costs:</strong> $4,200 (3%)</p>
+            <p class="prop-detail"><strong>ARV:</strong> $260,000</p>
+            <p class="prop-detail"><strong>Selling Costs:</strong> 8% of ARV</p>
+            <p class="prop-detail"><strong>Hard Money:</strong> 85% LTV, 2 points, 12% interest, 6-month hold</p>
+            <textarea id="auto_02db3d86" placeholder="Show your Cash ROI and Hard Money ROI calculations here..."></textarea>
+        </div>
+    </section>
+
+    <!-- PROVE -->
+    <section class="section-card">
+        <div class="section-label prove-label">✅ PROVE</div>
+        <h2>Submit Your Calculations</h2>
+
+        <p>Your calculations should include:</p>
+        <ul>
+            <li>Total Investment / Total Out-of-Pocket for both methods</li>
+            <li>Profit calculation for both methods</li>
+            <li>ROI percentage for both methods</li>
+            <li>A brief explanation of which method is better for the investor and why</li>
+        </ul>
+
+        <div style="margin-top: 20px;">
+            <button class="btn btn-accent" onclick="alert('In a live environment, your calculations would be submitted for review and compared against the answer key.')">📤 Submit Calculations</button>
+        </div>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="section-card">
+        <div class="section-label review-label">🔁 REVIEW</div>
+        <h2>Spaced Repetition Schedule</h2>
+
+        <div class="review-timeline">
+            <div class="review-day">
+                <div class="day-badge">DAY 7</div>
+                <p>Run both calculators on a brand new property. Time yourself — aim for under 3 minutes.</p>
+            </div>
+            <div class="review-day">
+                <div class="day-badge">DAY 14</div>
+                <p>Calculate during a mock sit-down. Present the numbers as if the investor is in front of you.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-green" style="margin-top: 16px;">
+            <strong>🎯 Mastery Marker</strong>
+            You've mastered this module when you can run Cash ROI and Hard Money ROI side-by-side in under 3 minutes — and explain the difference to an investor in plain English.
+        </div>
+    </section>
+
+    <div class="bottom-nav">
+        <a href="module-3-3.html">← Module 3.3: New vs Seasoned</a>
+        <a href="module-3-5.html">Module 3.5: Rentals & Break-Even →</a>
+    </div>
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

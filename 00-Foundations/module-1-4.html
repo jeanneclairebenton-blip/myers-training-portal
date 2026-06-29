@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.4 — Myers Glossary & Key Terms | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Mulish',system-ui,sans-serif;background:#F7F4ED;color:#1A1815;line-height:1.6;min-height:100vh}
+  .top-nav{background:#1A1815;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center}
+  .top-nav a{color:#FBE8B7;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.03em;transition:color .2s}
+  .top-nav a:hover{color:#C9941F}
+  .top-nav .cert-label{color:#7A7263;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+  .progress-wrap{background:#FFFDF6;border-bottom:1px solid #E8E2D4;padding:1rem 2rem}
+  .progress-label{font-size:.75rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+  .progress-track{width:100%;height:8px;background:#E8E2D4;border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;width:50%;background:linear-gradient(90deg,#C9941F,#8B6B1A);border-radius:99px}
+  .progress-steps{display:flex;justify-content:space-between;margin-top:.5rem}
+  .progress-steps span{font-size:.65rem;color:#7A7263;font-weight:600}
+  .progress-steps span.active{color:#C9941F;font-weight:800}
+  .progress-steps span.done{color:#4F7A3A;font-weight:800}
+  .hero{background:linear-gradient(135deg,#1A1815,#3D362A);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,148,31,.15),transparent 70%);border-radius:50%}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,148,31,.15);border:1px solid rgba(201,148,31,.3);border-radius:99px;padding:.35rem 1rem;font-size:.75rem;color:#FBE8B7;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;color:#FFFDF6;line-height:1.15;margin-bottom:.5rem}
+  .hero .subtitle{color:#C9941F;font-size:1.1rem;font-weight:600}
+  .hero-meta{display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap}
+  .hero-meta .tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:#E8E2D4;font-weight:500}
+  .why-box{background:linear-gradient(90deg,rgba(201,148,31,.1),rgba(201,148,31,.03));border-left:4px solid #C9941F;margin:2rem;padding:1.25rem 1.5rem;border-radius:0 12px 12px 0}
+  .why-box .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#8B6B1A;font-weight:800;margin-bottom:.25rem}
+  .why-box p{color:#3D362A;font-size:.95rem;font-weight:500}
+  .container{max-width:800px;margin:0 auto;padding:0 1.5rem 3rem}
+  .card{background:#FFFDF6;border-radius:16px;box-shadow:0 1px 3px rgba(26,24,21,.06),0 4px 12px rgba(26,24,21,.04);margin-bottom:1.5rem;overflow:hidden;border:1px solid #E8E2D4}
+  .card-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid #E8E2D4}
+  .card-header .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .card-header h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#1A1815}
+  .card-header .card-tag{margin-left:auto;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .75rem;border-radius:99px}
+  .card-body{padding:1.5rem}
+  .card.learn .card-icon{background:#FDF1D0}
+  .card.learn .card-tag{background:#FDF1D0;color:#8B6B1A}
+  .card.learn .card-body{background:linear-gradient(180deg,#FFFDF6,#FDF1D0 150%)}
+  .card.learn h3{font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.15rem;margin:1.5rem 0 .75rem}
+  .card.learn h3:first-child{margin-top:0}
+  .card.learn p{color:#3D362A;margin-bottom:.75rem;font-size:.95rem}
+  .card.do-card .card-icon{background:#FBE8B7}
+  .card.do-card .card-tag{background:#FBE8B7;color:#8B6B1A}
+  .card.prove .card-icon{background:rgba(79,122,58,.15)}
+  .card.prove .card-tag{background:rgba(79,122,58,.12);color:#4F7A3A}
+  .card.review .card-icon{background:rgba(122,114,99,.15)}
+  .card.review .card-tag{background:rgba(122,114,99,.12);color:#7A7263}
+  .activity-prompt{background:#FDF1D0;border-radius:10px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid #C9941F}
+  .activity-prompt p{color:#3D362A;font-size:.95rem;font-weight:600;margin:0}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-family:'Mulish',sans-serif;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+  .btn-primary{background:linear-gradient(135deg,#C9941F,#8B6B1A);color:#FFFDF6;box-shadow:0 2px 8px rgba(201,148,31,.3)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,148,31,.4)}
+  .btn-green{background:linear-gradient(135deg,#4F7A3A,#3d5f2d);color:#FFFDF6;box-shadow:0 2px 8px rgba(79,122,58,.3)}
+  .btn-green:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(79,122,58,.4)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+  .review-schedule{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:.75rem;margin-bottom:1.25rem}
+  .review-day{text-align:center;padding:1rem;background:#F7F4ED;border-radius:10px;border:1px solid #E8E2D4}
+  .review-day .day-num{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;color:#C9941F}
+  .review-day .day-label{font-size:.7rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .review-question{background:#F7F4ED;border-radius:8px;padding:.85rem 1rem;margin-bottom:.5rem;font-size:.9rem;color:#3D362A;border-left:3px solid #7A7263;font-style:italic}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:1px solid #E8E2D4}
+  .module-nav a{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1.25rem;border-radius:10px;transition:all .2s}
+  .nav-prev{color:#7A7263;background:#F7F4ED;border:1px solid #E8E2D4}
+  .nav-prev:hover{background:#E8E2D4}
+  .nav-next{color:#FFFDF6;background:linear-gradient(135deg,#C9941F,#8B6B1A);box-shadow:0 2px 8px rgba(201,148,31,.25)}
+  .nav-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,148,31,.35)}
+  .footer{text-align:center;padding:2rem;color:#7A7263;font-size:.75rem;font-weight:600;letter-spacing:.05em;border-top:1px solid #E8E2D4;margin-top:2rem}
+  .toast{position:fixed;bottom:2rem;right:2rem;background:#1A1815;color:#FBE8B7;padding:1rem 1.5rem;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:999}
+  .toast.show{transform:translateY(0)}
+
+  /* Glossary Entry */
+  .glossary-list{margin:1rem 0}
+  .glossary-entry{border-bottom:1px solid #E8E2D4;padding:1rem 0}
+  .glossary-entry:last-child{border-bottom:none}
+  .glossary-term{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:500;color:#C9941F;margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}
+  .glossary-term .abbr{background:#FDF1D0;padding:.15rem .5rem;border-radius:4px;font-size:.75rem;font-weight:700;color:#8B6B1A}
+  .glossary-def{font-size:.9rem;color:#3D362A;padding-left:0}
+  .glossary-category{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;color:#1A1815;margin:1.5rem 0 .5rem;padding-bottom:.5rem;border-bottom:2px solid #C9941F;display:inline-block}
+  .glossary-category:first-child{margin-top:0}
+
+  /* Flashcard matching */
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+  .match-col-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#7A7263;font-weight:700;margin-bottom:.5rem;text-align:center}
+  .match-item{padding:.65rem .85rem;border-radius:8px;font-size:.85rem;cursor:pointer;transition:all .2s;text-align:center;font-weight:600;user-select:none}
+  .match-term{background:#FDF1D0;border:2px solid #E8E2D4;color:#8B6B1A}
+  .match-term.selected{border-color:#C9941F;box-shadow:0 0 0 3px rgba(201,148,31,.2)}
+  .match-term.matched{background:#4F7A3A;color:#fff;border-color:#4F7A3A;pointer-events:none;opacity:.7}
+  .match-def{background:#F7F4ED;border:2px solid #E8E2D4;color:#3D362A;font-weight:500}
+  .match-def.selected{border-color:#C9941F;box-shadow:0 0 0 3px rgba(201,148,31,.2)}
+  .match-def.matched{background:#4F7A3A;color:#fff;border-color:#4F7A3A;pointer-events:none;opacity:.7}
+  .match-def.wrong{border-color:#c0392b;animation:shake .3s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+  /* Quiz */
+  .quiz-q{margin-bottom:1.5rem;padding:1.25rem;background:#F7F4ED;border-radius:12px;border:1px solid #E8E2D4}
+  .quiz-q .q-text{font-weight:700;color:#1A1815;margin-bottom:.75rem;font-size:.95rem}
+  .quiz-q .q-num{font-family:'JetBrains Mono',monospace;color:#C9941F;font-size:.8rem;margin-bottom:.25rem}
+  .quiz-option{display:block;padding:.6rem 1rem;margin:.35rem 0;background:#FFFDF6;border:2px solid #E8E2D4;border-radius:8px;cursor:pointer;font-size:.9rem;transition:all .2s}
+  .quiz-option:hover{border-color:#C9941F;background:#FDF1D0}
+  .quiz-option.selected{border-color:#C9941F;background:#FDF1D0;font-weight:700}
+  .quiz-option.correct{border-color:#4F7A3A;background:rgba(79,122,58,.1);font-weight:700}
+  .quiz-option.wrong{border-color:#c0392b;background:rgba(192,57,43,.05)}
+  .quiz-option input{display:none}
+  .quiz-score{text-align:center;padding:2rem;background:rgba(79,122,58,.08);border-radius:12px;margin-top:1.5rem;display:none}
+  .quiz-score .big-score{font-family:'DM Serif Display',Georgia,serif;font-size:3rem}
+  .quiz-score .score-msg{font-size:1rem;font-weight:600;color:#3D362A;margin-top:.25rem}
+  .pass-bar{width:100%;height:8px;background:#E8E2D4;border-radius:99px;overflow:hidden;margin-top:.75rem}
+  .pass-bar .fill{height:100%;border-radius:99px;transition:width .6s}
+
+  @media(max-width:640px){
+    .hero h1{font-size:1.75rem}
+    .hero{padding:2rem 1.25rem}
+    .why-box{margin:1.5rem 1rem}
+    .container{padding:0 1rem 2rem}
+    .module-nav{flex-direction:column;gap:.75rem}
+    .module-nav a{width:100%;justify-content:center}
+    .match-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-label">Module 4 of 8</div>
+  <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+  <div class="progress-steps">
+    <span class="done">1.1</span><span class="done">1.2</span><span class="done">1.3</span><span class="active">1.4</span><span>1.5</span><span>1.6</span><span>1.7</span><span>1.8</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-badge">📚 Module 1.4</div>
+  <h1>Myers Glossary & Key Terms</h1>
+  <div class="subtitle">Speak the Language, Close the Deals</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 10 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Fluent Speaker</span>
+  </div>
+</header>
+
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>Speaking the language fluently = investor confidence = more deals. When you can rattle off ARV, GP, and TREC without hesitating, investors know they're working with a pro.</p>
+</div>
+
+<div class="container">
+
+  <!-- LEARN -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Core Knowledge</span>
+    </div>
+    <div class="card-body">
+      <h3>Deal & Financial Terms</h3>
+      <div class="glossary-list">
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">ARV</span> After Repair Value</div>
+          <div class="glossary-def">The estimated market value of a property AFTER all repairs and renovations are completed. This is what the investor expects the home to be worth when it's fixed up.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">CMA</span> Comparative Market Analysis</div>
+          <div class="glossary-def">A report comparing similar recently sold properties to determine a home's fair market value. Used to price properties and validate ARV.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">GP</span> Gross Profit</div>
+          <div class="glossary-def">The difference between what Myers buys the property for and what the investor pays. Your commission is calculated from this number.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Spread</div>
+          <div class="glossary-def">The difference between the purchase price and the ARV — how much potential profit exists in a deal for the investor.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Double Close</div>
+          <div class="glossary-def">Two back-to-back closings on the same day. Myers buys from the seller (Transaction A) then sells to the investor (Transaction B) through the title company.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Leaseback</div>
+          <div class="glossary-def">An arrangement where the seller sells their home but continues to live in it for a set period, paying rent to the new owner.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">EMD</span> Earnest Money Deposit</div>
+          <div class="glossary-def">A deposit (typically $5K at Myers) paid by the buyer to show serious intent. At Myers, this is collected within 1 hour of bid acceptance.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">NOI</span> Net Operating Income</div>
+          <div class="glossary-def">Total rental income minus operating expenses (not including mortgage). Used by investors evaluating rental properties.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Cap Rate</div>
+          <div class="glossary-def">Capitalization Rate — NOI divided by property value. Used to compare the return potential of investment properties.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Absorption Rate</div>
+          <div class="glossary-def">How quickly homes are selling in a given market area — tells you if it's a buyer's or seller's market.</div>
+        </div>
+      </div>
+
+      <h3>Myers Acronyms & Frameworks</h3>
+      <div class="glossary-list">
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">D4D</span> Driving for Dollars</div>
+          <div class="glossary-def">Physically driving through neighborhoods looking for distressed properties — boarded windows, overgrown yards, vacant signs.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">MIOSI$</span> Motivation–Isolate–Statement of Impact–Money</div>
+          <div class="glossary-def">The Myers conversation framework for seller appointments. Uncover motivation, isolate problems, state impact, then talk numbers.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">P.O.E.T.</span> Proof of funds–Option period–Earnest money–TREC</div>
+          <div class="glossary-def">The 4 things you need from every investor before accepting their bid.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">F.O.R.D.</span> Family–Occupation–Recreation–Dreams</div>
+          <div class="glossary-def">Rapport-building framework. Ask about these 4 topics to connect with sellers on a personal level.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Big 5</div>
+          <div class="glossary-def">The 5 major systems to inspect: <strong>Roof, Foundation, HVAC, Electrical, Plumbing.</strong> These are the expensive repairs investors care most about.</div>
+        </div>
+      </div>
+
+      <h3>Documents & Systems</h3>
+      <div class="glossary-list">
+        <div class="glossary-entry">
+          <div class="glossary-term"><span class="abbr">TREC 1-4</span> Texas Real Estate Commission Contract</div>
+          <div class="glossary-def">The standard Texas residential contract used for 1-4 family properties. This is what gets sent through DocuSign after bid acceptance.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">MVP Agreement</div>
+          <div class="glossary-def">Myers' proprietary listing/services agreement signed by sellers at the appointment.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">SIS Sheet</div>
+          <div class="glossary-def">Seller Information Sheet — the intake form capturing all property and seller details at the appointment.</div>
+        </div>
+        <div class="glossary-entry">
+          <div class="glossary-term">Skip Trace</div>
+          <div class="glossary-def">Finding a property owner's contact information (phone, email) when it's not publicly available. Used for cold outreach on distressed properties.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DO — Matching Exercise -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Flashcard Match</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>🃏 Match each term to its definition. Click a term on the left, then click the matching definition on the right.</p>
+      </div>
+
+      <div class="match-grid">
+        <div>
+          <div class="match-col-label">Terms</div>
+          <div class="match-item match-term" data-pair="1" onclick="selectTerm(this)">ARV</div>
+          <div class="match-item match-term" data-pair="2" onclick="selectTerm(this)" style="margin-top:.5rem">GP</div>
+          <div class="match-item match-term" data-pair="3" onclick="selectTerm(this)" style="margin-top:.5rem">Double Close</div>
+          <div class="match-item match-term" data-pair="4" onclick="selectTerm(this)" style="margin-top:.5rem">Big 5</div>
+          <div class="match-item match-term" data-pair="5" onclick="selectTerm(this)" style="margin-top:.5rem">F.O.R.D.</div>
+          <div class="match-item match-term" data-pair="6" onclick="selectTerm(this)" style="margin-top:.5rem">D4D</div>
+          <div class="match-item match-term" data-pair="7" onclick="selectTerm(this)" style="margin-top:.5rem">EMD</div>
+          <div class="match-item match-term" data-pair="8" onclick="selectTerm(this)" style="margin-top:.5rem">MIOSI$</div>
+        </div>
+        <div>
+          <div class="match-col-label">Definitions</div>
+          <div class="match-item match-def" data-pair="4" onclick="selectDef(this)">Roof, Foundation, HVAC, Electrical, Plumbing</div>
+          <div class="match-item match-def" data-pair="1" onclick="selectDef(this)" style="margin-top:.5rem">Property value after renovations</div>
+          <div class="match-item match-def" data-pair="6" onclick="selectDef(this)" style="margin-top:.5rem">Driving neighborhoods for distressed homes</div>
+          <div class="match-item match-def" data-pair="3" onclick="selectDef(this)" style="margin-top:.5rem">Buy & sell same day through title</div>
+          <div class="match-item match-def" data-pair="8" onclick="selectDef(this)" style="margin-top:.5rem">Motivation–Isolate–Statement–Money</div>
+          <div class="match-item match-def" data-pair="5" onclick="selectDef(this)" style="margin-top:.5rem">Family–Occupation–Recreation–Dreams</div>
+          <div class="match-item match-def" data-pair="7" onclick="selectDef(this)" style="margin-top:.5rem">$5K deposit within 1 hour</div>
+          <div class="match-item match-def" data-pair="2" onclick="selectDef(this)" style="margin-top:.5rem">Revenue from buy/sell price difference</div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:1rem;font-size:.85rem;color:#7A7263"><span id="matchCount">0</span> of 8 matched</p>
+    </div>
+  </section>
+
+  <!-- PROVE — Quiz -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Glossary Quiz — 80% to Pass</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1.25rem;color:#3D362A;font-size:.95rem;">Answer at least <strong>16 of 20 correctly</strong> (80%) to pass. Select the best answer for each question.</p>
+
+      <div id="quizContainer"></div>
+
+      <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="btn btn-green" onclick="gradeQuiz()">✅ Submit Quiz</button>
+        <button class="btn btn-primary" onclick="resetQuiz()">🔄 Retake</button>
+      </div>
+
+      <div class="quiz-score" id="quizScore">
+        <div class="big-score" id="bigScore"></div>
+        <div class="score-msg" id="scoreMsg"></div>
+        <div class="pass-bar"><div class="fill" id="passFill"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Spaced Repetition</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem;color:#3D362A;font-size:.95rem;">Review 5 random terms on each scheduled day:</p>
+      <div class="review-schedule">
+        <div class="review-day"><div class="day-num">3</div><div class="day-label">Day</div></div>
+        <div class="review-day"><div class="day-num">7</div><div class="day-label">Day</div></div>
+        <div class="review-day"><div class="day-num">14</div><div class="day-label">Day</div></div>
+        <div class="review-day"><div class="day-num">30</div><div class="day-label">Day</div></div>
+      </div>
+      <div class="review-question">"Define ARV and explain why investors care about it."</div>
+      <div class="review-question">"What does P.O.E.T. stand for and when do you use it?"</div>
+      <div class="review-question">"Name the Big 5 without looking."</div>
+      <div class="review-question">"What is the difference between GP and Spread?"</div>
+      <div class="review-question">"Explain double close in one sentence."</div>
+    </div>
+  </section>
+
+  <nav class="module-nav">
+    <a href="module-1-3.html" class="nav-prev">← Module 1.3</a>
+    <a href="module-1-5.html" class="nav-next">Module 1.5: Gmail & Drive Setup →</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Agent Training Program Draft 1</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+// MATCHING GAME
+let selectedTermEl = null;
+let matchedCount = 0;
+
+function selectTerm(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('.match-term').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTermEl = el;
+}
+
+function selectDef(el) {
+  if (el.classList.contains('matched') || !selectedTermEl) return;
+  if (selectedTermEl.dataset.pair === el.dataset.pair) {
+    selectedTermEl.classList.add('matched');
+    selectedTermEl.classList.remove('selected');
+    el.classList.add('matched');
+    matchedCount++;
+    document.getElementById('matchCount').textContent = matchedCount;
+    selectedTermEl = null;
+    if (matchedCount === 8) showToast('🎉 All 8 matched! Great job!');
+  } else {
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 500);
+  }
+}
+
+// QUIZ
+const quizData = [
+  { q: "What does ARV stand for?", opts: ["After Repair Value", "Annual Rental Value", "Adjusted Resale Value", "Average Return Value"], ans: 0 },
+  { q: "GP (Gross Profit) is calculated as:", opts: ["Sell price minus buy price", "ARV minus repair costs", "Total revenue minus all expenses", "Commission minus fees"], ans: 0 },
+  { q: "What is a Double Close?", opts: ["Closing twice on different days", "Buy from seller and sell to investor same day", "Two agents closing the same deal", "Signing two contracts"], ans: 1 },
+  { q: "What does D4D stand for?", opts: ["Deals for Days", "Driving for Dollars", "Discounts for Deals", "Documents for Delivery"], ans: 1 },
+  { q: "The Big 5 are:", opts: ["Roof, Foundation, HVAC, Electrical, Plumbing", "Kitchen, Bath, Garage, Yard, Roof", "Price, Location, Size, Age, Condition", "Walls, Floors, Ceilings, Windows, Doors"], ans: 0 },
+  { q: "F.O.R.D. stands for:", opts: ["Found, Offered, Reviewed, Done", "Family, Occupation, Recreation, Dreams", "First, Offer, Reconsider, Deal", "Finance, Options, Risk, Decision"], ans: 1 },
+  { q: "What is a CMA?", opts: ["Certified Market Appraisal", "Comparative Market Analysis", "Commercial Market Assessment", "Current Market Average"], ans: 1 },
+  { q: "TREC 1-4 is:", opts: ["A training certificate", "A tax form", "The standard Texas residential contract", "A property inspection checklist"], ans: 2 },
+  { q: "What is EMD?", opts: ["Electronic Marketing Document", "Earnest Money Deposit", "Estimated Market Discount", "Equity Market Data"], ans: 1 },
+  { q: "MIOSI$ stands for:", opts: ["Market, Invest, Offer, Sell, Income", "Motivation, Isolate, Statement of Impact, Money", "Manage, Implement, Organize, Sell, Income", "Meet, Interview, Offer, Sign, Invoice"], ans: 1 },
+  { q: "Skip Trace is used to:", opts: ["Find a property owner's contact information", "Track deal progress", "Skip unqualified leads", "Trace property history"], ans: 0 },
+  { q: "What is a Leaseback?", opts: ["Leasing equipment for closings", "Seller stays and pays rent after selling", "A type of rental agreement", "Investor leases before buying"], ans: 1 },
+  { q: "The MVP Agreement is:", opts: ["A sports contract", "Myers' listing/services agreement", "A performance bonus plan", "An investor commitment form"], ans: 1 },
+  { q: "P.O.E.T. stands for:", opts: ["Price, Offer, Estimate, Terms", "Proof of funds, Option period, Earnest money, TREC", "Property, Owner, Equity, Title", "Plan, Organize, Execute, Track"], ans: 1 },
+  { q: "Cap Rate is calculated as:", opts: ["Monthly rent × 12", "NOI divided by property value", "Purchase price minus repairs", "Total return on investment"], ans: 1 },
+  { q: "What is Absorption Rate?", opts: ["How fast paint dries on walls", "How quickly homes sell in an area", "The rate of property depreciation", "How fast investors respond to listings"], ans: 1 },
+  { q: "SIS Sheet stands for:", opts: ["Standard Investment Summary", "Seller Information Sheet", "Sales Impact Statement", "System Integration Spec"], ans: 1 },
+  { q: "What does 'Spread' mean in a deal?", opts: ["Marketing reach", "Difference between purchase price and ARV", "Commission distribution", "Time between listing and closing"], ans: 1 },
+  { q: "NOI stands for:", opts: ["Net Operating Income", "National Offer Index", "Negotiated Offer Invoice", "New Owner Information"], ans: 0 },
+  { q: "At Myers, the EMD amount is typically:", opts: ["$1,000", "$2,500", "$5,000", "$10,000"], ans: 2 }
+];
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((q, i) => {
+    let html = `<div class="quiz-q" data-correct="${q.ans}"><div class="q-num">Question ${i+1} of 20</div><div class="q-text">${q.q}</div>`;
+    q.opts.forEach((opt, j) => {
+      html += `<label class="quiz-option" onclick="selectOption(this,${j})"><input id="auto_8331e142" type="radio" name="q${i}" value="${j}">${opt}</label>`;
+    });
+    html += '</div>';
+    container.innerHTML += html;
+  });
+}
+
+function selectOption(label, val) {
+  const q = label.closest('.quiz-q');
+  q.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  label.classList.add('selected');
+  label.querySelector('input').checked = true;
+}
+
+function gradeQuiz() {
+  const questions = document.querySelectorAll('.quiz-q');
+  let correct = 0;
+  questions.forEach((q, i) => {
+    const selected = q.querySelector('input:checked');
+    const correctAns = parseInt(q.dataset.correct);
+    q.querySelectorAll('.quiz-option').forEach((opt, j) => {
+      opt.classList.remove('correct', 'wrong');
+      if (j === correctAns) opt.classList.add('correct');
+      else if (selected && parseInt(selected.value) === j && j !== correctAns) opt.classList.add('wrong');
+    });
+    if (selected && parseInt(selected.value) === correctAns) correct++;
+  });
+  const pct = Math.round((correct / 20) * 100);
+  const passed = pct >= 80;
+  document.getElementById('quizScore').style.display = 'block';
+  document.getElementById('bigScore').textContent = `${correct}/20`;
+  document.getElementById('bigScore').style.color = passed ? '#4F7A3A' : '#C9941F';
+  document.getElementById('scoreMsg').textContent = passed ? `🎉 ${pct}% — You passed! You're speaking the language!` : `${pct}% — You need 80% to pass. Review the terms and try again.`;
+  document.getElementById('passFill').style.width = `${pct}%`;
+  document.getElementById('passFill').style.background = passed ? '#4F7A3A' : '#C9941F';
+}
+
+function resetQuiz() {
+  document.getElementById('quizScore').style.display = 'none';
+  buildQuiz();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+buildQuiz();
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

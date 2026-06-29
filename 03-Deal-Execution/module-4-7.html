@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.7 — Addenda & Pre-Close Procedures | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; }
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* Addenda types */
+  .addenda-list { list-style: none; margin: 14px 0; }
+  .addenda-list li { display: flex; gap: 14px; padding: 12px 16px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 8px; align-items: flex-start; }
+  .addenda-list .a-icon { flex-shrink: 0; width: 32px; height: 32px; background: var(--accent); color: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; }
+  .addenda-list .a-body h4 { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .addenda-list .a-body p { font-size: 0.84rem; color: var(--ink2); }
+
+  /* Checklist timeline */
+  .cl-timeline { list-style: none; counter-reset: cl-step; margin: 16px 0; position: relative; }
+  .cl-timeline::before { content: ''; position: absolute; left: 17px; top: 20px; bottom: 20px; width: 2px; background: var(--hairline); }
+  .cl-timeline li { position: relative; padding: 12px 16px 12px 48px; margin-bottom: 6px; font-size: 0.88rem; color: var(--ink2); }
+  .cl-timeline li::before { counter-increment: cl-step; content: counter(cl-step); position: absolute; left: 6px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; display: flex; align-items: center; justify-content: center; z-index: 1; }
+  .cl-timeline li strong { color: var(--ink); }
+
+  .callout-rule { background: rgba(230,126,34,0.08); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .callout-rule h4 { font-size: 0.82rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; font-weight: 700; }
+  .callout-rule p { font-size: 0.88rem; color: var(--ink2); }
+
+  .docusign-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
+  .ds-step { text-align: center; background: var(--bg-soft); border-radius: 8px; padding: 16px 10px; }
+  .ds-step .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .ds-step .action { font-size: 0.82rem; color: var(--ink2); margin-top: 4px; font-weight: 600; }
+
+  /* Ordering quiz */
+  .order-item { display: flex; gap: 12px; align-items: center; background: var(--bg-soft); border-radius: 8px; padding: 12px 16px; margin-bottom: 6px; }
+  .order-item .slot { width: 30px; height: 30px; border: 2px dashed var(--hairline); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; color: var(--muted); flex-shrink: 0; }
+  .order-item p { font-size: 0.88rem; color: var(--ink2); }
+
+  .task-list { list-style: none; margin: 12px 0 0; }
+  .task-list li { padding: 10px 14px 10px 40px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; position: relative; }
+  .task-list li::before { content: '☐'; position: absolute; left: 14px; top: 10px; font-size: 1rem; color: var(--accent); }
+
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+    .docusign-steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="module-4-6.html"><span class="nav-arrow">←</span> Module 4.6</a>
+    <a href="module-4-8.html">Module 4.8 <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 7 of 8</span><span>87% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:87.5%"></div></div>
+  </div>
+
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.7</div>
+    <h1>Addenda &amp; Pre-Close Procedures</h1>
+    <div class="mod-meta">
+      <span>⏱ 10 min</span>
+      <span>🏅 Milestone: Process Master</span>
+    </div>
+  </header>
+
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> A smooth pre-close process = happy investors who come back for more. Messy paperwork and missed steps cost you repeat business and referrals.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>Addenda Types</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Addenda modify or supplement the TREC contract. Know when to use each one.</p>
+
+    <ul class="addenda-list">
+      <li>
+        <div class="a-icon">A</div>
+        <div class="a-body">
+          <h4>Addendum for Property Subject to Mandatory Membership</h4>
+          <p>Required when the property is in an HOA. Includes HOA transfer fees, outstanding dues, and resale certificate info.</p>
+        </div>
+      </li>
+      <li>
+        <div class="a-icon">B</div>
+        <div class="a-body">
+          <h4>Seller's Temporary Residential Lease (Leaseback)</h4>
+          <p>When the seller needs to stay after closing. Include specific move-out date and daily rate. Push for leaseback deposit — especially for hoarder houses.</p>
+        </div>
+      </li>
+      <li>
+        <div class="a-icon">C</div>
+        <div class="a-body">
+          <h4>Amendment</h4>
+          <p>Used to change terms after contract execution. Option period extensions <strong>must include a $ figure</strong>. Both parties must sign.</p>
+        </div>
+      </li>
+      <li>
+        <div class="a-icon">D</div>
+        <div class="a-body">
+          <h4>Third-Party Financing Addendum</h4>
+          <p>Used when the buyer is financing. Specifies loan type, terms, and deadlines. Less common for our cash deals but know it.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="callout-rule">
+      <h4>🔑 Key Rule: Amendments</h4>
+      <p>Any amendment for an option period extension <strong>must have a dollar figure attached</strong>. "Free" extensions don't exist — the seller needs compensation for the delay.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>Pre-Close Procedure Checklist</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">After the winning bid — here's what happens, in order.</p>
+
+    <ol class="cl-timeline">
+      <li><strong>Send executed contract to title company</strong> — Immediately after all signatures are collected.</li>
+      <li><strong>Deliver earnest money</strong> — Wire or cashier's check to the title company per contract terms.</li>
+      <li><strong>Complete SIS sheet</strong> — Seller Information Sheet with all deal details for internal tracking.</li>
+      <li><strong>Collect lender/LLC documentation</strong> — Buyer's entity info, operating agreement, authorization to close.</li>
+      <li><strong>Coordinate closing timeline</strong> — Confirm expected close date with title company, buyer, and seller.</li>
+      <li><strong>Send DocuSign documents</strong> — All remaining docs that need e-signatures.</li>
+      <li><strong>Confirm title clear</strong> — Title company confirms no liens, encumbrances, or issues blocking close.</li>
+      <li><strong>Fund and close</strong> — Funding can take 24-48 hours. Set this expectation with the seller.</li>
+    </ol>
+
+    <div class="callout-rule">
+      <h4>⏰ Under Promise, Over Deliver</h4>
+      <p>Set the expectation with the seller that funding can take <strong>24-48 hours</strong>. If it happens faster, you're a hero. If it takes the full 48, you set the right expectation.</p>
+    </div>
+
+    <h3 style="font-family:var(--font-serif);font-size:1.1rem;margin:20px 0 14px;">DocuSign Process</h3>
+    <div class="docusign-steps">
+      <div class="ds-step"><div class="num">1</div><div class="action">Prepare &amp; Send</div></div>
+      <div class="ds-step"><div class="num">2</div><div class="action">Track Status</div></div>
+      <div class="ds-step"><div class="num">3</div><div class="action">Follow Up &amp; Manage</div></div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--ink2);margin-top:8px;">Monitor DocuSign daily. If a seller hasn't signed within 24 hours, follow up by phone. Don't rely on email alone.</p>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Process a Sample Deal</h2>
+    <ol class="task-list">
+      <li>Take a hypothetical deal (winning bid of $85K on a 3/2 in Fort Worth).</li>
+      <li>Walk through every step of the pre-close checklist above.</li>
+      <li>Write out what you'd do at each step — who do you call? What do you send?</li>
+      <li>Identify which addenda you'd need if the seller wants a 2-week leaseback.</li>
+      <li>Draft a sample timeline from winning bid to closing day.</li>
+    </ol>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>Checklist Quiz — Put Steps in Order</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Number these 8 pre-close steps in the correct order (1-8):</p>
+
+    <div class="order-item"><div class="slot">?</div><p>Confirm title clear</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Send executed contract to title company</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Fund and close</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Complete SIS sheet</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Deliver earnest money</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Send DocuSign documents</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Collect lender/LLC documentation</p></div>
+    <div class="order-item"><div class="slot">?</div><p>Coordinate closing timeline</p></div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <div class="review-grid">
+      <div class="review-day">
+        <div class="day">14</div>
+        <div class="label">Days</div>
+        <div class="task">Review the checklist</div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="module-4-6.html" class="btn-prev"><span>←</span> Module 4.6</a>
+    <a href="module-4-8.html" class="btn-next">Module 4.8 <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

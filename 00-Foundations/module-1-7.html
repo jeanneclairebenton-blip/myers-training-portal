@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.7 — Slack Setup & Channels | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Mulish',system-ui,sans-serif;background:#F7F4ED;color:#1A1815;line-height:1.6;min-height:100vh}
+  .top-nav{background:#1A1815;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center}
+  .top-nav a{color:#FBE8B7;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.03em;transition:color .2s}
+  .top-nav a:hover{color:#C9941F}
+  .top-nav .cert-label{color:#7A7263;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+  .progress-wrap{background:#FFFDF6;border-bottom:1px solid #E8E2D4;padding:1rem 2rem}
+  .progress-label{font-size:.75rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+  .progress-track{width:100%;height:8px;background:#E8E2D4;border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;width:87.5%;background:linear-gradient(90deg,#C9941F,#8B6B1A);border-radius:99px}
+  .progress-steps{display:flex;justify-content:space-between;margin-top:.5rem}
+  .progress-steps span{font-size:.65rem;color:#7A7263;font-weight:600}
+  .progress-steps span.active{color:#C9941F;font-weight:800}
+  .progress-steps span.done{color:#4F7A3A;font-weight:800}
+  .hero{background:linear-gradient(135deg,#1A1815,#3D362A);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,148,31,.15),transparent 70%);border-radius:50%}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,148,31,.15);border:1px solid rgba(201,148,31,.3);border-radius:99px;padding:.35rem 1rem;font-size:.75rem;color:#FBE8B7;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;color:#FFFDF6;line-height:1.15;margin-bottom:.5rem}
+  .hero .subtitle{color:#C9941F;font-size:1.1rem;font-weight:600}
+  .hero-meta{display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap}
+  .hero-meta .tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:#E8E2D4;font-weight:500}
+  .why-box{background:linear-gradient(90deg,rgba(201,148,31,.1),rgba(201,148,31,.03));border-left:4px solid #C9941F;margin:2rem;padding:1.25rem 1.5rem;border-radius:0 12px 12px 0}
+  .why-box .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#8B6B1A;font-weight:800;margin-bottom:.25rem}
+  .why-box p{color:#3D362A;font-size:.95rem;font-weight:500}
+  .container{max-width:800px;margin:0 auto;padding:0 1.5rem 3rem}
+  .card{background:#FFFDF6;border-radius:16px;box-shadow:0 1px 3px rgba(26,24,21,.06),0 4px 12px rgba(26,24,21,.04);margin-bottom:1.5rem;overflow:hidden;border:1px solid #E8E2D4}
+  .card-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid #E8E2D4}
+  .card-header .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .card-header h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#1A1815}
+  .card-header .card-tag{margin-left:auto;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .75rem;border-radius:99px}
+  .card-body{padding:1.5rem}
+  .card.learn .card-icon{background:#FDF1D0}
+  .card.learn .card-tag{background:#FDF1D0;color:#8B6B1A}
+  .card.learn .card-body{background:linear-gradient(180deg,#FFFDF6,#FDF1D0 120%)}
+  .card.learn h3{font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.15rem;margin:1.5rem 0 .75rem}
+  .card.learn h3:first-child{margin-top:0}
+  .card.learn p{color:#3D362A;margin-bottom:.75rem;font-size:.95rem}
+  .card.do-card .card-icon{background:#FBE8B7}
+  .card.do-card .card-tag{background:#FBE8B7;color:#8B6B1A}
+  .card.prove .card-icon{background:rgba(79,122,58,.15)}
+  .card.prove .card-tag{background:rgba(79,122,58,.12);color:#4F7A3A}
+  .card.review .card-icon{background:rgba(122,114,99,.15)}
+  .card.review .card-tag{background:rgba(122,114,99,.12);color:#7A7263}
+  .activity-prompt{background:#FDF1D0;border-radius:10px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid #C9941F}
+  .activity-prompt p{color:#3D362A;font-size:.95rem;font-weight:600;margin:0}
+  .prove-task{display:flex;align-items:flex-start;gap:.75rem;padding:1rem;background:rgba(79,122,58,.05);border-radius:10px;border:1px solid rgba(79,122,58,.15);margin-bottom:.75rem}
+  .prove-task input[type="checkbox"]{width:20px;height:20px;accent-color:#4F7A3A;margin-top:2px;flex-shrink:0;cursor:pointer}
+  .prove-task label{font-size:.95rem;color:#3D362A;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-family:'Mulish',sans-serif;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+  .btn-green{background:linear-gradient(135deg,#4F7A3A,#3d5f2d);color:#FFFDF6;box-shadow:0 2px 8px rgba(79,122,58,.3)}
+  .btn-green:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(79,122,58,.4)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:1px solid #E8E2D4}
+  .module-nav a{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1.25rem;border-radius:10px;transition:all .2s}
+  .nav-prev{color:#7A7263;background:#F7F4ED;border:1px solid #E8E2D4}
+  .nav-prev:hover{background:#E8E2D4}
+  .nav-next{color:#FFFDF6;background:linear-gradient(135deg,#C9941F,#8B6B1A);box-shadow:0 2px 8px rgba(201,148,31,.25)}
+  .nav-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,148,31,.35)}
+  .footer{text-align:center;padding:2rem;color:#7A7263;font-size:.75rem;font-weight:600;letter-spacing:.05em;border-top:1px solid #E8E2D4;margin-top:2rem}
+  .toast{position:fixed;bottom:2rem;right:2rem;background:#1A1815;color:#FBE8B7;padding:1rem 1.5rem;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:999}
+  .toast.show{transform:translateY(0)}
+
+  /* Channel cards */
+  .channel-cards{display:grid;gap:1rem;margin:1rem 0}
+  .channel-card{display:flex;gap:1rem;padding:1.25rem;background:#F7F4ED;border-radius:12px;border:1px solid #E8E2D4;align-items:flex-start}
+  .channel-card .ch-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+  .channel-card .ch-icon.primary{background:linear-gradient(135deg,#C9941F,#8B6B1A)}
+  .channel-card .ch-icon.secondary{background:rgba(79,122,58,.15)}
+  .channel-card h4{font-family:'DM Serif Display',Georgia,serif;font-size:1.05rem;color:#1A1815;margin-bottom:.25rem}
+  .channel-card h4 code{font-family:'JetBrains Mono',monospace;color:#C9941F;background:#FDF1D0;padding:.1rem .4rem;border-radius:4px;font-size:.85rem}
+  .channel-card p{font-size:.88rem;color:#3D362A;margin:0}
+  .channel-card .ch-badge{display:inline-block;margin-top:.5rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.2rem .6rem;border-radius:99px}
+  .ch-badge.critical{background:rgba(201,148,31,.15);color:#8B6B1A}
+  .ch-badge.helpful{background:rgba(79,122,58,.1);color:#4F7A3A}
+
+  /* Alert box */
+  .alert-box{background:rgba(201,148,31,.1);border:2px solid #C9941F;border-radius:12px;padding:1.25rem;margin:1.25rem 0;display:flex;gap:.75rem;align-items:flex-start}
+  .alert-box .alert-icon{font-size:1.5rem;flex-shrink:0}
+  .alert-box h4{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1A1815;margin-bottom:.25rem}
+  .alert-box p{font-size:.88rem;color:#3D362A;margin:0}
+
+  /* No review */
+  .no-review{background:#F7F4ED;border-radius:12px;padding:1.5rem;text-align:center;border:1px dashed #E8E2D4}
+  .no-review .nr-icon{font-size:2rem;margin-bottom:.5rem}
+  .no-review p{color:#7A7263;font-size:.9rem}
+
+  /* Intro message template */
+  .msg-template{background:#1A1815;border-radius:12px;padding:1.25rem;margin:1rem 0;color:#FBE8B7;font-size:.9rem;line-height:1.7}
+  .msg-template .msg-channel{color:#C9941F;font-weight:700;font-size:.8rem;margin-bottom:.5rem}
+  .msg-template .msg-user{color:#C9941F;font-weight:700}
+  .msg-template em{color:#7A7263;font-style:normal;font-size:.82rem}
+
+  textarea.activity-input{width:100%;min-height:100px;border:2px solid #E8E2D4;border-radius:10px;padding:1rem;font-family:'Mulish',sans-serif;font-size:.95rem;color:#1A1815;background:#FFFDF6;resize:vertical;transition:border-color .2s;line-height:1.6}
+  textarea.activity-input:focus{outline:none;border-color:#C9941F;box-shadow:0 0 0 3px rgba(201,148,31,.15)}
+  textarea.activity-input::placeholder{color:#7A7263}
+
+  @media(max-width:640px){
+    .hero h1{font-size:1.75rem}
+    .hero{padding:2rem 1.25rem}
+    .why-box{margin:1.5rem 1rem}
+    .container{padding:0 1rem 2rem}
+    .module-nav{flex-direction:column;gap:.75rem}
+    .module-nav a{width:100%;justify-content:center}
+    .channel-card{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-label">Module 7 of 8</div>
+  <div class="progress-track"><div class="progress-fill" style="width:87.5%"></div></div>
+  <div class="progress-steps">
+    <span class="done">1.1</span><span class="done">1.2</span><span class="done">1.3</span><span class="done">1.4</span><span class="done">1.5</span><span class="done">1.6</span><span class="active">1.7</span><span>1.8</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-badge">💬 Module 1.7</div>
+  <h1>Slack Setup & Channels</h1>
+  <div class="subtitle">Your Real-Time Deal Feed</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 5 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Team Connected</span>
+  </div>
+</header>
+
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>Investor leads drop in <strong>#myers</strong> — the fastest responder gets the deal. If your notifications aren't on, you're leaving money on the table every single day.</p>
+</div>
+
+<div class="container">
+
+  <!-- LEARN -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Core Knowledge</span>
+    </div>
+    <div class="card-body">
+      <h3>Slack = Your Money Channel</h3>
+      <p>Slack is where deals happen in real time. When a new investor lead drops, it shows up in Slack. The agent who responds first wins the opportunity. This isn't optional — this is where deals are made or lost.</p>
+
+      <div class="alert-box">
+        <div class="alert-icon">🚨</div>
+        <div>
+          <h4>Notifications are MANDATORY</h4>
+          <p>You must have Slack on both your laptop AND your phone with push notifications turned ON. Missing a Slack notification is the same as missing a deal.</p>
+        </div>
+      </div>
+
+      <h3>Your Two Essential Channels</h3>
+      <div class="channel-cards">
+        <div class="channel-card">
+          <div class="ch-icon primary">💰</div>
+          <div>
+            <h4><code>#myers</code></h4>
+            <p>The main team communication channel. This is where <strong>investor leads drop</strong>, deal updates are shared, showing times are posted, and team announcements go out. The fastest responder to a lead wins it.</p>
+            <span class="ch-badge critical">⚡ Critical — Monitor Always</span>
+          </div>
+        </div>
+        <div class="channel-card">
+          <div class="ch-icon secondary">❓</div>
+          <div>
+            <h4><code>#askmeanything2026</code></h4>
+            <p>Your safe space to ask questions, get help, and learn from the team. No question is too basic. This is where new agents get support from experienced agents and leadership.</p>
+            <span class="ch-badge helpful">🤝 Learning & Support</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Key Slack Setup Tasks</h3>
+      <p>Complete all of these to be fully connected:</p>
+      <ul style="list-style:none;margin:1rem 0">
+        <li style="padding:.5rem 0;border-bottom:1px solid #E8E2D4;font-size:.9rem;color:#3D362A">📱 <strong>Download Slack</strong> on both laptop AND phone</li>
+        <li style="padding:.5rem 0;border-bottom:1px solid #E8E2D4;font-size:.9rem;color:#3D362A">📞 <strong>Add phone number</strong> to your Slack profile</li>
+        <li style="padding:.5rem 0;border-bottom:1px solid #E8E2D4;font-size:.9rem;color:#3D362A">🔔 <strong>Enable push notifications</strong> — Settings → Notifications → All new messages</li>
+        <li style="padding:.5rem 0;border-bottom:1px solid #E8E2D4;font-size:.9rem;color:#3D362A">📌 <strong>Find the Resource Hub</strong> in quick links — this has offer submission links and key docs</li>
+        <li style="padding:.5rem 0;font-size:.9rem;color:#3D362A">🖼 <strong>Add a professional profile photo</strong></li>
+      </ul>
+
+      <h3>Where to Find the Resource Hub</h3>
+      <p>In Slack, check the channel bookmarks / pinned items in <code>#myers</code>. The <strong>Resource Hub</strong> contains:</p>
+      <ul style="list-style:none;margin:.75rem 0">
+        <li style="padding:.4rem 0;font-size:.9rem;color:#3D362A">📋 Offer submission links</li>
+        <li style="padding:.4rem 0;font-size:.9rem;color:#3D362A">📄 Key documents and templates</li>
+        <li style="padding:.4rem 0;font-size:.9rem;color:#3D362A">🔗 Quick access to Zoho, Google Drive, and other tools</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Hands-On Setup</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>⚡ Complete your Slack setup right now. Check off each step:</p>
+      </div>
+
+      <div class="prove-task">
+        <input type="checkbox" id="do1" onchange="updateDoProgress()">
+        <label for="do1">Downloaded Slack on my <strong>laptop</strong></label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do2" onchange="updateDoProgress()">
+        <label for="do2">Downloaded Slack on my <strong>phone</strong></label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do3" onchange="updateDoProgress()">
+        <label for="do3">Joined <code style="background:#FDF1D0;padding:.1rem .3rem;border-radius:3px;color:#8B6B1A">#myers</code> channel</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do4" onchange="updateDoProgress()">
+        <label for="do4">Joined <code style="background:#FDF1D0;padding:.1rem .3rem;border-radius:3px;color:#8B6B1A">#askmeanything2026</code> channel</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do5" onchange="updateDoProgress()">
+        <label for="do5">Added my phone number to my Slack profile</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do6" onchange="updateDoProgress()">
+        <label for="do6">Enabled push notifications (ALL new messages)</label>
+      </div>
+
+      <div id="doProgressMsg" style="margin-top:1rem;padding:.75rem;background:#F7F4ED;border-radius:8px;text-align:center;font-size:.85rem;color:#7A7263;font-weight:600">
+        0 of 6 tasks complete
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Verification</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem;color:#3D362A;font-size:.95rem;"><strong>Send a test message</strong> in <code style="background:rgba(79,122,58,.1);padding:.1rem .3rem;border-radius:3px;color:#4F7A3A">#askmeanything2026</code> introducing yourself to the team.</p>
+
+      <div class="msg-template">
+        <div class="msg-channel"># askmeanything2026</div>
+        <div><span class="msg-user">@YourName:</span> Hey team! 👋 I'm [Your Name], new [AA/SA] joining Myers. Excited to be here and ready to learn. Looking forward to closing my first deal! 🏠🔥</div>
+        <div style="margin-top:.75rem"><em>Feel free to personalize this — make it your own!</em></div>
+      </div>
+
+      <p style="margin:1rem 0 .5rem;font-size:.85rem;color:#7A7263;font-weight:600">Draft your intro message below:</p>
+      <textarea class="activity-input" id="introMsg" placeholder="Hey team! 👋 I'm..."></textarea>
+
+      <div class="prove-task" style="margin-top:1rem">
+        <input type="checkbox" id="prove1" onchange="checkProve()">
+        <label for="prove1">I have posted my intro message in #askmeanything2026</label>
+      </div>
+
+      <div style="margin-top:1.25rem">
+        <button class="btn btn-green" id="submitBtn" disabled onclick="submitModule()">✅ Submit Module 1.7</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Spaced Repetition</span>
+    </div>
+    <div class="card-body">
+      <div class="no-review" style="background:#F7F4ED;border-radius:12px;padding:1.5rem;text-align:center;border:1px dashed #E8E2D4">
+        <div style="font-size:2rem;margin-bottom:.5rem">✨</div>
+        <p style="color:#7A7263;font-size:.9rem"><strong>No review needed!</strong> This is a one-time setup module. Just make sure your notifications stay ON and you're monitoring #myers daily.</p>
+        <p style="margin-top:.5rem;color:#7A7263;font-size:.9rem">Pro tip: Pin the #myers channel so it's always at the top of your sidebar.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="module-nav">
+    <a href="module-1-6.html" class="nav-prev">← Module 1.6</a>
+    <a href="module-1-8.html" class="nav-next">Module 1.8: Goal Setting →</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Agent Training Program Draft 1</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+function updateDoProgress() {
+  const ids = ['do1','do2','do3','do4','do5','do6'];
+  const done = ids.filter(id => document.getElementById(id).checked).length;
+  document.getElementById('doProgressMsg').textContent = `${done} of 6 tasks complete`;
+  if (done === 6) showToast('⚡ All Slack setup tasks complete!');
+}
+
+function checkProve() {
+  document.getElementById('submitBtn').disabled = !document.getElementById('prove1').checked;
+}
+
+function submitModule() {
+  showToast('💬 Module 1.7 Complete — Slack is live!');
+  document.getElementById('submitBtn').textContent = '✅ Completed!';
+  document.getElementById('submitBtn').disabled = true;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

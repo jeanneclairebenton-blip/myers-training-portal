@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.3 — P.O.E.T. Framework | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; }
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* POET Cards */
+  .poet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .poet-card { background: var(--bg-soft); border-radius: 10px; padding: 20px; text-align: center; position: relative; }
+  .poet-card .big-letter { font-family: var(--font-serif); font-size: 2.8rem; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+  .poet-card h3 { font-family: var(--font-serif); font-size: 1rem; margin-bottom: 6px; font-weight: 400; }
+  .poet-card p { font-size: 0.84rem; color: var(--ink2); line-height: 1.5; }
+  .poet-card .detail { font-family: var(--font-mono); font-size: 0.78rem; background: var(--cream-soft); padding: 4px 10px; border-radius: 4px; display: inline-block; margin-top: 8px; color: var(--gold-deep); }
+
+  .callout { background: var(--cream-soft); border-radius: 10px; padding: 18px 22px; margin: 18px 0; }
+  .callout h4 { font-size: 0.88rem; color: var(--gold-deep); margin-bottom: 6px; font-weight: 700; }
+  .callout p { font-size: 0.88rem; color: var(--ink2); line-height: 1.6; }
+
+  .talk-track { background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 14px 0; }
+  .talk-track p { font-size: 0.88rem; color: var(--ink2); line-height: 1.7; }
+  .talk-track .speaker { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+
+  .task-list { list-style: none; margin: 12px 0 0; }
+  .task-list li { padding: 10px 14px 10px 40px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; position: relative; }
+  .task-list li::before { content: '☐'; position: absolute; left: 14px; top: 10px; font-size: 1rem; color: var(--accent); }
+
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+    .poet-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="module-4-2.html"><span class="nav-arrow">←</span> Module 4.2</a>
+    <a href="module-4-4.html">Module 4.4 <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 3 of 8</span><span>37% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:37.5%"></div></div>
+  </div>
+
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.3</div>
+    <h1>P.O.E.T. Framework</h1>
+    <div class="mod-meta">
+      <span>⏱ 8 min</span>
+      <span>🏅 Milestone: Competition Eliminator</span>
+    </div>
+  </header>
+
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> P.O.E.T. disqualifies your competition WITHOUT badmouthing anyone. It positions Myers as the real deal while letting pretenders eliminate themselves.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>The P.O.E.T. Standard</h2>
+
+    <div class="callout">
+      <h4>The Reality</h4>
+      <p>"95% of people who call themselves investors aren't actual investors." Radio ads teach people to tie up properties without ever closing. A contract without P.O.E.T. doesn't give peace of mind.</p>
+    </div>
+
+    <p style="font-size:0.9rem;color:var(--ink2);margin:14px 0;">There are <strong>two types of investors</strong> — those that contract a property and those that can actually close. P.O.E.T. is how sellers tell the difference.</p>
+
+    <div class="poet-grid">
+      <div class="poet-card">
+        <div class="big-letter">P</div>
+        <h3>Proof of Funds</h3>
+        <p>From a reputable bank. Not a screenshot — an actual bank letter.</p>
+        <div class="detail">Verified bank letter</div>
+      </div>
+      <div class="poet-card">
+        <div class="big-letter">O</div>
+        <h3>Option Period</h3>
+        <p>10 days or less, with a fee attached. Long option periods = red flag.</p>
+        <div class="detail">≤ 10 days + fee</div>
+      </div>
+      <div class="poet-card">
+        <div class="big-letter">E</div>
+        <h3>Earnest Money</h3>
+        <p>At least $5,000. Serious money proves serious intent.</p>
+        <div class="detail">Minimum $5,000</div>
+      </div>
+      <div class="poet-card">
+        <div class="big-letter">T</div>
+        <h3>TREC Contract</h3>
+        <p>No custom contracts. TREC is the Texas standard — it protects everyone.</p>
+        <div class="detail">Standard TREC only</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-serif);font-size:1.1rem;margin:20px 0 10px;">How to Present P.O.E.T. to Sellers</h3>
+
+    <div class="talk-track">
+      <div class="speaker">You say:</div>
+      <p>"There are two types of investors — those that contract a property and those that can actually close. You've probably heard the radio ads: 'We buy houses!' But here's the truth — most of them tie up properties and never close.</p>
+      <p style="margin-top:8px;">"We do things differently. We bring <strong>Proof of funds</strong> from a reputable bank. Our <strong>Option period</strong> is 10 days or less. We put down at least <strong>$5,000 in Earnest money</strong>. And we only use the standard <strong>TREC contract</strong> — no funny business. That's how you know we're real."</p>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Practice the P.O.E.T. Delivery</h2>
+    <ol class="task-list">
+      <li>Read the talk track above 3 times out loud.</li>
+      <li>Pair up with a partner — one is the agent, the other plays a skeptical seller.</li>
+      <li>The "seller" should ask: "How do I know you're not like the last guy who backed out?"</li>
+      <li>Deliver the P.O.E.T. explanation naturally without reading.</li>
+    </ol>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>🎤 Record Your P.O.E.T. Explanation</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:12px;">Record yourself explaining P.O.E.T. as if you're sitting across from a real seller. <strong>60 seconds max.</strong> You should hit all four letters clearly and naturally.</p>
+    <div style="background:var(--cream-soft);border-radius:8px;padding:14px 18px;font-size:0.85rem;color:var(--ink2);">
+      <strong>Submission:</strong> Upload your 60-second recording or deliver live to your Team Lead.
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <div class="review-grid">
+      <div class="review-day">
+        <div class="day">7</div>
+        <div class="label">Days</div>
+        <div class="task">Deliver from memory</div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="module-4-2.html" class="btn-prev"><span>←</span> Module 4.2</a>
+    <a href="module-4-4.html" class="btn-next">Module 4.4 <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

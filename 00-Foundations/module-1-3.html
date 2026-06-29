@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.3 — Code of Conduct & Brand | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Mulish',system-ui,sans-serif;background:#F7F4ED;color:#1A1815;line-height:1.6;min-height:100vh}
+  .top-nav{background:#1A1815;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center}
+  .top-nav a{color:#FBE8B7;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.03em;transition:color .2s}
+  .top-nav a:hover{color:#C9941F}
+  .top-nav .cert-label{color:#7A7263;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+  .progress-wrap{background:#FFFDF6;border-bottom:1px solid #E8E2D4;padding:1rem 2rem}
+  .progress-label{font-size:.75rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+  .progress-track{width:100%;height:8px;background:#E8E2D4;border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;width:37.5%;background:linear-gradient(90deg,#C9941F,#8B6B1A);border-radius:99px}
+  .progress-steps{display:flex;justify-content:space-between;margin-top:.5rem}
+  .progress-steps span{font-size:.65rem;color:#7A7263;font-weight:600}
+  .progress-steps span.active{color:#C9941F;font-weight:800}
+  .progress-steps span.done{color:#4F7A3A;font-weight:800}
+  .hero{background:linear-gradient(135deg,#1A1815,#3D362A);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,148,31,.15),transparent 70%);border-radius:50%}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,148,31,.15);border:1px solid rgba(201,148,31,.3);border-radius:99px;padding:.35rem 1rem;font-size:.75rem;color:#FBE8B7;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;color:#FFFDF6;line-height:1.15;margin-bottom:.5rem}
+  .hero .subtitle{color:#C9941F;font-size:1.1rem;font-weight:600}
+  .hero-meta{display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap}
+  .hero-meta .tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:#E8E2D4;font-weight:500}
+  .why-box{background:linear-gradient(90deg,rgba(201,148,31,.1),rgba(201,148,31,.03));border-left:4px solid #C9941F;margin:2rem;padding:1.25rem 1.5rem;border-radius:0 12px 12px 0}
+  .why-box .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#8B6B1A;font-weight:800;margin-bottom:.25rem}
+  .why-box p{color:#3D362A;font-size:.95rem;font-weight:500}
+  .container{max-width:800px;margin:0 auto;padding:0 1.5rem 3rem}
+  .card{background:#FFFDF6;border-radius:16px;box-shadow:0 1px 3px rgba(26,24,21,.06),0 4px 12px rgba(26,24,21,.04);margin-bottom:1.5rem;overflow:hidden;border:1px solid #E8E2D4}
+  .card-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid #E8E2D4}
+  .card-header .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .card-header h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#1A1815}
+  .card-header .card-tag{margin-left:auto;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .75rem;border-radius:99px}
+  .card-body{padding:1.5rem}
+  .card.learn .card-icon{background:#FDF1D0}
+  .card.learn .card-tag{background:#FDF1D0;color:#8B6B1A}
+  .card.learn .card-body{background:linear-gradient(180deg,#FFFDF6,#FDF1D0 120%)}
+  .card.learn h3{font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.15rem;margin:1.5rem 0 .75rem}
+  .card.learn h3:first-child{margin-top:0}
+  .card.learn p{color:#3D362A;margin-bottom:.75rem;font-size:.95rem}
+  .card.learn ul{list-style:none;margin:.75rem 0}
+  .card.learn li{color:#3D362A;margin-bottom:.5rem;font-size:.95rem;padding:.65rem 1rem;background:#F7F4ED;border-radius:8px;border-left:3px solid #C9941F;display:flex;align-items:flex-start;gap:.6rem}
+  .card.learn li .li-icon{flex-shrink:0;font-size:1.1rem}
+  .card.do-card .card-icon{background:#FBE8B7}
+  .card.do-card .card-tag{background:#FBE8B7;color:#8B6B1A}
+  .card.prove .card-icon{background:rgba(79,122,58,.15)}
+  .card.prove .card-tag{background:rgba(79,122,58,.12);color:#4F7A3A}
+  .card.review .card-icon{background:rgba(122,114,99,.15)}
+  .card.review .card-tag{background:rgba(122,114,99,.12);color:#7A7263}
+  .highlight-box{background:rgba(201,148,31,.1);border:1px solid rgba(201,148,31,.25);border-radius:10px;padding:1rem 1.25rem;margin:1rem 0}
+  .highlight-box .hl-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:#8B6B1A;margin-bottom:.35rem}
+  .highlight-box p{font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.1rem;margin-bottom:0}
+  .activity-prompt{background:#FDF1D0;border-radius:10px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid #C9941F}
+  .activity-prompt p{color:#3D362A;font-size:.95rem;font-weight:600;margin:0}
+  textarea.activity-input{width:100%;min-height:120px;border:2px solid #E8E2D4;border-radius:10px;padding:1rem;font-family:'Mulish',sans-serif;font-size:.95rem;color:#1A1815;background:#FFFDF6;resize:vertical;transition:border-color .2s;line-height:1.6}
+  textarea.activity-input:focus{outline:none;border-color:#C9941F;box-shadow:0 0 0 3px rgba(201,148,31,.15)}
+  textarea.activity-input::placeholder{color:#7A7263}
+  .prove-task{display:flex;align-items:flex-start;gap:.75rem;padding:1rem;background:rgba(79,122,58,.05);border-radius:10px;border:1px solid rgba(79,122,58,.15);margin-bottom:.75rem}
+  .prove-task input[type="checkbox"]{width:20px;height:20px;accent-color:#4F7A3A;margin-top:2px;flex-shrink:0;cursor:pointer}
+  .prove-task label{font-size:.95rem;color:#3D362A;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-family:'Mulish',sans-serif;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+  .btn-green{background:linear-gradient(135deg,#4F7A3A,#3d5f2d);color:#FFFDF6;box-shadow:0 2px 8px rgba(79,122,58,.3)}
+  .btn-green:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(79,122,58,.4)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+  .review-schedule{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1.25rem}
+  .review-day{text-align:center;padding:1rem;background:#F7F4ED;border-radius:10px;border:1px solid #E8E2D4}
+  .review-day .day-num{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;color:#C9941F}
+  .review-day .day-label{font-size:.7rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .review-question{background:#F7F4ED;border-radius:8px;padding:.85rem 1rem;margin-bottom:.5rem;font-size:.9rem;color:#3D362A;border-left:3px solid #7A7263;font-style:italic}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:1px solid #E8E2D4}
+  .module-nav a{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1.25rem;border-radius:10px;transition:all .2s}
+  .nav-prev{color:#7A7263;background:#F7F4ED;border:1px solid #E8E2D4}
+  .nav-prev:hover{background:#E8E2D4}
+  .nav-next{color:#FFFDF6;background:linear-gradient(135deg,#C9941F,#8B6B1A);box-shadow:0 2px 8px rgba(201,148,31,.25)}
+  .nav-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,148,31,.35)}
+  .footer{text-align:center;padding:2rem;color:#7A7263;font-size:.75rem;font-weight:600;letter-spacing:.05em;border-top:1px solid #E8E2D4;margin-top:2rem}
+  .toast{position:fixed;bottom:2rem;right:2rem;background:#1A1815;color:#FBE8B7;padding:1rem 1.5rem;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:999}
+  .toast.show{transform:translateY(0)}
+
+  /* Brand Rules Grid */
+  .brand-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+  .brand-rule{background:#F7F4ED;border-radius:12px;padding:1.25rem;border:1px solid #E8E2D4;text-align:center}
+  .brand-rule .rule-icon{font-size:2rem;margin-bottom:.5rem}
+  .brand-rule h4{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1A1815;margin-bottom:.35rem}
+  .brand-rule p{font-size:.82rem;color:#7A7263}
+
+  /* Signature block */
+  .signature-block{margin-top:1.5rem;padding:1.5rem;background:rgba(79,122,58,.05);border:2px solid rgba(79,122,58,.2);border-radius:12px}
+  .signature-block h4{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;color:#1A1815;margin-bottom:.75rem}
+  .sig-input{width:100%;border:none;border-bottom:2px solid #C9941F;background:transparent;padding:.5rem 0;font-family:'DM Serif Display',Georgia,serif;font-size:1.25rem;color:#1A1815;outline:none}
+  .sig-input::placeholder{color:#7A7263;font-family:'Mulish',sans-serif;font-size:.9rem;font-style:italic}
+  .sig-date{font-size:.8rem;color:#7A7263;margin-top:.5rem}
+
+  @media(max-width:640px){
+    .hero h1{font-size:1.75rem}
+    .hero{padding:2rem 1.25rem}
+    .why-box{margin:1.5rem 1rem}
+    .container{padding:0 1rem 2rem}
+    .module-nav{flex-direction:column;gap:.75rem}
+    .module-nav a{width:100%;justify-content:center}
+    .brand-rules{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-label">Module 3 of 8</div>
+  <div class="progress-track"><div class="progress-fill" style="width:37.5%"></div></div>
+  <div class="progress-steps">
+    <span class="done">1.1</span><span class="done">1.2</span><span class="active">1.3</span><span>1.4</span><span>1.5</span><span>1.6</span><span>1.7</span><span>1.8</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-badge">🛡️ Module 1.3</div>
+  <h1>Code of Conduct & Brand</h1>
+  <div class="subtitle">Protect the Brand, Protect Your Pipeline</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 5 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Brand Guardian</span>
+  </div>
+</header>
+
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>Protecting the brand protects your deal pipeline. One bad review can cost thousands in lost deals. One professional impression can create a raving fan who refers you three more sellers.</p>
+</div>
+
+<div class="container">
+
+  <!-- LEARN -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Core Knowledge</span>
+    </div>
+    <div class="card-body">
+      <h3>The Myers Standard: Transparency Above All</h3>
+      <p>At Myers, we don't hide things. We <strong>OVER DISCLOSE</strong>. When you're transparent with sellers, investors, and everyone in between, you build trust. Trust builds repeat business. Repeat business builds wealth.</p>
+
+      <div class="highlight-box">
+        <div class="hl-label">🔑 Core Principle</div>
+        <p>We create RAVING FANS — not just satisfied customers. 200+ Google reviews prove it works.</p>
+      </div>
+
+      <h3>Non-Negotiable Conduct Rules</h3>
+      <ul>
+        <li><span class="li-icon">👔</span><div><strong>Professional appearance at ALL times.</strong> You represent Myers the moment you leave your house. Dress like someone who handles six-figure transactions.</div></li>
+        <li><span class="li-icon">🚫</span><div><strong>No sunglasses during appointments.</strong> Eye contact builds trust. Sunglasses create a barrier between you and the seller.</div></li>
+        <li><span class="li-icon">🚫</span><div><strong>No Bluetooth earpieces during appointments.</strong> Give the seller your full, undivided attention. Nothing says "I'm not important to you" like a blinking earpiece.</div></li>
+        <li><span class="li-icon">💼</span><div><strong>Business cards at every meeting.</strong> Always carry Myers business cards. Hand them out proactively — to sellers, neighbors, anyone you meet.</div></li>
+        <li><span class="li-icon">📋</span><div><strong>Portfolio at every appointment.</strong> Your Myers portfolio demonstrates professionalism and gives the seller confidence in our process.</div></li>
+        <li><span class="li-icon">⭐</span><div><strong>Ask for reviews.</strong> After every positive interaction, ask for a Google review. This is how we maintain 200+ reviews and counting.</div></li>
+        <li><span class="li-icon">📣</span><div><strong>Over-disclose everything.</strong> If there's something the seller or investor should know, tell them. Even if it's uncomfortable. Especially if it's uncomfortable.</div></li>
+      </ul>
+
+      <h3>Brand Guidelines at a Glance</h3>
+      <div class="brand-rules">
+        <div class="brand-rule">
+          <div class="rule-icon">🎨</div>
+          <h4>Myers Gold</h4>
+          <p style="color:#C9941F;font-weight:800;font-size:1rem">#C9941F</p>
+          <p>Primary brand color. Used in all marketing, presentations, and materials.</p>
+        </div>
+        <div class="brand-rule">
+          <div class="rule-icon">🔤</div>
+          <h4>Professional Fonts</h4>
+          <p>Consistent typography across all materials. Clean, modern, premium feel.</p>
+        </div>
+        <div class="brand-rule">
+          <div class="rule-icon">📸</div>
+          <h4>Consistent Imagery</h4>
+          <p>Professional photos. No blurry selfies. Brand-consistent social posts.</p>
+        </div>
+        <div class="brand-rule">
+          <div class="rule-icon">⭐</div>
+          <h4>200+ Reviews</h4>
+          <p>Our reputation is our #1 asset. Every interaction protects or damages it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Activity</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>📝 Read through the Code of Conduct above, then write down 3 things that surprised you, stood out, or that you want to make sure you remember.</p>
+      </div>
+
+      <div style="margin-bottom:.75rem;">
+        <label style="font-size:.85rem;font-weight:700;color:#8B6B1A;display:block;margin-bottom:.35rem;">1. First thing that stood out:</label>
+        <textarea id="auto_a9580a77" class="activity-input" style="min-height:60px" placeholder="What surprised you or what do you want to remember?"></textarea>
+      </div>
+      <div style="margin-bottom:.75rem;">
+        <label style="font-size:.85rem;font-weight:700;color:#8B6B1A;display:block;margin-bottom:.35rem;">2. Second thing:</label>
+        <textarea id="auto_0f91db2d" class="activity-input" style="min-height:60px" placeholder="Another rule or principle that stood out..."></textarea>
+      </div>
+      <div>
+        <label style="font-size:.85rem;font-weight:700;color:#8B6B1A;display:block;margin-bottom:.35rem;">3. Third thing:</label>
+        <textarea id="auto_c2066e4d" class="activity-input" style="min-height:60px" placeholder="One more thing you want to remember..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Acknowledgment</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1.25rem;color:#3D362A;font-size:.95rem;">By checking the boxes below and signing your name, you acknowledge that you have read, understood, and agree to uphold the Myers Home Buyers Code of Conduct.</p>
+
+      <div class="prove-task">
+        <input type="checkbox" id="ack1" onchange="checkAck()">
+        <label for="ack1">I have read and understood the Myers Home Buyers Code of Conduct</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="ack2" onchange="checkAck()">
+        <label for="ack2">I understand that professional representation is required at ALL times</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="ack3" onchange="checkAck()">
+        <label for="ack3">I commit to over-disclosing and creating RAVING FANS</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="ack4" onchange="checkAck()">
+        <label for="ack4">I will carry business cards and my portfolio to every appointment</label>
+      </div>
+
+      <div class="signature-block">
+        <h4>✍️ Your Signature</h4>
+        <input type="text" class="sig-input" id="sigInput" placeholder="Type your full name here" oninput="checkAck()">
+        <div class="sig-date" id="sigDate"></div>
+      </div>
+
+      <div style="margin-top:1.25rem;">
+        <button class="btn btn-green" id="submitBtn" disabled onclick="submitModule()">✅ Sign & Submit Module 1.3</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Spaced Repetition</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1rem;color:#3D362A;font-size:.95rem;">Come back on Day 7 and answer this question:</p>
+      <div class="review-schedule">
+        <div class="review-day"><div class="day-num">7</div><div class="day-label">Day</div></div>
+      </div>
+      <div class="review-question">"Name 3 rules from the Myers Code of Conduct."</div>
+      <div class="review-question">"What does 'over-disclose' mean in practice?"</div>
+      <div class="review-question">"Why are Google reviews so important to Myers?"</div>
+    </div>
+  </section>
+
+  <nav class="module-nav">
+    <a href="module-1-2.html" class="nav-prev">← Module 1.2</a>
+    <a href="module-1-4.html" class="nav-next">Module 1.4: Glossary & Key Terms →</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Agent Training Program Draft 1</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+function checkAck(){
+  const boxes=[document.getElementById('ack1'),document.getElementById('ack2'),document.getElementById('ack3'),document.getElementById('ack4')];
+  const allChecked=boxes.every(b=>b.checked);
+  const signed=document.getElementById('sigInput').value.trim().length>=2;
+  document.getElementById('submitBtn').disabled=!(allChecked&&signed);
+  if(signed){
+    document.getElementById('sigDate').textContent='Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  }
+}
+
+function submitModule(){
+  showToast('🛡️ Module 1.3 Complete — Code of Conduct acknowledged!');
+  document.getElementById('submitBtn').textContent='✅ Signed & Submitted!';
+  document.getElementById('submitBtn').disabled=true;
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

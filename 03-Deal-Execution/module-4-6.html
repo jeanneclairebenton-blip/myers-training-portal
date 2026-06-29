@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.6 — TREC Contract Walkthrough | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; }
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* Contract Paragraphs */
+  .contract-para { background: var(--bg-soft); border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; border-left: 3px solid var(--accent); }
+  .contract-para .para-num { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
+  .contract-para h4 { font-family: var(--font-serif); font-size: 0.98rem; font-weight: 400; margin: 4px 0 6px; }
+  .contract-para p { font-size: 0.85rem; color: var(--ink2); line-height: 1.6; }
+
+  .callout-warn { background: rgba(220,53,69,0.06); border-left: 3px solid #dc3545; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .callout-warn h4 { font-size: 0.82rem; color: #b52a37; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .callout-warn ul { list-style: none; margin: 0; }
+  .callout-warn li { font-size: 0.85rem; color: var(--ink2); padding: 3px 0; padding-left: 18px; position: relative; }
+  .callout-warn li::before { content: '⚠'; position: absolute; left: 0; }
+
+  .callout-em { background: var(--cream-soft); border-radius: 10px; padding: 18px 22px; margin: 16px 0; }
+  .callout-em h4 { font-size: 0.88rem; color: var(--gold-deep); margin-bottom: 6px; font-weight: 700; }
+  .callout-em p { font-size: 0.88rem; color: var(--ink2); line-height: 1.6; }
+
+  .task-list { list-style: none; margin: 12px 0 0; }
+  .task-list li { padding: 10px 14px 10px 40px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; position: relative; }
+  .task-list li::before { content: '☐'; position: absolute; left: 14px; top: 10px; font-size: 1rem; color: var(--accent); }
+
+  /* Quiz */
+  .quiz-q { background: var(--bg-soft); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
+  .quiz-q p { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .quiz-q .options { list-style: none; }
+  .quiz-q .options li { padding: 5px 0; font-size: 0.85rem; color: var(--ink2); }
+  .quiz-q .options li::before { content: '○ '; color: var(--accent); font-weight: 700; }
+  .quiz-q .fill-in { background: var(--cream-soft); border-radius: 6px; padding: 8px 14px; font-size: 0.85rem; color: var(--muted); }
+
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="module-4-5.html"><span class="nav-arrow">←</span> Module 4.5</a>
+    <a href="module-4-7.html">Module 4.7 <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 6 of 8</span><span>75% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+  </div>
+
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.6</div>
+    <h1>TREC Contract Walkthrough</h1>
+    <div class="mod-meta">
+      <span>⏱ 10 min</span>
+      <span>🏅 Milestone: Contract Confident</span>
+    </div>
+  </header>
+
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> Contract errors kill deals and cost thousands — know this document inside out. One wrong paragraph can blow up a closing and your commission with it.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>TREC 1-4 Family Residential Contract</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:16px;">This is the Texas standard for residential real estate transactions. We use <strong>TREC contracts only</strong> — no custom contracts. This ties directly to P.O.E.T. (Module 4.3).</p>
+
+    <h3 style="font-family:var(--font-serif);font-size:1.1rem;margin:8px 0 14px;">Key Paragraphs You Must Know</h3>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 1</div>
+      <h4>Parties</h4>
+      <p>Names of buyer and seller. Must match exactly — verify against IDs. LLC name must match registered entity.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 4</div>
+      <h4>License Holder Disclosure</h4>
+      <p>Disclose if any party is a licensed agent. We always disclose — transparency builds trust.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 5</div>
+      <h4>Earnest Money</h4>
+      <p>Minimum $5,000. Deposited within the specified time. Non-refundable (refundable ONLY if title won't clear). Credited toward purchase price at closing.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 6</div>
+      <h4>Title Policy & Survey</h4>
+      <p>Title company information. Who pays for what. Survey requirements. Review carefully with the title company.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 7</div>
+      <h4>Property Condition</h4>
+      <p>We buy <strong>as-is</strong>. No inspection contingency. No appraisal contingency. This is a key selling point for our sellers.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 11</div>
+      <h4>Special Provisions</h4>
+      <p>Any additional terms go here. Leaseback agreements, repair credits, seller contingencies. Read and write this section carefully.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 21</div>
+      <h4>Notices</h4>
+      <p><strong>Always include seller name, phone, and email.</strong> This is critical for communication during the closing process.</p>
+    </div>
+
+    <div class="contract-para">
+      <div class="para-num">Paragraph 23</div>
+      <h4>Option Period</h4>
+      <p>10 days or less with a fee (per P.O.E.T.). Option money is separate from earnest money. Delivered within the specified timeframe.</p>
+    </div>
+
+    <div class="callout-em">
+      <h4>💰 Earnest Money Rules</h4>
+      <p><strong>Minimum:</strong> $5,000<br>
+      <strong>Refundable?</strong> Only if title won't clear — otherwise non-refundable.<br>
+      <strong>Deposit:</strong> Credited toward purchase price at closing.<br>
+      <strong>Timeline:</strong> Must be delivered per contract terms — no delays.</p>
+    </div>
+
+    <div class="callout-warn">
+      <h4>Common Mistakes New Agents Make</h4>
+      <ul>
+        <li>Misspelling names or using wrong entity names</li>
+        <li>Forgetting to include phone/email in Paragraph 21 Notices</li>
+        <li>Setting option period too long (must be ≤ 10 days)</li>
+        <li>Not specifying earnest money amount or delivery method</li>
+        <li>Using custom contract language instead of standard TREC</li>
+        <li>Leaving Special Provisions blank when additional terms were discussed</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Review a Sample TREC Contract</h2>
+    <ol class="task-list">
+      <li>Obtain a blank TREC 1-4 Family Residential Contract.</li>
+      <li>Read through every paragraph — mark the ones listed above.</li>
+      <li>Identify the 5 most important paragraphs for your role and write a sentence explaining why each matters.</li>
+      <li>Practice filling in sample data for a hypothetical deal.</li>
+      <li>Have a Team Lead review your filled-out sample for errors.</li>
+    </ol>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>Contract Quiz — 85%+ to Pass</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Match each scenario to the correct contract section. You need at least 85% (9 of 10 correct).</p>
+
+    <div class="quiz-q">
+      <p>1. Where does the buyer's LLC name go?</p>
+      <ul class="options"><li>Paragraph 1 — Parties</li><li>Paragraph 11 — Special Provisions</li><li>Paragraph 21 — Notices</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>2. You agree to a leaseback with the seller. Where does this go?</p>
+      <ul class="options"><li>Paragraph 5</li><li>Paragraph 7</li><li>Paragraph 11 — Special Provisions</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>3. What is the minimum earnest money at Myers?</p>
+      <div class="fill-in">$___________</div>
+    </div>
+    <div class="quiz-q">
+      <p>4. When is earnest money refundable?</p>
+      <ul class="options"><li>Anytime before closing</li><li>Only if title won't clear</li><li>Never</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>5. What is the maximum option period allowed per P.O.E.T.?</p>
+      <ul class="options"><li>7 days</li><li>10 days</li><li>14 days</li><li>30 days</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>6. The seller's phone and email go in which paragraph?</p>
+      <ul class="options"><li>Paragraph 1</li><li>Paragraph 11</li><li>Paragraph 21 — Notices</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>7. Why does Myers only use TREC contracts?</p>
+      <div class="fill-in">Write your answer: ___________________________</div>
+    </div>
+    <div class="quiz-q">
+      <p>8. "As-is, no inspection contingency" falls under which paragraph?</p>
+      <ul class="options"><li>Paragraph 5</li><li>Paragraph 7 — Property Condition</li><li>Paragraph 23</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>9. What's a common mistake with Paragraph 21?</p>
+      <ul class="options"><li>Putting wrong purchase price</li><li>Leaving out seller phone/email</li><li>Using wrong option period</li></ul>
+    </div>
+    <div class="quiz-q">
+      <p>10. Earnest money is credited toward what at closing?</p>
+      <ul class="options"><li>Agent commission</li><li>Purchase price</li><li>Closing costs only</li></ul>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <div class="review-grid">
+      <div class="review-day">
+        <div class="day">14</div>
+        <div class="label">Days</div>
+        <div class="task">Review the contract again</div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="module-4-5.html" class="btn-prev"><span>←</span> Module 4.5</a>
+    <a href="module-4-7.html" class="btn-next">Module 4.7 <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

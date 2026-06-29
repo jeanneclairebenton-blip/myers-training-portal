@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.8 — Setting Seller Expectations | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; }
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* Say / Don't Say */
+  .say-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .say-card { border-radius: 10px; padding: 18px 20px; }
+  .say-card.do-say { background: rgba(79,122,58,0.08); border: 1px solid rgba(79,122,58,0.15); }
+  .say-card.dont-say { background: rgba(220,53,69,0.05); border: 1px solid rgba(220,53,69,0.12); }
+  .say-card h4 { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+  .say-card.do-say h4 { color: var(--green); }
+  .say-card.dont-say h4 { color: #b52a37; }
+  .say-card ul { list-style: none; }
+  .say-card li { padding: 5px 0; font-size: 0.84rem; color: var(--ink2); border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .say-card li:last-child { border-bottom: none; }
+
+  /* Info blocks */
+  .info-section { margin: 16px 0; }
+  .info-section h3 { font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 10px; font-weight: 400; }
+  .info-block { background: var(--bg-soft); border-radius: 8px; padding: 16px 20px; margin-bottom: 10px; }
+  .info-block h4 { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .info-block p { font-size: 0.85rem; color: var(--ink2); line-height: 1.6; }
+
+  /* CRM Notes */
+  .crm-checklist { list-style: none; margin: 12px 0; }
+  .crm-checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--hairline); font-size: 0.88rem; color: var(--ink2); }
+  .crm-checklist li:last-child { border-bottom: none; }
+  .crm-checklist .check { flex-shrink: 0; width: 22px; height: 22px; border: 2px solid var(--accent); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--accent); margin-top: 1px; }
+
+  .callout-critical { background: var(--cream-soft); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .callout-critical h4 { font-size: 0.82rem; color: var(--gold-deep); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; font-weight: 700; }
+  .callout-critical p { font-size: 0.88rem; color: var(--ink2); }
+
+  .task-list { list-style: none; margin: 12px 0 0; }
+  .task-list li { padding: 10px 14px 10px 40px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; position: relative; }
+  .task-list li::before { content: '☐'; position: absolute; left: 14px; top: 10px; font-size: 1rem; color: var(--accent); }
+
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  /* Completion Banner */
+  .completion-banner { background: linear-gradient(135deg, var(--accent), #f39c12); border-radius: var(--radius); padding: 28px 24px; text-align: center; color: #fff; margin-top: 24px; box-shadow: var(--shadow-md); }
+  .completion-banner h2 { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 8px; font-weight: 400; }
+  .completion-banner p { font-size: 0.92rem; opacity: 0.9; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+    .say-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="module-4-7.html"><span class="nav-arrow">←</span> Module 4.7</a>
+    <a href="../index.html">Certificate Home <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 8 of 8</span><span>100% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.8</div>
+    <h1>Setting Seller Expectations</h1>
+    <div class="mod-meta">
+      <span>⏱ 8 min</span>
+      <span>🏅 Milestone: Expectation Expert</span>
+    </div>
+  </header>
+
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> Properly managed seller expectations = smooth closings = repeat deals + referrals. A confused or anxious seller can blow up a deal even after the contract is signed.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>After Offer Accepted: Say vs. Don't Say</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">The words you choose after the offer is accepted are just as important as the ones that closed the deal.</p>
+
+    <div class="say-grid">
+      <div class="say-card do-say">
+        <h4>✅ Do Say</h4>
+        <ul>
+          <li>"The title company will reach out to you within a few days."</li>
+          <li>"Funding typically takes 24-48 hours after signing."</li>
+          <li>"We'll keep you updated every step of the way."</li>
+          <li>"If you have questions, call me directly."</li>
+          <li>"The process usually takes [X] weeks from here."</li>
+          <li>"We buy as-is — you don't need to clean or repair anything."</li>
+        </ul>
+      </div>
+      <div class="say-card dont-say">
+        <h4>❌ Don't Say</h4>
+        <ul>
+          <li>"We'll close tomorrow." (Unless you're certain)</li>
+          <li>"Don't worry about anything." (Too vague)</li>
+          <li>"This will be easy." (Oversimplifying)</li>
+          <li>"I'll have your money by Friday." (Without confirmation)</li>
+          <li>Anything about the investor's profit margin</li>
+          <li>Anything negative about their property</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>Key Topics to Cover with Sellers</h2>
+
+    <div class="info-section">
+      <div class="info-block">
+        <h4>📅 Timeline Management</h4>
+        <p>Set a realistic closing window. Explain each phase: title search, document preparation, signing, funding. Always pad your estimate — under promise, over deliver.</p>
+      </div>
+
+      <div class="info-block">
+        <h4>🏠 Leaseback Explanation</h4>
+        <p>If the seller needs time to move out, explain the leaseback clearly: they can stay X days after closing, with a daily rate and a deposit. Push for a leaseback deposit — <strong>especially for hoarder houses</strong> — to ensure the property is cleared.</p>
+      </div>
+
+      <div class="info-block">
+        <h4>🏢 Title Company's Role</h4>
+        <p>Explain that the title company is a neutral third party. They verify ownership, check for liens, prepare documents, and handle the money. The seller should expect to hear from them.</p>
+      </div>
+
+      <div class="info-block">
+        <h4>😰 Handling Seller Anxiety</h4>
+        <p>Sellers get nervous — it's natural. Proactive communication prevents panic calls. Send updates even when there's nothing new: "Just checking in — everything is on track."</p>
+      </div>
+
+      <div class="info-block">
+        <h4>📝 Section 21 Notices — Non-Negotiable</h4>
+        <p><strong>Always include seller name, phone, and email in Section 21 NOTICES.</strong> This is how the title company and all parties communicate. Missing info = delays.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>CRM Notes — Required After Every Appointment</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Update CRM <strong>immediately after the appointment</strong> while the info is fresh. Don't wait until you get back to the office.</p>
+
+    <ul class="crm-checklist">
+      <li><div class="check">☐</div><strong>Detailed property condition</strong> — Roof, foundation, HVAC, plumbing, cosmetic issues, hoarder status</li>
+      <li><div class="check">☐</div><strong>Seller situation</strong> — Motivation, urgency, financial situation, family dynamics</li>
+      <li><div class="check">☐</div><strong>Timeline</strong> — When they need to close, move-out needs, leaseback requested?</li>
+      <li><div class="check">☐</div><strong>Offers discussed</strong> — Numbers mentioned, seller's expectations, competing offers</li>
+      <li><div class="check">☐</div><strong>Next steps</strong> — What you promised, what's pending, follow-up date</li>
+      <li><div class="check">☐</div><strong>Contact info verified</strong> — Name, phone, email confirmed for Section 21</li>
+    </ul>
+
+    <div class="callout-critical">
+      <h4>⚡ Critical Rule</h4>
+      <p>Post-appointment: Update CRM <strong>immediately</strong> while info is fresh. Details you forget today become deals you lose tomorrow. If you drive away without updating, you will forget something important.</p>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Write a Post-Acceptance Communication</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:14px;">Write a sample message to a seller after their offer has been accepted. Cover all the key topics.</p>
+    <ol class="task-list">
+      <li>Write a text/email to a seller confirming offer acceptance.</li>
+      <li>Include: timeline expectation, next steps, who will contact them, and your direct phone number.</li>
+      <li>Write a follow-up check-in message for 3 days later.</li>
+      <li>Write a "closing is scheduled" notification message.</li>
+    </ol>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>Submit Your Seller Communication Draft</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:12px;">Submit all 3 messages (acceptance, 3-day check-in, closing scheduled) to your Team Lead for review. They should be:</p>
+    <ul style="margin:10px 0 0 20px;font-size:0.88rem;color:var(--ink2);">
+      <li>Professional but warm</li>
+      <li>Clear about timeline and expectations</li>
+      <li>Include all necessary details</li>
+      <li>Free of promises you can't guarantee</li>
+    </ul>
+    <div style="background:var(--cream-soft);border-radius:8px;padding:14px 18px;font-size:0.85rem;color:var(--ink2);margin-top:14px;">
+      <strong>Submission:</strong> Share your 3 messages with your Team Lead. Be ready to explain your word choices.
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <div class="review-grid">
+      <div class="review-day">
+        <div class="day">14</div>
+        <div class="label">Days</div>
+        <div class="task">Review communication template</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Completion Banner -->
+  <div class="completion-banner">
+    <h2>🎉 Certificate 4 Complete!</h2>
+    <p>You've finished all 8 modules of Deal Execution. You now have the scripts, frameworks, and processes to execute deals with confidence. Time to put them to work.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="module-4-7.html" class="btn-prev"><span>←</span> Module 4.7</a>
+    <a href="../index.html" class="btn-next">Certificate Home <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

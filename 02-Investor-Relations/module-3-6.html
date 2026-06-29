@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3.6 — Repair Estimation | Myers Home Buyers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+            --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+            --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A;
+            --accent: #8e44ad; --accent-light: #f3e8f9; --accent-soft: #ecdaf5;
+            --font-sans: 'Mulish', system-ui, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+        .progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .progress-track { height: 4px; background: var(--hairline); }
+        .progress-fill { height: 100%; width: 75%; background: linear-gradient(90deg, var(--accent), #a855c7); border-radius: 0 4px 4px 0; }
+        .top-nav { margin-top: 4px; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+        .top-nav a { font-size: 0.82rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .top-nav a:hover { color: var(--gold-deep); }
+        .top-nav .nav-center { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+        .container { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; }
+        .module-header { text-align: center; margin-bottom: 40px; }
+        .module-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; }
+        .module-header h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--ink); line-height: 1.2; margin-bottom: 12px; }
+        .module-meta { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .module-meta span { display: flex; align-items: center; gap: 6px; }
+        .why-card { background: linear-gradient(135deg, var(--accent), #7b3a9e); color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 8px 32px rgba(142,68,173,0.18); }
+        .why-card h2 { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px; }
+        .why-card p { font-size: 0.97rem; line-height: 1.65; opacity: 0.95; }
+        .section-card { background: var(--surface); border-radius: 16px; padding: 32px; margin-bottom: 24px; border: 1px solid var(--hairline); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding: 5px 14px; border-radius: 100px; }
+        .learn-label { background: var(--accent-light); color: var(--accent); }
+        .do-label { background: #e8f5e1; color: var(--green); }
+        .prove-label { background: var(--cream-soft); color: var(--gold-deep); }
+        .review-label { background: #e3eefe; color: #2c5ea8; }
+        .section-card h2 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
+        .section-card h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); margin: 24px 0 12px; }
+        .section-card p, .section-card li { font-size: 0.93rem; color: var(--ink2); line-height: 1.7; }
+        .section-card ul, .section-card ol { padding-left: 20px; margin: 12px 0; }
+        .section-card li { margin-bottom: 8px; }
+        .callout { border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-size: 0.9rem; }
+        .callout-purple { background: var(--accent-light); border-left: 4px solid var(--accent); }
+        .callout-gold { background: var(--cream-soft); border-left: 4px solid var(--gold); }
+        .callout-green { background: #e8f5e1; border-left: 4px solid var(--green); }
+        .callout-red { background: #fde8e8; border-left: 4px solid #c0392b; }
+        .callout strong { display: block; margin-bottom: 4px; font-weight: 700; }
+
+        /* Methods Grid */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .method-card {
+            background: var(--bg-soft);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .method-card .method-num {
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            width: 28px; height: 28px; background: var(--accent); color: #fff;
+            font-size: 0.75rem; font-weight: 800; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .method-card h4 { font-family: var(--font-serif); font-size: 0.95rem; margin: 8px 0 6px; }
+        .method-card p { font-size: 0.8rem; color: var(--muted); }
+        .method-card .accuracy { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 8px; }
+        .method-card .acc-high { color: var(--green); }
+        .method-card .acc-mid { color: var(--gold-deep); }
+        .method-card .acc-quick { color: var(--accent); }
+
+        /* Repair Table */
+        .repair-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85rem;
+        }
+        .repair-table th {
+            background: var(--accent); color: #fff; padding: 12px 14px;
+            text-align: center; font-weight: 700; font-size: 0.78rem;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .repair-table th:first-child { border-radius: 10px 0 0 0; text-align: left; }
+        .repair-table th:last-child { border-radius: 0 10px 0 0; }
+        .repair-table td {
+            padding: 12px 14px; border-bottom: 1px solid var(--hairline);
+            text-align: center; color: var(--ink2);
+        }
+        .repair-table td:first-child { text-align: left; font-weight: 600; }
+        .repair-table tr:nth-child(even) { background: var(--bg-soft); }
+        .repair-table .light { color: var(--green); font-weight: 600; }
+        .repair-table .average { color: var(--gold-deep); font-weight: 600; }
+        .repair-table .heavy { color: #c0392b; font-weight: 600; }
+
+        /* Rehab Levels */
+        .rehab-levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .rehab-level {
+            border-radius: 12px;
+            padding: 18px;
+            border: 2px solid;
+        }
+        .rehab-light { background: #e8f5e1; border-color: var(--green); }
+        .rehab-average { background: var(--cream-soft); border-color: var(--gold); }
+        .rehab-heavy { background: #fde8e8; border-color: #e74c3c; }
+        .rehab-level h4 { font-family: var(--font-serif); font-size: 0.9rem; margin-bottom: 8px; }
+        .rehab-level ul { padding-left: 16px; margin: 0; }
+        .rehab-level li { font-size: 0.8rem; color: var(--ink2); margin-bottom: 3px; }
+
+        /* Big 5 */
+        .big5-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .big5-item {
+            background: #fde8e8;
+            border: 1px solid #e74c3c;
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+        }
+        .big5-item .big5-icon { font-size: 1.5rem; margin-bottom: 4px; }
+        .big5-item h5 { font-size: 0.75rem; font-weight: 800; color: #c0392b; }
+
+        .practice-card {
+            background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px;
+            padding: 24px; margin: 16px 0;
+        }
+        .practice-card h4 { font-weight: 700; font-size: 0.92rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .practice-card p { font-size: 0.85rem; color: var(--ink2); margin-bottom: 4px; }
+        .practice-card textarea {
+            width: 100%; min-height: 80px; border: 1px solid var(--hairline); border-radius: 8px;
+            padding: 12px; font-family: var(--font-mono); font-size: 0.85rem;
+            background: var(--surface); color: var(--ink); resize: vertical; margin-top: 12px;
+        }
+        .practice-card textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(142,68,173,0.12); }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 10px; font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { background: #7b3a9e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(142,68,173,0.25); }
+
+        .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+        .review-day { flex: 1; min-width: 200px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 12px; padding: 16px; text-align: center; }
+        .review-day .day-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 100px; margin-bottom: 8px; }
+        .review-day p { font-size: 0.82rem; color: var(--ink2); }
+
+        .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+        .bottom-nav a { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .bottom-nav a:hover { color: var(--gold-deep); }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 14px 40px; }
+            .section-card { padding: 22px 18px; }
+            .why-card { padding: 22px 20px; }
+            .methods-grid, .rehab-levels { grid-template-columns: 1fr; }
+            .big5-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar-container">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+</div>
+
+<nav class="top-nav">
+    <a href="module-3-5.html">← Previous</a>
+    <span class="nav-center">Module 6 of 8</span>
+    <a href="module-3-7.html">Next →</a>
+</nav>
+
+<div class="container">
+
+    <header class="module-header">
+        <div class="module-badge">🔨 Module 3.6</div>
+        <h1>Repair Estimation</h1>
+        <div class="module-meta">
+            <span>⏱ 8 min</span>
+            <span>🏆 Milestone: Repair Estimator</span>
+        </div>
+    </header>
+
+    <div class="why-card">
+        <h2>💰 Why This Matters</h2>
+        <p>Accurate repair estimates prevent blown deals. <strong style="display:inline;">Overestimate</strong> and you lose investors to competitors with better numbers. <strong style="display:inline;">Underestimate</strong> and investors lose money — and trust in you.</p>
+    </div>
+
+    <!-- LEARN -->
+    <section class="section-card">
+        <div class="section-label learn-label">📖 LEARN</div>
+        <h2>3 Estimation Methods</h2>
+
+        <div class="methods-grid">
+            <div class="method-card">
+                <div class="method-num">1</div>
+                <h4>Contractor Bid</h4>
+                <p>Walk the property with a GC, get an itemized quote</p>
+                <div class="accuracy acc-high">Most Accurate</div>
+            </div>
+            <div class="method-card">
+                <div class="method-num">2</div>
+                <h4>Line-Item Estimate</h4>
+                <p>Break down every room and system with estimated costs</p>
+                <div class="accuracy acc-mid">Intermediate</div>
+            </div>
+            <div class="method-card">
+                <div class="method-num">3</div>
+                <h4>$/SqFt Method</h4>
+                <p>Square footage × rehab level = ballpark estimate</p>
+                <div class="accuracy acc-quick">Quickest</div>
+            </div>
+        </div>
+
+        <h3>$/SqFt Quick Reference Chart</h3>
+
+        <table class="repair-table">
+            <thead>
+                <tr>
+                    <th>Square Footage</th>
+                    <th>🟢 Light</th>
+                    <th>🟡 Average</th>
+                    <th>🔴 Heavy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Under 1,500 sqft</td>
+                    <td class="light">$10,000</td>
+                    <td class="average">$30,000</td>
+                    <td class="heavy">$55,000</td>
+                </tr>
+                <tr>
+                    <td>1,500 – 2,000 sqft</td>
+                    <td class="light">$15,000</td>
+                    <td class="average">$35,000</td>
+                    <td class="heavy">$75,000</td>
+                </tr>
+                <tr>
+                    <td>2,000 – 2,500 sqft</td>
+                    <td class="light">$25,000</td>
+                    <td class="average">$50,000</td>
+                    <td class="heavy">$80,000</td>
+                </tr>
+                <tr>
+                    <td>2,500 – 3,000 sqft</td>
+                    <td class="light">$30,000</td>
+                    <td class="average">$55,000</td>
+                    <td class="heavy">$100,000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Rehab Level Definitions</h3>
+
+        <div class="rehab-levels">
+            <div class="rehab-level rehab-light">
+                <h4>🟢 Light Rehab</h4>
+                <ul>
+                    <li>Cleanup & declutter</li>
+                    <li>Carpet replacement</li>
+                    <li>Interior paint</li>
+                    <li>Minor touch-ups</li>
+                </ul>
+            </div>
+            <div class="rehab-level rehab-average">
+                <h4>🟡 Average Rehab</h4>
+                <ul>
+                    <li>Everything in Light, plus:</li>
+                    <li>Countertops & fixtures</li>
+                    <li>Updated finishes</li>
+                    <li>Maybe 1 major system</li>
+                </ul>
+            </div>
+            <div class="rehab-level rehab-heavy">
+                <h4>🔴 Heavy Rehab</h4>
+                <ul>
+                    <li>Everything in Average, plus:</li>
+                    <li>Windows & roof</li>
+                    <li>Foundation work</li>
+                    <li>Full kitchen & flooring</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>The BIG 5 — Major Systems</h3>
+        <p>These are the expensive items that can make or break a deal. Always check for these:</p>
+
+        <div class="big5-grid">
+            <div class="big5-item">
+                <div class="big5-icon">🏠</div>
+                <h5>Roof</h5>
+            </div>
+            <div class="big5-item">
+                <div class="big5-icon">🧱</div>
+                <h5>Foundation</h5>
+            </div>
+            <div class="big5-item">
+                <div class="big5-icon">❄️</div>
+                <h5>HVAC</h5>
+            </div>
+            <div class="big5-item">
+                <div class="big5-icon">⚡</div>
+                <h5>Electrical</h5>
+            </div>
+            <div class="big5-item">
+                <div class="big5-icon">🔧</div>
+                <h5>Plumbing</h5>
+            </div>
+        </div>
+
+        <div class="callout callout-red">
+            <strong>⚠️ Warning</strong>
+            Any property needing 2+ items from the Big 5 is likely a <strong style="display:inline;">heavy rehab</strong> — even if the cosmetics look decent. Always flag these for your investor.
+        </div>
+    </section>
+
+    <!-- DO -->
+    <section class="section-card">
+        <div class="section-label do-label">🔨 DO</div>
+        <h2>Estimate Repairs on 3 Properties</h2>
+
+        <p>Use the $/sqft chart to estimate repairs. Identify the rehab level and calculate the estimate.</p>
+
+        <div class="practice-card">
+            <h4>🏠 Property 1 — 1,350 sqft ranch</h4>
+            <p>Condition: Needs paint, carpet, cleanup. Appliances work. Roof is 5 years old. No foundation issues.</p>
+            <textarea id="auto_12fba294" placeholder="Rehab level: ___&#10;Estimated repairs: $___&#10;Reasoning: ..."></textarea>
+        </div>
+
+        <div class="practice-card">
+            <h4>🏠 Property 2 — 2,200 sqft two-story</h4>
+            <p>Condition: Needs full kitchen renovation, new countertops/fixtures throughout, new HVAC system. Interior paint and flooring needed.</p>
+            <textarea id="auto_151cff78" placeholder="Rehab level: ___&#10;Estimated repairs: $___&#10;Reasoning: ..."></textarea>
+        </div>
+
+        <div class="practice-card">
+            <h4>🏠 Property 3 — 1,800 sqft colonial</h4>
+            <p>Condition: Foundation settling, roof needs replacement, outdated electrical panel. Needs complete interior renovation including kitchen, bathrooms, and flooring.</p>
+            <textarea id="auto_5b3d3a62" placeholder="Rehab level: ___&#10;Estimated repairs: $___&#10;Reasoning: ..."></textarea>
+        </div>
+    </section>
+
+    <!-- PROVE -->
+    <section class="section-card">
+        <div class="section-label prove-label">✅ PROVE</div>
+        <h2>Submit Your Repair Estimates</h2>
+
+        <p>For each property, your submission should include:</p>
+        <ul>
+            <li>Rehab level classification (light, average, heavy)</li>
+            <li>Dollar estimate using the $/sqft chart</li>
+            <li>Which Big 5 items are involved (if any)</li>
+            <li>Your reasoning</li>
+        </ul>
+
+        <div style="margin-top: 20px;">
+            <button class="btn btn-accent" onclick="alert('In a live environment, your estimates would be submitted and compared to the answer key.')">📤 Submit Estimates</button>
+        </div>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="section-card">
+        <div class="section-label review-label">🔁 REVIEW</div>
+        <h2>Spaced Repetition Schedule</h2>
+
+        <div class="review-timeline">
+            <div class="review-day">
+                <div class="day-badge">DAY 7</div>
+                <p>Estimate repairs on a new property scenario. Compare your estimate to the answer key.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-green" style="margin-top: 16px;">
+            <strong>🎯 Mastery Marker</strong>
+            You've mastered this module when you can look at a property description, instantly classify the rehab level, and give a confident ballpark estimate within 60 seconds.
+        </div>
+    </section>
+
+    <div class="bottom-nav">
+        <a href="module-3-5.html">← Module 3.5: Rentals & Break-Even</a>
+        <a href="module-3-7.html">Module 3.7: Math 101 →</a>
+    </div>
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

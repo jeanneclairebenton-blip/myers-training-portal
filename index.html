@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myers Home Buyers — Agent Training Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Mulish', system-ui, sans-serif;
+  background: #F7F4ED;
+  color: #1A1815;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ─── LAYOUT ─── */
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+/* ─── TOP BAR ─── */
+.top-bar {
+  background: #1A1815;
+  padding: 10px 0;
+  text-align: center;
+}
+.top-bar span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #C9941F;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(170deg, #1A1815 0%, #3D362A 100%);
+  padding: 56px 0 52px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,148,31,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201,148,31,0.12);
+  border: 1px solid rgba(201,148,31,0.25);
+  border-radius: 100px;
+  padding: 6px 18px;
+  margin-bottom: 24px;
+}
+.hero-badge svg { flex-shrink: 0; }
+.hero-badge span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #C9941F;
+}
+.hero h1 {
+  font-size: clamp(32px, 5.5vw, 48px);
+  color: #FFFDF6;
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+.hero h1 em {
+  font-style: normal;
+  color: #C9941F;
+}
+.hero-tagline {
+  font-size: 17px;
+  color: #7A7263;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.hero-sub {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 15px;
+  color: rgba(201,148,31,0.7);
+  font-style: italic;
+}
+
+/* ─── PROGRESS TRACKER ─── */
+.progress-section {
+  background: #FFFDF6;
+  border-bottom: 1px solid #E8E2D4;
+  padding: 32px 0;
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.progress-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: #3D362A;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.progress-stat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #7A7263;
+}
+.progress-stat strong { color: #C9941F; }
+.progress-track {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.progress-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+.progress-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid #E8E2D4;
+  background: #FFFDF6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7A7263;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+.progress-node.active .progress-dot {
+  border-color: #C9941F;
+  background: linear-gradient(135deg, #C9941F, #8B6B1A);
+  color: #FFFDF6;
+  box-shadow: 0 0 0 4px rgba(201,148,31,0.15);
+}
+.progress-node.complete .progress-dot {
+  border-color: #4F7A3A;
+  background: #4F7A3A;
+  color: #FFFDF6;
+}
+.progress-node-label {
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #7A7263;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 90px;
+}
+.progress-node.active .progress-node-label { color: #C9941F; }
+.progress-node.complete .progress-node-label { color: #4F7A3A; }
+.progress-connector {
+  flex: 1;
+  height: 3px;
+  background: #E8E2D4;
+  margin: 0 -2px;
+  margin-bottom: 28px;
+  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+}
+.progress-connector.complete {
+  background: #4F7A3A;
+}
+
+/* ─── PATH SELECTOR ─── */
+.path-section {
+  padding: 36px 0 8px;
+}
+.path-selector-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.path-selector-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #7A7263;
+}
+.path-toggle {
+  display: inline-flex;
+  background: #FFFDF6;
+  border: 1.5px solid #E8E2D4;
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.path-btn {
+  padding: 10px 28px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Mulish', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #7A7263;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.path-btn:hover { color: #3D362A; }
+.path-btn.active {
+  background: linear-gradient(135deg, #C9941F, #8B6B1A);
+  color: #FFFDF6;
+  box-shadow: 0 2px 8px rgba(201,148,31,0.3);
+}
+.path-btn .path-icon { font-size: 16px; }
+.path-info {
+  margin-top: 4px;
+  text-align: center;
+}
+.path-info p {
+  font-size: 13px;
+  color: #7A7263;
+  max-width: 440px;
+}
+.path-info p strong {
+  color: #3D362A;
+}
+
+/* ─── CERTIFICATES ─── */
+.certs-section {
+  padding: 20px 0 48px;
+}
+.cert-card {
+  background: #FFFDF6;
+  border: 1.5px solid #E8E2D4;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.cert-card:hover {
+  border-color: rgba(201,148,31,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+.cert-card.status-locked { opacity: 0.7; }
+.cert-card.status-locked:hover { opacity: 0.85; }
+
+.cert-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.cert-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  position: relative;
+}
+.cert-1 .cert-icon { background: linear-gradient(135deg, #4F7A3A, #3d5f2c); }
+.cert-2 .cert-icon { background: linear-gradient(135deg, #3A6B7A, #2a5260); }
+.cert-3 .cert-icon { background: linear-gradient(135deg, #6B3A7A, #522a60); }
+.cert-4 .cert-icon { background: linear-gradient(135deg, #7A5A3A, #60442a); }
+.cert-5 .cert-icon { background: linear-gradient(135deg, #C9941F, #8B6B1A); }
+
+.cert-info { flex: 1; min-width: 0; }
+.cert-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #7A7263;
+  margin-bottom: 2px;
+}
+.cert-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 20px;
+  color: #1A1815;
+  line-height: 1.25;
+}
+.cert-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.cert-meta-item {
+  font-size: 12px;
+  color: #7A7263;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cert-meta-item svg { flex-shrink: 0; }
+
+.cert-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.cert-status-badge {
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.status-not-started { background: #F7F4ED; color: #7A7263; border: 1px solid #E8E2D4; }
+.status-in-progress { background: rgba(201,148,31,0.1); color: #8B6B1A; border: 1px solid rgba(201,148,31,0.25); }
+.status-complete { background: rgba(79,122,58,0.1); color: #4F7A3A; border: 1px solid rgba(79,122,58,0.25); }
+.status-locked-badge { background: #F7F4ED; color: #bbb3a4; border: 1px solid #E8E2D4; }
+
+.cert-chevron {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7A7263;
+  transition: transform 0.3s ease;
+}
+.cert-card.expanded .cert-chevron { transform: rotate(180deg); }
+
+/* ─── MODULE LIST ─── */
+.cert-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cert-body-inner {
+  padding: 0 24px 24px;
+}
+.cert-divider {
+  height: 1px;
+  background: #E8E2D4;
+  margin-bottom: 20px;
+}
+.module-list { list-style: none; }
+.module-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.module-item:hover {
+  background: #F7F4ED;
+}
+.module-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #E8E2D4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: #FFFDF6;
+}
+.module-checkbox:hover {
+  border-color: #C9941F;
+}
+.module-checkbox.checked {
+  background: #4F7A3A;
+  border-color: #4F7A3A;
+}
+.module-checkbox.checked svg { opacity: 1; }
+.module-checkbox svg { opacity: 0; transition: opacity 0.2s ease; }
+
+.module-info { flex: 1; min-width: 0; }
+.module-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1815;
+  display: block;
+  line-height: 1.35;
+}
+.module-name:hover { color: #C9941F; }
+.module-duration {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #7A7263;
+  margin-top: 1px;
+}
+.module-arrow {
+  color: #E8E2D4;
+  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+.module-item:hover .module-arrow {
+  color: #C9941F;
+  transform: translateX(3px);
+}
+
+/* ─── CERT 5 SPECIAL ─── */
+.cert-5 { border: 1.5px solid rgba(201,148,31,0.35); }
+.cert-5:hover { border-color: rgba(201,148,31,0.55); box-shadow: 0 4px 24px rgba(201,148,31,0.1); }
+.graduation-content {
+  text-align: center;
+  padding: 8px 0 12px;
+}
+.graduation-shield {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #C9941F, #8B6B1A);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(201,148,31,0.3);
+}
+.graduation-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 22px;
+  color: #1A1815;
+  margin-bottom: 8px;
+}
+.graduation-desc {
+  font-size: 14px;
+  color: #7A7263;
+  max-width: 380px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+.graduation-reqs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+.grad-req {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #F7F4ED;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3D362A;
+  text-align: left;
+}
+.grad-req-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #E8E2D4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #FFFDF6;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  background: #1A1815;
+  padding: 32px 0;
+  text-align: center;
+}
+.footer p {
+  font-size: 13px;
+  color: #7A7263;
+}
+.footer p span { color: #C9941F; }
+.footer .heart { color: #c0392b; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+.cert-card:nth-child(1) { animation-delay: 0.05s; }
+.cert-card:nth-child(2) { animation-delay: 0.1s; }
+.cert-card:nth-child(3) { animation-delay: 0.15s; }
+.cert-card:nth-child(4) { animation-delay: 0.2s; }
+.cert-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .cert-header { padding: 16px; gap: 12px; }
+  .cert-icon { width: 44px; height: 44px; font-size: 20px; border-radius: 10px; }
+  .cert-title { font-size: 17px; }
+  .cert-meta { gap: 8px; }
+  .cert-right { gap: 8px; }
+  .cert-status-badge { padding: 3px 8px; font-size: 10px; }
+  .cert-body-inner { padding: 0 16px 20px; }
+  .module-item { padding: 10px 8px; gap: 10px; }
+  .progress-node-label { font-size: 9px; max-width: 60px; }
+  .progress-dot { width: 30px; height: 30px; font-size: 11px; }
+  .path-btn { padding: 8px 18px; font-size: 13px; }
+  .hero { padding: 40px 0 36px; }
+}
+
+/* ─── DURATION TOGGLE ─── */
+.dur-quick, .dur-deep { transition: opacity 0.2s ease; }
+body.path-deep .dur-quick { display: none; }
+body.path-quick .dur-deep { display: none; }
+</style>
+</head>
+<body class="path-quick">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <span>Myers Home Buyers</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9941F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>Agent Training Program</span>
+    </div>
+    <h1>Become a Myers <em>Investor Agent</em></h1>
+    <p class="hero-tagline">5 Certificates · 33 Modules · 1 Transformed Career</p>
+    <p class="hero-sub">Where Agents Become Investors</p>
+  </div>
+</section>
+
+<!-- PROGRESS TRACKER -->
+<section class="progress-section">
+  <div class="container">
+    <div class="progress-header">
+      <span class="progress-label">Your Journey</span>
+      <span class="progress-stat"><strong>0</strong> / 5 Certificates Earned</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-node active" data-cert="1">
+        <div class="progress-dot">1</div>
+        <div class="progress-node-label">Foundations</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-node" data-cert="2">
+        <div class="progress-dot">2</div>
+        <div class="progress-node-label">Prospecting</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-node" data-cert="3">
+        <div class="progress-dot">3</div>
+        <div class="progress-node-label">Investor Relations</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-node" data-cert="4">
+        <div class="progress-dot">4</div>
+        <div class="progress-node-label">Deal Execution</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-node" data-cert="5">
+        <div class="progress-dot">★</div>
+        <div class="progress-node-label">Investor Agent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATH SELECTOR -->
+<section class="path-section">
+  <div class="container">
+    <div class="path-selector-wrap">
+      <span class="path-selector-label">Choose Your Path</span>
+      <div class="path-toggle">
+        <button class="path-btn active" data-path="quick" onclick="setPath('quick')">
+          <span class="path-icon">⚡</span> Quick Start
+        </button>
+        <button class="path-btn" data-path="deep" onclick="setPath('deep')">
+          <span class="path-icon">🎓</span> Deep Dive
+        </button>
+      </div>
+      <div class="path-info">
+        <p class="dur-quick"><strong>5 days</strong> — Fast-track through essentials. Perfect for experienced agents ready to hit the ground running.</p>
+        <p class="dur-deep"><strong>5 weeks</strong> — Comprehensive deep learning with practice, role-play, and spaced repetition built in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section class="certs-section">
+  <div class="container">
+
+    <!-- CERT 1: Foundations -->
+    <div class="cert-card cert-1 animate-in" data-cert="1">
+      <div class="cert-header" onclick="toggleCert(this)">
+        <div class="cert-icon">🏠</div>
+        <div class="cert-info">
+          <div class="cert-number">Certificate 1</div>
+          <div class="cert-title">MHB Foundations</div>
+          <div class="cert-meta">
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="dur-quick">Day 1 (AM)</span>
+              <span class="dur-deep">Week 1</span>
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20"/></svg>
+              8 modules
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              ~56 min
+            </span>
+          </div>
+        </div>
+        <div class="cert-right">
+          <span class="cert-status-badge status-not-started">Not Started</span>
+          <div class="cert-chevron">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-body-inner">
+          <div class="cert-divider"></div>
+          <ul class="module-list">
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-1.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.1 — Welcome to Myers</span>
+                  <span class="module-duration">5 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-2.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.2 — How a Myers Deal Works</span>
+                  <span class="module-duration">8 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-3.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.3 — Code of Conduct &amp; Brand</span>
+                  <span class="module-duration">5 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-4.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.4 — Myers Glossary &amp; Key Terms</span>
+                  <span class="module-duration">10 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-5.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.5 — Gmail &amp; Google Drive Setup</span>
+                  <span class="module-duration">5 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-6.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.6 — Zoho CRM Setup</span>
+                  <span class="module-duration">8 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-7.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.7 — Slack Setup &amp; Channels</span>
+                  <span class="module-duration">5 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="module-item" href="00-Foundations/module-1-8.html">
+                <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="module-info">
+                  <span class="module-name">1.8 — Goal Setting &amp; Income Calculator</span>
+                  <span class="module-duration">10 min</span>
+                </div>
+                <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 2: Prospecting -->
+    <div class="cert-card cert-2 animate-in" data-cert="2">
+      <div class="cert-header" onclick="toggleCert(this)">
+        <div class="cert-icon">🔎</div>
+        <div class="cert-info">
+          <div class="cert-number">Certificate 2</div>
+          <div class="cert-title">Prospecting Specialist</div>
+          <div class="cert-meta">
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="dur-quick">Day 1 (PM) – Day 2</span>
+              <span class="dur-deep">Week 2</span>
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20"/></svg>
+              9 modules
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              ~86 min
+            </span>
+          </div>
+        </div>
+        <div class="cert-right">
+          <span class="cert-status-badge status-not-started">Not Started</span>
+          <div class="cert-chevron">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-body-inner">
+          <div class="cert-divider"></div>
+          <ul class="module-list">
+            <li><a class="module-item" href="01-Prospecting/module-2-1.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.1 — SA Prospecting Overview</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-2.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.2 — Warm Prospect Script</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-3.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.3 — Cold Prospecting Script</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-4.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.4 — SA Call Script Full</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-5.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.5 — Hard Money Lender Scrape</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-6.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.6 — Property Tax Scrape</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-7.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.7 — Investor Finder System</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-8.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.8 — Objections &amp; Rebuttals</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="01-Prospecting/module-2-9.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">2.9 — USP Development</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 3: Investor Relations -->
+    <div class="cert-card cert-3 animate-in" data-cert="3">
+      <div class="cert-header" onclick="toggleCert(this)">
+        <div class="cert-icon">🤝</div>
+        <div class="cert-info">
+          <div class="cert-number">Certificate 3</div>
+          <div class="cert-title">Investor Relations</div>
+          <div class="cert-meta">
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="dur-quick">Day 3</span>
+              <span class="dur-deep">Week 3</span>
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20"/></svg>
+              8 modules
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              ~74 min
+            </span>
+          </div>
+        </div>
+        <div class="cert-right">
+          <span class="cert-status-badge status-not-started">Not Started</span>
+          <div class="cert-chevron">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-body-inner">
+          <div class="cert-divider"></div>
+          <ul class="module-list">
+            <li><a class="module-item" href="02-Investor-Relations/module-3-1.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.1 — Investor Sit-Down Framework</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-2.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.2 — Discovery Questions &amp; F.O.R.D.</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-3.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.3 — New vs Seasoned Investors</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-4.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.4 — Calculator Mastery: Cash ROI &amp; Hard Money</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-5.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.5 — Calculator Mastery: Rentals &amp; Break-Even</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-6.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.6 — Repair Estimation</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-7.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.7 — Math 101: Comps, ROI &amp; ARV</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="02-Investor-Relations/module-3-8.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">3.8 — Math 201: Rentals, Cap Rate &amp; NOI</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 4: Deal Execution -->
+    <div class="cert-card cert-4 animate-in" data-cert="4">
+      <div class="cert-header" onclick="toggleCert(this)">
+        <div class="cert-icon">📝</div>
+        <div class="cert-info">
+          <div class="cert-number">Certificate 4</div>
+          <div class="cert-title">Deal Execution</div>
+          <div class="cert-meta">
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="dur-quick">Day 4 – Day 5</span>
+              <span class="dur-deep">Week 4</span>
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20"/></svg>
+              8 modules
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              ~69 min
+            </span>
+          </div>
+        </div>
+        <div class="cert-right">
+          <span class="cert-status-badge status-not-started">Not Started</span>
+          <div class="cert-chevron">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-body-inner">
+          <div class="cert-divider"></div>
+          <ul class="module-list">
+            <li><a class="module-item" href="03-Deal-Execution/module-4-1.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.1 — SA Showing Script</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-2.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.2 — MIOSI$ Framework</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-3.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.3 — P.O.E.T. Framework</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-4.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.4 — The Disarming Statement</span><span class="module-duration">5 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-5.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.5 — Closing Statements &amp; Objection Isolation</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-6.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.6 — TREC Contract Walkthrough</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-7.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.7 — Addenda &amp; Pre-Close Procedures</span><span class="module-duration">10 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+            <li><a class="module-item" href="03-Deal-Execution/module-4-8.html">
+              <div class="module-checkbox" onclick="event.preventDefault(); event.stopPropagation(); toggleCheck(this);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="module-info"><span class="module-name">4.8 — Setting Seller Expectations</span><span class="module-duration">8 min</span></div>
+              <svg class="module-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 5: Investor Agent (Graduation) -->
+    <div class="cert-card cert-5 animate-in" data-cert="5">
+      <div class="cert-header" onclick="toggleCert(this)">
+        <div class="cert-icon">⭐</div>
+        <div class="cert-info">
+          <div class="cert-number">Certificate 5 — Graduation</div>
+          <div class="cert-title">MHB Investor Agent</div>
+          <div class="cert-meta">
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="dur-quick">Day 5</span>
+              <span class="dur-deep">Week 5</span>
+            </span>
+            <span class="cert-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Final Certification
+            </span>
+          </div>
+        </div>
+        <div class="cert-right">
+          <span class="cert-status-badge status-locked-badge">🔒 Locked</span>
+          <div class="cert-chevron">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-body-inner">
+          <div class="cert-divider"></div>
+          <div class="graduation-content">
+            <div class="graduation-shield">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFFDF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <div class="graduation-title">Investor Agent Certification</div>
+            <p class="graduation-desc">
+              Complete all four certificates and close your first deal to earn your
+              MHB Investor Agent designation and unlock advanced training.
+            </p>
+            <div class="graduation-reqs">
+              <div class="grad-req">
+                <div class="grad-req-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8E2D4" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                Certificate 1 — MHB Foundations
+              </div>
+              <div class="grad-req">
+                <div class="grad-req-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8E2D4" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                Certificate 2 — Prospecting Specialist
+              </div>
+              <div class="grad-req">
+                <div class="grad-req-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8E2D4" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                Certificate 3 — Investor Relations
+              </div>
+              <div class="grad-req">
+                <div class="grad-req-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8E2D4" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                Certificate 4 — Deal Execution
+              </div>
+              <div class="grad-req">
+                <div class="grad-req-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8E2D4" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                First Deal Closed &amp; Verified
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>Draft 1 — Built with <span class="heart">❤️</span> for <span>Myers Home Buyers</span></p>
+  </div>
+</footer>
+
+<script>
+/* ─── PATH TOGGLE ─── */
+function setPath(path) {
+  document.body.className = 'path-' + path;
+  document.querySelectorAll('.path-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.path === path);
+  });
+  // Save preference
+  try { localStorage.setItem('mhb-path', path); } catch(e) {}
+}
+
+/* ─── CERT EXPAND/COLLAPSE ─── */
+function toggleCert(headerEl) {
+  var card = headerEl.closest('.cert-card');
+  var body = card.querySelector('.cert-body');
+  var isExpanded = card.classList.contains('expanded');
+
+  if (isExpanded) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    // Force reflow
+    body.offsetHeight;
+    body.style.maxHeight = '0';
+    card.classList.remove('expanded');
+  } else {
+    card.classList.add('expanded');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    // After animation, set to auto for dynamic content
+    body.addEventListener('transitionend', function handler() {
+      if (card.classList.contains('expanded')) {
+        body.style.maxHeight = 'none';
+      }
+      body.removeEventListener('transitionend', handler);
+    });
+  }
+}
+
+/* ─── MODULE CHECKBOX ─── */
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  updateProgress();
+  saveState();
+}
+
+/* ─── PROGRESS UPDATER ─── */
+function updateProgress() {
+  var certs = document.querySelectorAll('.cert-card');
+  var completedCerts = 0;
+
+  certs.forEach(function(card, idx) {
+    if (idx === 4) return; // Skip cert 5 (graduation)
+    var checkboxes = card.querySelectorAll('.module-checkbox');
+    var checked = card.querySelectorAll('.module-checkbox.checked');
+    var statusBadge = card.querySelector('.cert-status-badge');
+
+    if (checked.length === 0) {
+      statusBadge.className = 'cert-status-badge status-not-started';
+      statusBadge.textContent = 'Not Started';
+    } else if (checked.length === checkboxes.length) {
+      statusBadge.className = 'cert-status-badge status-complete';
+      statusBadge.textContent = '✓ Complete';
+      completedCerts++;
+    } else {
+      statusBadge.className = 'cert-status-badge status-in-progress';
+      statusBadge.textContent = checked.length + '/' + checkboxes.length;
+    }
+  });
+
+  // Update progress nodes
+  var nodes = document.querySelectorAll('.progress-node');
+  var connectors = document.querySelectorAll('.progress-connector');
+
+  for (var i = 0; i < 4; i++) {
+    var card = certs[i];
+    var checkboxes = card.querySelectorAll('.module-checkbox');
+    var checked = card.querySelectorAll('.module-checkbox.checked');
+    var isComplete = checked.length === checkboxes.length && checkboxes.length > 0;
+    var isInProgress = checked.length > 0 && checked.length < checkboxes.length;
+
+    nodes[i].classList.remove('complete', 'active');
+    if (isComplete) {
+      nodes[i].classList.add('complete');
+    } else if (isInProgress) {
+      nodes[i].classList.add('active');
+    } else if (i === 0 || (i > 0 && certs[i-1].querySelectorAll('.module-checkbox.checked').length === certs[i-1].querySelectorAll('.module-checkbox').length)) {
+      nodes[i].classList.add('active');
+    }
+
+    if (i < connectors.length) {
+      connectors[i].classList.toggle('complete', isComplete);
+    }
+  }
+
+  // Cert 5 node
+  nodes[4].classList.remove('complete', 'active');
+  if (completedCerts === 4) {
+    nodes[4].classList.add('active');
+    var cert5Badge = certs[4].querySelector('.cert-status-badge');
+    cert5Badge.className = 'cert-status-badge status-in-progress';
+    cert5Badge.textContent = 'Unlocked!';
+    certs[4].classList.remove('status-locked');
+  } else {
+    var cert5Badge = certs[4].querySelector('.cert-status-badge');
+    cert5Badge.className = 'cert-status-badge status-locked-badge';
+    cert5Badge.textContent = '🔒 Locked';
+  }
+
+  // Update stat
+  document.querySelector('.progress-stat').innerHTML = '<strong>' + completedCerts + '</strong> / 5 Certificates Earned';
+}
+
+/* ─── PERSISTENCE ─── */
+function saveState() {
+  try {
+    var state = {};
+    document.querySelectorAll('.cert-card').forEach(function(card, ci) {
+      var checks = [];
+      card.querySelectorAll('.module-checkbox').forEach(function(cb) {
+        checks.push(cb.classList.contains('checked'));
+      });
+      state['cert-' + ci] = checks;
+    });
+    localStorage.setItem('mhb-progress', JSON.stringify(state));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    var raw = localStorage.getItem('mhb-progress');
+    if (!raw) return;
+    var state = JSON.parse(raw);
+    document.querySelectorAll('.cert-card').forEach(function(card, ci) {
+      var checks = state['cert-' + ci];
+      if (!checks) return;
+      card.querySelectorAll('.module-checkbox').forEach(function(cb, mi) {
+        if (checks[mi]) cb.classList.add('checked');
+      });
+    });
+    updateProgress();
+  } catch(e) {}
+
+  try {
+    var path = localStorage.getItem('mhb-path');
+    if (path) setPath(path);
+  } catch(e) {}
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded', function() {
+  loadState();
+  updateProgress();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4.1 — SA Showing Script | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A; --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263; --surface: #FFFDF6;
+    --bg-soft: #F7F4ED; --hairline: #E8E2D4; --green: #4F7A3A; --accent: #e67e22;
+    --font-sans: 'Mulish', system-ui, sans-serif; --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06); --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --shadow-lg: 0 8px 30px rgba(26,24,21,0.10); --radius: 12px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  /* -- Navigation -- */
+  .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 24px; font-size: 0.85rem; font-weight: 600; }
+  .top-nav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .2s; }
+  .top-nav a:hover { color: var(--gold-deep); }
+  .nav-arrow { font-size: 1.1rem; }
+
+  /* -- Progress Bar -- */
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .progress-track { height: 6px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 12.5%; background: linear-gradient(90deg, var(--accent), #f39c12); border-radius: 99px; transition: width .4s ease; }
+
+  /* -- Header -- */
+  .mod-header { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden; }
+  .mod-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #f39c12); }
+  .mod-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,126,34,0.10); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .mod-header h1 { font-family: var(--font-serif); font-size: clamp(1.6rem,4vw,2.1rem); color: var(--ink); margin-bottom: 8px; font-weight: 400; }
+  .mod-meta { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .mod-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+  /* -- Why Box -- */
+  .why-box { background: linear-gradient(135deg, rgba(230,126,34,0.07), rgba(201,148,31,0.05)); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin-bottom: 28px; }
+  .why-box p { font-size: 0.92rem; color: var(--ink2); font-weight: 500; }
+  .why-box strong { color: var(--accent); }
+
+  /* -- Section Cards -- */
+  .card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding: 4px 12px; border-radius: 99px; }
+  .card-label.learn { background: rgba(230,126,34,0.10); color: var(--accent); }
+  .card-label.do { background: rgba(79,122,58,0.10); color: var(--green); }
+  .card-label.prove { background: rgba(201,148,31,0.10); color: var(--gold-deep); }
+  .card-label.review { background: rgba(122,114,99,0.10); color: var(--muted); }
+  .card h2 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 14px; font-weight: 400; color: var(--ink); }
+
+  /* -- Script Flow -- */
+  .script-flow { list-style: none; counter-reset: step; margin: 16px 0; }
+  .script-flow li { position: relative; padding: 14px 18px 14px 52px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 8px; font-size: 0.9rem; line-height: 1.6; }
+  .script-flow li::before { counter-increment: step; content: counter(step); position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .script-line { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink2); background: var(--cream-soft); padding: 3px 8px; border-radius: 4px; display: inline; line-height: 2; }
+
+  /* -- Tips -- */
+  .tips-box { background: var(--cream-soft); border-radius: 8px; padding: 16px 20px; margin-top: 16px; }
+  .tips-box h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-deep); margin-bottom: 8px; }
+  .tips-box ul { list-style: none; }
+  .tips-box li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: 0.88rem; color: var(--ink2); }
+  .tips-box li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* -- Task List -- */
+  .task-list { list-style: none; margin: 12px 0 0; }
+  .task-list li { padding: 10px 14px 10px 40px; background: var(--bg-soft); border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; position: relative; }
+  .task-list li::before { content: '☐'; position: absolute; left: 14px; top: 10px; font-size: 1rem; color: var(--accent); }
+
+  /* -- Review Grid -- */
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 10px; margin-top: 12px; }
+  .review-day { text-align: center; padding: 14px 8px; background: var(--bg-soft); border-radius: 8px; }
+  .review-day .day { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .review-day .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .review-day .task { font-size: 0.78rem; color: var(--ink2); margin-top: 4px; }
+
+  /* -- Bottom Nav -- */
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-prev { background: var(--bg-soft); color: var(--ink2); border: 1px solid var(--hairline); }
+  .btn-prev:hover { background: var(--hairline); }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-next:hover { background: #cf6d17; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 10px 40px; }
+    .mod-header, .card { padding: 20px 16px; }
+    .script-flow li { padding-left: 44px; }
+    .review-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Top Nav -->
+  <nav class="top-nav">
+    <a href="../index.html"><span class="nav-arrow">←</span> Certificate 4</a>
+    <a href="module-4-2.html">Next Module <span class="nav-arrow">→</span></a>
+  </nav>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Module 1 of 8</span><span>12% Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:12.5%"></div></div>
+  </div>
+
+  <!-- Header -->
+  <header class="mod-header">
+    <div class="mod-badge">📋 Module 4.1</div>
+    <h1>SA Showing Script</h1>
+    <div class="mod-meta">
+      <span>⏱ 10 min</span>
+      <span>🏅 Milestone: Showing Ready</span>
+    </div>
+  </header>
+
+  <!-- Why This Matters -->
+  <div class="why-box">
+    <p><strong>💰 Why this matters:</strong> A polished showing = investor confidence = higher bids = bigger commissions. Your showing script is the engine that drives deal execution.</p>
+  </div>
+
+  <!-- LEARN -->
+  <section class="card">
+    <div class="card-label learn">📖 Learn</div>
+    <h2>The Complete SA Showing Script</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:16px;">Follow this exact sequence every time. Consistency builds investor trust and keeps the process tight.</p>
+
+    <ol class="script-flow">
+      <li><span class="script-line">"Thanks for coming out!"</span><br>Greet warmly. Set a professional but friendly tone.</li>
+      <li><span class="script-line">"Before we walk the property, do you have any questions?"</span><br>Handle questions up front so the walkthrough is uninterrupted.</li>
+      <li><span class="script-line">"If you have questions while walking, wait till we conclude our tour."</span><br>This keeps the showing on YOUR timeline.</li>
+      <li><strong>Walk the property together.</strong><br>Stay WITH your investor. Don't let them wander alone.</li>
+      <li><span class="script-line">"What do you think?"</span><br>Open-ended — let them talk. Listen more than you speak.</li>
+      <li><span class="script-line">"Did you have any offer price in mind?"</span><br>Get their number first. Never anchor.</li>
+      <li><span class="script-line">"Are you aware of the double closing costs?"</span><br>Set expectations on cost structure early.</li>
+      <li><span class="script-line">"The deposit will need to be delivered within one hour — cashier's check or wire."</span><br>Urgency + specificity = serious bidders only.</li>
+      <li><span class="script-line">"Submit the bid where if it was $1 more, you'd walk away."</span><br>This gets their REAL highest number.</li>
+      <li><span class="script-line">"The AA will announce the winner within 15 minutes."</span><br>Creates urgency and a clean process.</li>
+      <li><span class="script-line">"Are you able to send a wire within an hour?"</span><br>Final qualification — are they truly ready to close?</li>
+    </ol>
+
+    <div class="tips-box">
+      <h4>⚡ Pro Tips</h4>
+      <ul>
+        <li>Walk WITH your investor — never let them go ahead without you.</li>
+        <li>Don't give too much info about the house <strong>inside</strong> — keep that for outside.</li>
+        <li>Chat about numbers and logistics <strong>outside</strong>, never in front of the seller.</li>
+        <li>Stay calm, confident, and conversational — not salesy.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card">
+    <div class="card-label do">🔨 Do</div>
+    <h2>Practice the Showing Script</h2>
+    <ol class="task-list">
+      <li>Read through the full script out loud — 3 complete run-throughs.</li>
+      <li>Practice transitioning between each step naturally (no pauses or fumbling).</li>
+      <li>Pair up with a partner and role-play: one person is the SA, the other is the investor.</li>
+      <li>Switch roles and identify awkward spots in delivery.</li>
+    </ol>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card">
+    <div class="card-label prove">✅ Prove</div>
+    <h2>🎤 Record a Mock Showing</h2>
+    <p style="font-size:0.9rem;color:var(--ink2);margin-bottom:12px;">Record yourself running the full SA Showing Script from start to finish — <strong>no notes allowed</strong>. You should hit every step of the script naturally.</p>
+    <div style="background:var(--cream-soft);border-radius:8px;padding:14px 18px;font-size:0.85rem;color:var(--ink2);">
+      <strong>Submission:</strong> Upload your recording or deliver live to your Team Lead for sign-off.
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card">
+    <div class="card-label review">🔁 Review</div>
+    <h2>Spaced Repetition Schedule</h2>
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:12px;">Revisit to lock this script into long-term memory.</p>
+    <div class="review-grid">
+      <div class="review-day">
+        <div class="day">3</div>
+        <div class="label">Days</div>
+        <div class="task">Role-play the script</div>
+      </div>
+      <div class="review-day">
+        <div class="day">7</div>
+        <div class="label">Days</div>
+        <div class="task">Role-play the script</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="../index.html" class="btn-prev"><span>←</span> Back</a>
+    <a href="module-4-2.html" class="btn-next">Module 4.2 <span>→</span></a>
+  </nav>
+
+</div>
+<script src="../persistence.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.5 — Gmail & Google Drive Setup | MHB Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Mulish',system-ui,sans-serif;background:#F7F4ED;color:#1A1815;line-height:1.6;min-height:100vh}
+  .top-nav{background:#1A1815;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center}
+  .top-nav a{color:#FBE8B7;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.03em;transition:color .2s}
+  .top-nav a:hover{color:#C9941F}
+  .top-nav .cert-label{color:#7A7263;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+  .progress-wrap{background:#FFFDF6;border-bottom:1px solid #E8E2D4;padding:1rem 2rem}
+  .progress-label{font-size:.75rem;color:#7A7263;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+  .progress-track{width:100%;height:8px;background:#E8E2D4;border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;width:62.5%;background:linear-gradient(90deg,#C9941F,#8B6B1A);border-radius:99px}
+  .progress-steps{display:flex;justify-content:space-between;margin-top:.5rem}
+  .progress-steps span{font-size:.65rem;color:#7A7263;font-weight:600}
+  .progress-steps span.active{color:#C9941F;font-weight:800}
+  .progress-steps span.done{color:#4F7A3A;font-weight:800}
+  .hero{background:linear-gradient(135deg,#1A1815,#3D362A);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,148,31,.15),transparent 70%);border-radius:50%}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,148,31,.15);border:1px solid rgba(201,148,31,.3);border-radius:99px;padding:.35rem 1rem;font-size:.75rem;color:#FBE8B7;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;color:#FFFDF6;line-height:1.15;margin-bottom:.5rem}
+  .hero .subtitle{color:#C9941F;font-size:1.1rem;font-weight:600}
+  .hero-meta{display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap}
+  .hero-meta .tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:#E8E2D4;font-weight:500}
+  .why-box{background:linear-gradient(90deg,rgba(201,148,31,.1),rgba(201,148,31,.03));border-left:4px solid #C9941F;margin:2rem;padding:1.25rem 1.5rem;border-radius:0 12px 12px 0}
+  .why-box .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#8B6B1A;font-weight:800;margin-bottom:.25rem}
+  .why-box p{color:#3D362A;font-size:.95rem;font-weight:500}
+  .container{max-width:800px;margin:0 auto;padding:0 1.5rem 3rem}
+  .card{background:#FFFDF6;border-radius:16px;box-shadow:0 1px 3px rgba(26,24,21,.06),0 4px 12px rgba(26,24,21,.04);margin-bottom:1.5rem;overflow:hidden;border:1px solid #E8E2D4}
+  .card-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid #E8E2D4}
+  .card-header .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .card-header h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#1A1815}
+  .card-header .card-tag{margin-left:auto;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .75rem;border-radius:99px}
+  .card-body{padding:1.5rem}
+  .card.learn .card-icon{background:#FDF1D0}
+  .card.learn .card-tag{background:#FDF1D0;color:#8B6B1A}
+  .card.learn .card-body{background:linear-gradient(180deg,#FFFDF6,#FDF1D0 120%)}
+  .card.learn h3{font-family:'DM Serif Display',Georgia,serif;color:#1A1815;font-size:1.15rem;margin:1.5rem 0 .75rem}
+  .card.learn h3:first-child{margin-top:0}
+  .card.learn p{color:#3D362A;margin-bottom:.75rem;font-size:.95rem}
+  .card.do-card .card-icon{background:#FBE8B7}
+  .card.do-card .card-tag{background:#FBE8B7;color:#8B6B1A}
+  .card.prove .card-icon{background:rgba(79,122,58,.15)}
+  .card.prove .card-tag{background:rgba(79,122,58,.12);color:#4F7A3A}
+  .card.review .card-icon{background:rgba(122,114,99,.15)}
+  .card.review .card-tag{background:rgba(122,114,99,.12);color:#7A7263}
+  .activity-prompt{background:#FDF1D0;border-radius:10px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid #C9941F}
+  .activity-prompt p{color:#3D362A;font-size:.95rem;font-weight:600;margin:0}
+  .prove-task{display:flex;align-items:flex-start;gap:.75rem;padding:1rem;background:rgba(79,122,58,.05);border-radius:10px;border:1px solid rgba(79,122,58,.15);margin-bottom:.75rem}
+  .prove-task input[type="checkbox"]{width:20px;height:20px;accent-color:#4F7A3A;margin-top:2px;flex-shrink:0;cursor:pointer}
+  .prove-task label{font-size:.95rem;color:#3D362A;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-family:'Mulish',sans-serif;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+  .btn-green{background:linear-gradient(135deg,#4F7A3A,#3d5f2d);color:#FFFDF6;box-shadow:0 2px 8px rgba(79,122,58,.3)}
+  .btn-green:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(79,122,58,.4)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:1px solid #E8E2D4}
+  .module-nav a{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1.25rem;border-radius:10px;transition:all .2s}
+  .nav-prev{color:#7A7263;background:#F7F4ED;border:1px solid #E8E2D4}
+  .nav-prev:hover{background:#E8E2D4}
+  .nav-next{color:#FFFDF6;background:linear-gradient(135deg,#C9941F,#8B6B1A);box-shadow:0 2px 8px rgba(201,148,31,.25)}
+  .nav-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,148,31,.35)}
+  .footer{text-align:center;padding:2rem;color:#7A7263;font-size:.75rem;font-weight:600;letter-spacing:.05em;border-top:1px solid #E8E2D4;margin-top:2rem}
+  .toast{position:fixed;bottom:2rem;right:2rem;background:#1A1815;color:#FBE8B7;padding:1rem 1.5rem;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:999}
+  .toast.show{transform:translateY(0)}
+
+  /* Step Cards */
+  .setup-steps{counter-reset:setup}
+  .setup-step{counter-increment:setup;position:relative;padding:1.25rem 1.25rem 1.25rem 3.5rem;background:#F7F4ED;border-radius:12px;border:1px solid #E8E2D4;margin-bottom:.75rem}
+  .setup-step::before{content:counter(setup);position:absolute;left:1rem;top:1.25rem;width:28px;height:28px;background:#C9941F;color:#FFFDF6;border-radius:50%;font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .setup-step h4{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1A1815;margin-bottom:.35rem}
+  .setup-step p{font-size:.88rem;color:#3D362A;margin:0}
+  .setup-step code{font-family:'JetBrains Mono',monospace;background:#FDF1D0;padding:.15rem .4rem;border-radius:4px;font-size:.82rem;color:#8B6B1A}
+
+  /* Signature example */
+  .sig-example{background:#FFFDF6;border:1px solid #E8E2D4;border-radius:10px;padding:1.25rem;margin:1rem 0;font-size:.85rem;line-height:1.8;color:#3D362A}
+  .sig-example .sig-name{font-weight:800;color:#1A1815;font-size:1rem}
+  .sig-example .sig-title{color:#C9941F;font-weight:700}
+  .sig-example .sig-divider{border-top:2px solid #C9941F;margin:.5rem 0;width:60px}
+  .sig-example .sig-info{font-size:.82rem;color:#7A7263}
+
+  /* No review notice */
+  .no-review{background:#F7F4ED;border-radius:12px;padding:1.5rem;text-align:center;border:1px dashed #E8E2D4}
+  .no-review .nr-icon{font-size:2rem;margin-bottom:.5rem}
+  .no-review p{color:#7A7263;font-size:.9rem}
+
+  @media(max-width:640px){
+    .hero h1{font-size:1.75rem}
+    .hero{padding:2rem 1.25rem}
+    .why-box{margin:1.5rem 1rem}
+    .container{padding:0 1rem 2rem}
+    .module-nav{flex-direction:column;gap:.75rem}
+    .module-nav a{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">← Back to Dashboard</a>
+  <span class="cert-label">Certificate 1 — MHB Foundations</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-label">Module 5 of 8</div>
+  <div class="progress-track"><div class="progress-fill" style="width:62.5%"></div></div>
+  <div class="progress-steps">
+    <span class="done">1.1</span><span class="done">1.2</span><span class="done">1.3</span><span class="done">1.4</span><span class="active">1.5</span><span>1.6</span><span>1.7</span><span>1.8</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-badge">📧 Module 1.5</div>
+  <h1>Gmail & Google Drive Setup</h1>
+  <div class="subtitle">Your Professional Workspace</div>
+  <div class="hero-meta">
+    <span class="tag"><span class="icon">⏱</span> 5 min</span>
+    <span class="tag"><span class="icon">📜</span> MHB Foundations</span>
+    <span class="tag"><span class="icon">🏅</span> Milestone: Connected Agent</span>
+  </div>
+</header>
+
+<div class="why-box">
+  <div class="label">💰 Why This Matters</div>
+  <p>A professional email signature builds credibility with every investor you contact. Every email you send is a brand touchpoint — make it count.</p>
+</div>
+
+<div class="container">
+
+  <!-- LEARN -->
+  <section class="card learn">
+    <div class="card-header">
+      <div class="card-icon">📖</div>
+      <h2>Learn</h2>
+      <span class="card-tag">Setup Guide</span>
+    </div>
+    <div class="card-body">
+      <h3>Step-by-Step: Get Set Up</h3>
+      <p>Complete each step below to get your Myers Google Workspace fully configured. This should take about 5 minutes.</p>
+
+      <div class="setup-steps">
+        <div class="setup-step">
+          <h4>Activate Your Myers Gmail</h4>
+          <p>Log into your Myers Gmail account at <code>mail.google.com</code> using the credentials provided by your Team Lead. Change your password immediately to something secure.</p>
+        </div>
+        <div class="setup-step">
+          <h4>Set Up Your Professional Email Signature</h4>
+          <p>Go to <code>Settings → See all settings → General → Signature</code>. Create a new signature with your full name, title, phone number, and the Myers Home Buyers logo.</p>
+        </div>
+        <div class="setup-step">
+          <h4>Join Shared Google Drives</h4>
+          <p>Accept the invitations (or request access from your Team Lead) to join these shared drives:</p>
+          <p style="margin-top:.35rem">📁 <strong>Myers Deals</strong> — Active deal files and documents<br>
+          📁 <strong>Agent Resources</strong> — Templates, scripts, training materials<br>
+          📁 <strong>Marketing Drive</strong> — Approved marketing assets and property photos</p>
+        </div>
+        <div class="setup-step">
+          <h4>Subscribe to Company Calendars</h4>
+          <p>Add these shared calendars to your Google Calendar:</p>
+          <p style="margin-top:.35rem">📅 <strong>Company Calendar</strong> — Team meetings, training sessions, events<br>
+          📅 <strong>DFW Showings Calendar</strong> — All upcoming property showings (critical!)</p>
+        </div>
+      </div>
+
+      <h3>Your Email Signature Should Look Like This</h3>
+      <div class="sig-example">
+        <div class="sig-name">Jane Smith</div>
+        <div class="sig-title">Acquisition Agent | Myers Home Buyers</div>
+        <div class="sig-divider"></div>
+        <div class="sig-info">📱 (469) 555-1234</div>
+        <div class="sig-info">📧 jane@myershomebuyers.com</div>
+        <div class="sig-info">🌐 myershomebuyers.com</div>
+        <div style="margin-top:.5rem;font-size:.75rem;color:#C9941F;font-weight:700">[Myers Home Buyers Logo]</div>
+      </div>
+      <p style="font-size:.85rem;color:#7A7263;margin-top:.5rem"><em>Your Team Lead will provide the logo image and exact formatting template.</em></p>
+    </div>
+  </section>
+
+  <!-- DO -->
+  <section class="card do-card">
+    <div class="card-header">
+      <div class="card-icon">🔨</div>
+      <h2>Do</h2>
+      <span class="card-tag">Hands-On Setup</span>
+    </div>
+    <div class="card-body">
+      <div class="activity-prompt">
+        <p>⚡ Complete all 4 setup steps right now. Check each box as you finish:</p>
+      </div>
+
+      <div class="prove-task">
+        <input type="checkbox" id="do1" onchange="updateProgress()">
+        <label for="do1"><strong>Activated Myers Gmail</strong> — Logged in and changed my password</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do2" onchange="updateProgress()">
+        <label for="do2"><strong>Email signature created</strong> — Name, title, phone, logo</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do3" onchange="updateProgress()">
+        <label for="do3"><strong>Joined all 3 shared drives</strong> — Myers Deals, Agent Resources, Marketing Drive</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="do4" onchange="updateProgress()">
+        <label for="do4"><strong>Subscribed to calendars</strong> — Company Calendar + DFW Showings Calendar</label>
+      </div>
+
+      <div style="margin-top:1rem;padding:.75rem;background:#F7F4ED;border-radius:8px;text-align:center">
+        <span style="font-size:.85rem;color:#7A7263;font-weight:600">Setup Progress: </span>
+        <span id="doProgress" style="font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;color:#C9941F">0 of 4</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVE -->
+  <section class="card prove">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <h2>Prove</h2>
+      <span class="card-tag">Verification</span>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:1.25rem;color:#3D362A;font-size:.95rem;">Take a screenshot of your completed email signature and confirm your setup:</p>
+
+      <div class="prove-task">
+        <input type="checkbox" id="prove1" onchange="checkProve()">
+        <label for="prove1">I have taken a screenshot of my email signature (save it for your Team Lead)</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="prove2" onchange="checkProve()">
+        <label for="prove2">I can see all 3 shared drives in my Google Drive sidebar</label>
+      </div>
+      <div class="prove-task">
+        <input type="checkbox" id="prove3" onchange="checkProve()">
+        <label for="prove3">I can see the Company Calendar and DFW Showings Calendar in my Google Calendar</label>
+      </div>
+
+      <div style="margin-top:1.25rem">
+        <button class="btn btn-green" id="submitBtn" disabled onclick="submitModule()">✅ Submit Module 1.5</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="card review">
+    <div class="card-header">
+      <div class="card-icon">🔁</div>
+      <h2>Review</h2>
+      <span class="card-tag">Spaced Repetition</span>
+    </div>
+    <div class="card-body">
+      <div class="no-review">
+        <div class="nr-icon">✨</div>
+        <p><strong>No review needed!</strong> This is a one-time setup module. Once your Gmail, drives, and calendars are configured, you're good to go.</p>
+        <p style="margin-top:.5rem">If you ever need to update your signature or rejoin a drive, refer back to this module.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="module-nav">
+    <a href="module-1-4.html" class="nav-prev">← Module 1.4</a>
+    <a href="module-1-6.html" class="nav-next">Module 1.6: Zoho CRM Setup →</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Agent Training Program Draft 1</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+function updateProgress() {
+  const checks = ['do1','do2','do3','do4'];
+  const done = checks.filter(id => document.getElementById(id).checked).length;
+  document.getElementById('doProgress').textContent = `${done} of 4`;
+  if (done === 4) showToast('⚡ All setup steps complete!');
+}
+
+function checkProve() {
+  const boxes = ['prove1','prove2','prove3'];
+  const allChecked = boxes.every(id => document.getElementById(id).checked);
+  document.getElementById('submitBtn').disabled = !allChecked;
+}
+
+function submitModule() {
+  showToast('📧 Module 1.5 Complete — Gmail & Drive ready!');
+  document.getElementById('submitBtn').textContent = '✅ Completed!';
+  document.getElementById('submitBtn').disabled = true;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="../persistence.js"></script>
+</body>
+</html>

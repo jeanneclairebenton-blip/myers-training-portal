@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2.6 — Property Tax Scrape | Myers Home Buyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9941F; --gold-deep: #8B6B1A;
+    --cream: #FBE8B7; --cream-soft: #FDF1D0;
+    --ink: #1A1815; --ink2: #3D362A; --muted: #7A7263;
+    --surface: #FFFDF6; --bg-soft: #F7F4ED; --hairline: #E8E2D4;
+    --green: #4F7A3A;
+    --accent: #2980b9; --accent-light: #d6eaf8; --accent-dark: #1a5276;
+    --font-sans: 'Mulish', system-ui, sans-serif;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(26,24,21,0.06);
+    --shadow-md: 0 4px 12px rgba(26,24,21,0.08);
+    --radius: 12px; --radius-sm: 8px;
+  }
+  body { font-family: var(--font-sans); background: var(--bg-soft); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .top-nav { background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+  .top-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .top-nav a:hover { color: var(--accent-dark); }
+  .nav-group { display: flex; gap: 16px; }
+
+  .progress-bar-wrap { background: var(--hairline); height: 4px; width: 100%; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 0 4px 4px 0; }
+
+  .module-hero { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; padding: 48px 24px 40px; text-align: center; }
+  .module-hero .cert-badge { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .module-hero h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 8px; font-weight: 400; }
+  .module-hero .meta { font-size: 0.92rem; opacity: 0.9; display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 8px; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .why-card { background: linear-gradient(135deg, var(--cream-soft) 0%, var(--cream) 100%); border: 1px solid var(--gold); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+  .why-card .label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 6px; }
+  .why-card p { color: var(--ink2); font-size: 1rem; font-weight: 500; line-height: 1.7; }
+
+  .section-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 32px 28px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .section-title { font-family: var(--font-serif); font-size: 1.35rem; color: var(--ink); }
+  .learn-icon { background: var(--accent-light); }
+  .do-icon { background: #fef3e2; }
+  .prove-icon { background: #e8f5e9; }
+  .review-icon { background: #f3e5f5; }
+
+  .section-card h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--ink); margin: 20px 0 8px; }
+  .section-card h3:first-child { margin-top: 0; }
+  .section-card p, .section-card li { font-size: 0.95rem; color: var(--ink2); line-height: 1.7; }
+  .section-card ul, .section-card ol { padding-left: 20px; margin: 8px 0 12px; }
+  .section-card li { margin-bottom: 6px; }
+
+  .highlight-box { background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .highlight-box strong { color: var(--accent-dark); }
+
+  .tip-box { background: #e8f5e9; border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 16px 20px; margin: 16px 0; font-size: 0.93rem; color: var(--ink2); }
+  .tip-box strong { color: var(--green); }
+
+  .process-steps { margin: 20px 0; }
+  .p-step { display: flex; gap: 16px; margin-bottom: 20px; position: relative; }
+  .p-step:not(:last-child)::after { content: ''; position: absolute; left: 19px; top: 40px; bottom: -12px; width: 2px; background: var(--hairline); }
+  .p-step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+  .p-step-content { flex: 1; padding-top: 6px; }
+  .p-step-title { font-weight: 800; font-size: 0.95rem; color: var(--ink); margin-bottom: 4px; }
+  .p-step-desc { font-size: 0.9rem; color: var(--ink2); line-height: 1.6; }
+
+  .compare-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .compare-card { background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 16px; }
+  .compare-card .cc-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .compare-card .cc-text { font-size: 0.9rem; color: var(--ink2); }
+  .cc-hml { border-left: 3px solid var(--accent); }
+  .cc-hml .cc-label { color: var(--accent); }
+  .cc-tax { border-left: 3px solid var(--green); }
+  .cc-tax .cc-label { color: var(--green); }
+
+  .video-ref { background: var(--bg-soft); border: 1.5px dashed var(--accent); border-radius: var(--radius-sm); padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 0.9rem; color: var(--accent-dark); }
+  .video-ref .v-icon { font-size: 1.8rem; margin-bottom: 6px; }
+
+  .exercise-area { width: 100%; min-height: 120px; border: 1.5px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; font-family: var(--font-sans); font-size: 0.95rem; color: var(--ink); background: var(--surface); resize: vertical; transition: border-color 0.2s; }
+  .exercise-area:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(41,128,185,0.12); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .review-timeline { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .review-item { flex: 1; min-width: 140px; background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+  .review-item .day-label { font-weight: 800; font-size: 0.82rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .review-item .day-task { font-size: 0.85rem; color: var(--ink2); margin-top: 6px; }
+
+  .bottom-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .bottom-nav a { font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: 1.5px solid var(--accent); border-radius: var(--radius-sm); transition: all 0.2s; }
+  .bottom-nav a:hover { background: var(--accent); color: #fff; }
+
+  .milestone-badge { text-align: center; padding: 32px; margin-top: 24px; }
+  .milestone-badge .badge-icon { font-size: 2.4rem; margin-bottom: 8px; }
+  .milestone-badge .badge-text { font-family: var(--font-serif); font-size: 1.1rem; color: var(--accent-dark); }
+  .milestone-badge .badge-sub { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    .module-hero { padding: 36px 18px 28px; }
+    .section-card { padding: 24px 18px; }
+    .container { padding: 24px 14px 48px; }
+    .compare-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="module-2-5.html">← 2.5 HML Scrape</a>
+  <div class="nav-group">
+    <a href="../index.html">Program Home</a>
+    <a href="module-2-7.html">Next →</a>
+  </div>
+</nav>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" style="width: 66.6%"></div>
+</div>
+
+<header class="module-hero">
+  <div class="cert-badge">Certificate 2 — Prospecting Specialist</div>
+  <h1>Property Tax Scrape</h1>
+  <div class="meta">
+    <span>📘 Module 2.6</span>
+    <span>⏱ 10 min</span>
+    <span>🏅 Tax Hunter</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="why-card">
+    <div class="label">💰 Why This Matters</div>
+    <p>Tax records reveal <strong>cash buyers your competitors don't know about</strong>. While others rely on the same MLS buyer lists, you'll be finding hidden investors through public tax data.</p>
+  </div>
+
+  <!-- LEARN -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon learn-icon">📖</div>
+      <div class="section-title">Learn</div>
+    </div>
+
+    <h3>What Is a Property Tax Scrape?</h3>
+    <p>Property tax records are <strong>public information</strong> that reveals who owns what, how they purchased it, and whether they paid cash. By filtering for specific criteria, you can identify investors who are actively buying — especially those paying <strong>all cash</strong>, which signals experienced, well-funded buyers.</p>
+
+    <h3>Tax Scrape vs. HML Scrape</h3>
+    <div class="compare-box">
+      <div class="compare-card cc-hml">
+        <div class="cc-label">🏦 HML Scrape (Mod 2.5)</div>
+        <div class="cc-text">Finds investors who use hard money lenders. These are active flippers — they borrow short-term money to buy, rehab, and resell.</div>
+      </div>
+      <div class="compare-card cc-tax">
+        <div class="cc-label">🏛️ Tax Scrape (This Module)</div>
+        <div class="cc-text">Finds cash buyers through tax records. These are often more experienced investors with deeper pockets — they don't need to borrow.</div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Best Together:</strong> Use both scrape methods. HML scrapes find active flippers. Tax scrapes find cash-heavy investors. Together, you get the complete picture of who's buying in your market.
+    </div>
+
+    <h3>Step-by-Step Process</h3>
+    <div class="process-steps">
+      <div class="p-step">
+        <div class="p-step-num">1</div>
+        <div class="p-step-content">
+          <div class="p-step-title">Open MLS / Realist Tax Data</div>
+          <div class="p-step-desc">Navigate to the Realist property tax module within your MLS system. This is where you'll access county tax assessment records.</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">2</div>
+        <div class="p-step-content">
+          <div class="p-step-title">Set Your Search Criteria</div>
+          <div class="p-step-desc">Filter by: <strong>cash transactions</strong> (no mortgage recorded), <strong>recent sale date</strong> (last 90–180 days), <strong>target ZIP codes</strong>, and <strong>non-owner-occupied</strong> (mailing address differs from property address — a classic investor indicator).</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">3</div>
+        <div class="p-step-content">
+          <div class="p-step-title">Identify Cash Buyers</div>
+          <div class="p-step-desc">Look for transactions where no deed of trust / mortgage was recorded. These are cash purchases. Also flag properties owned by LLCs — these are almost always investors.</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">4</div>
+        <div class="p-step-content">
+          <div class="p-step-title">Extract Owner Information</div>
+          <div class="p-step-desc">Record: owner name (or LLC), mailing address, property address, purchase price, and sale date. Export to your spreadsheet.</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">5</div>
+        <div class="p-step-content">
+          <div class="p-step-title">Skip Trace for Contact Details</div>
+          <div class="p-step-desc">Use Forewarn or your preferred skip tracing tool to find phone numbers and emails. For LLCs, check the TX Comptroller site for registered agent info.</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">6</div>
+        <div class="p-step-content">
+          <div class="p-step-title">Add to Your Investor Database</div>
+          <div class="p-step-desc">Import contacts into Zoho. Tag them as "Tax Scrape" so you can track which prospecting channel produces the best results.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-ref">
+      <div class="v-icon">🎬</div>
+      <strong>Training Video Available</strong><br>
+      Watch the step-by-step walkthrough video for a live demonstration of the Property Tax scrape process.
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Pro Tip:</strong> Focus on properties where the <strong>mailing address ≠ property address</strong>. This almost always means the owner is an investor, not a homeowner. It's the single best filter for finding real buyers.
+    </div>
+  </div>
+
+  <!-- DO -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon do-icon">🔨</div>
+      <div class="section-title">Do</div>
+    </div>
+
+    <h3>Complete One Full Property Tax Scrape</h3>
+    <p>Follow the 6-step process above and produce a list of <strong>10+ investor contacts</strong> from property tax records.</p>
+    <ol>
+      <li>Search at least 3 ZIP codes in your target area</li>
+      <li>Filter for cash transactions in the last 90 days</li>
+      <li>Prioritize LLC-owned properties and non-owner-occupied</li>
+      <li>Skip trace all contacts</li>
+      <li>Add to your Zoho database</li>
+    </ol>
+
+    <textarea id="auto_cc18abe9" class="exercise-area" placeholder="Paste your investor list here:
+
+Investor 1: [Name/LLC] — [Phone] — Cash purchase at [Address] — $[Amount]
+Investor 2: ...
+Investor 3: ..."></textarea>
+  </div>
+
+  <!-- PROVE -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon prove-icon">✅</div>
+      <div class="section-title">Prove</div>
+    </div>
+
+    <h3>Submit Your Tax Scrape Investor List</h3>
+    <p>Submit your list of <strong>10+ investor contacts</strong> from the property tax scrape. Each contact should include:</p>
+    <ul>
+      <li>Investor name or LLC</li>
+      <li>Phone number (skip traced)</li>
+      <li>At least one recent cash purchase (address + amount)</li>
+    </ul>
+
+    <button class="btn btn-primary">📤 Submit Tax Scrape List</button>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon review-icon">🔁</div>
+      <div class="section-title">Review — Spaced Repetition</div>
+    </div>
+
+    <div class="review-timeline">
+      <div class="review-item">
+        <div class="day-label">Day 14</div>
+        <div class="day-task">Run another tax scrape — add new contacts to your database</div>
+      </div>
+      <div class="review-item">
+        <div class="day-label">Day 30</div>
+        <div class="day-task">Compare HML vs. tax scrape results — which produced better leads?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone-badge">
+    <div class="badge-icon">🏛️</div>
+    <div class="badge-text">Tax Hunter — Unlocked</div>
+    <div class="badge-sub">You can now uncover hidden cash buyers through public tax records.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="module-2-5.html">← 2.5 HML Scrape</a>
+    <a href="module-2-7.html">2.7 Investor Finder →</a>
+  </div>
+</main>
+
+<script src="../persistence.js"></script>
+</body>
+</html>
