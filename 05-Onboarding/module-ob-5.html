@@ -3,343 +3,423 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gmail, Calendars & Shared Drives — Myers Onboarding</title>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Step 5 — Email, Drives & Calendars | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sans: 'Mulish', system-ui, sans-serif;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --mono: 'JetBrains Mono', monospace;
-    --gold: #C9941F;
-    --gold-deep: #8B6B1A;
-    --cream: #FBE8B7;
-    --cream-soft: #FDF1D0;
-    --cream-deep: #F5D782;
-    --ink: #1A1815;
-    --ink-2: #3D362A;
-    --muted: #7A7263;
-    --surface: #FFFDF6;
-    --bg-soft: #F7F4ED;
-    --hairline: #E8E2D4;
-    --green: #4F7A3A;
-  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body {
-    font-family: var(--sans);
-    background: var(--surface);
-    color: var(--ink);
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #F7F4ED;
+    color: #1A1815;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    font-size: 18px;
   }
-  .page-wrapper {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 48px 24px 64px;
+
+  /* ─── Top Nav ─── */
+  .top-nav {
+    background: #1A1815;
+    padding: 0.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
   }
+  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ─── Progress ─── */
+  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
+  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
+
+  /* ─── Hero ─── */
   .hero {
-    text-align: center;
-    margin-bottom: 40px;
+    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    padding: 3.5rem 2rem 3rem;
+    position: relative; overflow: hidden;
   }
-  .hero-icon {
-    width: 80px; height: 80px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--cream-soft), var(--cream));
-    border-radius: 24px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 42px;
-    box-shadow: 0 4px 16px rgba(201,148,31,0.12);
-  }
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: 32px;
-    color: var(--ink);
-    margin-bottom: 8px;
-    letter-spacing: -0.3px;
-  }
-  .hero-sub {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto 24px;
-    line-height: 1.65;
-  }
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  .progress-dot {
-    width: 10px; height: 10px;
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
     border-radius: 50%;
-    background: var(--hairline);
-    transition: background 0.3s, transform 0.3s;
   }
-  .progress-dot.active {
-    background: var(--gold);
-    transform: scale(1.25);
-    box-shadow: 0 0 0 3px rgba(201,148,31,0.18);
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
   }
-  .progress-dot.completed {
-    background: var(--green);
+  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .progress-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    text-align: center;
+  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* ─── Intro Text ─── */
+  .intro-text {
+    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
+    margin-bottom: 2rem; max-width: 760px;
   }
-  .section-title {
-    font-family: var(--serif);
-    font-size: 20px;
-    color: var(--ink);
-    margin: 36px 0 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--hairline);
+
+  /* ─── Document Grid ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
   }
-  .task-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
+  .doc-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 14px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.3s ease;
+    flex-direction: column;
   }
-  .task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.07);
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
   }
-  .task-card.checked {
-    opacity: 0.6;
+  .doc-card.full-width {
+    grid-column: 1 / -1;
   }
-  .task-card.checked .task-title {
-    text-decoration: line-through;
-    color: var(--muted);
-  }
-  .task-icon {
-    width: 48px; height: 48px;
-    min-width: 48px;
-    border-radius: 14px;
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
   }
-  .task-icon svg {
-    width: 22px; height: 22px;
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .task-content {
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
     flex: 1;
-    min-width: 0;
   }
-  .task-content label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    margin-bottom: 6px;
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
   }
-  .task-content label input[type="checkbox"] {
-    width: 18px; height: 18px;
-    accent-color: var(--green);
-    cursor: pointer;
-    flex-shrink: 0;
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
   }
-  .task-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.4;
-    transition: color 0.3s, text-decoration 0.3s;
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
   }
-  .task-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 4px 0 12px 28px;
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
   }
-  .action-btn {
-    display: inline-flex;
-    padding: 8px 16px;
-    background: var(--gold);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: var(--sans);
-    transition: background 0.2s ease;
-    margin-left: 28px;
+  .doc-card .doc-action {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.55rem 1.1rem;
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6; border-radius: 8px; text-decoration: none;
+    font-size: 0.9rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+    transition: all 0.2s;
   }
-  .action-btn:hover {
-    background: var(--gold-deep);
+  .doc-card .doc-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
   }
-  .callout {
-    background: var(--cream-soft);
-    border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold);
-    padding: 16px 20px;
-    border-radius: 10px;
-    margin: 28px 0;
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.6;
+  .doc-card .doc-action svg {
+    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .callout strong { color: var(--ink); }
-  .nav-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--hairline);
+
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem 0;
   }
-  .nav-link {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    transition: background 0.2s;
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
   }
-  .nav-link:hover {
-    background: var(--cream-soft);
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .nav-link.next {
-    background: var(--gold);
-    color: #fff;
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
   }
-  .nav-link.next:hover {
-    background: var(--gold-deep);
+  .yellow-callout strong { color: #1A1815; }
+  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+  .section-divider:first-child { margin-top: 0; }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
+  }
+
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+  }
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
+  }
+  .info-block-body { padding: 1.5rem; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+  .info-block-body .detail-row {
+    display: flex; gap: 2rem; margin-top: 1rem;
+  }
+  .info-block-body .detail-item {
+    flex: 1;
+  }
+  .info-block-body .detail-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
+  }
+  .info-block-body .detail-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem; color: #C9941F;
+  }
+
+  /* ─── Navigation ─── */
+  .module-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
+  }
+  .module-nav a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; font-weight: 700; font-size: 1rem;
+    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
+  }
+  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+
+  /* ─── Footer ─── */
+  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
+
+  @media (max-width: 768px) {
+    .doc-grid, .doc-grid.cols-3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-icon">📧</div>
-    <h1>Gmail, Calendars & Shared Drives</h1>
-    <p class="hero-sub">Set up your email, shared drives, and calendars so you never miss a beat.</p>
-    <div class="progress-bar">
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot active"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-    </div>
-    <p class="progress-label">Step 5 of 10</p>
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="../index.html">&larr; Back to Dashboard</a>
+  <span class="cert-label">Onboarding &mdash; Step 5 of 10</span>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-label">Step 5 of 10</div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: 50%"></div>
   </div>
-
-  <!-- Tasks -->
-  <h2 class="section-title">Your Checklist</h2>
-
-  <!-- Task 1: Gmail -->
-  <div class="task-card" id="card-ob5-1">
-    <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #CC6650)">
-      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob5-task1" onchange="toggleCard(this)"> <strong class="task-title">Activate Gmail Account</strong></label>
-      <p class="task-desc">Use credentials from your 'Welcome To Myers!' email. Set up your email signature and add a professional headshot.</p>
-      <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="action-btn">Email Signature Template →</a>
-    </div>
-  </div>
-
-  <!-- Task 2: Company Calendar -->
-  <div class="task-card" id="card-ob5-2">
-    <div class="task-icon" style="background: linear-gradient(135deg, #2E5C8A, #4A7DB0)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob5-task2" onchange="toggleCard(this)"> <strong class="task-title">Join Company Calendar</strong></label>
-      <p class="task-desc">Subscribe to stay updated on all company events and meetings.</p>
-      <a href="https://calendar.google.com/calendar/u/0?cid=Y183cG8ydWpwdDJwM2JqNm5sczYzNXE4MW9vZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="action-btn">Company Calendar →</a>
-    </div>
-  </div>
-
-  <!-- Task 3: Showings Calendar -->
-  <div class="task-card" id="card-ob5-3">
-    <div class="task-icon" style="background: linear-gradient(135deg, #2E5C8A, #4A7DB0)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob5-task3" onchange="toggleCard(this)"> <strong class="task-title">Join Myers DFW Showings Calendar</strong></label>
-      <p class="task-desc">Stay updated on all property showings across the DFW area in real time.</p>
-      <a href="https://calendar.google.com/calendar/u/0?cid=am9zaGRlc2hvbmcuY29tX2QwMXNzMmdwZ2VlZXQxZ3F1Y2pkZDJnNmhvQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank" class="action-btn">Showings Calendar →</a>
-    </div>
-  </div>
-
-  <!-- Task 4: Myers Deals Drive -->
-  <div class="task-card" id="card-ob5-4">
-    <div class="task-icon" style="background: linear-gradient(135deg, #C9941F, #D4A94A)">
-      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob5-task4" onchange="toggleCard(this)"> <strong class="task-title">Join Myers Deals Drive</strong></label>
-      <p class="task-desc">Live Deals & Property Flyers — your go-to folder for active transactions and marketing materials.</p>
-      <a href="https://drive.google.com/drive/folders/0AAKvoVvYPEK-Uk9PVA" target="_blank" class="action-btn">Myers Deals →</a>
-    </div>
-  </div>
-
-  <!-- Task 5: Agent Resources Drive -->
-  <div class="task-card" id="card-ob5-5">
-    <div class="task-icon" style="background: linear-gradient(135deg, #4F7A3A, #6F9A5A)">
-      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob5-task5" onchange="toggleCard(this)"> <strong class="task-title">Join Agent Resources Drive</strong></label>
-      <p class="task-desc">SA Training materials and resources — everything you need to grow your skills and knowledge as an agent.</p>
-      <a href="https://drive.google.com/drive/folders/0ADyroRsH9CCZUk9PVA" target="_blank" class="action-btn">Agent Resources →</a>
-    </div>
-  </div>
-
-  <!-- Task 6: Marketing Drive -->
-  <div class="task-card" id="card-ob5-6">
-    <div class="task-icon" style="background: linear-gradient(135deg, #3A6B7A, #5A8B9A)">
-      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob5-task6" onchange="toggleCard(this)"> <strong class="task-title">Join Marketing Drive</strong></label>
-      <p class="task-desc">Logos, Signature Templates, and more.</p>
-      <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="action-btn">Marketing Drive →</a>
-    </div>
-  </div>
-
-  <!-- Nav Footer -->
-  <div class="nav-footer">
-    <a href="module-ob-4.html" class="nav-link">← DISC Assessment</a>
-    <a href="module-ob-6.html" class="nav-link next">Next: Slack Communication →</a>
-  </div>
-
 </div>
 
-<script>
-function toggleCard(cb) {
-  const card = cb.closest('.task-card');
-  if (cb.checked) {
-    card.classList.add('checked');
-  } else {
-    card.classList.remove('checked');
-  }
-}
-</script>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Step 5
+  </div>
+  <h1>Email, Drives &amp; Calendars</h1>
+  <div class="subtitle">Get connected to all your essential tools and resources.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- ═══ EMAIL SETUP ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="label">Email Setup</span>
+    <div class="line"></div>
+  </div>
+
+  <!-- Single Wide Task Card -->
+  <div class="doc-grid">
+    <div class="doc-card full-width">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <h3>Activate Gmail Account</h3>
+      <p>Use credentials from your <strong>"Welcome To Myers!"</strong> email. Set up your email signature and add a professional headshot.</p>
+      <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="doc-action">
+        Email Signature Template
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob5-email">
+        <label for="ob5-email">Completed</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CALENDARS ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="label">Calendars</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="doc-grid">
+
+    <!-- Company Calendar -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <h3>Company Calendar</h3>
+      <p>Subscribe to stay updated on all company events.</p>
+      <a href="https://calendar.google.com/calendar/u/0?cid=Y183cG8ydWpwdDJwM2JqNm5sczYzNXE4MW9vZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="doc-action">
+        Subscribe
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob5-cal-company">
+        <label for="ob5-cal-company">Completed</label>
+      </div>
+    </div>
+
+    <!-- Showings Calendar -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/></svg>
+      </div>
+      <h3>Myers DFW Showings Calendar</h3>
+      <p>Stay updated on all property showings in real time.</p>
+      <a href="https://calendar.google.com/calendar/u/0?cid=am9zaGRlc2hvbmcuY29tX2QwMXNzMmdwZ2VlZXQxZ3F1Y2pkZDJnNmhvQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank" class="doc-action">
+        Subscribe
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob5-cal-showings">
+        <label for="ob5-cal-showings">Completed</label>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ SHARED DRIVES ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="label">Shared Drives</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="doc-grid cols-3">
+
+    <!-- Myers Deals -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Myers Deals</h3>
+      <p>Live Deals &amp; Property Flyers.</p>
+      <a href="https://drive.google.com/drive/folders/0AAKvoVvYPEK-Uk9PVA" target="_blank" class="doc-action">
+        Open Drive
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob5-drive-deals">
+        <label for="ob5-drive-deals">Completed</label>
+      </div>
+    </div>
+
+    <!-- Agent Resources -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <h3>Agent Resources</h3>
+      <p>Training materials and resources.</p>
+      <a href="https://drive.google.com/drive/folders/0ADyroRsH9CCZUk9PVA" target="_blank" class="doc-action">
+        Open Drive
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob5-drive-resources">
+        <label for="ob5-drive-resources">Completed</label>
+      </div>
+    </div>
+
+    <!-- Marketing Drive -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <h3>Marketing Drive</h3>
+      <p>Logos, Signature Templates, and more.</p>
+      <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="doc-action">
+        Open Drive
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob5-drive-marketing">
+        <label for="ob5-drive-marketing">Completed</label>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <nav class="module-nav">
+    <a href="module-ob-4.html" class="nav-prev">&larr; DISC Assessment</a>
+    <a href="module-ob-6.html" class="nav-next">Next: Slack Communication &rarr;</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers &mdash; Onboarding</footer>
+
 <script src="../persistence.js"></script>
 </body>
 </html>

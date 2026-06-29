@@ -3,314 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Step 8: ForeWarn &amp; ZipForms — Myers Onboarding</title>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Step 8 — ForeWarn &amp; ZipForms | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sans: 'Mulish', system-ui, sans-serif;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --mono: 'JetBrains Mono', monospace;
-    --gold: #C9941F;
-    --gold-deep: #8B6B1A;
-    --cream: #FBE8B7;
-    --cream-soft: #FDF1D0;
-    --cream-deep: #F5D782;
-    --ink: #1A1815;
-    --ink-2: #3D362A;
-    --muted: #7A7263;
-    --surface: #FFFDF6;
-    --bg-soft: #F7F4ED;
-    --hairline: #E8E2D4;
-    --green: #4F7A3A;
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body {
-    font-family: var(--sans);
-    background: var(--surface);
-    color: var(--ink);
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #F7F4ED;
+    color: #1A1815;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    font-size: 18px;
   }
 
-  .page-wrapper {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 48px 24px 64px;
+  /* ─── Top Nav ─── */
+  .top-nav {
+    background: #1A1815;
+    padding: 0.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
   }
+  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  /* Progress Dots */
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 40px;
-  }
-  .progress-bar .step-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 8px;
-  }
-  .progress-bar .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--hairline);
-    transition: all 0.3s ease;
-  }
-  .progress-bar .dot.completed {
-    background: var(--green);
-  }
-  .progress-bar .dot.active {
-    background: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.25);
-    transform: scale(1.2);
-  }
+  /* ─── Progress ─── */
+  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
+  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
 
-  /* Hero */
+  /* ─── Hero ─── */
   .hero {
-    text-align: center;
-    margin-bottom: 40px;
+    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    padding: 3.5rem 2rem 3rem;
+    position: relative; overflow: hidden;
   }
-  .hero-icon {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 16px;
-    display: block;
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
+    border-radius: 50%;
   }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .hero h1 {
-    font-family: var(--serif);
-    font-size: 36px;
-    color: var(--ink);
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .hero .subtitle {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
+  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
 
-  /* Task Cards */
-  .task-list {
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* ─── Document Grid ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 32px;
+  }
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
+  }
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
+  }
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
+  }
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+  }
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
+  }
+  .doc-card .doc-action {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.55rem 1.1rem;
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6; border-radius: 8px; text-decoration: none;
+    font-size: 0.9rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .doc-card .doc-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
+  }
+  .doc-card .doc-action svg {
+    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
 
-  .task-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* ─── Step List ─── */
+  .setup-steps {
+    list-style: none; padding: 0; margin: 0.5rem 0 0;
   }
-  .task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  .setup-steps li {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #E8E2D4;
+    display: flex; gap: 0.75rem; align-items: flex-start;
   }
-  .task-card.checked {
-    opacity: 0.6;
-  }
-  .task-card.checked .task-title strong {
-    text-decoration: line-through;
+  .setup-steps li:last-child { border-bottom: none; }
+  .setup-steps .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; font-weight: 700; color: #C9941F;
+    background: rgba(201,148,31,0.12);
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
   }
 
-  .task-icon {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem 0;
   }
-  .task-icon svg {
-    width: 22px;
-    height: 22px;
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+  }
+  .yellow-callout strong { color: #1A1815; }
+  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
   }
 
-  .task-content {
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+  }
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
+  }
+  .info-block-body { padding: 1.5rem; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+  .info-block-body .detail-row {
+    display: flex; gap: 2rem; margin-top: 1rem;
+  }
+  .info-block-body .detail-item {
     flex: 1;
-    min-width: 0;
   }
-  .task-content label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    margin-bottom: 6px;
+  .info-block-body .detail-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
   }
-  .task-content label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--green);
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .task-title strong {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    transition: all 0.2s ease;
-  }
-  .task-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.65;
-    margin-bottom: 10px;
-    margin-left: 28px;
-  }
-  .task-desc:last-child {
-    margin-bottom: 0;
+  .info-block-body .detail-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem; color: #C9941F;
   }
 
-  .action-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    background: var(--gold);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: var(--sans);
-    transition: background 0.2s ease;
-    margin-left: 28px;
+  /* ─── Navigation ─── */
+  .module-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
   }
-  .action-btn:hover {
-    background: var(--gold-deep);
+  .module-nav a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; font-weight: 700; font-size: 1rem;
+    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
   }
+  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
 
-  /* Callout */
-  .callout {
-    background: var(--cream-soft);
-    border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold);
-    padding: 16px 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.7;
-    margin-bottom: 32px;
-  }
+  /* ─── Footer ─── */
+  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
 
-  /* Navigation */
-  .nav-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 24px;
-    border-top: 1px solid var(--hairline);
-    margin-top: 16px;
-  }
-  .nav-footer a {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  .nav-footer a:hover {
-    color: var(--gold-deep);
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
 
-  <!-- Progress Dots -->
-  <div class="progress-bar">
-    <span class="step-label">Step 8 of 10</span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="../index.html">&larr; Back to Dashboard</a>
+  <span class="cert-label">Onboarding &mdash; Step 8 of 10</span>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-label">Step 8 of 10</div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: 80%"></div>
   </div>
+</div>
 
-  <!-- Hero -->
-  <div class="hero">
-    <span class="hero-icon">🛡️</span>
-    <h1>ForeWarn &amp; ZipForms</h1>
-    <p class="subtitle">Set up your safety and contract tools so you can start working deals immediately.</p>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Step 8
   </div>
+  <h1>ForeWarn &amp; ZipForms</h1>
+  <div class="subtitle">Set up your safety and contract tools.</div>
+</header>
 
-  <!-- Task Cards -->
-  <div class="task-list">
+<!-- Main Content -->
+<div class="container">
 
-    <!-- Task 1: Activate ForeWarn -->
-    <div class="task-card" id="card-ob8-1">
-      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
+  <!-- 2-Column Tall Cards -->
+  <div class="doc-grid">
+
+    <!-- ForeWarn Card -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-      <div class="task-content">
-        <label><input type="checkbox" id="ob8-task1" onchange="toggleCard(this, 'card-ob8-1')"> <strong class="task-title">Activate ForeWarn</strong></label>
-        <p class="task-desc">1. Log in to NTREIS at ntreis.clareity.net.<br>2. Scroll to the bottom of the page and click 'ForeWarn.'<br>3. Sign up online or call (855) 518-0897.<br>You will need your License # and Email Address.</p>
-        <a href="http://ntreis.clareity.net" target="_blank" class="action-btn">NTREIS Portal →</a>
+      <h3>ForeWarn</h3>
+      <ul class="setup-steps">
+        <li>
+          <span class="step-num">1</span>
+          <span>Log in to NTREIS at <strong>ntreis.clareity.net</strong></span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span>Scroll to the bottom and click "ForeWarn."</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span>Sign up online or call <strong>(855) 518-0897</strong>. You will need your License # and Email.</span>
+        </li>
+      </ul>
+      <a href="http://ntreis.clareity.net" target="_blank" class="doc-action">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        NTREIS Portal
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob8-forewarn">
+        <label for="ob8-forewarn">Completed</label>
       </div>
     </div>
 
-    <!-- Task 2: Activate ZipForms -->
-    <div class="task-card" id="card-ob8-2">
-      <div class="task-icon" style="background: linear-gradient(135deg, #3A6B7A, #5193A6)">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <!-- ZipForms Card -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
-      <div class="task-content">
-        <label><input type="checkbox" id="ob8-task2" onchange="toggleCard(this, 'card-ob8-2')"> <strong class="task-title">Activate ZipForms</strong></label>
-        <p class="task-desc">1. Log in to NTREIS at ntreis.clareity.net.<br>2. Scroll to the bottom and select the 'ZipForms' icon.<br>3. Find your NRDS # in the Member Portal.<br>4. Call ZipForms Support to activate: 1-800-874-6500.<br><em>Note: You need your NRDS number in order for ZipForms to activate your account.</em></p>
-        <a href="http://portal.metrotex.com/home" target="_blank" class="action-btn">Look Up NRDS # →</a>
+      <h3>ZipForms</h3>
+      <ul class="setup-steps">
+        <li>
+          <span class="step-num">1</span>
+          <span>Log in to NTREIS.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span>Scroll to the bottom and select the "ZipForms" icon.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span>Find your NRDS # in the Member Portal.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span>Call ZipForms: <strong>1-800-874-6500</strong></span>
+        </li>
+      </ul>
+      <a href="http://portal.metrotex.com/home" target="_blank" class="doc-action">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Look Up NRDS #
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob8-zipforms">
+        <label for="ob8-zipforms">Completed</label>
       </div>
     </div>
 
   </div>
 
-  <!-- Callout -->
-  <div class="callout">
-    ⚠️ <strong>ForeWarn DISCLAIMER:</strong> Do not exceed 200 searches per day or your account will be banned.
+  <!-- Yellow Callout -->
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <p><strong>ForeWarn DISCLAIMER:</strong> Do not exceed 200 searches per day or your account will be banned.</p>
   </div>
 
   <!-- Navigation -->
-  <div class="nav-footer">
-    <a href="module-ob-7.html">← Zoho CRM</a>
-    <a href="module-ob-9.html">Next: Marketing &amp; Brand →</a>
-  </div>
-
+  <nav class="module-nav">
+    <a href="module-ob-7.html" class="nav-prev">&larr; Zoho CRM</a>
+    <a href="module-ob-9.html" class="nav-next">Next: Marketing &amp; Brand &rarr;</a>
+  </nav>
 </div>
 
-<script>
-function toggleCard(checkbox, cardId) {
-  const card = document.getElementById(cardId);
-  if (checkbox.checked) {
-    card.classList.add('checked');
-  } else {
-    card.classList.remove('checked');
-  }
-}
-</script>
+<footer class="footer">Myers Home Buyers &mdash; Onboarding</footer>
+
 <script src="../persistence.js"></script>
 </body>
 </html>

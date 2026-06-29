@@ -3,322 +3,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome & Paperwork — Myers Onboarding</title>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Step 1 — Welcome & Paperwork | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sans: 'Mulish', system-ui, sans-serif;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --mono: 'JetBrains Mono', monospace;
-    --gold: #C9941F;
-    --gold-deep: #8B6B1A;
-    --cream: #FBE8B7;
-    --cream-soft: #FDF1D0;
-    --cream-deep: #F5D782;
-    --ink: #1A1815;
-    --ink-2: #3D362A;
-    --muted: #7A7263;
-    --surface: #FFFDF6;
-    --bg-soft: #F7F4ED;
-    --hairline: #E8E2D4;
-    --green: #4F7A3A;
-  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body {
-    font-family: var(--sans);
-    background: var(--surface);
-    color: var(--ink);
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #F7F4ED;
+    color: #1A1815;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .page-wrapper {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 48px 24px 64px;
+    min-height: 100vh;
+    font-size: 18px;
   }
 
-  /* Hero */
+  /* ─── Top Nav ─── */
+  .top-nav {
+    background: #1A1815;
+    padding: 0.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ─── Progress ─── */
+  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
+  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
+
+  /* ─── Hero ─── */
   .hero {
-    text-align: center;
-    margin-bottom: 40px;
+    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    padding: 3.5rem 2rem 3rem;
+    position: relative; overflow: hidden;
   }
-  .hero-icon {
-    width: 80px; height: 80px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--cream-soft), var(--cream));
-    border-radius: 24px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 42px;
-    box-shadow: 0 4px 16px rgba(201,148,31,0.12);
-  }
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: 32px;
-    color: var(--ink);
-    margin-bottom: 8px;
-    letter-spacing: -0.3px;
-  }
-  .hero-sub {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto 24px;
-    line-height: 1.65;
-  }
-
-  /* Progress Dots */
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  .progress-dot {
-    width: 10px; height: 10px;
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
     border-radius: 50%;
-    background: var(--hairline);
-    transition: background 0.3s, transform 0.3s;
   }
-  .progress-dot.active {
-    background: var(--gold);
-    transform: scale(1.25);
-    box-shadow: 0 0 0 3px rgba(201,148,31,0.18);
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
   }
-  .progress-dot.completed {
-    background: var(--green);
+  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .progress-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    text-align: center;
+  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* ─── Intro Text ─── */
+  .intro-text {
+    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
+    margin-bottom: 2rem; max-width: 760px;
   }
 
-  /* Section Title */
-  .section-title {
-    font-family: var(--serif);
-    font-size: 20px;
-    color: var(--ink);
-    margin: 36px 0 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--hairline);
+  /* ─── Document Grid (side-by-side cards like the PPTX) ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
   }
-
-  /* Task Card */
-  .task-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 14px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.3s ease;
+    flex-direction: column;
   }
-  .task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.07);
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
   }
-  .task-card.checked {
-    opacity: 0.6;
-  }
-  .task-card.checked .task-title {
-    text-decoration: line-through;
-    color: var(--muted);
-  }
-  .task-icon {
-    width: 48px; height: 48px;
-    min-width: 48px;
-    border-radius: 14px;
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
   }
-  .task-icon svg {
-    width: 22px; height: 22px;
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .task-content {
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
     flex: 1;
-    min-width: 0;
   }
-  .task-content label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    margin-bottom: 6px;
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
   }
-  .task-content label input[type="checkbox"] {
-    width: 18px; height: 18px;
-    accent-color: var(--green);
-    cursor: pointer;
-    flex-shrink: 0;
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
   }
-  .task-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.4;
-    transition: color 0.3s, text-decoration 0.3s;
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
   }
-  .task-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 4px 0 12px 28px;
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
   }
-  .action-btn {
-    display: inline-flex;
-    padding: 8px 16px;
-    background: var(--gold);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: var(--sans);
-    transition: background 0.2s ease;
-    margin-left: 28px;
+  .doc-card .doc-action {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.55rem 1.1rem;
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6; border-radius: 8px; text-decoration: none;
+    font-size: 0.9rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+    transition: all 0.2s;
   }
-  .action-btn:hover {
-    background: var(--gold-deep);
+  .doc-card .doc-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
+  }
+  .doc-card .doc-action svg {
+    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
 
-  /* Callout */
-  .callout {
-    background: var(--cream-soft);
-    border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold);
-    padding: 16px 20px;
-    border-radius: 10px;
-    margin: 28px 0;
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.6;
+  /* ─── Yellow Callout Box (matches PPTX) ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem 0;
   }
-  .callout strong { color: var(--ink); }
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+  }
+  .yellow-callout strong { color: #1A1815; }
+  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
 
-  /* Navigation */
-  .nav-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--hairline);
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
   }
-  .nav-link {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    transition: background 0.2s;
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
   }
-  .nav-link:hover {
-    background: var(--cream-soft);
+
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
   }
-  .nav-link.next {
-    background: var(--gold);
-    color: #fff;
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
   }
-  .nav-link.next:hover {
-    background: var(--gold-deep);
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
+  }
+  .info-block-body { padding: 1.5rem; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+  .info-block-body .detail-row {
+    display: flex; gap: 2rem; margin-top: 1rem;
+  }
+  .info-block-body .detail-item {
+    flex: 1;
+  }
+  .info-block-body .detail-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
+  }
+  .info-block-body .detail-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem; color: #C9941F;
+  }
+
+  /* ─── Navigation ─── */
+  .module-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
+  }
+  .module-nav a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; font-weight: 700; font-size: 1rem;
+    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
+  }
+  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+
+  /* ─── Footer ─── */
+  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
+
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-icon">📋</div>
-    <h1>Welcome & Paperwork</h1>
-    <p class="hero-sub">Complete your essential documents to officially join Myers Home Buyers.</p>
-    <div class="progress-bar">
-      <div class="progress-dot active"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-    </div>
-    <p class="progress-label">Step 1 of 10</p>
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="../index.html">← Back to Dashboard</a>
+  <span class="cert-label">Onboarding — Step 1 of 10</span>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-label">Step 1 of 10</div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: 10%"></div>
   </div>
-
-  <!-- Tasks -->
-  <h2 class="section-title">Your Checklist</h2>
-
-  <!-- Task 1: Contractor Agreement -->
-  <div class="task-card" id="card-ob1-1">
-    <div class="task-icon" style="background: linear-gradient(135deg, #6B4E8E, #8B6BAE)">
-      <svg viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob1-task1" onchange="toggleCard(this)"> <strong class="task-title">Agent License Sponsorship & Contractor Agreement</strong></label>
-      <p class="task-desc">This outlines your official affiliation with Myers and your working relationship.</p>
-    </div>
-  </div>
-
-  <!-- Task 2: W-9 -->
-  <div class="task-card" id="card-ob1-2">
-    <div class="task-icon" style="background: linear-gradient(135deg, #6B4E8E, #8B6BAE)">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob1-task2" onchange="toggleCard(this)"> <strong class="task-title">W-9 Form</strong></label>
-      <p class="task-desc">Required for tax purposes as an independent contractor.</p>
-    </div>
-  </div>
-
-  <!-- Task 3: Membership Dues -->
-  <div class="task-card" id="card-ob1-3">
-    <div class="task-icon" style="background: linear-gradient(135deg, #C9941F, #D4A94A)">
-      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob1-task3" onchange="toggleCard(this)"> <strong class="task-title">Membership Dues ($150/mo)</strong></label>
-      <p class="task-desc">Covers essential tools and services. If your credit card is declined, you will be notified. Failure to update payment will result in an additional $100 fee.</p>
-      <a href="https://buy.stripe.com/fZudR2aR37Y92C87Ue5AQ00" target="_blank" class="action-btn">Update Payment Method →</a>
-    </div>
-  </div>
-
-  <!-- Callout -->
-  <div class="callout">
-    ✅ <strong>Once all three documents are completed,</strong> notify Jeanne via text at <strong>337-258-1093</strong>.
-  </div>
-
-  <!-- Nav Footer -->
-  <div class="nav-footer">
-    <a href="../index.html" class="nav-link">← Back to Portal</a>
-    <a href="module-ob-2.html" class="nav-link next">Next: TREC Licensing →</a>
-  </div>
-
 </div>
 
-<script>
-function toggleCard(cb) {
-  const card = cb.closest('.task-card');
-  if (cb.checked) {
-    card.classList.add('checked');
-  } else {
-    card.classList.remove('checked');
-  }
-}
-</script>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Step 1
+  </div>
+  <h1>Your First Steps: Essential Documents</h1>
+  <div class="subtitle">Complete your paperwork to officially join Myers Home Buyers.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <p class="intro-text">After filling out the online application form, you will automatically receive the following three documents via email. Please ensure all three are fully completed before proceeding.</p>
+
+  <!-- 3 Documents in a Row -->
+  <div class="doc-grid">
+
+    <!-- Document 1 -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+      </div>
+      <h3>Agent License Sponsorship & Contractor Agreement</h3>
+      <p>This outlines your official affiliation with Myers and your working relationship.</p>
+      <div class="doc-check">
+        <input type="checkbox" id="ob1-doc1">
+        <label for="ob1-doc1">Completed</label>
+      </div>
+    </div>
+
+    <!-- Document 2 -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <h3>W-9 Form</h3>
+      <p>Required for tax purposes as an independent contractor.</p>
+      <div class="doc-check">
+        <input type="checkbox" id="ob1-doc2">
+        <label for="ob1-doc2">Completed</label>
+      </div>
+    </div>
+
+    <!-- Document 3 -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <h3>Credit Card Authorization Form</h3>
+      <p>Includes authorization for a <span class="highlight">$149/month fee</span> for essential tools and services.</p>
+      <div class="doc-check">
+        <input type="checkbox" id="ob1-doc3">
+        <label for="ob1-doc3">Completed</label>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Yellow Callout (matching PPTX) -->
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    <p>Once the above documents are completed, kindly notify Jeanne via text at <a href="sms:3372581093"><strong>337-258-1093</strong></a>.</p>
+  </div>
+
+  <!-- Section Divider -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="label">Membership Dues</span>
+    <div class="line"></div>
+  </div>
+
+  <!-- Membership Dues Info Block -->
+  <div class="info-block">
+    <div class="info-block-header">
+      <div class="ib-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3>Membership Dues</h3>
+    </div>
+    <div class="info-block-body">
+      <p>All agents are required to pay a monthly membership fee to maintain access to essential tools and services.</p>
+
+      <div class="detail-row">
+        <div class="detail-item">
+          <div class="detail-label">Monthly Dues</div>
+          <div class="detail-value">$150/month</div>
+          <p style="font-size: 0.95rem; margin-top: 0.25rem;">per agent. Covers essential tools and services.</p>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Late / Declined Payment Fee</div>
+          <div class="detail-value">$100</div>
+          <p style="font-size: 0.95rem; margin-top: 0.25rem;">Additional fee if payment is not updated after a declined card notice.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <a href="https://buy.stripe.com/fZudR2aR37Y92C87Ue5AQ00" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.35rem; background: linear-gradient(135deg, #C9941F, #8B6B1A); color: #FFFDF6; border-radius: 10px; text-decoration: none; font-size: 1rem; font-weight: 700; box-shadow: 0 2px 8px rgba(201,148,31,0.3); transition: all 0.2s;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Manage Your Payment Method
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="module-nav">
+    <a href="../index.html" class="nav-prev">← Back to Portal</a>
+    <a href="module-ob-2.html" class="nav-next">Next: TREC Licensing →</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers — Onboarding</footer>
+
 <script src="../persistence.js"></script>
 </body>
 </html>

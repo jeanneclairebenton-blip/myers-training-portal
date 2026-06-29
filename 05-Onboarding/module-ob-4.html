@@ -3,350 +3,358 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DISC Assessment — Myers Onboarding</title>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Step 4 — DISC Assessment | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sans: 'Mulish', system-ui, sans-serif;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --mono: 'JetBrains Mono', monospace;
-    --gold: #C9941F;
-    --gold-deep: #8B6B1A;
-    --cream: #FBE8B7;
-    --cream-soft: #FDF1D0;
-    --cream-deep: #F5D782;
-    --ink: #1A1815;
-    --ink-2: #3D362A;
-    --muted: #7A7263;
-    --surface: #FFFDF6;
-    --bg-soft: #F7F4ED;
-    --hairline: #E8E2D4;
-    --green: #4F7A3A;
-  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body {
-    font-family: var(--sans);
-    background: var(--surface);
-    color: var(--ink);
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #F7F4ED;
+    color: #1A1815;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .page-wrapper {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 48px 24px 64px;
-  }
-  .hero {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .hero-icon {
-    width: 80px; height: 80px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--cream-soft), var(--cream));
-    border-radius: 24px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 42px;
-    box-shadow: 0 4px 16px rgba(201,148,31,0.12);
-  }
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: 32px;
-    color: var(--ink);
-    margin-bottom: 8px;
-    letter-spacing: -0.3px;
-  }
-  .hero-sub {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto 24px;
-    line-height: 1.65;
-  }
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  .progress-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--hairline);
-    transition: background 0.3s, transform 0.3s;
-  }
-  .progress-dot.active {
-    background: var(--gold);
-    transform: scale(1.25);
-    box-shadow: 0 0 0 3px rgba(201,148,31,0.18);
-  }
-  .progress-dot.completed {
-    background: var(--green);
-  }
-  .progress-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    text-align: center;
-  }
-  .section-title {
-    font-family: var(--serif);
-    font-size: 20px;
-    color: var(--ink);
-    margin: 36px 0 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--hairline);
-  }
-  .task-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 14px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.3s ease;
-  }
-  .task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.07);
-  }
-  .task-card.checked {
-    opacity: 0.6;
-  }
-  .task-card.checked .task-title {
-    text-decoration: line-through;
-    color: var(--muted);
-  }
-  .task-icon {
-    width: 48px; height: 48px;
-    min-width: 48px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .task-icon svg {
-    width: 22px; height: 22px;
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .task-content {
-    flex: 1;
-    min-width: 0;
-  }
-  .task-content label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    margin-bottom: 6px;
-  }
-  .task-content label input[type="checkbox"] {
-    width: 18px; height: 18px;
-    accent-color: var(--green);
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .task-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.4;
-    transition: color 0.3s, text-decoration 0.3s;
-  }
-  .task-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 4px 0 12px 28px;
-  }
-  .action-btn {
-    display: inline-flex;
-    padding: 8px 16px;
-    background: var(--gold);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: var(--sans);
-    transition: background 0.2s ease;
-    margin-left: 28px;
-  }
-  .action-btn:hover {
-    background: var(--gold-deep);
+    min-height: 100vh;
+    font-size: 18px;
   }
 
-  /* Text Input Card */
-  .input-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
+  /* ─── Top Nav ─── */
+  .top-nav {
+    background: #1A1815;
+    padding: 0.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ─── Progress ─── */
+  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
+  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    padding: 3.5rem 2rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* ─── Intro Text ─── */
+  .intro-text {
+    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
+    margin-bottom: 2rem; max-width: 760px;
+  }
+
+  /* ─── Document Grid ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .doc-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 14px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    flex-direction: column;
   }
-  .input-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.07);
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
   }
-  .input-card .input-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 10px;
+  .doc-card.full-width {
+    grid-column: 1 / -1;
   }
-  .input-card input[type="text"] {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--hairline);
-    border-radius: 8px;
-    font-family: var(--sans);
-    font-size: 14px;
-    color: var(--ink);
-    background: var(--bg-soft);
-    outline: none;
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
+  }
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
+    flex: 1;
+  }
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
+  }
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+  }
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
+  }
+  .doc-card .doc-action {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.55rem 1.1rem;
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6; border-radius: 8px; text-decoration: none;
+    font-size: 0.9rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+    transition: all 0.2s;
+  }
+  .doc-card .doc-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
+  }
+  .doc-card .doc-action svg {
+    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ─── Text Input ─── */
+  .input-label {
+    display: block;
+    font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.5rem;
+  }
+  .text-input {
+    width: 100%; padding: 0.75rem 1rem;
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1rem; color: #1A1815;
+    background: #FFFDF6; border: 1px solid #E8E2D4;
+    border-radius: 10px; outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .input-card input[type="text"]:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201,148,31,0.12);
+  .text-input:focus {
+    border-color: #C9941F;
+    box-shadow: 0 0 0 3px rgba(201,148,31,0.15);
   }
-  .input-card input[type="text"]::placeholder {
-    color: var(--muted);
-    font-style: italic;
+  .text-input::placeholder { color: #B5AFA3; }
+
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+  }
+  .yellow-callout strong { color: #1A1815; }
+  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
   }
 
-  .callout {
-    background: var(--cream-soft);
-    border: 1px solid var(--cream-deep);
-    border-left: 4px solid var(--gold);
-    padding: 16px 20px;
-    border-radius: 10px;
-    margin: 28px 0;
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.6;
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
   }
-  .callout strong { color: var(--ink); }
-  .nav-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--hairline);
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
   }
-  .nav-link {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    transition: background 0.2s;
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
   }
-  .nav-link:hover {
-    background: var(--cream-soft);
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
   }
-  .nav-link.next {
-    background: var(--gold);
-    color: #fff;
+  .info-block-body { padding: 1.5rem; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+  .info-block-body .detail-row {
+    display: flex; gap: 2rem; margin-top: 1rem;
   }
-  .nav-link.next:hover {
-    background: var(--gold-deep);
+  .info-block-body .detail-item {
+    flex: 1;
+  }
+  .info-block-body .detail-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
+  }
+  .info-block-body .detail-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem; color: #C9941F;
+  }
+
+  /* ─── Navigation ─── */
+  .module-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
+  }
+  .module-nav a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; font-weight: 700; font-size: 1rem;
+    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
+  }
+  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+
+  /* ─── Footer ─── */
+  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
+
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-icon">✨</div>
-    <h1>DISC Assessment</h1>
-    <p class="hero-sub">Understanding your DISC profile helps us communicate with you more effectively, play to your strengths, and set you up for success.</p>
-    <div class="progress-bar">
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot completed"></div>
-      <div class="progress-dot active"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-    </div>
-    <p class="progress-label">Step 4 of 10</p>
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="../index.html">&larr; Back to Dashboard</a>
+  <span class="cert-label">Onboarding &mdash; Step 4 of 10</span>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-label">Step 4 of 10</div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: 40%"></div>
   </div>
-
-  <!-- Tasks -->
-  <h2 class="section-title">Your Checklist</h2>
-
-  <!-- Task 1: Take Assessment -->
-  <div class="task-card" id="card-ob4-1">
-    <div class="task-icon" style="background: linear-gradient(135deg, #6B4E8E, #8B6BAE)">
-      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob4-task1" onchange="toggleCard(this)"> <strong class="task-title">Take the DISC Assessment</strong></label>
-      <p class="task-desc">Complete the personality assessment through Wizehire. It takes about 10–15 minutes. Answer honestly — there are no right or wrong answers. Your results help us understand how you prefer to communicate, make decisions, and work within a team.</p>
-      <a href="https://wizehire.com/team/assessment/myers-home-buyers-1" target="_blank" class="action-btn">Start Assessment →</a>
-    </div>
-  </div>
-
-  <!-- Task 2: Book Review Session -->
-  <div class="task-card" id="card-ob4-2">
-    <div class="task-icon" style="background: linear-gradient(135deg, #2E5C8A, #4A7DB0)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>
-    </div>
-    <div class="task-content">
-      <label><input type="checkbox" id="ob4-task2" onchange="toggleCard(this)"> <strong class="task-title">Request Your Results + Book a Review Session</strong></label>
-      <p class="task-desc">Once you've completed the assessment, request your results and book a 15-minute session with Jeanne to go over them and discuss how they apply to your role.</p>
-      <a href="https://calendar.app.google/eSp3q8T6i3bt2oe37" target="_blank" class="action-btn">Book Review Session →</a>
-    </div>
-  </div>
-
-  <!-- Text Input Card -->
-  <div class="input-card" id="card-ob4-input">
-    <div class="task-icon" style="background: linear-gradient(135deg, #7A7263, #9A9283)">
-      <svg viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
-    </div>
-    <div class="task-content">
-      <p class="input-label">What is your primary DISC type?</p>
-      <input type="text" id="ob4-disc-type" placeholder="e.g., High D, High I, High S, High C">
-    </div>
-  </div>
-
-  <!-- Nav Footer -->
-  <div class="nav-footer">
-    <a href="module-ob-3.html" class="nav-link">← MLS & Realtor Association</a>
-    <a href="module-ob-5.html" class="nav-link next">Next: Gmail, Calendars & Shared Drives →</a>
-  </div>
-
 </div>
 
-<script>
-function toggleCard(cb) {
-  const card = cb.closest('.task-card');
-  if (cb.checked) {
-    card.classList.add('checked');
-  } else {
-    card.classList.remove('checked');
-  }
-}
-</script>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    Step 4
+  </div>
+  <h1>DISC Assessment</h1>
+  <div class="subtitle">Understand your strengths so we can set you up for success.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- 2-Column Grid -->
+  <div class="doc-grid">
+
+    <!-- Card 1: Take the Assessment -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <h3>Take the DISC Assessment</h3>
+      <p>Complete through Wizehire. Takes <strong>10&ndash;15 minutes</strong>. Answer honestly &mdash; no right or wrong answers. Your results help us understand how you prefer to communicate, make decisions, and work within a team.</p>
+      <a href="https://wizehire.com/team/assessment/myers-home-buyers-1" target="_blank" class="doc-action">
+        Start Assessment
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob4-assessment">
+        <label for="ob4-assessment">Completed</label>
+      </div>
+    </div>
+
+    <!-- Card 2: Book a Review Session -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <h3>Book a Review Session</h3>
+      <p>Once completed, request your results and book a <strong>15-minute session</strong> with Jeanne to discuss how they apply to your role.</p>
+      <a href="https://calendar.app.google/eSp3q8T6i3bt2oe37" target="_blank" class="doc-action">
+        Book Session
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob4-review">
+        <label for="ob4-review">Completed</label>
+      </div>
+    </div>
+
+    <!-- Full-Width Input Card -->
+    <div class="doc-card full-width">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+      </div>
+      <h3>Your DISC Results</h3>
+      <label for="ob4-disc-type" class="input-label">What is your primary DISC type?</label>
+      <input type="text" id="ob4-disc-type" class="text-input" placeholder="e.g., High D, High I, High S, High C">
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <nav class="module-nav">
+    <a href="module-ob-3.html" class="nav-prev">&larr; MLS &amp; Realtor Association</a>
+    <a href="module-ob-5.html" class="nav-next">Next: Gmail, Calendars &amp; Shared Drives &rarr;</a>
+  </nav>
+</div>
+
+<footer class="footer">Myers Home Buyers &mdash; Onboarding</footer>
+
 <script src="../persistence.js"></script>
 </body>
 </html>

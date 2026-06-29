@@ -3,376 +3,394 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Step 9: Marketing &amp; Brand — Myers Onboarding</title>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Step 9 — Marketing &amp; Brand | Myers Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sans: 'Mulish', system-ui, sans-serif;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --mono: 'JetBrains Mono', monospace;
-    --gold: #C9941F;
-    --gold-deep: #8B6B1A;
-    --cream: #FBE8B7;
-    --cream-soft: #FDF1D0;
-    --cream-deep: #F5D782;
-    --ink: #1A1815;
-    --ink-2: #3D362A;
-    --muted: #7A7263;
-    --surface: #FFFDF6;
-    --bg-soft: #F7F4ED;
-    --hairline: #E8E2D4;
-    --green: #4F7A3A;
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body {
-    font-family: var(--sans);
-    background: var(--surface);
-    color: var(--ink);
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #F7F4ED;
+    color: #1A1815;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    font-size: 18px;
   }
 
-  .page-wrapper {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 48px 24px 64px;
+  /* ─── Top Nav ─── */
+  .top-nav {
+    background: #1A1815;
+    padding: 0.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
   }
+  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
+  .top-nav a:hover { color: #C9941F; }
+  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  /* Progress Dots */
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 40px;
-  }
-  .progress-bar .step-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 8px;
-  }
-  .progress-bar .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--hairline);
-    transition: all 0.3s ease;
-  }
-  .progress-bar .dot.completed {
-    background: var(--green);
-  }
-  .progress-bar .dot.active {
-    background: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.25);
-    transform: scale(1.2);
-  }
+  /* ─── Progress ─── */
+  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
+  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
 
-  /* Hero */
+  /* ─── Hero ─── */
   .hero {
-    text-align: center;
-    margin-bottom: 40px;
+    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    padding: 3.5rem 2rem 3rem;
+    position: relative; overflow: hidden;
   }
-  .hero-icon {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 16px;
-    display: block;
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
+    border-radius: 50%;
   }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .hero h1 {
-    font-family: var(--serif);
-    font-size: 36px;
-    color: var(--ink);
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .hero .subtitle {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.7;
+  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* ─── Intro Text ─── */
+  .intro-text {
+    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
+    margin-bottom: 2rem; max-width: 760px;
   }
 
-  /* Task Cards */
-  .task-list {
+  /* ─── Document Grid ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .doc-grid.single-col {
+    grid-template-columns: 1fr;
+  }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 32px;
   }
-
-  .task-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
   }
-  .task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
   }
-  .task-card.checked {
-    opacity: 0.6;
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .task-card.checked .task-title strong {
-    text-decoration: line-through;
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
   }
-
-  .task-icon {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .task-icon svg {
-    width: 22px;
-    height: 22px;
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .task-content {
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
     flex: 1;
-    min-width: 0;
   }
-  .task-content label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    margin-bottom: 6px;
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
   }
-  .task-content label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--green);
-    cursor: pointer;
-    flex-shrink: 0;
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
   }
-  .task-title strong {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    transition: all 0.2s ease;
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
   }
-  .task-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.65;
-    margin-bottom: 10px;
-    margin-left: 28px;
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
   }
-  .task-desc:last-child {
-    margin-bottom: 0;
+  .doc-card .doc-action {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.55rem 1.1rem;
+    background: linear-gradient(135deg, #C9941F, #8B6B1A);
+    color: #FFFDF6; border-radius: 8px; text-decoration: none;
+    font-size: 0.9rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
+    transition: all 0.2s;
+    align-self: flex-start;
   }
-
-  .action-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    background: var(--gold);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: var(--sans);
-    transition: background 0.2s ease;
-    margin-left: 28px;
+  .doc-card .doc-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
   }
-  .action-btn:hover {
-    background: var(--gold-deep);
+  .doc-card .doc-action svg {
+    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
 
-  /* Text Input Card */
+  /* ─── Input Card ─── */
   .input-card {
-    background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: 14px;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    margin-bottom: 1.5rem;
   }
-  .input-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  }
-  .input-card .input-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 10px;
+  .input-card label {
+    display: block;
+    font-size: 1rem; font-weight: 700; color: #1A1815;
+    margin-bottom: 0.75rem;
   }
   .input-card input[type="text"] {
     width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--hairline);
-    border-radius: 8px;
-    font-family: var(--sans);
-    font-size: 13.5px;
-    color: var(--ink);
-    background: var(--bg-soft);
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 0.75rem 1rem;
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1rem;
+    border: 1px solid #E8E2D4;
+    border-radius: 10px;
+    background: #F7F4ED;
+    color: #1A1815;
+    transition: border-color 0.2s;
   }
   .input-card input[type="text"]:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201, 148, 31, 0.15);
+    outline: none;
+    border-color: #C9941F;
+    box-shadow: 0 0 0 3px rgba(201,148,31,0.15);
   }
   .input-card input[type="text"]::placeholder {
-    color: var(--muted);
-    opacity: 0.6;
+    color: #7A7263;
   }
 
-  /* Navigation */
-  .nav-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 24px;
-    border-top: 1px solid var(--hairline);
-    margin-top: 16px;
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem 0;
   }
-  .nav-footer a {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    transition: color 0.2s ease;
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
   }
-  .nav-footer a:hover {
-    color: var(--gold-deep);
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+  }
+  .yellow-callout strong { color: #1A1815; }
+  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
+  }
+
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+  }
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
+  }
+  .info-block-body { padding: 1.5rem; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+  .info-block-body .detail-row {
+    display: flex; gap: 2rem; margin-top: 1rem;
+  }
+  .info-block-body .detail-item {
+    flex: 1;
+  }
+  .info-block-body .detail-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
+  }
+  .info-block-body .detail-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem; color: #C9941F;
+  }
+
+  /* ─── Navigation ─── */
+  .module-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
+  }
+  .module-nav a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; font-weight: 700; font-size: 1rem;
+    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
+  }
+  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
+  .nav-prev:hover { background: #E8E2D4; }
+  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
+  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+
+  /* ─── Footer ─── */
+  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
+
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .module-nav { flex-direction: column; gap: 0.75rem; }
+    .module-nav a { width: 100%; justify-content: center; }
+    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
 
-  <!-- Progress Dots -->
-  <div class="progress-bar">
-    <span class="step-label">Step 9 of 10</span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot completed"></span>
-    <span class="dot active"></span>
-    <span class="dot"></span>
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="../index.html">&larr; Back to Dashboard</a>
+  <span class="cert-label">Onboarding &mdash; Step 9 of 10</span>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-label">Step 9 of 10</div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: 90%"></div>
+  </div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    Step 9
+  </div>
+  <h1>Marketing &amp; Brand</h1>
+  <div class="subtitle">Launch your professional brand and establish your presence.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- 2x2 Task Card Grid -->
+  <div class="doc-grid">
+
+    <!-- Card 1: Brand Guidelines & Logos -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <h3>Brand Guidelines &amp; Logos</h3>
+      <p>Review guidelines and download official logos.</p>
+      <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="doc-action">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Marketing Drive
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob9-brand">
+        <label for="ob9-brand">Completed</label>
+      </div>
+    </div>
+
+    <!-- Card 2: Welcome Announcement -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </div>
+      <h3>Welcome Announcement</h3>
+      <p>Pick a template, add your headshot, and post to social media. Six premium designs available.</p>
+      <div class="doc-check">
+        <input type="checkbox" id="ob9-announcement">
+        <label for="ob9-announcement">Completed</label>
+      </div>
+    </div>
+
+    <!-- Card 3: Email Signature -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+      </div>
+      <h3>Email Signature</h3>
+      <p>Build a branded Gmail signature with photo, title, and license number.</p>
+      <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="doc-action">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Signature Template
+      </a>
+      <div class="doc-check">
+        <input type="checkbox" id="ob9-signature">
+        <label for="ob9-signature">Completed</label>
+      </div>
+    </div>
+
+    <!-- Card 4: Business Cards -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3>Business Cards</h3>
+      <p>Choose a layout, preview front and back, and order 250 soft-touch matte cards.</p>
+      <div class="doc-check">
+        <input type="checkbox" id="ob9-cards">
+        <label for="ob9-cards">Completed</label>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Hero -->
-  <div class="hero">
-    <span class="hero-icon">🎨</span>
-    <h1>Marketing &amp; Brand</h1>
-    <p class="subtitle">Launch your professional brand. Create your announcement, set up your signature, and get your presence established.</p>
-  </div>
-
-  <!-- Task Cards -->
-  <div class="task-list">
-
-    <!-- Task 1: Review Brand Guidelines & Logos -->
-    <div class="task-card" id="card-ob9-1">
-      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
-        <!-- palette icon -->
-        <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/><circle cx="17.5" cy="10.5" r="0.5" fill="#fff" stroke="none"/><circle cx="8.5" cy="7.5" r="0.5" fill="#fff" stroke="none"/><circle cx="6.5" cy="12" r="0.5" fill="#fff" stroke="none"/><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10a2 2 0 0 0 2-2v-1a2 2 0 0 1 2-2h1.5A4.5 4.5 0 0 0 22 12.5C22 6.82 17.52 2 12 2z"/></svg>
-      </div>
-      <div class="task-content">
-        <label><input type="checkbox" id="ob9-task1" onchange="toggleCard(this, 'card-ob9-1')"> <strong class="task-title">Review Brand Guidelines &amp; Logos</strong></label>
-        <p class="task-desc">Review the brand guidelines and download official logos to use in your own marketing materials.</p>
-        <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="action-btn">Marketing Drive →</a>
-      </div>
-    </div>
-
-    <!-- Task 2: Create Welcome Announcement -->
-    <div class="task-card" id="card-ob9-2">
-      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
-        <!-- megaphone icon -->
-        <svg viewBox="0 0 24 24"><path d="M21 15V5a2 2 0 0 0-2-2H9"/><path d="M3 11v4a2 2 0 0 0 2 2h2"/><path d="M7 17l-2 4"/><path d="M18 3l-6 4H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h7l6 4V3z"/></svg>
-      </div>
-      <div class="task-content">
-        <label><input type="checkbox" id="ob9-task2" onchange="toggleCard(this, 'card-ob9-2')"> <strong class="task-title">Create Welcome Announcement</strong></label>
-        <p class="task-desc">Pick a template, add your headshot, download, and post to social media. Six premium designs available.</p>
-      </div>
-    </div>
-
-    <!-- Task 3: Set Up Email Signature -->
-    <div class="task-card" id="card-ob9-3">
-      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
-        <!-- mail icon -->
-        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      </div>
-      <div class="task-content">
-        <label><input type="checkbox" id="ob9-task3" onchange="toggleCard(this, 'card-ob9-3')"> <strong class="task-title">Set Up Email Signature</strong></label>
-        <p class="task-desc">Build a branded Gmail signature with your photo, title, and license number.</p>
-        <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="action-btn">Email Signature Template →</a>
-      </div>
-    </div>
-
-    <!-- Task 4: Order Business Cards -->
-    <div class="task-card" id="card-ob9-4">
-      <div class="task-icon" style="background: linear-gradient(135deg, #B0432A, #D45E42)">
-        <!-- card/credit-card icon -->
-        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      </div>
-      <div class="task-content">
-        <label><input type="checkbox" id="ob9-task4" onchange="toggleCard(this, 'card-ob9-4')"> <strong class="task-title">Order Business Cards</strong></label>
-        <p class="task-desc">Choose a layout, preview front and back, and order 250 soft-touch matte cards.</p>
-      </div>
-    </div>
-
-    <!-- Text Input Card: Social Media Link -->
-    <div class="input-card">
-      <div class="task-icon" style="background: linear-gradient(135deg, #7A7263, #9E968A)">
-        <!-- link icon -->
-        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-      </div>
-      <div class="task-content" style="flex: 1;">
-        <div class="input-label">Paste the link to your social media announcement post</div>
-        <input type="text" id="ob9-social-link" placeholder="https://...">
-      </div>
-    </div>
-
+  <!-- Text Input Card -->
+  <div class="input-card">
+    <label for="ob9-social-link">Paste the link to your social media announcement post</label>
+    <input type="text" id="ob9-social-link" placeholder="https://...">
   </div>
 
   <!-- Navigation -->
-  <div class="nav-footer">
-    <a href="module-ob-8.html">← ForeWarn &amp; ZipForms</a>
-    <a href="module-ob-10.html">Next: Payout Process →</a>
-  </div>
-
+  <nav class="module-nav">
+    <a href="module-ob-8.html" class="nav-prev">&larr; ForeWarn &amp; ZipForms</a>
+    <a href="module-ob-10.html" class="nav-next">Next: Payout Process &rarr;</a>
+  </nav>
 </div>
 
-<script>
-function toggleCard(checkbox, cardId) {
-  const card = document.getElementById(cardId);
-  if (checkbox.checked) {
-    card.classList.add('checked');
-  } else {
-    card.classList.remove('checked');
-  }
-}
-</script>
+<footer class="footer">Myers Home Buyers &mdash; Onboarding</footer>
+
 <script src="../persistence.js"></script>
 </body>
 </html>
