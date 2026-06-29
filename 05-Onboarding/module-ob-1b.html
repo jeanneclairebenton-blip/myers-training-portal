@@ -35,6 +35,7 @@
     padding: 3.5rem 2rem 3rem;
     position: relative; overflow: hidden;
     border-bottom: 1px solid #E8E2D4;
+    text-align: center;
   }
   .hero::after {
     content: ''; position: absolute; top: -50%; right: -10%;
@@ -43,7 +44,9 @@
     border-radius: 50%;
   }
   .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    justify-content: center;
+    margin-left: auto; margin-right: auto; width: fit-content;
     background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
     border-radius: 99px; padding: 0.4rem 1.1rem;
     font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
@@ -58,12 +61,13 @@
   .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
 
   /* ─── Container ─── */
-  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; text-align: center; }
 
   /* ─── Intro Text ─── */
   .intro-text {
     font-size: 1.1rem; color: #3D362A; line-height: 1.7;
     margin-bottom: 2rem; max-width: 760px;
+    text-align: center; margin-left: auto; margin-right: auto;
   }
 
   /* ─── Stat Grid ─── */
@@ -72,6 +76,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
     margin-bottom: 2rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
   }
   .stat-card {
     background: #FFFDF6;
@@ -80,6 +85,7 @@
     padding: 2rem 1.75rem;
     box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     transition: transform 200ms, box-shadow 200ms;
+    text-align: left;
   }
   .stat-card:hover {
     transform: translateY(-3px);
@@ -119,6 +125,8 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 1.25rem;
+    text-align: left;
+    margin-left: auto; margin-right: auto;
   }
   .doc-card:hover {
     transform: translateY(-3px);
@@ -181,7 +189,8 @@
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     display: flex; align-items: flex-start; gap: 1rem;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
+    max-width: 700px; margin-left: auto; margin-right: auto;
   }
   .yellow-callout-icon {
     width: 40px; height: 40px; flex-shrink: 0;
@@ -201,6 +210,7 @@
   .module-nav {
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
+    max-width: 800px; margin-left: auto; margin-right: auto;
   }
   .module-nav a {
     display: inline-flex; align-items: center; gap: 0.5rem;
