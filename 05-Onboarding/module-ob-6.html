@@ -37,30 +37,31 @@
 
   /* ─── Hero ─── */
   .hero {
-    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
     padding: 3.5rem 2rem 3rem;
     position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
   }
   .hero::after {
     content: ''; position: absolute; top: -50%; right: -10%;
     width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
     border-radius: 50%;
   }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 0.5rem;
     background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
     border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
   }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .hero h1 {
     font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    font-size: clamp(2rem, 5vw, 3rem); color: #1A1815;
     line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
 
   /* ─── Container ─── */
   .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
@@ -287,7 +288,7 @@
 <!-- Hero -->
 <header class="hero">
   <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="#8B6B1A"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zm2.521-10.123a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.527 2.527 0 0 1 2.52-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
     Step 6
   </div>
   <h1>Slack Communication</h1>
@@ -370,7 +371,7 @@
   <div class="doc-grid single-col">
     <div class="doc-card">
       <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="#C9941F"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zm2.521-10.123a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.527 2.527 0 0 1 2.52-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
       </div>
       <h3>Download &amp; Join Slack</h3>
       <p>Download the Slack app on your laptop and mobile device, then join the Myers Home Buyers workspace.</p>

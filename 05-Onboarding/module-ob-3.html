@@ -37,30 +37,31 @@
 
   /* ─── Hero ─── */
   .hero {
-    background: linear-gradient(135deg, #1A1815 0%, #3D362A 100%);
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
     padding: 3.5rem 2rem 3rem;
     position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
   }
   .hero::after {
     content: ''; position: absolute; top: -50%; right: -10%;
     width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
     border-radius: 50%;
   }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 0.5rem;
     background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
     border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #FBE8B7; font-weight: 700;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
   }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #FBE8B7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .hero h1 {
     font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3rem); color: #FFFDF6;
+    font-size: clamp(2rem, 5vw, 3rem); color: #1A1815;
     line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .hero .subtitle { color: #C9941F; font-size: 1.2rem; font-weight: 600; }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
 
   /* ─── Container ─── */
   .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
