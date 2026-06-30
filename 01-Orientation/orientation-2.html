@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules & Compliance | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #FAFAF8;
+    color: #1A1815;
+    line-height: 1.6;
+    min-height: 100vh;
+    font-size: 16px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
+    text-align: center;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    justify-content: center;
+    margin-left: auto; margin-right: auto; width: fit-content;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
+    line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+
+  /* ─── Document Grid ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.25rem 1.25rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
+  }
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
+    flex: 1;
+  }
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
+  }
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+  }
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
+  }
+
+  /* ─── Wide Acknowledgment Card ─── */
+  .doc-grid.single { grid-template-columns: 1fr; }
+
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1rem auto;
+    max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+  }
+  .yellow-callout strong { color: #1A1815; }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem auto 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
+  }
+
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
+  }
+  .info-block-body { padding: 1.5rem; text-align: left; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+  }
+</style>
+</head>
+<body>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Orientation
+  </div>
+  <h1>Rules & Compliance</h1>
+  <div class="subtitle">The non-negotiables that protect you, the buyer, and Myers.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- ═══ Acquisition Discipline ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Acquisition Discipline</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid">
+    <!-- See It Before You Buy It -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <h3>See It Before You Buy It</h3>
+      <p>Don't acquire a property you haven't seen — unless the numbers are significantly de-risked.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-see">
+        <label for="or2-see">Understood</label>
+      </div>
+    </div>
+
+    <!-- Never Post Below Cost -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3>Never Post Below Cost</h3>
+      <p>Deals must not be posted for less than the price they were acquired for.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-cost">
+        <label for="or2-cost">Understood</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Confidentiality & Verification ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Confidentiality & Verification</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid">
+    <!-- Verify Before You Disclose -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Verify Before You Disclose</h3>
+      <p>Never share a property address until the investor is verified by signing the MVP agreement.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-verify">
+        <label for="or2-verify">Understood</label>
+      </div>
+    </div>
+
+    <!-- Keep It Off The Open Market -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h3>Keep It Off The Open Market</h3>
+      <p>When pitching, advertising, or posting on social media, never reveal the address or the showing time. The address and showing time are confidential — protecting them protects the deal.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-market">
+        <label for="or2-market">Understood</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Marketing & TREC ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Marketing & TREC</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid">
+    <!-- Logo Placement -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+      </div>
+      <h3>Logo Placement</h3>
+      <p>The Myers logo goes on all marketing materials where TREC requires it. Myers need not be the dominant brand on your materials.</p>
+    </div>
+
+    <!-- Stay Compliant -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h3>Stay Compliant</h3>
+      <p>Everything you publish must meet all TREC requirements. When in doubt on a disclosure or attribution, check before you post.</p>
+    </div>
+  </div>
+
+  <!-- ═══ Reporting & Splits ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Reporting & Splits</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid">
+    <!-- Report Brokered & Wholesaled Deals -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <h3>Report Brokered & Wholesaled Deals</h3>
+      <p>All transactions that are brokered or wholesaled in nature must be reported to Myers. Exception: No report needed when you're closing to rent, flip, or otherwise hold the home yourself.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-report">
+        <label for="or2-report">Understood</label>
+      </div>
+    </div>
+
+    <!-- When Commission Splits Apply -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      </div>
+      <h3>When Commission Splits Apply</h3>
+      <p>If you ever receive a commission for real estate services, you are responsible for all brokerage splits — including when you're a principal to the transaction. This includes: commissions from purchasing a listed property, commissions from helping another party buy or sell, and lease commissions.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-splits">
+        <label for="or2-splits">Understood</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Yellow Callout -->
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <p><strong>Investor-first reward:</strong> Myers takes no broker fee on traditional brokerage referrals you pass to another agent.</p>
+  </div>
+
+  <!-- ═══ Full Acknowledgment ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Acknowledgment</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid single">
+    <div class="doc-card" style="text-align: center;">
+      <h3>I have read and understand all rules and compliance requirements.</h3>
+      <div class="doc-check" style="justify-content: center; border-top: none; padding-top: 0.5rem;">
+        <input type="checkbox" onchange="checkConfetti()" id="or2-acknowledge">
+        <label for="or2-acknowledge">I Acknowledge</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+</body>
+</html>

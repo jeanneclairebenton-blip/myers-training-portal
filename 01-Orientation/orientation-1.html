@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roles & Responsibilities | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #FAFAF8;
+    color: #1A1815;
+    line-height: 1.6;
+    min-height: 100vh;
+    font-size: 16px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
+    text-align: center;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    justify-content: center;
+    margin-left: auto; margin-right: auto; width: fit-content;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
+    line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+
+  /* ─── Document Grid ─── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.25rem 1.25rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .doc-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    background: rgba(201,148,31,0.12);
+  }
+  .doc-card-icon svg {
+    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .doc-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.6rem; line-height: 1.35;
+  }
+  .doc-card .card-subtitle {
+    font-size: 0.95rem; font-weight: 700; color: #8B6B1A;
+    margin-bottom: 0.5rem;
+  }
+  .doc-card p {
+    font-size: 1rem; color: #3D362A; line-height: 1.6;
+    flex: 1;
+  }
+  .doc-card ul {
+    list-style: none; padding: 0; margin: 0 0 0.25rem 0;
+    flex: 1;
+  }
+  .doc-card ul li {
+    font-size: 0.95rem; color: #3D362A; line-height: 1.6;
+    padding: 0.2rem 0 0.2rem 1.25rem;
+    position: relative;
+  }
+  .doc-card ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 0.65rem;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #C9941F;
+  }
+  .doc-card .highlight {
+    color: #C9941F; font-weight: 700;
+  }
+  .doc-card .doc-check {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E8E2D4;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+  }
+  .doc-card .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
+  }
+
+  /* ─── Large Stat ─── */
+  .stat-display {
+    text-align: center; margin-bottom: 0.75rem;
+  }
+  .stat-display .stat-number {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2.75rem; color: #C9941F; line-height: 1.1;
+  }
+  .stat-display .stat-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #7A7263; margin-top: 0.15rem;
+  }
+
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1rem auto;
+    max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+  }
+  .yellow-callout strong { color: #1A1815; }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem auto 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
+  }
+
+  /* ─── Info Block ─── */
+  .info-block {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .info-block-header {
+    background: #1A1815; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .info-block-header .ib-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(201,148,31,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .info-block-header h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem; color: #FFFDF6;
+  }
+  .info-block-body { padding: 1.5rem; text-align: left; }
+  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+
+  /* ─── Stage Cards (Career Progression) ─── */
+  .stage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .stage-card {
+    background: #FAFAF8;
+    border: 1px solid #E8E2D4;
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  .stage-card .stage-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #7A7263; margin-bottom: 0.35rem;
+  }
+  .stage-card .stage-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.15rem; color: #C9941F; margin-bottom: 0.35rem;
+  }
+  .stage-card .stage-desc {
+    font-size: 0.85rem; color: #7A7263; font-weight: 500;
+  }
+
+  /* ─── Degree Grid (Revenue Share) ─── */
+  .degree-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .degree-box {
+    background: #FAFAF8;
+    border: 1px solid #E8E2D4;
+    border-radius: 10px;
+    padding: 0.85rem 0.5rem;
+    text-align: center;
+  }
+  .degree-box .deg-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 700;
+    color: #7A7263; margin-bottom: 0.2rem;
+  }
+  .degree-box .deg-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.35rem; color: #C9941F;
+  }
+  .note-text {
+    font-size: 0.9rem; color: #7A7263; font-style: italic; margin-top: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .stage-grid { grid-template-columns: 1fr; }
+    .degree-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+  }
+</style>
+</head>
+<body>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Orientation
+  </div>
+  <h1>Structure & Roles</h1>
+  <div class="subtitle">Two ways to work. Know your path.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- ═══ Two Ways to Work ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Two Ways to Work</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid">
+    <!-- Company-Supported -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Company-Supported</h3>
+      <div class="card-subtitle">Faster ramp, more hands-on</div>
+      <ul>
+        <li>Sales Agent or Acquisitions Agent</li>
+        <li>50% commission split</li>
+        <li>90-day onboarding period</li>
+        <li>Full company training & support</li>
+      </ul>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or1-cs">
+        <label for="or1-cs">Understood</label>
+      </div>
+    </div>
+
+    <!-- Independent -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </div>
+      <h3>Independent</h3>
+      <div class="card-subtitle">More freedom, keep more</div>
+      <ul>
+        <li>Team Leader or Downline Operator</li>
+        <li>Keep 100% of your commission</li>
+        <li>Self-directed scheduling & deals</li>
+        <li>Build & earn from your downline</li>
+      </ul>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or1-ind">
+        <label for="or1-ind">Understood</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Agent Roles ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Agent Roles</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="doc-grid">
+    <!-- Sales Agent -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="stat-display">
+        <div class="stat-number">20%</div>
+        <div class="stat-label">Commission per sale</div>
+      </div>
+      <h3>Sales Agent</h3>
+      <p>Sales Agents meet investors, communicate opportunities and strategy, and ultimately sell to and from them.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or1-sales">
+        <label for="or1-sales">Understood</label>
+      </div>
+    </div>
+
+    <!-- Acquisitions Agent -->
+    <div class="doc-card">
+      <div class="doc-card-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="stat-display">
+        <div class="stat-number">60%</div>
+        <div class="stat-label">Up to per acquisition</div>
+      </div>
+      <h3>Acquisitions Agent</h3>
+      <p>Acquisitions Agents find opportunities in the market, work leads and prospects, make offers, and negotiate with homeowners and agents who supply properties for Myers to purchase.</p>
+      <div class="doc-check">
+        <input type="checkbox" onchange="checkConfetti()" id="or1-acq">
+        <label for="or1-acq">Understood</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Career Progression ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Career Progression</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="info-block">
+    <div class="info-block-header">
+      <div class="ib-icon">
+        <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </div>
+      <h3>Your Growth Path</h3>
+    </div>
+    <div class="info-block-body">
+      <div class="stage-grid">
+        <div class="stage-card">
+          <div class="stage-num">Stage 1</div>
+          <div class="stage-title">Sales Agent</div>
+          <div class="stage-desc">Entry level. Learn the product, meet investors, and close your first deals.</div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-num">Stage 2</div>
+          <div class="stage-title">Acquisitions Agent</div>
+          <div class="stage-desc">Mid level. Source opportunities, make offers, and negotiate directly with sellers.</div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-num">Stage 3</div>
+          <div class="stage-title">Team Leader</div>
+          <div class="stage-desc">Build your own team, mentor agents, and earn passive income from your downline.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Revenue Share ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Revenue Share</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="info-block">
+    <div class="info-block-header">
+      <div class="ib-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3>Passive Income Model</h3>
+    </div>
+    <div class="info-block-body">
+      <p>Earn from the agents you bring in — long after their deals close. The revenue-share pool earns 10% of all deal revenue — paid out by your degree of separation in the downline.</p>
+
+      <div class="degree-grid">
+        <div class="degree-box">
+          <div class="deg-label">1st Degree</div>
+          <div class="deg-value">25%</div>
+        </div>
+        <div class="degree-box">
+          <div class="deg-label">2nd Degree</div>
+          <div class="deg-value">20%</div>
+        </div>
+        <div class="degree-box">
+          <div class="deg-label">3rd Degree</div>
+          <div class="deg-value">15%</div>
+        </div>
+        <div class="degree-box">
+          <div class="deg-label">4th Degree</div>
+          <div class="deg-value">10%</div>
+        </div>
+        <div class="degree-box">
+          <div class="deg-label">5th Degree</div>
+          <div class="deg-value">5%</div>
+        </div>
+        <div class="degree-box">
+          <div class="deg-label">6th Degree</div>
+          <div class="deg-value">25%</div>
+        </div>
+      </div>
+
+      <p class="note-text">"Degree" = how many steps an agent sits below you in your downline.</p>
+    </div>
+  </div>
+
+  <!-- Yellow Callout -->
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    </div>
+    <p><strong>80% of revenue goes to the agent. 10% funds the revenue-share pool.</strong> Recruit & build a downline to grow passive income.</p>
+  </div>
+
+</div>
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+</body>
+</html>

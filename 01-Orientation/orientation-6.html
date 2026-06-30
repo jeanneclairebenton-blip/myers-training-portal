@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Investor Questions | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #FAFAF8;
+    color: #1A1815;
+    line-height: 1.6;
+    min-height: 100vh;
+    font-size: 16px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
+    text-align: center;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    justify-content: center;
+    margin-left: auto; margin-right: auto; width: fit-content;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
+    line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+
+  /* ─── Intro Text ─── */
+  .intro-text {
+    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
+    margin-bottom: 2rem; max-width: 760px;
+    text-align: center; margin-left: auto; margin-right: auto;
+  }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem auto 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
+  }
+
+  /* ─── Q&A Cards ─── */
+  .qa-stack {
+    max-width: 800px; margin: 0 auto 1.5rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .qa-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    text-align: left;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+  }
+  .qa-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,24,21,0.08);
+  }
+  .qa-card:nth-child(even) {
+    background: #FDFBF5;
+  }
+  .qa-badge {
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: #C9941F;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.15rem; color: #FFFDF6; font-weight: 700;
+    margin-top: 0.1rem;
+  }
+  .qa-content { flex: 1; }
+  .qa-content .question {
+    font-size: 1.05rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.4rem; line-height: 1.4;
+  }
+  .qa-content .answer {
+    font-size: 1rem; color: #3D362A; line-height: 1.6; font-weight: 400;
+  }
+
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem auto;
+    max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500; text-align: left;
+  }
+  .yellow-callout strong { color: #1A1815; }
+
+  /* ─── Acknowledgment Card ─── */
+  .acknowledge-card {
+    background: #FFFDF6; border: 2px solid #C9941F; border-radius: 16px;
+    padding: 1.5rem; margin: 2rem auto;
+    max-width: 700px;
+    display: flex; align-items: center; gap: 0.75rem;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.12);
+  }
+  .acknowledge-card input[type="checkbox"] {
+    width: 24px; height: 24px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+  }
+  .acknowledge-card label {
+    font-size: 1.05rem; font-weight: 700; color: #1A1815; cursor: pointer; text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .qa-card { flex-direction: row; }
+  }
+</style>
+</head>
+<body>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    Orientation
+  </div>
+  <h1>Common Investor Questions</h1>
+  <div class="subtitle">What you'll hear most — and how Myers answers.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <p class="intro-text">These are the most common questions investors will ask. Study these answers so you can respond confidently and consistently.</p>
+
+  <!-- Q&A Cards -->
+  <div class="qa-stack">
+
+    <!-- Q1 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Can I get in before showings?</div>
+        <div class="answer">Probably not. Showings are scheduled for a reason — to give every qualified buyer a fair shot. Early access undermines the process.</div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Will you take $10K below buy-now right now?</div>
+        <div class="answer">No. The buy-now price is set. If you want to negotiate, enter the auction during the showing window.</div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Will you take $3K as the deposit?</div>
+        <div class="answer">No. The deposit is $5,000 — non-refundable, wire or cashier's check only. No exceptions.</div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Are closing dates negotiable?</div>
+        <div class="answer">No. Closing dates are firm and set by Myers.</div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Can you assign the contract to me?</div>
+        <div class="answer">No. All transactions run as a double close through Myers' title company.</div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Can you cover your side of closing costs?</div>
+        <div class="answer">No. Each party is responsible for their own closing costs.</div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="qa-card">
+      <div class="qa-badge">Q</div>
+      <div class="qa-content">
+        <div class="question">Will you pay my commission for a referral?</div>
+        <div class="answer">It depends. Contact your team lead to discuss referral commission structures on a case-by-case basis.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Yellow Callout -->
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    </div>
+    <p><strong>Pro tip:</strong> Confidence comes from preparation. Review these scripts regularly so your responses are natural and professional.</p>
+  </div>
+
+  <!-- Acknowledgment -->
+  <div class="acknowledge-card">
+    <input type="checkbox" onchange="checkConfetti()" id="or6-acknowledge">
+    <label for="or6-acknowledge">I have reviewed all common investor questions and scripts.</label>
+  </div>
+
+</div>
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+</body>
+</html>
