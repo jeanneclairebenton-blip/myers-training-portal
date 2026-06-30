@@ -6,490 +6,641 @@
 <title>The Showing & Sale Process | Myers Orientation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
 
-  /* ── TOKENS ── */
-  :root {
-    --gold:   #C9941F;
-    --gold-light: #D4A94A;
-    --cream:  #FBE8B7;
-    --cream-bg: #FFF8EB;
-    --ink:    #1A1815;
-    --dark:   #2A2520;
-    --bg:     #FAFAF8;
-    --white:  #FFFFFF;
-    --gray:   #8A857D;
-    --border: #E8E4DC;
-    --serif:  'DM Serif Display', Georgia, serif;
-    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 4px 24px rgba(26,24,21,0.08);
-    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
-  }
+:root {
+  --gold: #C9941F;
+  --gold-light: #D4A94A;
+  --cream: #FBE8B7;
+  --cream-bg: #FFF8EB;
+  --ink: #1A1815;
+  --dark: #2A2520;
+  --bg: #FAFAF8;
+  --white: #FFFFFF;
+  --gray: #8A857D;
+  --border: #E8E4DC;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Mulish', 'Segoe UI', Arial, sans-serif;
+}
 
-  body {
-    font-family: var(--sans);
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-    min-height: 100vh;
-    font-size: 16px;
-  }
+body {
+  font-family: var(--sans);
+  background: var(--ink);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
 
-  /* ─── Hero ─── */
-  .hero {
-    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
-    padding: 2rem 2rem 1.75rem;
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-  }
-  .hero::after {
-    content: ''; position: absolute; top: -50%; right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-badge {
-    display: flex; align-items: center; gap: 0.5rem;
-    justify-content: center;
-    margin-left: auto; margin-right: auto; width: fit-content;
-    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
-    border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
-  }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: var(--ink);
-    line-height: 1.15; margin-bottom: 0.5rem;
-  }
-  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+/* ── PROGRESS TRACKER ── */
+.progress-tracker {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--ink);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid rgba(201,148,31,0.15);
+}
+.tracker-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  min-width: 80px;
+}
+.tracker-circle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  color: #555;
+  background: #333;
+  border: 2px solid #333;
+  transition: all 0.3s ease;
+}
+.tracker-step.active .tracker-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+.tracker-step.completed .tracker-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+.tracker-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #555;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+.tracker-step.active .tracker-label,
+.tracker-step.completed .tracker-label {
+  color: var(--gold);
+}
+.tracker-line {
+  width: 40px; height: 2px;
+  background: #333;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+.tracker-line.filled {
+  background: var(--gold);
+}
 
-  /* ─── Container ─── */
-  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+/* ── SLIDER ── */
+.slider-viewport {
+  position: fixed;
+  top: 56px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide {
+  width: 100vw;
+  min-width: 100vw;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slide-inner {
+  max-width: 900px;
+  width: 100%;
+  padding: 80px 2rem 120px;
+}
 
-  /* ─── Packet-Style Section Headers ─── */
-  .gold-label {
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 12px;
-    display: block;
-  }
-  .section-heading {
-    font-family: var(--serif);
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    line-height: 1.2;
-    color: var(--ink);
-    margin-top: 8px;
-    margin-bottom: 24px;
-  }
-  .section-heading em {
-    font-style: italic;
-    color: var(--gold);
-  }
+.slide.dark { background: var(--ink); color: var(--bg); }
+.slide.light { background: var(--bg); color: var(--ink); }
 
-  /* ─── Document Grid ─── */
-  .doc-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .doc-grid.three-col { grid-template-columns: repeat(3, 1fr); }
-  .doc-grid.single { grid-template-columns: 1fr; }
-  .doc-card {
-    background: #FFFDF6;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.25rem 1.25rem;
-    transition: transform 200ms, box-shadow 200ms;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-  .doc-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
-  }
-  .doc-card-icon {
-    width: 52px; height: 52px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.25rem;
-    background: rgba(201,148,31,0.12);
-  }
-  .doc-card-icon svg {
-    width: 26px; height: 26px; stroke: var(--gold); fill: none;
-    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .doc-card h3 {
-    font-family: var(--sans);
-    font-size: 1.1rem; font-weight: 800; color: var(--ink);
-    margin-bottom: 0.6rem; line-height: 1.35;
-  }
-  .doc-card p {
-    font-size: 1rem; color: #3D362A; line-height: 1.6;
-    flex: 1;
-  }
-  .doc-card ul {
-    list-style: none; padding: 0; margin: 0 0 0.25rem 0;
-    flex: 1;
-  }
-  .doc-card ul li {
-    font-size: 0.95rem; color: #3D362A; line-height: 1.6;
-    padding: 0.2rem 0 0.2rem 1.25rem;
-    position: relative;
-  }
-  .doc-card ul li::before {
-    content: '';
-    position: absolute; left: 0; top: 0.65rem;
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--gold);
-  }
-  .doc-card .highlight {
-    color: var(--gold); font-weight: 700;
-  }
-  .doc-card .doc-check {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; gap: 0.6rem;
-  }
-  .doc-card .doc-check input[type="checkbox"] {
-    width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
-  }
-  .doc-card .doc-check label {
-    font-size: 0.95rem; font-weight: 600; color: var(--gray); cursor: pointer;
-  }
+/* ── HERO WITH BG IMAGE ── */
+.slide.hero-bg {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.slide.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26,24,21,0.85) 0%, rgba(26,24,21,0.92) 100%);
+  z-index: 0;
+}
+.slide.hero-bg .slide-inner {
+  position: relative;
+  z-index: 1;
+}
 
-  /* ─── Large Stat ─── */
-  .stat-display {
-    text-align: center; margin-bottom: 0.75rem;
-  }
-  .stat-display .stat-number {
-    font-family: var(--serif);
-    font-size: 2.75rem; color: var(--gold); line-height: 1.1;
-  }
-  .stat-display .stat-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--gray); margin-top: 0.15rem;
-  }
+/* ── GOLD LABEL ── */
+.gold-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+  text-align: center;
+}
 
-  /* ─── Yellow Callout Box ─── */
-  .yellow-callout {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-    margin: 1rem auto;
-    max-width: 700px; margin-left: auto; margin-right: auto;
-  }
-  .yellow-callout-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .yellow-callout-icon svg {
-    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
-    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .yellow-callout p {
-    color: #3D362A; font-size: 1.05rem; font-weight: 500;
-  }
-  .yellow-callout strong { color: var(--ink); }
+/* ── SECTION HEADING ── */
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.2;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.slide.dark .section-heading,
+.slide.hero-bg .section-heading { color: var(--bg); }
+.slide.light .section-heading { color: var(--ink); }
+.section-heading em { font-style: italic; color: var(--gold); }
 
-  /* ─── Info Block ─── */
-  .info-block {
-    background: #FFFDF6; border: 1px solid var(--border); border-radius: 16px;
-    overflow: hidden; margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .info-block-header {
-    background: var(--ink); padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .info-block-header .ib-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    background: rgba(201,148,31,0.2);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .info-block-header h3 {
-    font-family: var(--serif);
-    font-size: 1.3rem; color: #FFFDF6;
-  }
-  .info-block-body { padding: 1.5rem; text-align: left; }
-  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
+/* ── HERO TITLE ── */
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
 
-  /* ─── Step Cards (Timeline) ─── */
-  .step-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .step-card {
-    background: #FFFDF6;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem 1.25rem;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    text-align: left;
-    position: relative;
-    transition: transform 200ms, box-shadow 200ms;
-  }
-  .step-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
-  }
-  .step-num {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), #8B6B1A);
-    color: #FFFDF6; font-family: var(--serif);
-    font-size: 1.1rem; margin-bottom: 0.85rem;
-  }
-  .step-card h3 {
-    font-family: var(--sans);
-    font-size: 1.05rem; font-weight: 800; color: var(--ink);
-    margin-bottom: 0.4rem; line-height: 1.35;
-  }
-  .step-card p {
-    font-size: 0.95rem; color: #3D362A; line-height: 1.6;
-  }
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid.cols-3x2 { grid-template-columns: repeat(3, 1fr); }
 
-  /* ─── Non-Negotiables Grid ─── */
-  .nn-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .nn-card {
-    background: #FFFDF6;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.1rem 1rem;
-    text-align: left;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    transition: transform 200ms, box-shadow 200ms;
-  }
-  .nn-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(26,24,21,0.08);
-  }
-  .nn-card .nn-icon {
-    width: 38px; height: 38px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 0.75rem;
-    background: rgba(201,148,31,0.12);
-  }
-  .nn-card .nn-icon svg {
-    width: 20px; height: 20px; stroke: var(--gold); fill: none;
-    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .nn-card h4 {
-    font-size: 0.95rem; font-weight: 800; color: var(--ink);
-    margin-bottom: 0.3rem; line-height: 1.3;
-  }
-  .nn-card p {
-    font-size: 0.85rem; color: var(--gray); line-height: 1.5;
-  }
+.doc-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+  transition: transform 200ms, box-shadow 200ms;
+  box-shadow: 0 2px 8px rgba(26,24,21,0.06);
+}
+.doc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(26,24,21,0.1);
+}
+.slide.dark .doc-card,
+.slide.hero-bg .doc-card {
+  background: var(--dark);
+  border-color: rgba(201,148,31,0.15);
+}
+.slide.dark .doc-card h3,
+.slide.hero-bg .doc-card h3 { color: var(--cream); }
+.slide.dark .doc-card p,
+.slide.hero-bg .doc-card p,
+.slide.dark .doc-card li,
+.slide.hero-bg .doc-card li { color: rgba(251,232,183,0.7); }
 
-  @media (max-width: 768px) {
-    .doc-grid { grid-template-columns: 1fr; }
-    .doc-grid.three-col { grid-template-columns: 1fr; }
-    .step-grid { grid-template-columns: 1fr; }
-    .nn-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.75rem; }
-    .hero { padding: 2rem 1.25rem; }
-    .container { padding: 1.5rem 1rem 2rem; }
-  }
+.doc-card-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  background: rgba(201,148,31,0.12);
+}
+.doc-card-icon svg {
+  width: 26px; height: 26px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.doc-card h3 {
+  font-family: var(--sans);
+  font-size: 1.05rem; font-weight: 800; color: var(--ink);
+  margin-bottom: 0.5rem; line-height: 1.3;
+}
+.doc-card p {
+  font-size: 0.95rem; color: #5A5347; line-height: 1.6;
+}
+.doc-card ul {
+  list-style: none; padding: 0; margin: 0;
+}
+.doc-card ul li {
+  font-size: 0.95rem; color: #5A5347; line-height: 1.6;
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  position: relative;
+}
+.doc-card ul li::before {
+  content: '';
+  position: absolute; left: 0; top: 0.65rem;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+}
+.doc-card .doc-check {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.slide.dark .doc-card .doc-check,
+.slide.hero-bg .doc-card .doc-check { border-top-color: rgba(201,148,31,0.15); }
+.doc-card .doc-check input[type="checkbox"] {
+  width: 20px; height: 20px;
+  accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+}
+.doc-card .doc-check label {
+  font-size: 0.9rem; font-weight: 600; color: var(--gray); cursor: pointer;
+}
 
-  /* ── PROGRESSIVE REVEAL ── */
-  .reveal-section {
-    opacity: 0;
-    transform: translateY(40px);
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
-    pointer-events: none;
-  }
-  .reveal-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 5000px;
-    overflow: visible;
-    pointer-events: auto;
-  }
+/* ── STEP CARDS (Timeline) ── */
+.step-flow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 1.5rem;
+}
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem;
+  text-align: left;
+  flex: 1;
+  box-shadow: 0 2px 8px rgba(26,24,21,0.06);
+  transition: transform 200ms, box-shadow 200ms;
+}
+.step-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #8B6B1A);
+  color: var(--white); font-family: var(--serif);
+  font-size: 1.1rem; margin-bottom: 0.85rem;
+}
+.step-card h3 {
+  font-family: var(--sans);
+  font-size: 1.05rem; font-weight: 800; color: var(--ink);
+  margin-bottom: 0.4rem; line-height: 1.35;
+}
+.step-card p {
+  font-size: 0.9rem; color: #5A5347; line-height: 1.5;
+}
+.step-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin-top: 2.5rem;
+  flex-shrink: 0;
+}
+.step-arrow svg {
+  width: 24px; height: 24px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
 
-  .continue-btn-wrap {
-    text-align: center;
-    padding: 2rem 0 1rem;
-  }
-  .continue-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--gold);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 14px 36px;
-    border: none;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
-  }
-  .continue-btn:hover {
-    background: #B8841A;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
-  }
-  .continue-btn svg {
-    width: 18px; height: 18px;
-    stroke: currentColor; fill: none;
-    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-  }
+/* ── STAT DISPLAY ── */
+.stat-display {
+  text-align: center; margin-bottom: 0.75rem;
+}
+.stat-display .stat-number {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 8vw, 5rem); color: var(--gold); line-height: 1.1;
+}
+.stat-display .stat-label {
+  font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--gray); margin-top: 0.35rem;
+}
 
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: var(--gold);
-    z-index: 9999;
-    transition: width 0.4s ease;
-    box-shadow: 0 0 8px rgba(201,148,31,0.4);
-  }
+/* ── DEPOSIT BULLETS ── */
+.deposit-list {
+  list-style: none; padding: 0; margin: 1.5rem auto 0;
+  max-width: 560px; text-align: left;
+}
+.deposit-list li {
+  font-size: 1rem; color: rgba(251,232,183,0.8); line-height: 1.7;
+  padding: 0.3rem 0 0.3rem 1.5rem;
+  position: relative;
+}
+.deposit-list li::before {
+  content: '';
+  position: absolute; left: 0; top: 0.75rem;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ── NN GRID (Non-Negotiables) ── */
+.nn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.nn-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1rem;
+  text-align: left;
+  box-shadow: 0 2px 6px rgba(26,24,21,0.06);
+  transition: transform 200ms, box-shadow 200ms;
+}
+.nn-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(26,24,21,0.08);
+}
+.nn-card .nn-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.75rem;
+  background: rgba(201,148,31,0.12);
+}
+.nn-card .nn-icon svg {
+  width: 20px; height: 20px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.nn-card h4 {
+  font-size: 0.95rem; font-weight: 800; color: var(--ink);
+  margin-bottom: 0.3rem; line-height: 1.3;
+}
+.nn-card p {
+  font-size: 0.85rem; color: var(--gray); line-height: 1.5;
+}
+
+/* ── YELLOW CALLOUT ── */
+.yellow-callout {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: 700px; margin: 1.5rem auto 0;
+}
+.yellow-callout-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.yellow-callout-icon svg {
+  width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.yellow-callout p {
+  color: #3D362A; font-size: 1rem; font-weight: 500; text-align: left;
+}
+.yellow-callout strong { color: var(--ink); }
+
+/* ── ACKNOWLEDGE BLOCK ── */
+.acknowledge-block {
+  background: rgba(201,148,31,0.08);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.acknowledge-block input[type="checkbox"] {
+  width: 24px; height: 24px;
+  accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+}
+.slide.dark .acknowledge-block label { color: var(--cream); }
+.acknowledge-block label {
+  font-size: 1.05rem; font-weight: 700; color: var(--ink); cursor: pointer;
+}
+
+/* ── CONTINUE BUTTON ── */
+.continue-btn {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gold);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms, box-shadow 200ms;
+  box-shadow: 0 4px 24px rgba(201,148,31,0.35);
+}
+.continue-btn:hover {
+  background: #B8841A;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,148,31,0.45);
+}
+.continue-btn svg {
+  width: 18px; height: 18px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.check-svg { display: none; }
+.tracker-step.completed .check-svg { display: block; }
+.tracker-step.completed .step-num-text { display: none; }
+
+@media (max-width: 768px) {
+  .card-grid.cols-3 { grid-template-columns: 1fr; }
+  .card-grid.cols-2 { grid-template-columns: 1fr; }
+  .card-grid.cols-3x2 { grid-template-columns: 1fr; }
+  .nn-grid { grid-template-columns: 1fr; }
+  .step-flow { flex-direction: column; gap: 1rem; }
+  .step-arrow { display: none; }
+  .tracker-step { min-width: 56px; }
+  .tracker-line { width: 20px; }
+  .tracker-label { font-size: 8px; }
+  .slide-inner { padding: 60px 1.25rem 120px; }
+  .hero-title { font-size: 2rem; }
+}
 </style>
 </head>
 <body>
-<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
-<!-- Hero -->
-<header class="hero">
-  <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    Orientation
-  </div>
-  <h1>The Showing & Sale Process</h1>
-  <div class="subtitle">How every property is bought and sold.</div>
-  <div class="continue-btn-wrap">
-    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-  </div>
-</header>
-
-<!-- Main Content -->
-<div class="container">
-
-  <!-- ═══ Two Ways to Buy (Step 1) ═══ -->
-  <div class="reveal-section" data-step="1">
-    <span class="gold-label">Purchase Methods</span>
-    <h2 class="section-heading">Two Ways to <em>Buy</em></h2>
-
-    <div class="doc-grid">
-      <!-- First Come, First Serve -->
-      <div class="doc-card">
-        <div class="doc-card-icon">
-          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3>First Come, First Serve</h3>
-        <ul>
-          <li>Vacant properties or land</li>
-          <li>Can be bought at any time</li>
-          <li>The price you see is the price you pay</li>
-        </ul>
-        <div class="doc-check">
-          <input type="checkbox" onchange="checkConfetti()" id="or3-fcfs">
-          <label for="or3-fcfs">Understood</label>
-        </div>
+<!-- ═══ PROGRESS TRACKER ═══ -->
+<nav class="progress-tracker">
+  <div class="tracker-steps">
+    <div class="tracker-step active" data-slide="0">
+      <div class="tracker-circle">
+        <span class="step-num-text">1</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
+      <span class="tracker-label">Buying</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="1">
+      <div class="tracker-circle">
+        <span class="step-num-text">2</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Timeline</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="2">
+      <div class="tracker-circle">
+        <span class="step-num-text">3</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Deposits</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="3">
+      <div class="tracker-circle">
+        <span class="step-num-text">4</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Non-Negotiables</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="4">
+      <div class="tracker-circle">
+        <span class="step-num-text">5</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Complete</span>
+    </div>
+  </div>
+</nav>
 
-      <!-- Showing (Silent Auction) -->
-      <div class="doc-card">
-        <div class="doc-card-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3>Showing (Silent Auction)</h3>
-        <ul>
-          <li>Occupied or seller-restricted</li>
-          <li>One scheduled 1-hour showing</li>
-          <li>Then choose: buy-now price or enter the auction</li>
-          <li>Required for properties in Dallas, Collin, Denton, Tarrant & Rockwall counties</li>
-        </ul>
-        <div class="doc-check">
-          <input type="checkbox" onchange="checkConfetti()" id="or3-auction">
-          <label for="or3-auction">Understood</label>
+<!-- ═══ SLIDE DECK ═══ -->
+<div class="slider-viewport">
+  <div class="slider" id="slider">
+
+    <!-- SLIDE 1: Buying (Dark, BG image) -->
+    <div class="slide dark hero-bg" style="background-image: url('assets/flip-1.png');">
+      <div class="slide-inner">
+        <span class="gold-label">Purchase Methods</span>
+        <h1 class="hero-title">Two Ways to Buy</h1>
+
+        <div class="card-grid cols-2">
+          <!-- First Come, First Serve -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3>First Come, First Serve</h3>
+            <ul>
+              <li>Vacant properties or land</li>
+              <li>Can be bought at any time</li>
+              <li>The price you see is the price you pay</li>
+            </ul>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3-fcfs">
+              <label for="or3-fcfs">Understood</label>
+            </div>
+          </div>
+
+          <!-- Showing (Silent Auction) -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Showing (Silent Auction)</h3>
+            <ul>
+              <li>Occupied or seller-restricted</li>
+              <li>One scheduled 1-hour showing</li>
+              <li>Then choose: buy-now price or enter the auction</li>
+              <li>Required for properties in Dallas, Collin, Denton, Tarrant &amp; Rockwall counties</li>
+            </ul>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3-auction">
+              <label for="or3-auction">Understood</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ═══ The Showing Timeline (Step 2) ═══ -->
-  <div class="reveal-section" data-step="2">
-    <span class="gold-label">Timeline</span>
-    <h2 class="section-heading">The Showing <em>Timeline</em></h2>
+    <!-- SLIDE 2: Timeline (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Timeline</span>
+        <h2 class="section-heading">The Showing <em>Timeline</em></h2>
 
-    <div class="step-grid">
-      <!-- Step 1 -->
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>Showing Window</h3>
-        <p>One scheduled 1-hour showing of the property.</p>
-      </div>
+        <div class="step-flow">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h3>Showing Window</h3>
+            <p>One scheduled 1-hour showing of the property.</p>
+          </div>
 
-      <!-- Step 2 -->
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>Bidding Closes</h3>
-        <p>Bidding ends 1 hour after the end of the showing.</p>
-      </div>
+          <div class="step-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
 
-      <!-- Step 3 -->
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>Win & Secure</h3>
-        <p>Winner has 2 hours after bidding ends to submit contract + deposit, or the AA moves to the next buyer.</p>
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h3>Bidding Closes</h3>
+            <p>Bidding ends 1 hour after the end of the showing.</p>
+          </div>
+
+          <div class="step-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h3>Win &amp; Secure</h3>
+            <p>Winner has 2 hours after bidding ends to submit contract + deposit, or the AA moves to the next buyer.</p>
+          </div>
+        </div>
+
+        <div class="yellow-callout">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <p><strong>SHORTCUT — BUY IT NOW:</strong> Skip the auction. Pay the buy-now price to purchase instantly.</p>
+        </div>
       </div>
     </div>
 
-    <!-- Yellow Callout — Buy It Now -->
-    <div class="yellow-callout">
-      <div class="yellow-callout-icon">
-        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      </div>
-      <p><strong>SHORTCUT — BUY IT NOW:</strong> Skip the auction. Pay the buy-now price to purchase instantly.</p>
-    </div>
-  </div>
+    <!-- SLIDE 3: Deposits (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
+        <span class="gold-label">Deposits</span>
+        <h2 class="section-heading">Securing with a <em>Deposit</em></h2>
 
-  <!-- ═══ Deposits (Step 3) ═══ -->
-  <div class="reveal-section" data-step="3">
-    <span class="gold-label">Deposits</span>
-    <h2 class="section-heading">Securing with a <em>Deposit</em></h2>
-
-    <div class="doc-grid single">
-      <div class="doc-card" style="text-align: center;">
-        <div class="stat-display" style="margin-top: 0.5rem;">
+        <div class="stat-display" style="margin-bottom: 1.5rem;">
           <div class="stat-number">$5,000</div>
           <div class="stat-label">Non-refundable deposit to secure a property</div>
         </div>
-        <ul style="text-align: left; max-width: 560px; margin: 0.75rem auto 0;">
+
+        <ul class="deposit-list">
           <li>Refundable only if Myers cannot provide clear title</li>
           <li>Due fast — within 1 hour of offer acceptance</li>
           <li>Enforces respect for the process and the seller</li>
@@ -497,131 +648,140 @@
         </ul>
       </div>
     </div>
-  </div>
 
-  <!-- ═══ Investor-Agent Non-Negotiables (Step 4) ═══ -->
-  <div class="reveal-section" data-step="4">
-    <span class="gold-label">Non-Negotiables</span>
-    <h2 class="section-heading">Investor-Agent <em>Non-Negotiables</em></h2>
+    <!-- SLIDE 4: Non-Negotiables (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Non-Negotiables</span>
+        <h2 class="section-heading">Investor-Agent <em>Non-Negotiables</em></h2>
 
-    <div class="nn-grid">
-      <!-- 1 -->
-      <div class="nn-card">
-        <div class="nn-icon">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div class="nn-grid">
+          <!-- 1 -->
+          <div class="nn-card">
+            <div class="nn-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h4>Bring Your Own EMD</h4>
+            <p>Investors must provide their own earnest money deposit. No financing the deposit.</p>
+          </div>
+          <!-- 2 -->
+          <div class="nn-card">
+            <div class="nn-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h4>No Delaying the Deposit</h4>
+            <p>Deposit is due within 1 hour. Delays forfeit the deal to the next buyer in line.</p>
+          </div>
+          <!-- 3 -->
+          <div class="nn-card">
+            <div class="nn-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+            </div>
+            <h4>No Option Period</h4>
+            <p>There is no option period. Once you commit, you are committed. Perform due diligence upfront.</p>
+          </div>
+          <!-- 4 -->
+          <div class="nn-card">
+            <div class="nn-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+            </div>
+            <h4>Double Close</h4>
+            <p>All transactions are structured as a double close. Myers sells to the investor as a principal.</p>
+          </div>
+          <!-- 5 -->
+          <div class="nn-card">
+            <div class="nn-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+            </div>
+            <h4>Cash or Hard Money Only</h4>
+            <p>No conventional or FHA financing. Investors must close with cash or hard money lending.</p>
+          </div>
+          <!-- 6 -->
+          <div class="nn-card">
+            <div class="nn-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h4>Close with Myers</h4>
+            <p>All transactions close through Myers' designated title company. No outside closings.</p>
+          </div>
         </div>
-        <h4>Bring Your Own EMD</h4>
-        <p>Investors must provide their own earnest money deposit. No financing the deposit.</p>
-      </div>
-      <!-- 2 -->
-      <div class="nn-card">
-        <div class="nn-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h4>No Delaying the Deposit</h4>
-        <p>Deposit is due within 1 hour. Delays forfeit the deal to the next buyer in line.</p>
-      </div>
-      <!-- 3 -->
-      <div class="nn-card">
-        <div class="nn-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-        </div>
-        <h4>No Option Period</h4>
-        <p>There is no option period. Once you commit, you are committed. Perform due diligence upfront.</p>
-      </div>
-      <!-- 4 -->
-      <div class="nn-card">
-        <div class="nn-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
-        </div>
-        <h4>Double Close</h4>
-        <p>All transactions are structured as a double close. Myers sells to the investor as a principal.</p>
-      </div>
-      <!-- 5 -->
-      <div class="nn-card">
-        <div class="nn-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-        </div>
-        <h4>Cash or Hard Money Only</h4>
-        <p>No conventional or FHA financing. Investors must close with cash or hard money lending.</p>
-      </div>
-      <!-- 6 -->
-      <div class="nn-card">
-        <div class="nn-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-        <h4>Close with Myers</h4>
-        <p>All transactions close through Myers' designated title company. No outside closings.</p>
       </div>
     </div>
-  </div>
 
-  <!-- ═══ Acknowledgment (Step 5) ═══ -->
-  <div class="reveal-section" data-step="5">
-    <span class="gold-label">Acknowledgment</span>
-    <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
-
-    <div class="doc-grid single">
-      <div class="doc-card" style="text-align: center;">
-        <h3>I understand the non-negotiables</h3>
-        <div class="doc-check" style="justify-content: center; border-top: none; padding-top: 0.5rem;">
+    <!-- SLIDE 5: Complete (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
+        <span class="gold-label">Acknowledgment</span>
+        <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
+        <div class="acknowledge-block">
           <input type="checkbox" onchange="checkConfetti()" id="or3-acknowledge">
-          <label for="or3-acknowledge">I Acknowledge</label>
+          <label for="or3-acknowledge">I understand the showing & sale process, deposits, and non-negotiables.</label>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
+
+<!-- ═══ CONTINUE BUTTON ═══ -->
+<button class="continue-btn" id="continueBtn" onclick="goNext()">
+  Continue
+  <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+</button>
+
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
 <script>
-  var totalSteps = 5;
-  var currentStep = 0;
+  var currentSlide = 0;
+  var totalSlides = 5;
+  var slider = document.getElementById('slider');
+  var btn = document.getElementById('continueBtn');
+  var steps = document.querySelectorAll('.tracker-step');
+  var lines = document.querySelectorAll('.tracker-line');
 
-  function updateProgress() {
-    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
-    document.getElementById('progressBar').style.width = pct + '%';
+  function updateUI() {
+    slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
+
+    steps.forEach(function(step, i) {
+      step.classList.remove('active', 'completed');
+      if (i < currentSlide) step.classList.add('completed');
+      else if (i === currentSlide) step.classList.add('active');
+    });
+    lines.forEach(function(line, i) {
+      line.classList.toggle('filled', i < currentSlide);
+    });
+
+    if (currentSlide >= totalSlides - 1) {
+      btn.innerHTML = 'Complete <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else {
+      btn.innerHTML = 'Continue <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>';
+    }
   }
 
-  function addContinueButton(section, step) {
-    if (step >= totalSteps) return;
-    var wrap = document.createElement('div');
-    wrap.className = 'continue-btn-wrap';
-    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
-    section.appendChild(wrap);
+  function goNext() {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateUI();
+    }
   }
 
-  // Add continue buttons to each section (except the last)
-  document.querySelectorAll('.reveal-section').forEach(function(sec) {
-    var step = parseInt(sec.getAttribute('data-step'));
-    addContinueButton(sec, step);
+  function goToSlide(index) {
+    if (index <= currentSlide || index <= totalSlides - 1) {
+      currentSlide = index;
+      updateUI();
+    }
+  }
+
+  steps.forEach(function(step, i) {
+    step.addEventListener('click', function() { goToSlide(i); });
   });
 
-  function revealNext(step) {
-    var section = document.querySelector('[data-step="' + step + '"]');
-    if (!section) return;
-    section.classList.add('visible');
-    currentStep = step;
-    updateProgress();
-    setTimeout(function() {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-    // Hide the continue button that was clicked
-    var prevStep = step - 1;
-    var prevSection;
-    if (prevStep === 0) {
-      prevSection = document.querySelector('.hero');
-    } else {
-      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
-    }
-    if (prevSection) {
-      var btn = prevSection.querySelector('.continue-btn-wrap');
-      if (btn) btn.style.display = 'none';
-    }
-  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { currentSlide--; updateUI(); }
+  });
 
-  updateProgress();
+  updateUI();
 </script>
 </body>
 </html>

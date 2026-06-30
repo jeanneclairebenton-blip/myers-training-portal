@@ -27,6 +27,7 @@
     --radius-sm: 8px;
     --shadow: 0 4px 24px rgba(26,24,21,0.08);
     --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
+    --total-slides: 11;
   }
 
   body {
@@ -34,15 +35,187 @@
     font-size: 16px;
     line-height: 1.6;
     color: var(--ink);
-    background: var(--bg);
+    background: var(--ink);
     -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
   }
 
   img { max-width: 100%; display: block; }
 
-  /* ── UTILITY ── */
-  .section-pad { padding: 80px 24px; }
-  .inner { max-width: 1120px; margin: 0 auto; }
+  /* ══════════════════════════════════════
+     PROGRESS TRACKER — Fixed Top Bar
+     ══════════════════════════════════════ */
+  .tracker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #1A1815;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
+  }
+  .tracker-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    padding: 0 20px;
+    max-width: 960px;
+    width: 100%;
+  }
+  .tracker-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    min-width: 0;
+  }
+  .tracker-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #3D362A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    color: #6B6358;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+  }
+  .tracker-circle svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--white);
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: none;
+  }
+  .tracker-label {
+    font-family: var(--sans);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #5A5449;
+    margin-top: 3px;
+    white-space: nowrap;
+    transition: color 0.4s ease;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.active .tracker-label { color: var(--gold); }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+  }
+  .tracker-step.completed .tracker-circle .step-num { display: none; }
+  .tracker-step.completed .tracker-circle svg { display: block; }
+  .tracker-step.completed .tracker-label { color: var(--gold); opacity: 0.7; }
+
+  .tracker-line {
+    position: absolute;
+    top: 12px;
+    left: calc(100% / 22);
+    right: calc(100% / 22);
+    height: 2px;
+    background: #3D362A;
+    z-index: 1;
+  }
+  .tracker-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ══════════════════════════════════════
+     SLIDER — Horizontal Slide Deck
+     ══════════════════════════════════════ */
+  .slider {
+    display: flex;
+    width: calc(var(--total-slides) * 100vw);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .slide-content {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* ══════════════════════════════════════
+     CONTINUE BUTTON — Fixed Bottom
+     ══════════════════════════════════════ */
+  .nav-btn {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 40px;
+    height: 48px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms, opacity 200ms;
+    box-shadow: 0 4px 24px rgba(201,148,31,0.3);
+    letter-spacing: 0.3px;
+  }
+  .nav-btn:hover {
+    background: #B8841A;
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
+  }
+  .nav-btn:active { transform: translateX(-50%) translateY(0); }
+  .nav-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .nav-btn.hidden { opacity: 0; pointer-events: none; }
+
+  /* ══════════════════════════════════════
+     UTILITY CLASSES
+     ══════════════════════════════════════ */
   .gold-label {
     font-family: var(--sans);
     font-size: 11px;
@@ -60,82 +233,202 @@
     color: var(--ink);
     margin-bottom: 40px;
   }
-  .section-heading .gold {
-    color: var(--gold);
-  }
+  .section-heading .gold { color: var(--gold); }
   .section-heading .gold-italic {
     color: var(--gold);
     font-style: italic;
   }
 
-  /* ===========================
-     1. HERO — DFW SKYLINE
-     =========================== */
-  .hero {
-    position: relative;
-    min-height: 520px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  /* ══════════════════════════════════════
+     SLIDE 1 — MISSION HERO
+     ══════════════════════════════════════ */
+  .slide-hero {
     background: url('assets/dfw-skyline.png') center center / cover no-repeat;
-    overflow: hidden;
+    align-items: stretch;
   }
-  .hero::before {
+  .slide-hero::before {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(26,24,21,0.75) 0%,
-      rgba(26,24,21,0.65) 50%,
-      rgba(26,24,21,0.80) 100%
+      rgba(26,24,21,0.78) 0%,
+      rgba(26,24,21,0.62) 50%,
+      rgba(26,24,21,0.82) 100%
     );
+    z-index: 0;
   }
-  .hero-content {
+  .hero-wrap {
     position: relative;
     z-index: 2;
-    padding: 60px 24px;
-    max-width: 800px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 80px 32px 120px;
+    max-width: 760px;
+    margin: 0 auto;
   }
   .hero-title {
     font-family: var(--serif);
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
     line-height: 1.15;
     color: var(--white);
-    margin-bottom: 20px;
+    margin-bottom: 28px;
   }
   .hero-title .gold { color: var(--gold); }
-  .hero-subtitle {
+  .hero-body {
     font-family: var(--sans);
-    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
     font-weight: 400;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.7;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.75;
     max-width: 620px;
-    margin: 0 auto;
   }
 
-  /* ===========================
-     2. STAT BAR
-     =========================== */
-  .stat-bar {
-    background: var(--ink);
-    padding: 40px 24px;
+  /* ══════════════════════════════════════
+     SLIDE 2 — CORE THESIS
+     ══════════════════════════════════════ */
+  .slide-thesis { background: var(--bg); }
+  .thesis-body {
+    font-size: 1.05rem;
+    color: var(--gray);
+    line-height: 1.75;
+    max-width: 700px;
+    margin-bottom: 48px;
   }
-  .stat-bar .inner {
+  .thesis-sub-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .thesis-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .thesis-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .thesis-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .thesis-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .thesis-card-icon svg {
+    width: 22px; height: 22px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .thesis-card-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .thesis-card-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 3 — PLATFORM
+     ══════════════════════════════════════ */
+  .slide-platform { background: var(--ink); }
+  .slide-platform .section-heading { color: var(--white); }
+  .platform-body {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.75;
+    max-width: 600px;
+    margin-bottom: 48px;
+  }
+  .platform-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 20px;
+  }
+  .platform-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,148,31,0.12);
+    border-radius: var(--radius);
+    padding: 32px 20px;
+    text-align: center;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .platform-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(201,148,31,0.3);
+  }
+  .platform-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.2), rgba(201,148,31,0.06));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .platform-card-icon svg {
+    width: 24px; height: 24px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .platform-card-title {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .platform-card-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.55;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 4 — STATS
+     ══════════════════════════════════════ */
+  .slide-stats { background: var(--ink); }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
     text-align: center;
   }
-  .stat-item {}
+  .stat-box {
+    padding: 40px 16px;
+    border: 1px solid rgba(201,148,31,0.15);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.03);
+  }
   .stat-number {
     font-family: var(--serif);
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
     color: var(--gold);
     line-height: 1;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
   .stat-label {
     font-family: var(--sans);
@@ -143,13 +436,13 @@
     font-weight: 800;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.5);
   }
 
-  /* ===========================
-     3. THE SPLIT — COMMISSION
-     =========================== */
-  .split-section { background: var(--bg); }
+  /* ══════════════════════════════════════
+     SLIDE 5 — COMMISSION SPLIT
+     ══════════════════════════════════════ */
+  .slide-commission { background: var(--bg); }
   .split-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
@@ -163,32 +456,22 @@
     align-items: baseline;
     margin-bottom: 8px;
   }
-  .bar-label {
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--ink);
-  }
-  .bar-pct {
-    font-family: var(--serif);
-    font-size: 15px;
-    color: var(--gold);
-    font-weight: 600;
-  }
+  .bar-label { font-weight: 700; font-size: 14px; color: var(--ink); }
+  .bar-pct { font-family: var(--serif); font-size: 15px; color: var(--gold); font-weight: 600; }
   .bar-track {
-    width: 100%;
-    height: 18px;
+    width: 100%; height: 18px;
     background: var(--border);
     border-radius: 100px;
     overflow: hidden;
   }
   .bar-fill {
-    height: 100%;
-    border-radius: 100px;
+    height: 100%; border-radius: 100px;
     transition: width 1.2s cubic-bezier(.22,.61,.36,1);
+    width: 0%;
   }
-  .bar-fill.agent   { background: linear-gradient(90deg, #8B6914, var(--gold)); width: 80%; }
-  .bar-fill.revshare { background: linear-gradient(90deg, var(--gold), var(--gold-light)); width: 10%; }
-  .bar-fill.ops      { background: linear-gradient(90deg, var(--gold-light), var(--cream)); width: 10%; }
+  .bar-fill.agent   { background: linear-gradient(90deg, #8B6914, var(--gold)); }
+  .bar-fill.revshare { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .bar-fill.ops      { background: linear-gradient(90deg, var(--gold-light), var(--cream)); }
 
   .split-highlight {
     text-align: center;
@@ -203,27 +486,14 @@
     line-height: 1;
     margin-bottom: 8px;
   }
-  .split-big-label {
-    font-family: var(--serif);
-    font-size: 1.3rem;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-  .split-big-sub {
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-  }
+  .split-big-label { font-family: var(--serif); font-size: 1.3rem; color: var(--white); margin-bottom: 8px; }
+  .split-big-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
 
-  /* ===========================
-     4. YOUR PATH — CAREER
-     =========================== */
-  .path-section {
-    background: var(--dark);
-    color: var(--white);
-    position: relative;
-    overflow: hidden;
-  }
-  .path-section .section-heading { color: var(--white); }
+  /* ══════════════════════════════════════
+     SLIDE 6 — CAREER PATH
+     ══════════════════════════════════════ */
+  .slide-career { background: var(--dark); }
+  .slide-career .section-heading { color: var(--white); }
 
   .path-track {
     display: grid;
@@ -232,13 +502,11 @@
     position: relative;
     margin-bottom: 40px;
   }
-  /* connecting line */
   .path-track::before {
     content: '';
     position: absolute;
     top: 32px;
-    left: 8%;
-    right: 8%;
+    left: 8%; right: 8%;
     height: 3px;
     background: linear-gradient(90deg, var(--gold), var(--gold-light));
     z-index: 0;
@@ -250,40 +518,25 @@
     padding: 0 12px;
   }
   .path-circle {
-    width: 64px;
-    height: 64px;
+    width: 64px; height: 64px;
     border-radius: 50%;
     border: 3px solid var(--gold);
     background: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     margin: 0 auto 20px;
     font-family: var(--serif);
     font-size: 1.4rem;
     color: var(--gold);
   }
   .path-circle.star { font-size: 1.6rem; }
-  .path-step-title {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-  .path-step-desc {
-    font-size: 13px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.5;
-    margin-bottom: 14px;
-    min-height: 40px;
-  }
+  .path-step-title { font-family: var(--serif); font-size: 1.1rem; color: var(--white); margin-bottom: 8px; }
+  .path-step-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 14px; min-height: 40px; }
   .path-badge {
     display: inline-block;
     padding: 4px 14px;
     border: 1px solid var(--gold);
     border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 11px; font-weight: 700;
     color: var(--gold);
     letter-spacing: 0.5px;
   }
@@ -297,10 +550,10 @@
     line-height: 1.65;
   }
 
-  /* ===========================
-     5. FIVE INCOME STREAMS
-     =========================== */
-  .streams-section { background: var(--bg); }
+  /* ══════════════════════════════════════
+     SLIDE 7 — INCOME STREAMS
+     ══════════════════════════════════════ */
+  .slide-income { background: var(--bg); }
   .streams-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -314,118 +567,77 @@
     border-radius: var(--radius);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .stream-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
+  .stream-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
   .stream-icon {
-    width: 56px;
-    height: 56px;
+    width: 56px; height: 56px;
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     margin: 0 auto 18px;
   }
   .stream-icon svg {
-    width: 26px;
-    height: 26px;
-    fill: none;
-    stroke: var(--gold);
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    width: 26px; height: 26px;
+    fill: none; stroke: var(--gold);
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
   }
-  .stream-title {
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: var(--ink);
-    margin-bottom: 8px;
-  }
-  .stream-desc {
-    font-size: 12.5px;
-    color: var(--gray);
-    line-height: 1.55;
-  }
+  .stream-title { font-family: var(--serif); font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
+  .stream-desc { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
 
-  /* ===========================
-     6. TEAM CULTURE
-     =========================== */
-  .culture-section { background: var(--white); }
+  /* ══════════════════════════════════════
+     SLIDE 8 — CULTURE
+     ══════════════════════════════════════ */
+  .slide-culture { background: var(--white); }
   .culture-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
   .culture-grid img {
-    width: 100%;
-    height: 360px;
+    width: 100%; height: 320px;
     object-fit: cover;
     border-radius: var(--radius);
   }
 
-  /* ===========================
-     7. REVENUE SHARE
-     =========================== */
-  .revshare-section { background: var(--bg); }
+  /* ══════════════════════════════════════
+     SLIDE 9 — REVENUE SHARE
+     ══════════════════════════════════════ */
+  .slide-revshare { background: var(--bg); }
   .revshare-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
     align-items: start;
   }
-  .revshare-grid img {
-    width: 100%;
-    border-radius: var(--radius);
-  }
+  .revshare-grid img { width: 100%; border-radius: var(--radius); }
   .revshare-table { list-style: none; }
   .revshare-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex; align-items: center; gap: 16px;
     padding: 14px 0;
     border-bottom: 1px solid var(--border);
   }
   .revshare-row:last-child { border-bottom: none; }
   .revshare-level-badge {
-    flex-shrink: 0;
-    width: 70px;
-    padding: 4px 0;
-    text-align: center;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    flex-shrink: 0; width: 70px;
+    padding: 4px 0; text-align: center;
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
     color: var(--gold);
     border: 1px solid var(--gold);
     border-radius: 100px;
     background: rgba(201,148,31,0.06);
   }
-  .revshare-desc {
-    flex: 1;
-    font-size: 13.5px;
-    color: var(--gray);
-  }
+  .revshare-desc { flex: 1; font-size: 13.5px; color: var(--gray); }
   .revshare-pct {
     flex-shrink: 0;
-    font-family: var(--serif);
-    font-size: 1.3rem;
-    color: var(--gold);
-    width: 50px;
-    text-align: right;
+    font-family: var(--serif); font-size: 1.3rem;
+    color: var(--gold); width: 50px; text-align: right;
   }
-  .revshare-footnote {
-    margin-top: 20px;
-    font-size: 12px;
-    color: var(--gray);
-    font-style: italic;
-  }
+  .revshare-footnote { margin-top: 20px; font-size: 12px; color: var(--gray); font-style: italic; }
 
-  /* ===========================
-     8. SA vs AA ROLES
-     =========================== */
-  .roles-section { background: var(--white); }
+  /* ══════════════════════════════════════
+     SLIDE 10 — ROLES
+     ══════════════════════════════════════ */
+  .slide-roles { background: var(--white); }
   .roles-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -438,534 +650,638 @@
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .role-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-  }
-  .role-card-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-  }
+  .role-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .role-card-img { width: 100%; height: 220px; object-fit: cover; }
   .role-card-body { padding: 28px 28px 32px; }
-  .role-card-title {
-    font-family: var(--serif);
-    font-size: 1.35rem;
-    color: var(--ink);
-    margin-bottom: 6px;
-  }
-  .role-card-badge {
-    display: inline-block;
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-  .role-card-desc {
-    font-size: 14px;
-    color: var(--gray);
-    line-height: 1.65;
-  }
+  .role-card-title { font-family: var(--serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 6px; }
+  .role-card-badge { display: inline-block; font-family: var(--serif); font-size: 1rem; color: var(--gold); margin-bottom: 14px; }
+  .role-card-desc { font-size: 14px; color: var(--gray); line-height: 1.65; }
 
-  /* ===========================
-     9. ACKNOWLEDGMENT
-     =========================== */
-  .ack-section {
-    background: var(--bg);
-    padding: 60px 24px 80px;
-  }
+  /* ══════════════════════════════════════
+     SLIDE 11 — COMPLETE / ACKNOWLEDGMENT
+     ══════════════════════════════════════ */
+  .slide-complete { background: var(--bg); }
   .ack-card {
-    max-width: 640px;
-    margin: 0 auto;
+    max-width: 640px; margin: 0 auto;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 48px 40px;
+    padding: 56px 48px;
     text-align: center;
     box-shadow: var(--shadow);
   }
+  .ack-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .ack-icon svg {
+    width: 28px; height: 28px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
   .ack-card-title {
-    font-family: var(--serif);
-    font-size: 1.3rem;
-    color: var(--ink);
-    margin-bottom: 28px;
-    line-height: 1.4;
+    font-family: var(--serif); font-size: 1.5rem;
+    color: var(--ink); margin-bottom: 8px; line-height: 1.3;
+  }
+  .ack-card-sub {
+    font-size: 14px; color: var(--gray);
+    margin-bottom: 32px; line-height: 1.6;
   }
   .ack-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-    cursor: pointer;
-    user-select: none;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer; user-select: none;
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border);
+    transition: border-color 0.3s ease, background 0.3s ease;
   }
+  .ack-label:hover { border-color: var(--gold); background: rgba(201,148,31,0.04); }
   .ack-label input[type="checkbox"] {
-    width: 22px;
-    height: 22px;
-    accent-color: var(--gold);
-    cursor: pointer;
+    width: 22px; height: 22px;
+    accent-color: var(--gold); cursor: pointer;
   }
 
-  /* ===========================
+  /* ══════════════════════════════════════
+     SCROLLBAR
+     ══════════════════════════════════════ */
+  .slide::-webkit-scrollbar { width: 5px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(201,148,31,0.25); border-radius: 100px; }
+
+  /* ══════════════════════════════════════
      RESPONSIVE
-     =========================== */
+     ══════════════════════════════════════ */
   @media (max-width: 900px) {
-    .stat-bar .inner { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .split-grid { grid-template-columns: 1fr; gap: 36px; }
     .path-track { grid-template-columns: repeat(2, 1fr); gap: 48px 0; }
     .path-track::before { display: none; }
     .streams-grid { grid-template-columns: repeat(3, 1fr); }
-    .culture-grid { grid-template-columns: 1fr; }
-    .culture-grid img { height: 280px; }
+    .thesis-cards { grid-template-columns: 1fr; }
+    .platform-cards { grid-template-columns: repeat(2, 1fr); }
+    .culture-grid img { height: 260px; }
     .revshare-grid { grid-template-columns: 1fr; }
     .roles-grid { grid-template-columns: 1fr; }
   }
+
+  @media (max-width: 768px) {
+    .tracker-label { display: none; }
+    .tracker-inner { gap: 0; padding: 0 12px; }
+    .tracker { height: 44px; }
+    .slide-content { padding: 60px 20px 110px; }
+    .hero-wrap { padding: 60px 20px 110px; }
+  }
+
   @media (max-width: 600px) {
-    .section-pad { padding: 56px 16px; }
-    .hero { min-height: 400px; }
-    .stat-bar .inner { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-box { padding: 28px 12px; }
     .streams-grid { grid-template-columns: 1fr 1fr; }
     .path-track { grid-template-columns: 1fr 1fr; }
-    .ack-card { padding: 32px 20px; }
-  }
-
-  /* ── PROGRESSIVE REVEAL ── */
-  .reveal-section {
-    opacity: 0;
-    transform: translateY(40px);
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
-    pointer-events: none;
-  }
-  .reveal-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 5000px;
-    overflow: visible;
-    pointer-events: auto;
-  }
-  .hero, .stat-bar { opacity: 1; transform: none; max-height: none; overflow: visible; pointer-events: auto; }
-
-  .continue-btn-wrap {
-    text-align: center;
-    padding: 2rem 0 1rem;
-  }
-  .continue-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--gold);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 14px 36px;
-    border: none;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
-  }
-  .continue-btn:hover {
-    background: #B8841A;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
-  }
-  .continue-btn svg {
-    width: 18px; height: 18px;
-    stroke: currentColor; fill: none;
-    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-  }
-
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: var(--gold);
-    z-index: 9999;
-    transition: width 0.4s ease;
-    box-shadow: 0 0 8px rgba(201,148,31,0.4);
+    .culture-grid { grid-template-columns: 1fr; }
+    .culture-grid img { height: 220px; }
+    .roles-grid { grid-template-columns: 1fr; }
+    .platform-cards { grid-template-columns: 1fr 1fr; }
+    .thesis-cards { grid-template-columns: 1fr; }
+    .ack-card { padding: 36px 24px; }
+    .nav-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 32px; }
+    .hero-title { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+    .slide-content { padding: 56px 16px 100px; }
+    .hero-wrap { padding: 56px 16px 100px; }
   }
 </style>
 </head>
 <body>
-<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
-<!-- ════════════════════════════════════════
-     1. HERO — DFW SKYLINE
-     ════════════════════════════════════════ -->
-<section class="hero">
-  <div class="hero-content">
-    <h1 class="hero-title">
-      Where Agents Become<br><span class="gold">Investors.</span>
-    </h1>
-    <p class="hero-subtitle">
-      The highest commission split in the industry. Five income streams.<br>
-      Off-market deal flow from day one.
-    </p>
+<!-- ══════════════════════════════════════
+     PROGRESS TRACKER
+     ══════════════════════════════════════ -->
+<nav class="tracker">
+  <div class="tracker-inner">
+    <div class="tracker-line">
+      <div class="tracker-line-fill" id="trackerFill"></div>
+    </div>
+    <div class="tracker-step active" data-index="0">
+      <div class="tracker-circle"><span class="step-num">1</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Mission</span>
+    </div>
+    <div class="tracker-step" data-index="1">
+      <div class="tracker-circle"><span class="step-num">2</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Thesis</span>
+    </div>
+    <div class="tracker-step" data-index="2">
+      <div class="tracker-circle"><span class="step-num">3</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Platform</span>
+    </div>
+    <div class="tracker-step" data-index="3">
+      <div class="tracker-circle"><span class="step-num">4</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Stats</span>
+    </div>
+    <div class="tracker-step" data-index="4">
+      <div class="tracker-circle"><span class="step-num">5</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Commission</span>
+    </div>
+    <div class="tracker-step" data-index="5">
+      <div class="tracker-circle"><span class="step-num">6</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Career</span>
+    </div>
+    <div class="tracker-step" data-index="6">
+      <div class="tracker-circle"><span class="step-num">7</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Income</span>
+    </div>
+    <div class="tracker-step" data-index="7">
+      <div class="tracker-circle"><span class="step-num">8</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Culture</span>
+    </div>
+    <div class="tracker-step" data-index="8">
+      <div class="tracker-circle"><span class="step-num">9</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Rev Share</span>
+    </div>
+    <div class="tracker-step" data-index="9">
+      <div class="tracker-circle"><span class="step-num">10</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Roles</span>
+    </div>
+    <div class="tracker-step" data-index="10">
+      <div class="tracker-circle"><span class="step-num">11</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Complete</span>
+    </div>
   </div>
-  </div>
-  <div class="continue-btn-wrap">
-    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-  </div>
-</section>
+</nav>
 
-<!-- ════════════════════════════════════════
-     2. STAT BAR
-     ════════════════════════════════════════ -->
-<section class="stat-bar reveal-section" data-step="1">
-  <div class="inner">
-    <div class="stat-item">
-      <div class="stat-number">90%</div>
-      <div class="stat-label">Highest in the Industry</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">5</div>
-      <div class="stat-label">Income Streams</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">3,000+</div>
-      <div class="stat-label">Deals Closed</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Remote</div>
+<!-- ══════════════════════════════════════
+     CONTINUE / COMPLETE BUTTON
+     ══════════════════════════════════════ -->
+<button class="nav-btn" id="navBtn" onclick="advanceSlide()">
+  Continue
+  <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</button>
+
+<!-- ══════════════════════════════════════
+     SLIDE DECK
+     ══════════════════════════════════════ -->
+<div class="slider" id="slider">
+
+  <!-- ═══ SLIDE 1 — MISSION HERO ═══ -->
+  <div class="slide slide-hero" data-slide="0">
+    <div class="hero-wrap">
+      <span class="gold-label">Our Mission</span>
+      <h1 class="hero-title">
+        Where Agents Become<br><span class="gold">Investors.</span>
+      </h1>
+      <p class="hero-body">
+        Most brokerages sell houses. Myers sells access to a deal machine &mdash; the acquisitions pipeline, the investor network, the showing/auction system, and the training to understand it all.
+      </p>
     </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════
-     3. THE SPLIT — COMMISSION
-     ════════════════════════════════════════ -->
-<section class="split-section section-pad reveal-section" data-step="2">
-  <div class="inner">
-    <span class="gold-label">The Split</span>
-    <h2 class="section-heading">
-      The Highest Commission in the Industry<br>
-      <span class="gold-italic">...And It's Yours</span>
-    </h2>
-
-    <div class="split-grid">
-      <!-- Left: Bars -->
-      <div>
-        <div class="bar-group">
-          <div class="bar-label-row">
-            <span class="bar-label">Agent Payout</span>
-            <span class="bar-pct">80%</span>
+  <!-- ═══ SLIDE 2 — CORE THESIS ═══ -->
+  <div class="slide slide-thesis" data-slide="1">
+    <div class="slide-content">
+      <span class="gold-label">The Core Thesis</span>
+      <h2 class="section-heading">
+        Turn Real Estate Agents into<br><span class="gold-italic">Real Estate Investors.</span>
+      </h2>
+      <p class="thesis-body">
+        Most agents help other people build wealth through real estate. Myers teaches agents to build wealth for themselves &mdash; using the same deal flow, market access, and investor network they serve.
+      </p>
+      <div class="thesis-sub-label">Three Layers</div>
+      <div class="thesis-cards">
+        <!-- For Agents -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           </div>
-          <div class="bar-track">
-            <div class="bar-fill agent"></div>
-          </div>
+          <div class="thesis-card-title">For Agents</div>
+          <div class="thesis-card-desc">A path from commission earner to wealth builder. Agents should eventually own deals, not just broker them.</div>
         </div>
-        <div class="bar-group">
-          <div class="bar-label-row">
-            <span class="bar-label">Revenue Share Pool</span>
-            <span class="bar-pct">10%</span>
+        <!-- For Investors -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <div class="bar-track">
-            <div class="bar-fill revshare"></div>
-          </div>
+          <div class="thesis-card-title">For Investors</div>
+          <div class="thesis-card-desc">A reliable pipeline of vetted off-market properties in DFW. The showing process and verification system protect deal quality.</div>
         </div>
-        <div class="bar-group">
-          <div class="bar-label-row">
-            <span class="bar-label">Myers Ops</span>
-            <span class="bar-pct">10%</span>
+        <!-- For the Company -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
-          <div class="bar-track">
-            <div class="bar-fill ops"></div>
-          </div>
+          <div class="thesis-card-title">For the Company</div>
+          <div class="thesis-card-desc">A self-reinforcing network. Every agent adds deal flow, every deal adds investor relationships, every relationship creates opportunity.</div>
         </div>
-      </div>
-
-      <!-- Right: Big number -->
-      <div class="split-highlight">
-        <div class="split-big-number">90%</div>
-        <div class="split-big-label">Goes Back to Our Agents</div>
-        <div class="split-big-sub">80% direct payout + 10% revenue share pool</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════
-     4. YOUR PATH — CAREER
-     ════════════════════════════════════════ -->
-<section class="path-section section-pad reveal-section" data-step="3">
-  <div class="inner">
-    <span class="gold-label">Your Path at Myers</span>
-    <h2 class="section-heading">
-      From First Deal to<br><span class="gold">Full-Time Investor</span>
-    </h2>
-
-    <div class="path-track">
-      <div class="path-step">
-        <div class="path-circle">1</div>
-        <div class="path-step-title">Sales Agent</div>
-        <div class="path-step-desc">Close your first deal. Learn the math.</div>
-        <span class="path-badge">20% Commission</span>
-      </div>
-      <div class="path-step">
-        <div class="path-circle">2</div>
-        <div class="path-step-title">Acquisition Agent</div>
-        <div class="path-step-desc">Source your own off-market deals.</div>
-        <span class="path-badge">60% Acq. Payout</span>
-      </div>
-      <div class="path-step">
-        <div class="path-circle">3</div>
-        <div class="path-step-title">Team Lead</div>
-        <div class="path-step-desc">Mentor agents. Build your downline.</div>
-        <span class="path-badge">+ Rev Share</span>
-      </div>
-      <div class="path-step">
-        <div class="path-circle star">&#9733;</div>
-        <div class="path-step-title">Investor</div>
-        <div class="path-step-desc">Buy houses yourself. True wealth.</div>
-        <span class="path-badge">Generational</span>
-      </div>
-    </div>
-
-    <div class="path-callout">
-      Agents can begin investing at any stage &mdash; however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════
-     5. FIVE INCOME STREAMS
-     ════════════════════════════════════════ -->
-<section class="streams-section section-pad reveal-section" data-step="4">
-  <div class="inner">
-    <span class="gold-label">Earn 5 Ways</span>
-    <h2 class="section-heading">
-      Five Income Streams.<br><span class="gold">One Brokerage.</span>
-    </h2>
-
-    <div class="streams-grid">
-      <!-- Commissions -->
-      <div class="stream-card">
-        <div class="stream-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+  <!-- ═══ SLIDE 3 — PLATFORM ═══ -->
+  <div class="slide slide-platform" data-slide="2">
+    <div class="slide-content">
+      <span class="gold-label">What Makes Us Different</span>
+      <h2 class="section-heading">
+        Not a Brokerage.<br><span class="gold">A Platform.</span>
+      </h2>
+      <p class="platform-body">
+        The brokerage is really a platform for building investment careers.
+      </p>
+      <div class="platform-cards">
+        <div class="platform-card">
+          <div class="platform-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="platform-card-title">Acquisitions Pipeline</div>
+          <div class="platform-card-desc">Off-market deal sourcing and acquisition systems that feed your growth.</div>
         </div>
-        <div class="stream-title">Commissions</div>
-        <div class="stream-desc">Earn up to 80% on every closed transaction.</div>
-      </div>
-      <!-- Fix & Flip -->
-      <div class="stream-card">
-        <div class="stream-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <div class="platform-card">
+          <div class="platform-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="platform-card-title">Investor Network</div>
+          <div class="platform-card-desc">Direct access to active buyers and seasoned real estate investors.</div>
         </div>
-        <div class="stream-title">Fix &amp; Flip</div>
-        <div class="stream-desc">Renovate and resell properties for profit.</div>
-      </div>
-      <!-- Rentals -->
-      <div class="stream-card">
-        <div class="stream-icon">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        <div class="platform-card">
+          <div class="platform-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="platform-card-title">Showing/Auction System</div>
+          <div class="platform-card-desc">Structured showing process and competitive bidding to maximize deal value.</div>
         </div>
-        <div class="stream-title">Rentals</div>
-        <div class="stream-desc">Build long-term cash flow with rental properties.</div>
-      </div>
-      <!-- Wholesale -->
-      <div class="stream-card">
-        <div class="stream-icon">
-          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <div class="platform-card">
+          <div class="platform-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          </div>
+          <div class="platform-card-title">Training Platform</div>
+          <div class="platform-card-desc">End-to-end education turning agents into confident real estate investors.</div>
         </div>
-        <div class="stream-title">Wholesale</div>
-        <div class="stream-desc">Assign contracts for quick, low-risk income.</div>
-      </div>
-      <!-- Revenue Share -->
-      <div class="stream-card">
-        <div class="stream-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="15" r="3"/><circle cx="19" cy="15" r="3"/><line x1="12" y1="8" x2="5" y2="12"/><line x1="12" y1="8" x2="19" y2="12"/></svg>
-        </div>
-        <div class="stream-title">Revenue Share</div>
-        <div class="stream-desc">Earn passive income from your recruited network.</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════
-     6. TEAM CULTURE
-     ════════════════════════════════════════ -->
-<section class="culture-section section-pad reveal-section" data-step="5">
-  <div class="inner">
-    <span class="gold-label">Our Culture</span>
-    <h2 class="section-heading">
-      A Team That Feels Like<br><span class="gold">Family</span>
-    </h2>
-
-    <div class="culture-grid">
-      <img src="assets/team-culture.jpg" alt="Myers team culture meeting">
-      <img src="assets/hero-team.png" alt="Myers team together">
+  <!-- ═══ SLIDE 4 — STATS ═══ -->
+  <div class="slide slide-stats" data-slide="3">
+    <div class="slide-content">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number">90%</div>
+          <div class="stat-label">Highest in the Industry</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Income Streams</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">3,000+</div>
+          <div class="stat-label">Deals Closed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Remote</div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════
-     7. REVENUE SHARE — TREE + TABLE
-     ════════════════════════════════════════ -->
-<section class="revshare-section section-pad reveal-section" data-step="6">
-  <div class="inner">
-    <span class="gold-label">Passive Income</span>
-    <h2 class="section-heading">
-      6-Level<br><span class="gold">Revenue Share</span>
-    </h2>
-
-    <div class="revshare-grid">
-      <div>
-        <img src="assets/revshare-tree.png" alt="Revenue share tree diagram">
+  <!-- ═══ SLIDE 5 — COMMISSION ═══ -->
+  <div class="slide slide-commission" data-slide="4">
+    <div class="slide-content">
+      <span class="gold-label">The Split</span>
+      <h2 class="section-heading">
+        The Highest Commission in the Industry<br>
+        <span class="gold-italic">...And It's Yours</span>
+      </h2>
+      <div class="split-grid">
+        <div>
+          <div class="bar-group">
+            <div class="bar-label-row">
+              <span class="bar-label">Agent Payout</span>
+              <span class="bar-pct">80%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill agent" data-width="80"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label-row">
+              <span class="bar-label">Revenue Share Pool</span>
+              <span class="bar-pct">10%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill revshare" data-width="10"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label-row">
+              <span class="bar-label">Myers Ops</span>
+              <span class="bar-pct">10%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill ops" data-width="10"></div></div>
+          </div>
+        </div>
+        <div class="split-highlight">
+          <div class="split-big-number">90%</div>
+          <div class="split-big-label">Goes Back to Our Agents</div>
+          <div class="split-big-sub">80% direct payout + 10% revenue share pool</div>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <div>
-        <ul class="revshare-table">
-          <li class="revshare-row">
-            <span class="revshare-level-badge">Level 1</span>
-            <span class="revshare-desc">Direct recruit production</span>
-            <span class="revshare-pct">25%</span>
-          </li>
-          <li class="revshare-row">
-            <span class="revshare-level-badge">Level 2</span>
-            <span class="revshare-desc">Recruit's recruits</span>
-            <span class="revshare-pct">20%</span>
-          </li>
-          <li class="revshare-row">
-            <span class="revshare-level-badge">Level 3</span>
-            <span class="revshare-desc">Third-tier network</span>
-            <span class="revshare-pct">15%</span>
-          </li>
-          <li class="revshare-row">
-            <span class="revshare-level-badge">Level 4</span>
-            <span class="revshare-desc">Fourth-tier reach</span>
-            <span class="revshare-pct">10%</span>
-          </li>
-          <li class="revshare-row">
-            <span class="revshare-level-badge">Level 5</span>
-            <span class="revshare-desc">Fifth-tier growth</span>
-            <span class="revshare-pct">5%</span>
-          </li>
-          <li class="revshare-row">
-            <span class="revshare-level-badge">Level 6</span>
-            <span class="revshare-desc">Sixth-tier expansion</span>
-            <span class="revshare-pct">25%</span>
-          </li>
-        </ul>
-        <p class="revshare-footnote">
-          *Percentages represent share of revenue share pool, paid monthly.
+  <!-- ═══ SLIDE 6 — CAREER PATH ═══ -->
+  <div class="slide slide-career" data-slide="5">
+    <div class="slide-content">
+      <span class="gold-label">Your Path at Myers</span>
+      <h2 class="section-heading">
+        From First Deal to<br><span class="gold">Full-Time Investor</span>
+      </h2>
+      <div class="path-track">
+        <div class="path-step">
+          <div class="path-circle">1</div>
+          <div class="path-step-title">Sales Agent</div>
+          <div class="path-step-desc">Close your first deal. Learn the math.</div>
+          <span class="path-badge">20% Commission</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle">2</div>
+          <div class="path-step-title">Acquisition Agent</div>
+          <div class="path-step-desc">Source your own off-market deals.</div>
+          <span class="path-badge">60% Acq. Payout</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle">3</div>
+          <div class="path-step-title">Team Lead</div>
+          <div class="path-step-desc">Mentor agents. Build your downline.</div>
+          <span class="path-badge">+ Rev Share</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle star">&#9733;</div>
+          <div class="path-step-title">Investor</div>
+          <div class="path-step-desc">Buy houses yourself. True wealth.</div>
+          <span class="path-badge">Generational</span>
+        </div>
+      </div>
+      <div class="path-callout">
+        Agents can begin investing at any stage &mdash; however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 7 — INCOME STREAMS ═══ -->
+  <div class="slide slide-income" data-slide="6">
+    <div class="slide-content">
+      <span class="gold-label">Earn 5 Ways</span>
+      <h2 class="section-heading">
+        Five Income Streams.<br><span class="gold">One Brokerage.</span>
+      </h2>
+      <div class="streams-grid">
+        <div class="stream-card">
+          <div class="stream-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="stream-title">Commissions</div>
+          <div class="stream-desc">Earn up to 80% on every closed transaction.</div>
+        </div>
+        <div class="stream-card">
+          <div class="stream-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="stream-title">Fix &amp; Flip</div>
+          <div class="stream-desc">Renovate and resell properties for profit.</div>
+        </div>
+        <div class="stream-card">
+          <div class="stream-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          </div>
+          <div class="stream-title">Rentals</div>
+          <div class="stream-desc">Build long-term cash flow with rental properties.</div>
+        </div>
+        <div class="stream-card">
+          <div class="stream-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="stream-title">Wholesale</div>
+          <div class="stream-desc">Assign contracts for quick, low-risk income.</div>
+        </div>
+        <div class="stream-card">
+          <div class="stream-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="15" r="3"/><circle cx="19" cy="15" r="3"/><line x1="12" y1="8" x2="5" y2="12"/><line x1="12" y1="8" x2="19" y2="12"/></svg>
+          </div>
+          <div class="stream-title">Revenue Share</div>
+          <div class="stream-desc">Earn passive income from your recruited network.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 8 — CULTURE ═══ -->
+  <div class="slide slide-culture" data-slide="7">
+    <div class="slide-content">
+      <span class="gold-label">Our Culture</span>
+      <h2 class="section-heading">
+        A Team That Feels Like<br><span class="gold">Family</span>
+      </h2>
+      <div class="culture-grid">
+        <img src="assets/team-culture.jpg" alt="Myers team culture meeting">
+        <img src="assets/hero-team.png" alt="Myers team together">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 9 — REVENUE SHARE ═══ -->
+  <div class="slide slide-revshare" data-slide="8">
+    <div class="slide-content">
+      <span class="gold-label">Passive Income</span>
+      <h2 class="section-heading">
+        6-Level<br><span class="gold">Revenue Share</span>
+      </h2>
+      <div class="revshare-grid">
+        <div>
+          <img src="assets/revshare-tree.png" alt="Revenue share tree diagram">
+        </div>
+        <div>
+          <ul class="revshare-table">
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 1</span>
+              <span class="revshare-desc">Direct recruit production</span>
+              <span class="revshare-pct">25%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 2</span>
+              <span class="revshare-desc">Recruit's recruits</span>
+              <span class="revshare-pct">20%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 3</span>
+              <span class="revshare-desc">Third-tier network</span>
+              <span class="revshare-pct">15%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 4</span>
+              <span class="revshare-desc">Fourth-tier reach</span>
+              <span class="revshare-pct">10%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 5</span>
+              <span class="revshare-desc">Fifth-tier growth</span>
+              <span class="revshare-pct">5%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 6</span>
+              <span class="revshare-desc">Sixth-tier expansion</span>
+              <span class="revshare-pct">25%</span>
+            </li>
+          </ul>
+          <p class="revshare-footnote">
+            *Percentages represent share of revenue share pool, paid monthly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 10 — ROLES ═══ -->
+  <div class="slide slide-roles" data-slide="9">
+    <div class="slide-content">
+      <span class="gold-label">Agent Roles</span>
+      <h2 class="section-heading">
+        Two Paths.<br><span class="gold">One Mission.</span>
+      </h2>
+      <div class="roles-grid">
+        <div class="role-card">
+          <img class="role-card-img" src="assets/agent-success.png" alt="Sales agent">
+          <div class="role-card-body">
+            <div class="role-card-title">Sales Agent</div>
+            <div class="role-card-badge">20% Commission</div>
+            <p class="role-card-desc">
+              Your entry point into the Myers ecosystem. As a Sales Agent you work warm leads generated by the company, close transactions, and learn the investment math behind every deal. This role builds the foundation for everything that follows.
+            </p>
+          </div>
+        </div>
+        <div class="role-card">
+          <img class="role-card-img" src="assets/acquisitions.png" alt="Acquisitions agent">
+          <div class="role-card-body">
+            <div class="role-card-title">Acquisitions Agent</div>
+            <div class="role-card-badge">Up to 60%</div>
+            <p class="role-card-desc">
+              Source your own off-market deals, negotiate directly with sellers, and earn significantly higher payouts. Acquisitions agents operate with autonomy and build the skills to eventually invest in their own properties.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 11 — COMPLETE ═══ -->
+  <div class="slide slide-complete" data-slide="10">
+    <div class="slide-content" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 180px);">
+      <div class="ack-card">
+        <div class="ack-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="ack-card-title">Orientation Complete</div>
+        <p class="ack-card-sub">
+          I understand the Myers mission, commission structure, and career path.
         </p>
+        <label class="ack-label">
+          <input type="checkbox" id="or1-acknowledge" onchange="checkConfetti()">
+          <span>I acknowledge and agree</span>
+        </label>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════
-     8. SA vs AA ROLES
-     ════════════════════════════════════════ -->
-<section class="roles-section section-pad reveal-section" data-step="7">
-  <div class="inner">
-    <span class="gold-label">Agent Roles</span>
-    <h2 class="section-heading">
-      Two Paths.<br><span class="gold">One Mission.</span>
-    </h2>
-
-    <div class="roles-grid">
-      <!-- Sales Agent -->
-      <div class="role-card">
-        <img class="role-card-img" src="assets/agent-success.png" alt="Sales agent">
-        <div class="role-card-body">
-          <div class="role-card-title">Sales Agent</div>
-          <div class="role-card-badge">20% Commission</div>
-          <p class="role-card-desc">
-            Your entry point into the Myers ecosystem. As a Sales Agent you work warm leads generated by the company, close transactions, and learn the investment math behind every deal. This role builds the foundation for everything that follows.
-          </p>
-        </div>
-      </div>
-      <!-- Acquisitions Agent -->
-      <div class="role-card">
-        <img class="role-card-img" src="assets/acquisitions.png" alt="Acquisitions agent">
-        <div class="role-card-body">
-          <div class="role-card-title">Acquisitions Agent</div>
-          <div class="role-card-badge">Up to 60%</div>
-          <p class="role-card-desc">
-            Source your own off-market deals, negotiate directly with sellers, and earn significantly higher payouts. Acquisitions agents operate with autonomy and build the skills to eventually invest in their own properties.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════
-     9. ACKNOWLEDGMENT
-     ════════════════════════════════════════ -->
-<section class="ack-section reveal-section" data-step="8">
-  <div class="inner">
-    <div class="ack-card">
-      <div class="ack-card-title">
-        I understand the Myers mission, commission structure, and career path.
-      </div>
-      <label class="ack-label">
-        <input type="checkbox" id="or1-acknowledge" onchange="checkConfetti()">
-        <span>I acknowledge and agree</span>
-      </label>
-    </div>
-  </div>
-</section>
+</div><!-- /.slider -->
 
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
 <script>
-  var totalSteps = 8;
-  var currentStep = 0;
+  /* ── STATE ── */
+  var currentSlide = 0;
+  var totalSlides = 11;
+  var isTransitioning = false;
 
-  function updateProgress() {
-    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
-    document.getElementById('progressBar').style.width = pct + '%';
+  var slider = document.getElementById('slider');
+  var navBtn = document.getElementById('navBtn');
+  var trackerFill = document.getElementById('trackerFill');
+  var trackerSteps = document.querySelectorAll('.tracker-step');
+
+  /* ── GO TO SLIDE ── */
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides || isTransitioning) return;
+    isTransitioning = true;
+    currentSlide = n;
+
+    /* Move slider */
+    slider.style.transform = 'translateX(-' + (n * 100) + 'vw)';
+
+    /* Update tracker */
+    updateTracker();
+
+    /* Update button */
+    navBtn.classList.add('hidden');
+    setTimeout(function() {
+      if (currentSlide === totalSlides - 1) {
+        navBtn.style.display = 'none';
+      } else {
+        navBtn.innerHTML = 'Continue <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+        navBtn.style.display = '';
+        navBtn.classList.remove('hidden');
+      }
+      isTransitioning = false;
+    }, 350);
+
+    /* Animate bar fills on commission slide (slide index 4) */
+    if (n === 4) {
+      setTimeout(animateBars, 300);
+    }
+
+    /* Reset scroll of target slide */
+    var targetSlide = document.querySelector('[data-slide="' + n + '"]');
+    if (targetSlide) targetSlide.scrollTop = 0;
   }
 
-  function addContinueButton(section, step) {
-    if (step >= totalSteps) return;
-    var wrap = document.createElement('div');
-    wrap.className = 'continue-btn-wrap';
-    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
-    section.appendChild(wrap);
+  /* ── ADVANCE ── */
+  function advanceSlide() {
+    goToSlide(currentSlide + 1);
   }
 
-  // Add continue buttons to each section (except the last)
-  document.querySelectorAll('.reveal-section').forEach(function(sec) {
-    var step = parseInt(sec.getAttribute('data-step'));
-    addContinueButton(sec, step);
+  /* ── TRACKER UPDATE ── */
+  function updateTracker() {
+    trackerSteps.forEach(function(step) {
+      var idx = parseInt(step.getAttribute('data-index'));
+      step.classList.remove('active', 'completed');
+      if (idx < currentSlide) {
+        step.classList.add('completed');
+      } else if (idx === currentSlide) {
+        step.classList.add('active');
+      }
+    });
+
+    /* Progress line fill */
+    var pct = totalSlides > 1 ? (currentSlide / (totalSlides - 1)) * 100 : 0;
+    trackerFill.style.width = pct + '%';
+  }
+
+  /* ── BAR ANIMATION ── */
+  function animateBars() {
+    document.querySelectorAll('.bar-fill').forEach(function(bar) {
+      var w = bar.getAttribute('data-width');
+      if (w) bar.style.width = w + '%';
+    });
+  }
+
+  /* ── KEYBOARD NAV ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (currentSlide < totalSlides - 1) advanceSlide();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToSlide(currentSlide - 1);
+    }
   });
 
-  function revealNext(step) {
-    var section = document.querySelector('[data-step="' + step + '"]');
-    if (!section) return;
-    section.classList.add('visible');
-    currentStep = step;
-    updateProgress();
-    setTimeout(function() {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-    // Hide the continue button that was clicked
-    var prevStep = step - 1;
-    var prevSection;
-    if (prevStep === 0) {
-      prevSection = document.querySelector('.hero');
-    } else {
-      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
-    }
-    if (prevSection) {
-      var btn = prevSection.querySelector('.continue-btn-wrap');
-      if (btn) btn.style.display = 'none';
-    }
-  }
-
-  updateProgress();
+  /* ── INIT ── */
+  updateTracker();
 </script>
 </body>
 </html>

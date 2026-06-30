@@ -6,41 +6,163 @@
 <title>Available Properties Overview | Myers Orientation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  html { -webkit-font-smoothing: antialiased; }
 
-  /* ── TOKENS ── */
   :root {
-    --gold:   #C9941F;
+    --gold: #C9941F;
     --gold-light: #D4A94A;
-    --cream:  #FBE8B7;
+    --cream: #FBE8B7;
     --cream-bg: #FFF8EB;
-    --ink:    #1A1815;
-    --dark:   #2A2520;
-    --bg:     #FAFAF8;
-    --white:  #FFFFFF;
-    --gray:   #8A857D;
+    --ink: #1A1815;
+    --dark: #2A2520;
+    --bg: #FAFAF8;
+    --white: #FFFFFF;
+    --gray: #8A857D;
     --border: #E8E4DC;
-    --serif:  'DM Serif Display', Georgia, serif;
-    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Mulish', 'Segoe UI', Arial, sans-serif;
     --radius: 12px;
-    --radius-sm: 8px;
     --shadow: 0 4px 24px rgba(26,24,21,0.08);
-    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
   }
 
   body {
     font-family: var(--sans);
-    background: var(--bg);
+    background: var(--ink);
     color: var(--ink);
     line-height: 1.6;
-    min-height: 100vh;
     font-size: 16px;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
   }
 
-  /* ─── Utility ─── */
+  /* ── PROGRESS TRACKER ── */
+  .progress-tracker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--ink);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
+  }
+  .tracker-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+  .tracker-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+  }
+  .tracker-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    background: #333029;
+    color: #5A564E;
+    border: 2px solid #3D382F;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+  }
+  .tracker-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #5A564E;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+  .tracker-step.active .tracker-label {
+    color: var(--gold);
+  }
+  .tracker-step.completed .tracker-label {
+    color: var(--gold);
+  }
+  .tracker-line {
+    width: 40px;
+    height: 2px;
+    background: #333029;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 14px;
+  }
+  .tracker-line.filled {
+    background: var(--gold);
+  }
+
+  /* ── SLIDER ── */
+  .slider-viewport {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+  .slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .slide {
+    min-width: 100vw;
+    width: 100vw;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .slide-inner {
+    max-width: 900px;
+    width: 100%;
+    padding: 80px 32px 120px;
+    margin: 0 auto;
+  }
+
+  /* ── SLIDE BACKGROUNDS ── */
+  .slide-dark {
+    background: linear-gradient(180deg, #1A1815 0%, #2A2520 100%);
+    color: #FFFDF6;
+  }
+  .slide-light {
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  /* ── TYPOGRAPHY ── */
   .gold-label {
     font-family: var(--sans);
     font-size: 11px;
@@ -53,382 +175,578 @@
   }
   .section-heading {
     font-family: var(--serif);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    line-height: 1.2;
-    color: var(--ink);
-    margin-bottom: 40px;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 20px;
   }
+  .slide-dark .section-heading { color: #FFFDF6; }
+  .slide-light .section-heading { color: var(--ink); }
   .section-heading em {
     color: var(--gold);
     font-style: italic;
   }
-
-  /* ─── Hero ─── */
-  .hero {
-    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
-    padding: 2rem 2rem 1.75rem;
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid #E8E2D4;
-    text-align: center;
+  .subtitle {
+    font-size: 1.15rem;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: 48px;
+    line-height: 1.7;
+    max-width: 640px;
   }
-  .hero::after {
-    content: ''; position: absolute; top: -50%; right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
+  .slide-dark .subtitle { color: #D4CFC7; }
+  .slide-light .subtitle { color: #3D362A; }
+
+  /* ── BOARD PREVIEW (Slide 1) ── */
+  .board-preview {
+    max-width: 860px;
+    width: 100%;
+    background: #111;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,148,31,0.15);
+  }
+  .board-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(201,148,31,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,24,21,0.6);
+  }
+  .board-header .dot {
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
   }
-  .hero-badge {
-    display: flex; align-items: center; gap: 0.5rem;
-    justify-content: center;
-    margin: 0 auto 1.25rem; width: fit-content;
-    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
-    border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em;
+  .dot-r { background: #E85D4A; }
+  .dot-y { background: #C9941F; }
+  .dot-g { background: #4F7A3A; }
+  .board-header .board-title {
+    color: #FFFDF6;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-left: 8px;
   }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .hero h1 {
+  .board-body { padding: 20px; }
+  .board-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    align-items: center;
+  }
+  .board-row.board-row-header {
+    border-bottom: 1px solid rgba(201,148,31,0.3);
+  }
+  .board-row-header span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #7A7263;
+  }
+  .board-row span {
+    font-size: 0.85rem;
+    color: #FFFDF6;
+  }
+  .board-row .price {
+    color: var(--gold);
+    font-weight: 700;
     font-family: var(--serif);
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: var(--ink);
-    line-height: 1.15; margin-bottom: 0.5rem;
   }
-  .hero .subtitle { color: #8B6B1A; font-size: 1.1rem; font-weight: 600; }
-
-  /* ─── Container ─── */
-  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
-  .intro-text { font-size: 1.05rem; color: #3D362A; line-height: 1.7; margin-bottom: 2rem; max-width: 700px; text-align: center; margin-left: auto; margin-right: auto; }
-
-  /* ─── Section Divider ─── */
-  .section-divider { display: flex; align-items: center; gap: 1rem; margin: 2.5rem auto 1.5rem; max-width: 800px; }
-  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
-  .section-divider .label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #7A7263; }
-
-  /* ─── Document Grid ─── */
-  .doc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
-  .doc-grid.three-col { grid-template-columns: repeat(3, 1fr); }
-  .doc-grid.single-col { grid-template-columns: 1fr; }
-
-  .doc-card { background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px; padding: 1.25rem; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 1px 3px rgba(26,24,21,0.06); text-align: left; }
-  .doc-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,24,21,0.08); }
-  .doc-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; background: rgba(201,148,31,0.12); }
-  .doc-card-icon svg { width: 26px; height: 26px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .doc-card h3 { font-family: 'Mulish', system-ui, sans-serif; font-size: 1.1rem; font-weight: 800; color: #1A1815; margin-bottom: 0.6rem; line-height: 1.35; }
-  .doc-card p { font-size: 1rem; color: #3D362A; line-height: 1.6; }
-  .doc-card .highlight { color: #C9941F; font-weight: 700; }
-
-  /* ─── Info Block ─── */
-  .info-block { background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(26,24,21,0.06); max-width: 800px; margin-left: auto; margin-right: auto; }
-  .info-block-header { background: #1A1815; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
-  .info-block-header .ib-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(201,148,31,0.2); display: flex; align-items: center; justify-content: center; }
-  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .info-block-header h3 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.3rem; color: #FFFDF6; }
-  .info-block-body { padding: 1.5rem; text-align: left; }
-  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
-
-  /* ─── Board Preview ─── */
-  .board-preview { max-width: 800px; margin: 0 auto 2rem; background: #1A1815; border-radius: 16px; overflow: hidden; }
-  .board-header { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(201,148,31,0.2); display: flex; align-items: center; gap: 0.75rem; }
-  .board-header .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .board-header .dot-r { background: #E85D4A; }
-  .board-header .dot-y { background: #C9941F; }
-  .board-header .dot-g { background: #4F7A3A; }
-  .board-header .board-title { color: #FFFDF6; font-weight: 700; font-size: 0.9rem; margin-left: 0.5rem; }
-  .board-body { padding: 1.5rem; }
-  .board-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 0.5rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); align-items: center; }
-  .board-row.board-row-header { border-bottom: 1px solid rgba(201,148,31,0.3); }
-  .board-row-header span { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #7A7263; }
-  .board-row span { font-size: 0.85rem; color: #FFFDF6; }
-  .board-row .price { color: #C9941F; font-weight: 700; font-family: 'DM Serif Display', serif; }
-  .board-row .status { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 99px; font-weight: 700; text-transform: uppercase; display: inline-block; }
+  .board-row .status {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+  }
   .status-active { background: rgba(79,122,58,0.2); color: #6BA54B; }
   .status-showing { background: rgba(201,148,31,0.2); color: #C9941F; }
   .status-pending { background: rgba(122,114,99,0.2); color: #7A7263; }
 
-  /* ─── Yellow Callout ─── */
-  .yellow-callout { background: #FBE8B7; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; margin: 1rem auto; max-width: 700px; text-align: left; }
-  .yellow-callout-icon { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .yellow-callout-icon svg { width: 24px; height: 24px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .yellow-callout p { color: #3D362A; font-size: 1rem; font-weight: 500; }
-  .yellow-callout strong { color: #1A1815; }
-
-  /* ─── Doc Check ─── */
-  .doc-card .doc-check { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #E8E2D4; display: flex; align-items: center; gap: 0.6rem; }
-  .doc-card .doc-check input[type="checkbox"] { width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0; }
-  .doc-card .doc-check label { font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer; }
-
-  @media (max-width: 768px) {
-    .doc-grid { grid-template-columns: 1fr; }
-    .doc-grid.three-col { grid-template-columns: 1fr; }
-    .board-row { grid-template-columns: 1fr 1fr; gap: 0.25rem; }
+  /* ── DOC GRID ── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 24px;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .doc-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    background: rgba(201,148,31,0.12);
+  }
+  .doc-card-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .doc-card h3 {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 0.95rem;
+    color: #3D362A;
+    line-height: 1.6;
+    flex: 1;
+  }
+  .doc-card .highlight {
+    color: var(--gold);
+    font-weight: 700;
   }
 
-  /* ── PROGRESSIVE REVEAL ── */
-  .reveal-section {
-    opacity: 0;
-    transform: translateY(40px);
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
-    pointer-events: none;
+  /* ── STATUS GRID (Slide 3) ── */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 32px;
   }
-  .reveal-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 5000px;
-    overflow: visible;
-    pointer-events: auto;
-  }
-
-  .continue-btn-wrap {
+  .status-card {
+    background: rgba(255,253,246,0.06);
+    border: 1px solid rgba(201,148,31,0.15);
+    border-radius: 16px;
+    padding: 32px 24px;
     text-align: center;
-    padding: 2rem 0 1rem;
+  }
+  .status-card .status-badge {
+    font-size: 0.85rem;
+    padding: 6px 18px;
+    border-radius: 99px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .status-card p {
+    font-size: 0.95rem;
+    color: #D4CFC7;
+    line-height: 1.6;
+  }
+
+  /* ── YELLOW CALLOUT ── */
+  .yellow-callout {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .yellow-callout-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #8B6B1A;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .yellow-callout strong { color: var(--ink); }
+
+  /* ── ACKNOWLEDGE CARD ── */
+  .acknowledge-card {
+    background: #FFFDF6;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(201,148,31,0.12);
+  }
+  .acknowledge-card input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .acknowledge-card label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+  }
+  .doc-card .doc-check {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #E8E2D4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .doc-card .doc-check label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #7A7263;
+    cursor: pointer;
+  }
+
+  /* ── CONTINUE BUTTON ── */
+  .continue-btn-wrap {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    z-index: 999;
+    pointer-events: none;
   }
   .continue-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 8px;
     background: var(--gold);
     color: var(--white);
     font-family: var(--sans);
     font-size: 1rem;
     font-weight: 700;
-    padding: 14px 36px;
+    padding: 0 36px;
+    height: 48px;
     border: none;
     border-radius: 99px;
     cursor: pointer;
     transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
+    box-shadow: 0 4px 24px rgba(201,148,31,0.3);
+    pointer-events: auto;
   }
   .continue-btn:hover {
     background: #B8841A;
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
+    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
   }
   .continue-btn svg {
-    width: 18px; height: 18px;
-    stroke: currentColor; fill: none;
-    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: var(--gold);
-    z-index: 9999;
-    transition: width 0.4s ease;
-    box-shadow: 0 0 8px rgba(201,148,31,0.4);
+  @media (max-width: 768px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .status-grid { grid-template-columns: 1fr; }
+    .board-row { grid-template-columns: 1fr 1fr; gap: 4px; }
+    .slide-inner { padding: 60px 20px 120px; }
+    .tracker-step { padding: 0 10px; }
+    .tracker-line { width: 20px; }
   }
 </style>
 </head>
 <body>
-<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
-<header class="hero">
-  <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    Orientation
+<!-- ── PROGRESS TRACKER ── -->
+<nav class="progress-tracker">
+  <div class="tracker-steps">
+    <div class="tracker-step active" data-slide="0" onclick="goToSlide(0)">
+      <div class="tracker-circle">1</div>
+      <span class="tracker-label">The Board</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="1" onclick="goToSlide(1)">
+      <div class="tracker-circle">2</div>
+      <span class="tracker-label">Columns</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="2" onclick="goToSlide(2)">
+      <div class="tracker-circle">3</div>
+      <span class="tracker-label">Status</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="3" onclick="goToSlide(3)">
+      <div class="tracker-circle">4</div>
+      <span class="tracker-label">Complete</span>
+    </div>
   </div>
-  <h1>Available Properties</h1>
-  <div class="subtitle">Every deal lives on one shared board — this is where you start.</div>
-  <div class="continue-btn-wrap">
-    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-  </div>
-</header>
+</nav>
 
-<div class="container">
+<!-- ── SLIDER ── -->
+<div class="slider-viewport">
+  <div class="slider" id="slider">
 
-  <p class="intro-text">The Zoho property board is your daily command center. Every available property is listed here with deal details, showing schedules, and pricing. Here's how to read it.</p>
+    <!-- SLIDE 1: THE BOARD (Dark) -->
+    <div class="slide slide-dark">
+      <div class="slide-inner">
+        <span class="gold-label">Orientation</span>
+        <h1 class="section-heading">Available <em>Properties</em></h1>
+        <p class="subtitle">Every deal lives on one shared board. The Zoho property board is your daily command center — this is where you start.</p>
 
-  <!-- The Property Board (step 1) -->
-  <div class="reveal-section" data-step="1">
-    <span class="gold-label">The Board</span>
-    <h2 class="section-heading">The Property <em>Board</em></h2>
-
-    <div class="board-preview">
-      <div class="board-header">
-        <div class="dot dot-r"></div>
-        <div class="dot dot-y"></div>
-        <div class="dot dot-g"></div>
-        <span class="board-title">Zoho CRM — Available Properties</span>
-      </div>
-      <div class="board-body">
-        <div class="board-row board-row-header">
-          <span>Property</span>
-          <span>Min Ask</span>
-          <span>Buy Now</span>
-          <span>Showing</span>
-          <span>Status</span>
-        </div>
-        <div class="board-row">
-          <span>3BR/2BA · 1,450 sqft · Dallas</span>
-          <span class="price">$165,000</span>
-          <span class="price">$185,000</span>
-          <span>Jul 5, 2pm</span>
-          <span><span class="status status-showing">Showing</span></span>
-        </div>
-        <div class="board-row">
-          <span>4BR/2BA · 2,100 sqft · Denton</span>
-          <span class="price">$210,000</span>
-          <span class="price">$240,000</span>
-          <span>Jul 8, 10am</span>
-          <span><span class="status status-active">Active</span></span>
-        </div>
-        <div class="board-row">
-          <span>2BR/1BA · 950 sqft · Fort Worth</span>
-          <span class="price">$98,000</span>
-          <span class="price">$115,000</span>
-          <span>FCFS</span>
-          <span><span class="status status-active">Active</span></span>
-        </div>
-        <div class="board-row">
-          <span>3BR/2BA · 1,800 sqft · Collin</span>
-          <span class="price">$195,000</span>
-          <span class="price">$220,000</span>
-          <span>Jul 3, 1pm</span>
-          <span><span class="status status-pending">Pending</span></span>
+        <div class="board-preview">
+          <div class="board-header">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="board-title">Zoho CRM — Available Properties</span>
+          </div>
+          <div class="board-body">
+            <div class="board-row board-row-header">
+              <span>Property</span>
+              <span>Min Ask</span>
+              <span>Buy Now</span>
+              <span>Showing</span>
+              <span>Status</span>
+            </div>
+            <div class="board-row">
+              <span>3BR/2BA · 1,450 sqft · Dallas</span>
+              <span class="price">$165,000</span>
+              <span class="price">$185,000</span>
+              <span>Jul 5, 2pm</span>
+              <span><span class="status status-showing">Showing</span></span>
+            </div>
+            <div class="board-row">
+              <span>4BR/2BA · 2,100 sqft · Denton</span>
+              <span class="price">$210,000</span>
+              <span class="price">$240,000</span>
+              <span>Jul 8, 10am</span>
+              <span><span class="status status-active">Active</span></span>
+            </div>
+            <div class="board-row">
+              <span>2BR/1BA · 950 sqft · Fort Worth</span>
+              <span class="price">$98,000</span>
+              <span class="price">$115,000</span>
+              <span>FCFS</span>
+              <span><span class="status status-active">Active</span></span>
+            </div>
+            <div class="board-row">
+              <span>3BR/2BA · 1,800 sqft · Collin</span>
+              <span class="price">$195,000</span>
+              <span class="price">$220,000</span>
+              <span>Jul 3, 1pm</span>
+              <span><span class="status status-pending">Pending</span></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- What You're Looking At (step 2) -->
-  <div class="reveal-section" data-step="2">
-    <span class="gold-label">Columns</span>
-    <h2 class="section-heading">What You're <em>Looking At</em></h2>
+    <!-- SLIDE 2: COLUMNS (Light) -->
+    <div class="slide slide-light">
+      <div class="slide-inner">
+        <span class="gold-label">Columns</span>
+        <h2 class="section-heading">What You're <em>Looking At</em></h2>
+        <p class="subtitle">Each column on the board gives your investors the information they need to make fast, confident decisions.</p>
 
-    <div class="doc-grid">
-      <div class="doc-card">
-        <div class="doc-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <div class="doc-grid">
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>Property Details</h3>
+            <p>Beds, baths, square footage, lot size, and location. Every listing shows the basics at a glance.</p>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3>Min Ask vs. Buy-It-Now</h3>
+            <p><span class="highlight">Min Ask</span> = the starting bid for the auction. <span class="highlight">Buy-It-Now</span> = skip the auction and purchase instantly at this price.</p>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Showing Date &amp; Time</h3>
+            <p>When the 1-hour showing is scheduled. <span class="highlight">FCFS</span> = First Come, First Serve (vacant property, no showing needed).</p>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3>Estimated ARV &amp; Rent</h3>
+            <p>After-repair value and estimated monthly rent. These help your investors evaluate the deal before the showing.</p>
+          </div>
         </div>
-        <h3>Property Details</h3>
-        <p>Beds, baths, square footage, lot size, and location. Every listing shows the basics at a glance.</p>
-      </div>
-
-      <div class="doc-card">
-        <div class="doc-card-icon">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <h3>Min Ask vs. Buy-It-Now</h3>
-        <p><span class="highlight">Min Ask</span> = the starting bid for the auction. <span class="highlight">Buy-It-Now</span> = skip the auction and purchase instantly at this price.</p>
-      </div>
-
-      <div class="doc-card">
-        <div class="doc-card-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3>Showing Date & Time</h3>
-        <p>When the 1-hour showing is scheduled. <span class="highlight">FCFS</span> = First Come, First Serve (vacant property, no showing needed).</p>
-      </div>
-
-      <div class="doc-card">
-        <div class="doc-card-icon">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <h3>Estimated ARV & Rent</h3>
-        <p>After-repair value and estimated monthly rent. These help your investors evaluate the deal before the showing.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Status Guide (step 3) -->
-  <div class="reveal-section" data-step="3">
-    <span class="gold-label">Statuses</span>
-    <h2 class="section-heading">Status <em>Guide</em></h2>
-
-    <div class="doc-grid three-col">
-      <div class="doc-card" style="text-align: center;">
-        <span class="status status-active" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Active</span>
-        <p>Property is available for purchase. First Come, First Serve deals can be bought now.</p>
-      </div>
-      <div class="doc-card" style="text-align: center;">
-        <span class="status status-showing" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Showing</span>
-        <p>A showing is scheduled. Attend, then bid via the Bid Form or pay Buy-It-Now price.</p>
-      </div>
-      <div class="doc-card" style="text-align: center;">
-        <span class="status status-pending" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Pending</span>
-        <p>A contract is submitted and deposit collected. This deal is no longer available.</p>
       </div>
     </div>
 
-    <!-- Yellow Callout -->
-    <div class="yellow-callout">
-      <div class="yellow-callout-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <!-- SLIDE 3: STATUS (Dark) -->
+    <div class="slide slide-dark">
+      <div class="slide-inner">
+        <span class="gold-label">Statuses</span>
+        <h2 class="section-heading">Status <em>Guide</em></h2>
+        <p class="subtitle">Each property has a status that tells you exactly where it is in the pipeline.</p>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <span class="status-badge status-active">Active</span>
+            <p>Property is available for purchase. First Come, First Serve deals can be bought now.</p>
+          </div>
+          <div class="status-card">
+            <span class="status-badge status-showing">Showing</span>
+            <p>A showing is scheduled. Attend, then bid via the Bid Form or pay Buy-It-Now price.</p>
+          </div>
+          <div class="status-card">
+            <span class="status-badge status-pending">Pending</span>
+            <p>A contract is submitted and deposit collected. This deal is no longer available.</p>
+          </div>
+        </div>
+
+        <div class="yellow-callout">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <p><strong>Check the board daily.</strong> New properties are added regularly. The fastest agents get the best deals to their investors first.</p>
+        </div>
       </div>
-      <p><strong>Check the board daily.</strong> New properties are added regularly. The fastest agents get the best deals to their investors first.</p>
     </div>
-  </div>
 
-  <!-- Acknowledgment (step 4) -->
-  <div class="reveal-section" data-step="4">
-    <span class="gold-label">Acknowledgment</span>
-    <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
+    <!-- SLIDE 4: COMPLETE (Light) -->
+    <div class="slide slide-light">
+      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
+        <span class="gold-label">Acknowledgment</span>
+        <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
 
-    <div class="doc-grid single-col" style="max-width: 640px;">
-      <div class="doc-card" style="margin-left: auto; margin-right: auto;">
-        <h3>I understand how to read the property board.</h3>
-        <div class="doc-check">
+        <div class="yellow-callout">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <p>The property board is updated in real time. Make it a habit to <strong>check it daily</strong> so you never miss a new deal for your investors.</p>
+        </div>
+
+        <div class="acknowledge-card">
           <input type="checkbox" id="orp-acknowledge" onchange="checkConfetti()">
-          <label for="orp-acknowledge">Completed</label>
+          <label for="orp-acknowledge">I understand how to read the property board and the meaning of each status.</label>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
+</div>
+
+<!-- ── CONTINUE BUTTON ── -->
+<div class="continue-btn-wrap">
+  <button class="continue-btn" id="continueBtn" onclick="nextSlide()">
+    Continue
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
 </div>
 
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
 <script>
-  var totalSteps = 4;
-  var currentStep = 0;
+  var currentSlide = 0;
+  var totalSlides = 4;
+  var maxVisited = 0;
 
-  function updateProgress() {
-    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
-    document.getElementById('progressBar').style.width = pct + '%';
+  function updateTracker() {
+    var steps = document.querySelectorAll('.tracker-step');
+    var lines = document.querySelectorAll('.tracker-line');
+    steps.forEach(function(step, i) {
+      step.classList.remove('active', 'completed');
+      if (i === currentSlide) {
+        step.classList.add('active');
+      } else if (i < currentSlide) {
+        step.classList.add('completed');
+        var circle = step.querySelector('.tracker-circle');
+        circle.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      } else {
+        var circle = step.querySelector('.tracker-circle');
+        circle.textContent = (i + 1);
+      }
+    });
+    lines.forEach(function(line, i) {
+      line.classList.toggle('filled', i < currentSlide);
+    });
   }
 
-  function addContinueButton(section, step) {
-    if (step >= totalSteps) return;
-    var wrap = document.createElement('div');
-    wrap.className = 'continue-btn-wrap';
-    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
-    section.appendChild(wrap);
-  }
-
-  // Add continue buttons to each section (except the last)
-  document.querySelectorAll('.reveal-section').forEach(function(sec) {
-    var step = parseInt(sec.getAttribute('data-step'));
-    addContinueButton(sec, step);
-  });
-
-  function revealNext(step) {
-    var section = document.querySelector('[data-step="' + step + '"]');
-    if (!section) return;
-    section.classList.add('visible');
-    currentStep = step;
-    updateProgress();
-    setTimeout(function() {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-    // Hide the continue button that was clicked
-    var prevStep = step - 1;
-    var prevSection;
-    if (prevStep === 0) {
-      prevSection = document.querySelector('.hero');
+  function updateButton() {
+    var btn = document.getElementById('continueBtn');
+    if (currentSlide >= totalSlides - 1) {
+      btn.innerHTML = 'Complete <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
     } else {
-      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
-    }
-    if (prevSection) {
-      var btn = prevSection.querySelector('.continue-btn-wrap');
-      if (btn) btn.style.display = 'none';
+      btn.innerHTML = 'Continue <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
     }
   }
 
-  updateProgress();
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides) return;
+    if (n > maxVisited + 1) return;
+    currentSlide = n;
+    if (n > maxVisited) maxVisited = n;
+    var slider = document.getElementById('slider');
+    slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
+    updateTracker();
+    updateButton();
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      goToSlide(currentSlide + 1);
+    }
+  }
+
+  updateTracker();
+  updateButton();
 </script>
 </body>
 </html>
