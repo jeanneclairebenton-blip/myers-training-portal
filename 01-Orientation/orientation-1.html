@@ -531,9 +531,70 @@
     .path-track { grid-template-columns: 1fr 1fr; }
     .ack-card { padding: 32px 20px; }
   }
+
+  /* ── PROGRESSIVE REVEAL ── */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
+    pointer-events: none;
+  }
+  .reveal-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 5000px;
+    overflow: visible;
+    pointer-events: auto;
+  }
+  .hero, .stat-bar { opacity: 1; transform: none; max-height: none; overflow: visible; pointer-events: auto; }
+
+  .continue-btn-wrap {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms;
+    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
+  }
+  .continue-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
+  }
+  .continue-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--gold);
+    z-index: 9999;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(201,148,31,0.4);
+  }
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
 <!-- ════════════════════════════════════════
      1. HERO — DFW SKYLINE
@@ -548,12 +609,16 @@
       Off-market deal flow from day one.
     </p>
   </div>
+  </div>
+  <div class="continue-btn-wrap">
+    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+  </div>
 </section>
 
 <!-- ════════════════════════════════════════
      2. STAT BAR
      ════════════════════════════════════════ -->
-<section class="stat-bar">
+<section class="stat-bar reveal-section" data-step="1">
   <div class="inner">
     <div class="stat-item">
       <div class="stat-number">90%</div>
@@ -577,7 +642,7 @@
 <!-- ════════════════════════════════════════
      3. THE SPLIT — COMMISSION
      ════════════════════════════════════════ -->
-<section class="split-section section-pad">
+<section class="split-section section-pad reveal-section" data-step="2">
   <div class="inner">
     <span class="gold-label">The Split</span>
     <h2 class="section-heading">
@@ -630,7 +695,7 @@
 <!-- ════════════════════════════════════════
      4. YOUR PATH — CAREER
      ════════════════════════════════════════ -->
-<section class="path-section section-pad">
+<section class="path-section section-pad reveal-section" data-step="3">
   <div class="inner">
     <span class="gold-label">Your Path at Myers</span>
     <h2 class="section-heading">
@@ -673,7 +738,7 @@
 <!-- ════════════════════════════════════════
      5. FIVE INCOME STREAMS
      ════════════════════════════════════════ -->
-<section class="streams-section section-pad">
+<section class="streams-section section-pad reveal-section" data-step="4">
   <div class="inner">
     <span class="gold-label">Earn 5 Ways</span>
     <h2 class="section-heading">
@@ -728,7 +793,7 @@
 <!-- ════════════════════════════════════════
      6. TEAM CULTURE
      ════════════════════════════════════════ -->
-<section class="culture-section section-pad">
+<section class="culture-section section-pad reveal-section" data-step="5">
   <div class="inner">
     <span class="gold-label">Our Culture</span>
     <h2 class="section-heading">
@@ -745,7 +810,7 @@
 <!-- ════════════════════════════════════════
      7. REVENUE SHARE — TREE + TABLE
      ════════════════════════════════════════ -->
-<section class="revshare-section section-pad">
+<section class="revshare-section section-pad reveal-section" data-step="6">
   <div class="inner">
     <span class="gold-label">Passive Income</span>
     <h2 class="section-heading">
@@ -801,7 +866,7 @@
 <!-- ════════════════════════════════════════
      8. SA vs AA ROLES
      ════════════════════════════════════════ -->
-<section class="roles-section section-pad">
+<section class="roles-section section-pad reveal-section" data-step="7">
   <div class="inner">
     <span class="gold-label">Agent Roles</span>
     <h2 class="section-heading">
@@ -838,7 +903,7 @@
 <!-- ════════════════════════════════════════
      9. ACKNOWLEDGMENT
      ════════════════════════════════════════ -->
-<section class="ack-section">
+<section class="ack-section reveal-section" data-step="8">
   <div class="inner">
     <div class="ack-card">
       <div class="ack-card-title">
@@ -854,5 +919,53 @@
 
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  var totalSteps = 8;
+  var currentStep = 0;
+
+  function updateProgress() {
+    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function addContinueButton(section, step) {
+    if (step >= totalSteps) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'continue-btn-wrap';
+    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    section.appendChild(wrap);
+  }
+
+  // Add continue buttons to each section (except the last)
+  document.querySelectorAll('.reveal-section').forEach(function(sec) {
+    var step = parseInt(sec.getAttribute('data-step'));
+    addContinueButton(sec, step);
+  });
+
+  function revealNext(step) {
+    var section = document.querySelector('[data-step="' + step + '"]');
+    if (!section) return;
+    section.classList.add('visible');
+    currentStep = step;
+    updateProgress();
+    setTimeout(function() {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    // Hide the continue button that was clicked
+    var prevStep = step - 1;
+    var prevSection;
+    if (prevStep === 0) {
+      prevSection = document.querySelector('.hero');
+    } else {
+      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
+    }
+    if (prevSection) {
+      var btn = prevSection.querySelector('.continue-btn-wrap');
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  updateProgress();
+</script>
 </body>
 </html>
