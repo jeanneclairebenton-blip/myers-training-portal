@@ -3,327 +3,424 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Step 1 — Welcome & Paperwork | Myers Onboarding</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Step 1 — Essential Documents | Myers Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9941F;
+    --gold-deep: #8B6B1A;
+    --cream: #FBE8B7;
+    --ink: #1A1815;
+    --dark: #2A2520;
+    --bg: #FAFAF8;
+    --white: #FFFFFF;
+    --gray: #8A857D;
+    --border: #E8E4DC;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Mulish', 'Segoe UI', Arial, sans-serif;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
   body {
-    font-family: 'Mulish', system-ui, sans-serif;
-    background: #FAFAF8;
-    color: #1A1815;
-    line-height: 1.6;
-    min-height: 100vh;
+    font-family: var(--sans);
     font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ─── Top Nav ─── */
-  .top-nav {
-    background: #1A1815;
-    padding: 0.75rem 2rem;
-    display: flex; justify-content: space-between; align-items: center;
+  /* ── PROGRESS TRACKER ── */
+  .tracker {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--ink);
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
   }
-  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
-  .top-nav a:hover { color: #C9941F; }
-  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .tracker-inner {
+    display: flex; align-items: center; gap: 0; position: relative;
+    padding: 0 24px;
+  }
+  .tracker-step {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    cursor: pointer; position: relative; z-index: 2;
+    padding: 0 20px;
+  }
+  .tracker-circle {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    transition: all 0.3s ease;
+    background: var(--dark); color: #555;
+    border: 2px solid #3D362A;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold); color: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold); color: var(--white);
+    border-color: var(--gold);
+  }
+  .tracker-label {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #555; transition: color 0.3s;
+    white-space: nowrap;
+  }
+  .tracker-step.active .tracker-label,
+  .tracker-step.completed .tracker-label { color: var(--gold); }
 
-  /* ─── Progress ─── */
-  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
-  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
+  .tracker-line {
+    position: absolute; top: 12px; left: 0; right: 0; height: 2px;
+    background: #3D362A; z-index: 1;
+  }
+  .tracker-line-fill {
+    height: 100%; background: var(--gold);
+    transition: width 0.5s ease; width: 0%;
+  }
 
-  /* ─── Hero ─── */
-  .hero {
-    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
-    padding: 2rem 2rem 1.75rem;
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid #E8E2D4;
+  /* ── SLIDER ── */
+  .slider {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+  .slide {
+    width: 100vw; min-width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 24px 120px;
+  }
+  .slide-content {
+    max-width: 800px; width: 100%;
     text-align: center;
   }
-  .hero::after {
-    content: ''; position: absolute; top: -50%; right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-badge {
-    display: flex; align-items: center; gap: 0.5rem;
-    justify-content: center;
-    margin-left: auto; margin-right: auto; width: fit-content;
-    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
-    border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
-  }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .hero h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
-    line-height: 1.15; margin-bottom: 0.5rem;
-  }
-  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
 
-  /* ─── Container ─── */
-  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+  .slide-light { background: var(--bg); }
+  .slide-dark { background: var(--ink); color: var(--white); }
+  .slide-cream { background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%); }
 
-  /* ─── Intro Text ─── */
-  .intro-text {
-    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
-    margin-bottom: 2rem; max-width: 760px;
-    text-align: center; margin-left: auto; margin-right: auto;
+  /* ── TYPOGRAPHY ── */
+  .gold-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px; display: block;
   }
+  .slide-title {
+    font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .slide-dark .slide-title { color: var(--white); }
+  .slide-title .gold { color: var(--gold); font-style: italic; }
+  .slide-subtitle {
+    font-size: 1.1rem; color: var(--gray); max-width: 600px;
+    margin: 0 auto 2rem; line-height: 1.7;
+  }
+  .slide-dark .slide-subtitle { color: #B0A99E; }
 
-  /* ─── Document Grid (side-by-side cards like the PPTX) ─── */
+  /* ── DOC CARDS ── */
   .doc-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem; margin-top: 2rem;
   }
   .doc-card {
-    background: #FFFDF6;
-    border: 1px solid #E8E2D4;
-    border-radius: 16px;
-    padding: 1.25rem 1.25rem;
-    transition: transform 200ms, box-shadow 200ms;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    display: flex;
-    flex-direction: column;
-    text-align: left;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem 1.5rem;
+    text-align: left; transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 2px 8px rgba(26,24,21,0.06);
   }
-  .doc-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
-  }
+  .doc-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,24,21,0.1); }
   .doc-card-icon {
-    width: 52px; height: 52px; border-radius: 14px;
+    width: 56px; height: 56px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.25rem;
-    background: rgba(201,148,31,0.12);
+    margin-bottom: 1.25rem; background: rgba(201,148,31,0.12);
   }
   .doc-card-icon svg {
-    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    width: 28px; height: 28px; stroke: var(--gold); fill: none;
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
   .doc-card h3 {
-    font-family: 'Mulish', system-ui, sans-serif;
-    font-size: 1.1rem; font-weight: 800; color: #1A1815;
-    margin-bottom: 0.6rem; line-height: 1.35;
+    font-family: var(--sans); font-size: 1.05rem; font-weight: 800;
+    color: var(--ink); margin-bottom: 0.6rem; line-height: 1.35;
   }
   .doc-card p {
-    font-size: 1rem; color: #3D362A; line-height: 1.6;
-    flex: 1;
+    font-size: 0.95rem; color: #3D362A; line-height: 1.6; margin-bottom: 1.25rem;
   }
-  .doc-card .highlight {
-    color: #C9941F; font-weight: 700;
-  }
-  .doc-card .doc-check {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid #E8E2D4;
+  .doc-card .highlight { color: var(--gold); font-weight: 700; }
+  .doc-check {
+    padding-top: 1rem; border-top: 1px solid var(--border);
     display: flex; align-items: center; gap: 0.6rem;
   }
-  .doc-card .doc-check input[type="checkbox"] {
-    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+  .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer;
   }
-  .doc-card .doc-check label {
-    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
-  }
-  .doc-card .doc-action {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    margin-top: 1rem; padding: 0.55rem 1.1rem;
-    background: linear-gradient(135deg, #C9941F, #8B6B1A);
-    color: #FFFDF6; border-radius: 8px; text-decoration: none;
-    font-size: 0.9rem; font-weight: 700;
-    box-shadow: 0 2px 8px rgba(201,148,31,0.25);
-    transition: all 0.2s;
-  }
-  .doc-card .doc-action:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(201,148,31,0.35);
-  }
-  .doc-card .doc-action svg {
-    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
-    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  .doc-check label {
+    font-size: 0.95rem; font-weight: 600; color: var(--gray); cursor: pointer;
   }
 
-  /* ─── Yellow Callout Box (matches PPTX) ─── */
+  /* ── STAT DISPLAY ── */
+  .stat-big {
+    font-family: var(--serif); font-size: 4rem;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .stat-label-text {
+    font-size: 0.9rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--gray);
+  }
+
+  /* ── YELLOW CALLOUT ── */
   .yellow-callout {
-    background: #FBE8B7;
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-    margin: 1rem auto;
-    max-width: 700px; margin-left: auto; margin-right: auto;
+    background: var(--cream); border-radius: 12px;
+    padding: 1.5rem; display: flex; align-items: center; gap: 1rem;
+    margin-top: 2rem; text-align: left; max-width: 600px;
+    margin-left: auto; margin-right: auto;
   }
   .yellow-callout-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
+    width: 44px; height: 44px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
   }
   .yellow-callout-icon svg {
-    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    width: 24px; height: 24px; stroke: var(--gold-deep); fill: none;
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .yellow-callout p {
-    color: #3D362A; font-size: 1.05rem; font-weight: 500;
-  }
-  .yellow-callout strong { color: #1A1815; }
-  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
+  .yellow-callout p { color: #3D362A; font-size: 1rem; font-weight: 500; }
+  .yellow-callout strong { color: var(--ink); }
+  .yellow-callout a { color: var(--gold); font-weight: 700; }
 
-  /* ─── Section Divider ─── */
-  .section-divider {
-    display: flex; align-items: center; gap: 1rem;
-    margin: 2.5rem auto 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
+  /* ── ACK CARD ── */
+  .ack-card {
+    background: var(--white); border: 2px solid var(--gold);
+    border-radius: 16px; padding: 2.5rem;
+    max-width: 500px; margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(201,148,31,0.1);
   }
-  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
-  .section-divider .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.12em; color: #7A7263;
+  .ack-card h3 {
+    font-family: var(--serif); font-size: 1.3rem;
+    color: var(--ink); margin-bottom: 1.5rem;
   }
 
-  /* ─── Info Block ─── */
-  .info-block {
-    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
-    overflow: hidden; margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    max-width: 800px; margin-left: auto; margin-right: auto;
+  /* ── CONTINUE BUTTON ── */
+  .continue-wrap {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 1000;
   }
-  .info-block-header {
-    background: #1A1815; padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
+  .continue-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--gold); color: var(--white);
+    font-family: var(--sans); font-size: 1rem; font-weight: 700;
+    padding: 14px 40px; border: none; border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms;
+    box-shadow: 0 4px 20px rgba(201,148,31,0.3);
   }
-  .info-block-header .ib-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    background: rgba(201,148,31,0.2);
-    display: flex; align-items: center; justify-content: center;
+  .continue-btn:hover {
+    background: #B8841A; transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
   }
-  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .info-block-header h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.3rem; color: #FFFDF6;
-  }
-  .info-block-body { padding: 1.5rem; text-align: left; }
-  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
-  .info-block-body .detail-row {
-    display: flex; gap: 2rem; margin-top: 1rem;
-  }
-  .info-block-body .detail-item {
-    flex: 1;
-  }
-  .info-block-body .detail-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
-  }
-  .info-block-body .detail-value {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.4rem; color: #C9941F;
+  .continue-btn svg {
+    width: 18px; height: 18px; stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
   }
 
-  /* ─── Navigation ─── */
-  .module-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .module-nav a {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    text-decoration: none; font-weight: 700; font-size: 1rem;
-    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
-  }
-  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
-  .nav-prev:hover { background: #E8E2D4; }
-  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
-  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
-
-  /* ─── Footer ─── */
-  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
-
+  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
+    .tracker-label { display: none; }
+    .tracker-step { padding: 0 12px; }
     .doc-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.75rem; }
-    .hero { padding: 2rem 1.25rem; }
-    .container { padding: 1.5rem 1rem 2rem; }
-    .module-nav { flex-direction: column; gap: 0.75rem; }
-    .module-nav a { width: 100%; justify-content: center; }
-    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
+    .slide { padding: 72px 16px 110px; }
   }
 </style>
 </head>
 <body>
-<!-- Hero -->
-<header class="hero">
-  <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    Step 1
-  </div>
-  <h1>Your First Steps: Essential Documents</h1>
-  <div class="subtitle">Complete your paperwork to officially join Myers Home Buyers.</div>
-</header>
 
-<!-- Main Content -->
-<div class="container">
-
-  <p class="intro-text">After filling out the online application form, you will automatically receive the following three documents via email. Please ensure all three are fully completed before proceeding.</p>
-
-  <!-- 3 Documents in a Row -->
-  <div class="doc-grid">
-
-    <!-- Document 1 -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
-      </div>
-      <h3>Agent License Sponsorship & Contractor Agreement</h3>
-      <p>This outlines your official affiliation with Myers and your working relationship.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob1-doc1">
-        <label for="ob1-doc1">Completed</label>
-      </div>
+<!-- TRACKER -->
+<div class="tracker">
+  <div class="tracker-inner">
+    <div class="tracker-line"><div class="tracker-line-fill" id="trackerFill"></div></div>
+    <div class="tracker-step active" data-slide="0" onclick="goToSlide(0)">
+      <div class="tracker-circle">1</div>
+      <div class="tracker-label">Welcome</div>
     </div>
-
-    <!-- Document 2 -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      </div>
-      <h3>W-9 Form</h3>
-      <p>Required for tax purposes as an independent contractor.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob1-doc2">
-        <label for="ob1-doc2">Completed</label>
-      </div>
+    <div class="tracker-step" data-slide="1" onclick="goToSlide(1)">
+      <div class="tracker-circle">2</div>
+      <div class="tracker-label">Documents</div>
     </div>
-
-    <!-- Document 3 -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      </div>
-      <h3>Credit Card Authorization Form</h3>
-      <p>Includes authorization for a <span class="highlight">$149/month fee</span> for essential tools and services.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob1-doc3">
-        <label for="ob1-doc3">Completed</label>
-      </div>
+    <div class="tracker-step" data-slide="2" onclick="goToSlide(2)">
+      <div class="tracker-circle">3</div>
+      <div class="tracker-label">Next Steps</div>
     </div>
-
-  </div>
-
-  <!-- Yellow Callout (matching PPTX) -->
-  <div class="yellow-callout">
-    <div class="yellow-callout-icon">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <div class="tracker-step" data-slide="3" onclick="goToSlide(3)">
+      <div class="tracker-circle">4</div>
+      <div class="tracker-label">Complete</div>
     </div>
-    <p>Once the above documents are completed, kindly notify Jeanne via text at <a href="sms:3372581093"><strong>337-258-1093</strong></a>.</p>
   </div>
 </div>
+
+<!-- SLIDER -->
+<div class="slider" id="slider">
+
+  <!-- SLIDE 1: Welcome Hero -->
+  <div class="slide slide-cream">
+    <div class="slide-content">
+      <span class="gold-label">Step 1 of 10</span>
+      <h1 class="slide-title">Your First Steps: <span class="gold">Essential Documents</span></h1>
+      <p class="slide-subtitle">Complete your paperwork to officially join Myers Home Buyers. After filling out the online application, you'll receive three documents via email.</p>
+      <div class="stat-big">3</div>
+      <div class="stat-label-text">Documents to Complete</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: The 3 Documents -->
+  <div class="slide slide-light">
+    <div class="slide-content">
+      <span class="gold-label">Your Documents</span>
+      <h1 class="slide-title">Complete All <span class="gold">Three</span></h1>
+      <p class="slide-subtitle">Each document arrives via email after your application. Check them off as you go.</p>
+      <div class="doc-grid">
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          </div>
+          <h3>Agent License Sponsorship & Contractor Agreement</h3>
+          <p>This outlines your official affiliation with Myers and your working relationship.</p>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob1-doc1">
+            <label for="ob1-doc1">Completed</label>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>W-9 Form</h3>
+          <p>Required for tax purposes as an independent contractor.</p>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob1-doc2">
+            <label for="ob1-doc2">Completed</label>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3>Credit Card Authorization Form</h3>
+          <p>Includes authorization for a <span class="highlight">$149/month fee</span> for essential tools and services.</p>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob1-doc3">
+            <label for="ob1-doc3">Completed</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: What's Next -->
+  <div class="slide slide-dark">
+    <div class="slide-content">
+      <span class="gold-label">What Happens Next</span>
+      <h1 class="slide-title">Notify <span class="gold">Jeanne</span></h1>
+      <p class="slide-subtitle">Once all three documents are completed, send a text to confirm.</p>
+      <div class="yellow-callout">
+        <div class="yellow-callout-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <p>Once the above documents are completed, kindly notify Jeanne via text at <a href="sms:3372581093"><strong>337-258-1093</strong></a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Complete -->
+  <div class="slide slide-light">
+    <div class="slide-content">
+      <span class="gold-label">You Did It</span>
+      <h1 class="slide-title">Step 1 <span class="gold">Complete</span></h1>
+      <div class="ack-card">
+        <h3>I have completed all required documents and notified Jeanne.</h3>
+        <div class="doc-check" style="justify-content: center; border: none; padding: 0;">
+          <input type="checkbox" onchange="checkConfetti()" id="ob1-ack">
+          <label for="ob1-ack">I acknowledge and confirm</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTINUE BUTTON -->
+<div class="continue-wrap" id="continueWrap">
+  <button class="continue-btn" id="continueBtn" onclick="nextSlide()">
+    Continue <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  var currentSlide = 0;
+  var totalSlides = 4;
+  var slider = document.getElementById('slider');
+  var trackerFill = document.getElementById('trackerFill');
+  var continueBtn = document.getElementById('continueBtn');
+  var continueWrap = document.getElementById('continueWrap');
+  var steps = document.querySelectorAll('.tracker-step');
+
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides) return;
+    currentSlide = n;
+    slider.style.transform = 'translateX(-' + (n * 100) + 'vw)';
+    updateTracker();
+    updateButton();
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      goToSlide(currentSlide + 1);
+    }
+  }
+
+  function updateTracker() {
+    steps.forEach(function(step, i) {
+      step.classList.remove('active', 'completed');
+      if (i === currentSlide) step.classList.add('active');
+      else if (i < currentSlide) step.classList.add('completed');
+
+      // Add checkmark for completed
+      var circle = step.querySelector('.tracker-circle');
+      if (i < currentSlide) {
+        circle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      } else {
+        circle.textContent = i + 1;
+      }
+    });
+
+    var pct = (currentSlide / (totalSlides - 1)) * 100;
+    trackerFill.style.width = pct + '%';
+  }
+
+  function updateButton() {
+    if (currentSlide >= totalSlides - 1) {
+      continueWrap.style.display = 'none';
+    } else {
+      continueWrap.style.display = 'block';
+      continueBtn.innerHTML = 'Continue <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+    }
+  }
+
+  // Keyboard nav
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { e.preventDefault(); goToSlide(currentSlide - 1); }
+  });
+
+  updateTracker();
+  updateButton();
+</script>
 </body>
 </html>
