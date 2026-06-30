@@ -257,10 +257,81 @@
     font-size: 0.9rem; color: #7A7263; font-style: italic; margin-top: 0.5rem;
   }
 
+  /* ─── Mission Stat Grid ─── */
+  .mission-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .mission-stat {
+    text-align: center;
+    padding: 1rem 0.5rem;
+  }
+  .mission-stat .ms-number {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2.5rem; color: #C9941F; line-height: 1.1;
+  }
+  .mission-stat .ms-label {
+    font-size: 0.8rem; color: #7A7263; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-top: 0.25rem;
+  }
+
+  /* ─── Path Grid (2-col image + cards) ─── */
+  .path-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 800px; margin: 0 auto 2rem;
+    align-items: start;
+  }
+  .path-grid img {
+    width: 100%;
+    border-radius: 12px;
+  }
+  .path-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .path-stage-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    text-align: left;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+  }
+  .path-stage-card .ps-num {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem; color: #C9941F;
+    line-height: 1; flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .path-stage-card .ps-body { flex: 1; }
+  .path-stage-card .ps-title {
+    font-weight: 800; color: #1A1815;
+    font-size: 1rem; margin-bottom: 0.15rem;
+  }
+  .path-stage-card .ps-comp {
+    font-family: 'DM Serif Display', Georgia, serif;
+    color: #C9941F; font-size: 1.05rem;
+    margin-bottom: 0.2rem;
+  }
+  .path-stage-card .ps-desc {
+    font-size: 0.88rem; color: #7A7263; font-weight: 500;
+  }
+
   @media (max-width: 768px) {
     .doc-grid { grid-template-columns: 1fr; }
     .stage-grid { grid-template-columns: 1fr; }
     .degree-grid { grid-template-columns: repeat(3, 1fr); }
+    .mission-stat-grid { grid-template-columns: 1fr; }
+    .path-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 1.75rem; }
     .hero { padding: 2rem 1.25rem; }
     .container { padding: 1.5rem 1rem 2rem; }
@@ -280,6 +351,115 @@
 
 <!-- Main Content -->
 <div class="container">
+
+  <!-- ═══ Our Mission ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Our Mission</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="info-block">
+    <div class="info-block-header">
+      <div class="ib-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      </div>
+      <h3>Where Agents Become Investors</h3>
+    </div>
+    <div class="info-block-body">
+      <p style="font-size: 1.3rem; font-style: italic; color: #3D362A; text-align: center; max-width: 600px; margin: 0 auto 1.5rem;">We don't just help other people build wealth through real estate — we teach our agents to build wealth for themselves.</p>
+      <div class="mission-stat-grid">
+        <div class="mission-stat">
+          <div class="ms-number">80%</div>
+          <div class="ms-label">of revenue goes to you</div>
+        </div>
+        <div class="mission-stat">
+          <div class="ms-number">5</div>
+          <div class="ms-label">income streams</div>
+        </div>
+        <div class="mission-stat">
+          <div class="ms-number">6°</div>
+          <div class="ms-label">levels of revenue share</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Your Path ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Your Path</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="path-grid">
+    <div>
+      <img src="assets/career-path.png" alt="Career Progression" style="width: 100%; border-radius: 12px;">
+    </div>
+    <div class="path-stages">
+      <div class="path-stage-card">
+        <div class="ps-num">1</div>
+        <div class="ps-body">
+          <div class="ps-title">Sales Agent</div>
+          <div class="ps-comp">$60K+</div>
+          <div class="ps-desc">Meet investors, sell properties</div>
+        </div>
+      </div>
+      <div class="path-stage-card">
+        <div class="ps-num">2</div>
+        <div class="ps-body">
+          <div class="ps-title">Acquisitions Agent</div>
+          <div class="ps-comp">$250K+</div>
+          <div class="ps-desc">Find deals, make offers, negotiate</div>
+        </div>
+      </div>
+      <div class="path-stage-card">
+        <div class="ps-num">3</div>
+        <div class="ps-body">
+          <div class="ps-title">Team Leader → Investor</div>
+          <div class="ps-comp">$500K+</div>
+          <div class="ps-desc">Build your team, own your deals</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Revenue Share ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">Revenue Share</span>
+    <span class="line"></span>
+  </div>
+
+  <div style="max-width: 800px; margin: 0 auto 1.5rem;">
+    <img src="assets/revshare-tree.png" alt="Revenue Share Tree" style="max-width: 400px; width: 100%; margin: 0 auto 1.5rem; display: block; border-radius: 12px;">
+    <div class="degree-grid">
+      <div class="degree-box">
+        <div class="deg-label">1st Degree</div>
+        <div class="deg-value">25%</div>
+      </div>
+      <div class="degree-box">
+        <div class="deg-label">2nd Degree</div>
+        <div class="deg-value">20%</div>
+      </div>
+      <div class="degree-box">
+        <div class="deg-label">3rd Degree</div>
+        <div class="deg-value">15%</div>
+      </div>
+      <div class="degree-box">
+        <div class="deg-label">4th Degree</div>
+        <div class="deg-value">10%</div>
+      </div>
+      <div class="degree-box">
+        <div class="deg-label">5th Degree</div>
+        <div class="deg-value">5%</div>
+      </div>
+      <div class="degree-box">
+        <div class="deg-label">6th Degree</div>
+        <div class="deg-value">25%</div>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ Two Ways to Work ═══ -->
   <div class="section-divider">
@@ -406,7 +586,7 @@
     </div>
   </div>
 
-  <!-- ═══ Revenue Share ═══ -->
+  <!-- ═══ Revenue Share (Original) ═══ -->
   <div class="section-divider">
     <span class="line"></span>
     <span class="label">Revenue Share</span>

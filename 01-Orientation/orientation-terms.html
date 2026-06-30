@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key Terms & Glossary | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Mulish', system-ui, sans-serif;
+    background: #FAFAF8;
+    color: #1A1815;
+    line-height: 1.6;
+    min-height: 100vh;
+    font-size: 16px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
+    text-align: center;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    justify-content: center;
+    margin-left: auto; margin-right: auto; width: fit-content;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+  }
+  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
+    line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+
+  /* ─── Container ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+
+  /* ─── Intro Text ─── */
+  .intro-text {
+    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
+    max-width: 700px; margin: 1.5rem auto 0.5rem;
+    font-weight: 500;
+  }
+
+  /* ─── Glossary Grid ─── */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .glossary-card {
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    text-align: left;
+  }
+  .glossary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .glossary-card:nth-child(odd) { background: #FFFDF6; }
+  .glossary-card:nth-child(even) { background: #FDFBF5; }
+  .glossary-card h3 {
+    font-family: 'Mulish', system-ui, sans-serif;
+    font-size: 1.05rem; font-weight: 800; color: #1A1815;
+    margin-bottom: 0.4rem; line-height: 1.35;
+  }
+  .glossary-card h3 .term-abbr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; font-weight: 700; color: #C9941F;
+    margin-left: 0.35rem;
+  }
+  .glossary-card p {
+    font-size: 0.95rem; color: #3D362A; line-height: 1.6;
+  }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem auto 1.5rem;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #7A7263;
+  }
+
+  /* ─── ARV Flow ─── */
+  .arv-flow-card {
+    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    max-width: 800px; margin-left: auto; margin-right: auto;
+    padding: 2rem 1.5rem;
+  }
+  .arv-flow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; flex-wrap: wrap;
+  }
+  .arv-step {
+    background: #FAFAF8;
+    border: 1px solid #E8E2D4;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    min-width: 120px;
+  }
+  .arv-step .step-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #7A7263; margin-bottom: 0.25rem;
+  }
+  .arv-step .step-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem; color: #1A1815; line-height: 1.2;
+  }
+  .arv-step.final {
+    background: rgba(201,148,31,0.1);
+    border-color: #C9941F;
+  }
+  .arv-step.final .step-value {
+    color: #C9941F;
+  }
+  .arv-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 0.5rem;
+    flex-shrink: 0;
+  }
+  .arv-arrow svg {
+    width: 28px; height: 28px; stroke: #C9941F; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .arv-operator {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.5rem; color: #7A7263;
+    padding: 0 0.5rem;
+    display: flex; align-items: center;
+  }
+
+  /* ─── Yellow Callout Box ─── */
+  .yellow-callout {
+    background: #FBE8B7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1rem auto;
+    max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+  .yellow-callout-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A; font-size: 1.05rem; font-weight: 500;
+    text-align: left;
+  }
+  .yellow-callout strong { color: #1A1815; }
+
+  @media (max-width: 768px) {
+    .glossary-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    .arv-flow { flex-direction: column; gap: 0.5rem; }
+    .arv-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Orientation
+  </div>
+  <h1>Key Terms &amp; Glossary</h1>
+  <div class="subtitle">The vocabulary you'll use every day.</div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+  <p class="intro-text">Master these terms &mdash; you'll hear them in every meeting, every deal review, and every conversation with investors.</p>
+
+  <!-- ═══ Glossary Grid ═══ -->
+  <div class="glossary-grid" style="margin-top: 2rem;">
+
+    <!-- 1. Absorption Rate -->
+    <div class="glossary-card">
+      <h3>Absorption Rate</h3>
+      <p>The rate at which available properties are sold in a market during a given time period. Used to determine market speed.</p>
+    </div>
+
+    <!-- 2. After Repair Value (ARV) -->
+    <div class="glossary-card">
+      <h3>After Repair Value <span class="term-abbr">(ARV)</span></h3>
+      <p>The estimated value of a property after all renovations are complete. The starting point for every deal analysis.</p>
+    </div>
+
+    <!-- 3. Cap Rate -->
+    <div class="glossary-card">
+      <h3>Cap Rate</h3>
+      <p>Capitalization rate. Annual net operating income divided by property value. Used to evaluate rental investment returns.</p>
+    </div>
+
+    <!-- 4. Discount Rate -->
+    <div class="glossary-card">
+      <h3>Discount Rate</h3>
+      <p>The percentage applied to ARV to calculate your maximum allowable offer. Myers typically uses 75%.</p>
+    </div>
+
+    <!-- 5. Flip -->
+    <div class="glossary-card">
+      <h3>Flip</h3>
+      <p>Buy a property, renovate it, and sell it for profit. One of the core investment strategies.</p>
+    </div>
+
+    <!-- 6. Frontside & Backside -->
+    <div class="glossary-card">
+      <h3>Frontside &amp; Backside <span class="term-abbr">(FS / BS)</span></h3>
+      <p>Frontside = revenue from the initial sale to an investor. Backside = revenue from the investor's eventual resale.</p>
+    </div>
+
+    <!-- 7. Gross Return -->
+    <div class="glossary-card">
+      <h3>Gross Return</h3>
+      <p>Total revenue before expenses. The top-line number on any deal.</p>
+    </div>
+
+    <!-- 8. Rip (Spread / Arbitrage) -->
+    <div class="glossary-card">
+      <h3>Rip <span class="term-abbr">(Spread / Arbitrage)</span></h3>
+      <p>The profit margin between your acquisition cost and sale price. The bigger the rip, the better the deal.</p>
+    </div>
+
+    <!-- 9. Self-Gen & Company-Gen -->
+    <div class="glossary-card">
+      <h3>Self-Gen &amp; Company-Gen</h3>
+      <p>Self-gen = leads you find yourself. Company-gen = leads provided by Myers through marketing and systems.</p>
+    </div>
+
+    <!-- 10. Wholesale -->
+    <div class="glossary-card">
+      <h3>Wholesale</h3>
+      <p>Buying a property under contract and assigning or double-closing to another buyer without renovating.</p>
+    </div>
+
+    <!-- 11. Wholetail -->
+    <div class="glossary-card">
+      <h3>Wholetail</h3>
+      <p>Selling a property as-is (or with minor cosmetic work) on the MLS, typically at retail or near-retail price.</p>
+    </div>
+
+    <!-- 12. Hard Money -->
+    <div class="glossary-card">
+      <h3>Hard Money</h3>
+      <p>Short-term, asset-based loans from private lenders. Higher interest rates but fast closing. Standard for investment deals.</p>
+    </div>
+
+    <!-- 13. BRRR -->
+    <div class="glossary-card">
+      <h3>BRRR</h3>
+      <p>Buy, Rehab, Rent, Refinance, Repeat. A strategy for building a rental portfolio.</p>
+    </div>
+
+    <!-- 14. DSCR Loan -->
+    <div class="glossary-card">
+      <h3>DSCR Loan</h3>
+      <p>Debt Service Coverage Ratio loan. Qualifies based on the property's rental income, not the borrower's personal income.</p>
+    </div>
+
+  </div>
+
+  <!-- ═══ ARV Example ═══ -->
+  <div class="section-divider">
+    <span class="line"></span>
+    <span class="label">ARV Example</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="arv-flow-card">
+    <div class="arv-flow">
+      <div class="arv-step">
+        <div class="step-label">ARV</div>
+        <div class="step-value">$300,000</div>
+      </div>
+      <div class="arv-arrow">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div class="arv-step">
+        <div class="step-label">&times; 75%</div>
+        <div class="step-value">$225,000</div>
+      </div>
+      <div class="arv-arrow">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div class="arv-step">
+        <div class="step-label">&minus; Repairs</div>
+        <div class="step-value">$50,000</div>
+      </div>
+      <div class="arv-arrow">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div class="arv-step final">
+        <div class="step-label">Offer</div>
+        <div class="step-value">$175,000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Yellow Callout -->
+  <div class="yellow-callout">
+    <div class="yellow-callout-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <p><strong>This formula is your foundation.</strong> Every deal starts with ARV &times; discount rate &minus; repairs = offer.</p>
+  </div>
+
+</div>
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+</body>
+</html>
