@@ -485,6 +485,41 @@ body {
   .slide-inner { padding: 60px 1.25rem 120px; }
   .hero-title { font-size: 2rem; }
 }
+
+  .back-btn {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(calc(-50% - 120px));
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    color: #8A857D;
+    font-family: var(--sans, 'Mulish', sans-serif);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid #E8E4DC;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms;
+    backdrop-filter: blur(8px);
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.15);
+    color: #1A1815;
+    border-color: #C9941F;
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
 </style>
 </head>
 <body>
@@ -724,6 +759,10 @@ body {
 </div>
 
 <!-- ═══ CONTINUE BUTTON ═══ -->
+<button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  Back
+</button>
 <button class="continue-btn" id="continueBtn" onclick="goNext()">
   Continue
   <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
@@ -775,6 +814,14 @@ body {
   steps.forEach(function(step, i) {
     step.addEventListener('click', function() { goToSlide(i); });
   });
+
+  
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }

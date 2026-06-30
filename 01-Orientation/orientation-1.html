@@ -213,6 +213,40 @@
   }
   .nav-btn.hidden { opacity: 0; pointer-events: none; }
 
+  .back-btn {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(calc(-50% - 120px));
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    color: var(--gray);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms;
+    backdrop-filter: blur(8px);
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.15);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
   /* ══════════════════════════════════════
      UTILITY CLASSES
      ══════════════════════════════════════ */
@@ -748,6 +782,7 @@
     .thesis-cards { grid-template-columns: 1fr; }
     .ack-card { padding: 36px 24px; }
     .nav-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 32px; }
+    .back-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 24px; transform: translateX(calc(-50% - 100px)); }
     .hero-title { font-size: clamp(1.8rem, 6vw, 2.6rem); }
     .slide-content { padding: 56px 16px 100px; }
     .hero-wrap { padding: 56px 16px 100px; }
@@ -814,6 +849,10 @@
 <!-- ══════════════════════════════════════
      CONTINUE / COMPLETE BUTTON
      ══════════════════════════════════════ -->
+<button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  Back
+</button>
 <button class="nav-btn" id="navBtn" onclick="advanceSlide()">
   Continue
   <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -1214,6 +1253,7 @@
 
     /* Update tracker */
     updateTracker();
+    updateBackBtn();
 
     /* Update button */
     navBtn.classList.add('hidden');
@@ -1241,6 +1281,12 @@
   /* ── ADVANCE ── */
   function advanceSlide() {
     goToSlide(currentSlide + 1);
+  }
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
   }
 
   /* ── TRACKER UPDATE ── */
@@ -1282,6 +1328,7 @@
 
   /* ── INIT ── */
   updateTracker();
+  updateBackBtn();
 </script>
 </body>
 </html>
