@@ -27,7 +27,7 @@
     --radius-sm: 8px;
     --shadow: 0 4px 24px rgba(26,24,21,0.08);
     --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
-    --total-slides: 11;
+    --total-slides: 9;
   }
 
   body {
@@ -820,11 +820,11 @@
     </div>
     <div class="tracker-step" data-index="3">
       <div class="tracker-circle"><span class="step-num">4</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Stats</span>
+      <span class="tracker-label">Commission</span>
     </div>
     <div class="tracker-step" data-index="4">
       <div class="tracker-circle"><span class="step-num">5</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Commission</span>
+      <span class="tracker-label">Rev Share</span>
     </div>
     <div class="tracker-step" data-index="5">
       <div class="tracker-circle"><span class="step-num">6</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -836,18 +836,10 @@
     </div>
     <div class="tracker-step" data-index="7">
       <div class="tracker-circle"><span class="step-num">8</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Culture</span>
+      <span class="tracker-label">Roles</span>
     </div>
     <div class="tracker-step" data-index="8">
       <div class="tracker-circle"><span class="step-num">9</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Rev Share</span>
-    </div>
-    <div class="tracker-step" data-index="9">
-      <div class="tracker-circle"><span class="step-num">10</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Roles</span>
-    </div>
-    <div class="tracker-step" data-index="10">
-      <div class="tracker-circle"><span class="step-num">11</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <span class="tracker-label">Complete</span>
     </div>
   </div>
@@ -962,10 +954,15 @@
     </div>
   </div>
 
-  <!-- ═══ SLIDE 4 — STATS ═══ -->
-  <div class="slide slide-stats" data-slide="3">
+  <!-- ═══ SLIDE 4 — STATS + COMMISSION ═══ -->
+  <div class="slide slide-commission" data-slide="3">
     <div class="slide-content">
-      <div class="stats-grid">
+      <span class="gold-label">The Split</span>
+      <h2 class="section-heading">
+        The Highest Commission in the Industry<br>
+        <span class="gold-italic">...And It's Yours</span>
+      </h2>
+      <div class="stats-grid" style="margin-bottom: 40px;">
         <div class="stat-box">
           <div class="stat-number">90%</div>
           <div class="stat-label">Highest in the Industry</div>
@@ -983,17 +980,6 @@
           <div class="stat-label">Remote</div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- ═══ SLIDE 5 — COMMISSION ═══ -->
-  <div class="slide slide-commission" data-slide="4">
-    <div class="slide-content">
-      <span class="gold-label">The Split</span>
-      <h2 class="section-heading">
-        The Highest Commission in the Industry<br>
-        <span class="gold-italic">...And It's Yours</span>
-      </h2>
       <div class="split-grid">
         <div>
           <div class="bar-group">
@@ -1027,8 +1013,8 @@
     </div>
   </div>
 
-  <!-- ═══ SLIDE 6 — CAREER PATH ═══ -->
-  <div class="slide slide-career" data-slide="5">
+  <!-- ═══ SLIDE 5 — REVENUE SHARE ═══ -->
+  <div class="slide slide-revshare" data-slide="4">
     <div class="slide-content">
       <span class="gold-label">Your Path at Myers</span>
       <h2 class="section-heading">
@@ -1113,22 +1099,8 @@
     </div>
   </div>
 
-  <!-- ═══ SLIDE 8 — CULTURE ═══ -->
-  <div class="slide slide-culture" data-slide="7">
-    <div class="slide-content">
-      <span class="gold-label">Our Culture</span>
-      <h2 class="section-heading">
-        A Team That Feels Like<br><span class="gold">Family</span>
-      </h2>
-      <div class="culture-grid">
-        <img src="assets/team-culture.jpg" alt="Myers team culture meeting">
-        <img src="assets/hero-team.png" alt="Myers team together">
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ SLIDE 9 — REVENUE SHARE ═══ -->
-  <div class="slide slide-revshare" data-slide="8">
+  <!-- ═══ SLIDE 6 — CAREER PATH ═══ -->
+  <div class="slide slide-career" data-slide="5">
     <div class="slide-content">
       <span class="gold-label">Passive Income</span>
       <h2 class="section-heading">
@@ -1180,7 +1152,7 @@
   </div>
 
   <!-- ═══ SLIDE 10 — ROLES ═══ -->
-  <div class="slide slide-roles" data-slide="9">
+  <div class="slide slide-roles" data-slide="7">
     <div class="slide-content">
       <span class="gold-label">Agent Roles</span>
       <h2 class="section-heading">
@@ -1212,7 +1184,7 @@
   </div>
 
   <!-- ═══ SLIDE 11 — COMPLETE ═══ -->
-  <div class="slide slide-complete" data-slide="10">
+  <div class="slide slide-complete" data-slide="8">
     <div class="slide-content" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 180px);">
       <div class="ack-card">
         <div class="ack-icon">
@@ -1237,7 +1209,7 @@
 <script>
   /* ── STATE ── */
   var currentSlide = 0;
-  var totalSlides = 11;
+  var totalSlides = 9;
   var isTransitioning = false;
 
   var slider = document.getElementById('slider');
