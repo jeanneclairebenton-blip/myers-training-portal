@@ -10,22 +10,100 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { font-family: 'Mulish', system-ui, sans-serif; background: #FAFAF8; color: #1A1815; line-height: 1.6; min-height: 100vh; font-size: 16px; }
 
-  .hero { background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%); padding: 2rem 2rem 1.75rem; position: relative; overflow: hidden; border-bottom: 1px solid #E8E2D4; text-align: center; }
-  .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%); border-radius: 50%; }
-  .hero-badge { display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin: 0 auto 1.25rem; width: fit-content; background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3); border-radius: 99px; padding: 0.4rem 1.1rem; font-size: 0.8rem; color: #8B6B1A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  /* ── TOKENS ── */
+  :root {
+    --gold:   #C9941F;
+    --gold-light: #D4A94A;
+    --cream:  #FBE8B7;
+    --cream-bg: #FFF8EB;
+    --ink:    #1A1815;
+    --dark:   #2A2520;
+    --bg:     #FAFAF8;
+    --white:  #FFFFFF;
+    --gray:   #8A857D;
+    --border: #E8E4DC;
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(26,24,21,0.08);
+    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    font-size: 16px;
+  }
+
+  /* ─── Utility ─── */
+  .gold-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .section-heading em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
+    padding: 2rem 2rem 1.75rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid #E8E2D4;
+    text-align: center;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    justify-content: center;
+    margin: 0 auto 1.25rem; width: fit-content;
+    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
+    border-radius: 99px; padding: 0.4rem 1.1rem;
+    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
   .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815; line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: var(--ink);
+    line-height: 1.15; margin-bottom: 0.5rem;
+  }
   .hero .subtitle { color: #8B6B1A; font-size: 1.1rem; font-weight: 600; }
 
+  /* ─── Container ─── */
   .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
   .intro-text { font-size: 1.05rem; color: #3D362A; line-height: 1.7; margin-bottom: 2rem; max-width: 700px; text-align: center; margin-left: auto; margin-right: auto; }
 
+  /* ─── Section Divider ─── */
   .section-divider { display: flex; align-items: center; gap: 1rem; margin: 2.5rem auto 1.5rem; max-width: 800px; }
   .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
   .section-divider .label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #7A7263; }
 
+  /* ─── Document Grid ─── */
   .doc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
   .doc-grid.three-col { grid-template-columns: repeat(3, 1fr); }
   .doc-grid.single-col { grid-template-columns: 1fr; }
@@ -38,6 +116,7 @@
   .doc-card p { font-size: 1rem; color: #3D362A; line-height: 1.6; }
   .doc-card .highlight { color: #C9941F; font-weight: 700; }
 
+  /* ─── Info Block ─── */
   .info-block { background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(26,24,21,0.06); max-width: 800px; margin-left: auto; margin-right: auto; }
   .info-block-header { background: #1A1815; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
   .info-block-header .ib-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(201,148,31,0.2); display: flex; align-items: center; justify-content: center; }
@@ -46,6 +125,7 @@
   .info-block-body { padding: 1.5rem; text-align: left; }
   .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
 
+  /* ─── Board Preview ─── */
   .board-preview { max-width: 800px; margin: 0 auto 2rem; background: #1A1815; border-radius: 16px; overflow: hidden; }
   .board-header { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(201,148,31,0.2); display: flex; align-items: center; gap: 0.75rem; }
   .board-header .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -64,12 +144,14 @@
   .status-showing { background: rgba(201,148,31,0.2); color: #C9941F; }
   .status-pending { background: rgba(122,114,99,0.2); color: #7A7263; }
 
+  /* ─── Yellow Callout ─── */
   .yellow-callout { background: #FBE8B7; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; margin: 1rem auto; max-width: 700px; text-align: left; }
   .yellow-callout-icon { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .yellow-callout-icon svg { width: 24px; height: 24px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .yellow-callout p { color: #3D362A; font-size: 1rem; font-weight: 500; }
   .yellow-callout strong { color: #1A1815; }
 
+  /* ─── Doc Check ─── */
   .doc-card .doc-check { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #E8E2D4; display: flex; align-items: center; gap: 0.6rem; }
   .doc-card .doc-check input[type="checkbox"] { width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0; }
   .doc-card .doc-check label { font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer; }
@@ -79,9 +161,69 @@
     .doc-grid.three-col { grid-template-columns: 1fr; }
     .board-row { grid-template-columns: 1fr 1fr; gap: 0.25rem; }
   }
+
+  /* ── PROGRESSIVE REVEAL ── */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
+    pointer-events: none;
+  }
+  .reveal-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 5000px;
+    overflow: visible;
+    pointer-events: auto;
+  }
+
+  .continue-btn-wrap {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms;
+    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
+  }
+  .continue-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
+  }
+  .continue-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--gold);
+    z-index: 9999;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(201,148,31,0.4);
+  }
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
 <header class="hero">
   <div class="hero-badge">
@@ -90,143 +232,148 @@
   </div>
   <h1>Available Properties</h1>
   <div class="subtitle">Every deal lives on one shared board — this is where you start.</div>
+  <div class="continue-btn-wrap">
+    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+  </div>
 </header>
 
 <div class="container">
 
   <p class="intro-text">The Zoho property board is your daily command center. Every available property is listed here with deal details, showing schedules, and pricing. Here's how to read it.</p>
 
-  <!-- The Property Board -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">The Property Board</span>
-    <div class="line"></div>
-  </div>
+  <!-- The Property Board (step 1) -->
+  <div class="reveal-section" data-step="1">
+    <span class="gold-label">The Board</span>
+    <h2 class="section-heading">The Property <em>Board</em></h2>
 
-  <div class="board-preview">
-    <div class="board-header">
-      <div class="dot dot-r"></div>
-      <div class="dot dot-y"></div>
-      <div class="dot dot-g"></div>
-      <span class="board-title">Zoho CRM — Available Properties</span>
-    </div>
-    <div class="board-body">
-      <div class="board-row board-row-header">
-        <span>Property</span>
-        <span>Min Ask</span>
-        <span>Buy Now</span>
-        <span>Showing</span>
-        <span>Status</span>
+    <div class="board-preview">
+      <div class="board-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="board-title">Zoho CRM — Available Properties</span>
       </div>
-      <div class="board-row">
-        <span>3BR/2BA · 1,450 sqft · Dallas</span>
-        <span class="price">$165,000</span>
-        <span class="price">$185,000</span>
-        <span>Jul 5, 2pm</span>
-        <span><span class="status status-showing">Showing</span></span>
+      <div class="board-body">
+        <div class="board-row board-row-header">
+          <span>Property</span>
+          <span>Min Ask</span>
+          <span>Buy Now</span>
+          <span>Showing</span>
+          <span>Status</span>
+        </div>
+        <div class="board-row">
+          <span>3BR/2BA · 1,450 sqft · Dallas</span>
+          <span class="price">$165,000</span>
+          <span class="price">$185,000</span>
+          <span>Jul 5, 2pm</span>
+          <span><span class="status status-showing">Showing</span></span>
+        </div>
+        <div class="board-row">
+          <span>4BR/2BA · 2,100 sqft · Denton</span>
+          <span class="price">$210,000</span>
+          <span class="price">$240,000</span>
+          <span>Jul 8, 10am</span>
+          <span><span class="status status-active">Active</span></span>
+        </div>
+        <div class="board-row">
+          <span>2BR/1BA · 950 sqft · Fort Worth</span>
+          <span class="price">$98,000</span>
+          <span class="price">$115,000</span>
+          <span>FCFS</span>
+          <span><span class="status status-active">Active</span></span>
+        </div>
+        <div class="board-row">
+          <span>3BR/2BA · 1,800 sqft · Collin</span>
+          <span class="price">$195,000</span>
+          <span class="price">$220,000</span>
+          <span>Jul 3, 1pm</span>
+          <span><span class="status status-pending">Pending</span></span>
+        </div>
       </div>
-      <div class="board-row">
-        <span>4BR/2BA · 2,100 sqft · Denton</span>
-        <span class="price">$210,000</span>
-        <span class="price">$240,000</span>
-        <span>Jul 8, 10am</span>
-        <span><span class="status status-active">Active</span></span>
-      </div>
-      <div class="board-row">
-        <span>2BR/1BA · 950 sqft · Fort Worth</span>
-        <span class="price">$98,000</span>
-        <span class="price">$115,000</span>
-        <span>FCFS</span>
-        <span><span class="status status-active">Active</span></span>
-      </div>
-      <div class="board-row">
-        <span>3BR/2BA · 1,800 sqft · Collin</span>
-        <span class="price">$195,000</span>
-        <span class="price">$220,000</span>
-        <span>Jul 3, 1pm</span>
-        <span><span class="status status-pending">Pending</span></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- What You're Looking At -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">What You're Looking At</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="doc-grid">
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      </div>
-      <h3>Property Details</h3>
-      <p>Beds, baths, square footage, lot size, and location. Every listing shows the basics at a glance.</p>
-    </div>
-
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      </div>
-      <h3>Min Ask vs. Buy-It-Now</h3>
-      <p><span class="highlight">Min Ask</span> = the starting bid for the auction. <span class="highlight">Buy-It-Now</span> = skip the auction and purchase instantly at this price.</p>
-    </div>
-
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <h3>Showing Date & Time</h3>
-      <p>When the 1-hour showing is scheduled. <span class="highlight">FCFS</span> = First Come, First Serve (vacant property, no showing needed).</p>
-    </div>
-
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      </div>
-      <h3>Estimated ARV & Rent</h3>
-      <p>After-repair value and estimated monthly rent. These help your investors evaluate the deal before the showing.</p>
     </div>
   </div>
 
-  <!-- Status Guide -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Status Guide</span>
-    <div class="line"></div>
+  <!-- What You're Looking At (step 2) -->
+  <div class="reveal-section" data-step="2">
+    <span class="gold-label">Columns</span>
+    <h2 class="section-heading">What You're <em>Looking At</em></h2>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Property Details</h3>
+        <p>Beds, baths, square footage, lot size, and location. Every listing shows the basics at a glance.</p>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Min Ask vs. Buy-It-Now</h3>
+        <p><span class="highlight">Min Ask</span> = the starting bid for the auction. <span class="highlight">Buy-It-Now</span> = skip the auction and purchase instantly at this price.</p>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Showing Date & Time</h3>
+        <p>When the 1-hour showing is scheduled. <span class="highlight">FCFS</span> = First Come, First Serve (vacant property, no showing needed).</p>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Estimated ARV & Rent</h3>
+        <p>After-repair value and estimated monthly rent. These help your investors evaluate the deal before the showing.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="doc-grid three-col">
-    <div class="doc-card" style="text-align: center;">
-      <span class="status status-active" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Active</span>
-      <p>Property is available for purchase. First Come, First Serve deals can be bought now.</p>
+  <!-- Status Guide (step 3) -->
+  <div class="reveal-section" data-step="3">
+    <span class="gold-label">Statuses</span>
+    <h2 class="section-heading">Status <em>Guide</em></h2>
+
+    <div class="doc-grid three-col">
+      <div class="doc-card" style="text-align: center;">
+        <span class="status status-active" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Active</span>
+        <p>Property is available for purchase. First Come, First Serve deals can be bought now.</p>
+      </div>
+      <div class="doc-card" style="text-align: center;">
+        <span class="status status-showing" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Showing</span>
+        <p>A showing is scheduled. Attend, then bid via the Bid Form or pay Buy-It-Now price.</p>
+      </div>
+      <div class="doc-card" style="text-align: center;">
+        <span class="status status-pending" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Pending</span>
+        <p>A contract is submitted and deposit collected. This deal is no longer available.</p>
+      </div>
     </div>
-    <div class="doc-card" style="text-align: center;">
-      <span class="status status-showing" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Showing</span>
-      <p>A showing is scheduled. Attend, then bid via the Bid Form or pay Buy-It-Now price.</p>
-    </div>
-    <div class="doc-card" style="text-align: center;">
-      <span class="status status-pending" style="font-size: 0.85rem; padding: 0.35rem 1rem; margin-bottom: 1rem; display: inline-block;">Pending</span>
-      <p>A contract is submitted and deposit collected. This deal is no longer available.</p>
+
+    <!-- Yellow Callout -->
+    <div class="yellow-callout">
+      <div class="yellow-callout-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      </div>
+      <p><strong>Check the board daily.</strong> New properties are added regularly. The fastest agents get the best deals to their investors first.</p>
     </div>
   </div>
 
-  <!-- Yellow Callout -->
-  <div class="yellow-callout">
-    <div class="yellow-callout-icon">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-    </div>
-    <p><strong>Check the board daily.</strong> New properties are added regularly. The fastest agents get the best deals to their investors first.</p>
-  </div>
+  <!-- Acknowledgment (step 4) -->
+  <div class="reveal-section" data-step="4">
+    <span class="gold-label">Acknowledgment</span>
+    <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
 
-  <!-- Acknowledgment -->
-  <div class="doc-grid single-col" style="max-width: 640px;">
-    <div class="doc-card" style="margin-left: auto; margin-right: auto;">
-      <h3>I understand how to read the property board.</h3>
-      <div class="doc-check">
-        <input type="checkbox" id="orp-acknowledge" onchange="checkConfetti()">
-        <label for="orp-acknowledge">Completed</label>
+    <div class="doc-grid single-col" style="max-width: 640px;">
+      <div class="doc-card" style="margin-left: auto; margin-right: auto;">
+        <h3>I understand how to read the property board.</h3>
+        <div class="doc-check">
+          <input type="checkbox" id="orp-acknowledge" onchange="checkConfetti()">
+          <label for="orp-acknowledge">Completed</label>
+        </div>
       </div>
     </div>
   </div>
@@ -235,5 +382,53 @@
 
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  var totalSteps = 4;
+  var currentStep = 0;
+
+  function updateProgress() {
+    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function addContinueButton(section, step) {
+    if (step >= totalSteps) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'continue-btn-wrap';
+    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    section.appendChild(wrap);
+  }
+
+  // Add continue buttons to each section (except the last)
+  document.querySelectorAll('.reveal-section').forEach(function(sec) {
+    var step = parseInt(sec.getAttribute('data-step'));
+    addContinueButton(sec, step);
+  });
+
+  function revealNext(step) {
+    var section = document.querySelector('[data-step="' + step + '"]');
+    if (!section) return;
+    section.classList.add('visible');
+    currentStep = step;
+    updateProgress();
+    setTimeout(function() {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    // Hide the continue button that was clicked
+    var prevStep = step - 1;
+    var prevSection;
+    if (prevStep === 0) {
+      prevSection = document.querySelector('.hero');
+    } else {
+      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
+    }
+    if (prevSection) {
+      var btn = prevSection.querySelector('.continue-btn-wrap');
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  updateProgress();
+</script>
 </body>
 </html>

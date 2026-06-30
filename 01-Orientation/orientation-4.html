@@ -10,13 +10,57 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  /* ── TOKENS ── */
+  :root {
+    --gold:   #C9941F;
+    --gold-light: #D4A94A;
+    --cream:  #FBE8B7;
+    --cream-bg: #FFF8EB;
+    --ink:    #1A1815;
+    --dark:   #2A2520;
+    --bg:     #FAFAF8;
+    --white:  #FFFFFF;
+    --gray:   #8A857D;
+    --border: #E8E4DC;
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(26,24,21,0.08);
+    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
+  }
+
   body {
-    font-family: 'Mulish', system-ui, sans-serif;
-    background: #FAFAF8;
-    color: #1A1815;
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
     line-height: 1.6;
     min-height: 100vh;
     font-size: 16px;
+  }
+
+  /* ─── Utility ─── */
+  .gold-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .section-heading em {
+    color: var(--gold);
+    font-style: italic;
   }
 
   /* ─── Hero ─── */
@@ -44,8 +88,8 @@
   }
   .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .hero h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: var(--ink);
     line-height: 1.15; margin-bottom: 0.5rem;
   }
   .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
@@ -220,9 +264,70 @@
     .container { padding: 1.5rem 1rem 2rem; }
     .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
+
+  /* ── PROGRESSIVE REVEAL ── */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
+    pointer-events: none;
+  }
+  .reveal-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 5000px;
+    overflow: visible;
+    pointer-events: auto;
+  }
+
+  .continue-btn-wrap {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms;
+    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
+  }
+  .continue-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
+  }
+  .continue-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--gold);
+    z-index: 9999;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(201,148,31,0.4);
+  }
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+
 <!-- Hero -->
 <header class="hero">
   <div class="hero-badge">
@@ -231,146 +336,199 @@
   </div>
   <h1>Verifying Investors & NDA Review</h1>
   <div class="subtitle">Verify before you disclose — every time.</div>
+  <div class="continue-btn-wrap">
+    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+  </div>
 </header>
 
 <!-- Main Content -->
 <div class="container">
 
-  <!-- Why Verification Matters -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">Why Verification Matters</div>
-    <div class="line"></div>
-  </div>
+  <!-- Why Verification Matters (step 1) -->
+  <div class="reveal-section" data-step="1">
+    <span class="gold-label">Why It Matters</span>
+    <h2 class="section-heading">Protect the Deal. Protect <em>Myers.</em></h2>
 
-  <div class="info-block">
-    <div class="info-block-header">
-      <div class="ib-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <div class="info-block">
+      <div class="info-block-header">
+        <div class="ib-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Protect the Deal. Protect Myers. Protect Yourself.</h3>
       </div>
-      <h3>Protect the Deal. Protect Myers. Protect Yourself.</h3>
-    </div>
-    <div class="info-block-body">
-      <p>Every investor must be verified before receiving any property address or showing details. This protects confidential deal information and ensures only serious, qualified buyers enter the process.</p>
-    </div>
-  </div>
-
-  <!-- What Investors Sign -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">What Investors Sign</div>
-    <div class="line"></div>
-  </div>
-
-  <div class="doc-grid">
-    <!-- Card 1: MVP Agreement -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      </div>
-      <h3>MVP Agreement</h3>
-      <p>The core agreement that verifies the investor and grants access to property details. Must be signed before any address is shared.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or4-mvp">
-        <label for="or4-mvp">Reviewed</label>
-      </div>
-    </div>
-
-    <!-- Card 2: Process Disclosures -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-      </div>
-      <h3>Process Disclosures</h3>
-      <p>Outlines how Myers operates — deposit requirements, showing rules, bidding process, and non-negotiables.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or4-disclosures">
-        <label for="or4-disclosures">Reviewed</label>
-      </div>
-    </div>
-
-    <!-- Card 3: TREC Purchase Agreement -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      </div>
-      <h3>TREC Purchase Agreement</h3>
-      <p>The standard Texas Real Estate Commission purchase contract used for all transactions.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or4-trec">
-        <label for="or4-trec">Reviewed</label>
-      </div>
-    </div>
-
-    <!-- Card 4: First Addendum to Purchase -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-      </div>
-      <h3>First Addendum to Purchase</h3>
-      <p>Additional terms specific to Myers transactions, including double close and funding requirements.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or4-addendum">
-        <label for="or4-addendum">Reviewed</label>
+      <div class="info-block-body">
+        <p>Every investor must be verified before receiving any property address or showing details. This protects confidential deal information and ensures only serious, qualified buyers enter the process.</p>
       </div>
     </div>
   </div>
 
-  <!-- Before vs After Verification -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">Before vs After Verification</div>
-    <div class="line"></div>
-  </div>
+  <!-- What Investors Sign (step 2) -->
+  <div class="reveal-section" data-step="2">
+    <span class="gold-label">Documents</span>
+    <h2 class="section-heading">What Investors <em>Sign</em></h2>
 
-  <div class="doc-grid">
-    <!-- BEFORE Verification -->
-    <div class="doc-card">
-      <div class="doc-card-icon red-tint">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+    <div class="doc-grid">
+      <!-- Card 1: MVP Agreement -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>MVP Agreement</h3>
+        <p>The core agreement that verifies the investor and grants access to property details. Must be signed before any address is shared.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or4-mvp">
+          <label for="or4-mvp">Reviewed</label>
+        </div>
       </div>
-      <h3>BEFORE Verification</h3>
-      <ul>
-        <li>General property description only</li>
-        <li>No address</li>
-        <li>No showing time</li>
-        <li>No flyer with address</li>
-        <li>Marketing must be address-free</li>
-      </ul>
-    </div>
 
-    <!-- AFTER Verification -->
-    <div class="doc-card">
-      <div class="doc-card-icon green-tint">
-        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <!-- Card 2: Process Disclosures -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+        </div>
+        <h3>Process Disclosures</h3>
+        <p>Outlines how Myers operates — deposit requirements, showing rules, bidding process, and non-negotiables.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or4-disclosures">
+          <label for="or4-disclosures">Reviewed</label>
+        </div>
       </div>
-      <h3>AFTER Verification</h3>
-      <ul>
-        <li>Full property address</li>
-        <li>Showing time & date</li>
-        <li>Detailed property flyer</li>
-        <li>Access to bid form</li>
-        <li>Full deal details</li>
-      </ul>
+
+      <!-- Card 3: TREC Purchase Agreement -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>TREC Purchase Agreement</h3>
+        <p>The standard Texas Real Estate Commission purchase contract used for all transactions.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or4-trec">
+          <label for="or4-trec">Reviewed</label>
+        </div>
+      </div>
+
+      <!-- Card 4: First Addendum to Purchase -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <h3>First Addendum to Purchase</h3>
+        <p>Additional terms specific to Myers transactions, including double close and funding requirements.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or4-addendum">
+          <label for="or4-addendum">Reviewed</label>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Yellow Callout -->
-  <div class="yellow-callout">
-    <div class="yellow-callout-icon">
-      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <!-- Before vs After Verification (step 3) -->
+  <div class="reveal-section" data-step="3">
+    <span class="gold-label">Comparison</span>
+    <h2 class="section-heading">Before vs After <em>Verification</em></h2>
+
+    <div class="doc-grid">
+      <!-- BEFORE Verification -->
+      <div class="doc-card">
+        <div class="doc-card-icon red-tint">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <h3>BEFORE Verification</h3>
+        <ul>
+          <li>General property description only</li>
+          <li>No address</li>
+          <li>No showing time</li>
+          <li>No flyer with address</li>
+          <li>Marketing must be address-free</li>
+        </ul>
+      </div>
+
+      <!-- AFTER Verification -->
+      <div class="doc-card">
+        <div class="doc-card-icon green-tint">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>AFTER Verification</h3>
+        <ul>
+          <li>Full property address</li>
+          <li>Showing time & date</li>
+          <li>Detailed property flyer</li>
+          <li>Access to bid form</li>
+          <li>Full deal details</li>
+        </ul>
+      </div>
     </div>
-    <p>The address and showing time are confidential — protecting them protects the deal, the seller, and your commission.</p>
+
+    <!-- Yellow Callout -->
+    <div class="yellow-callout">
+      <div class="yellow-callout-icon">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <p>The address and showing time are confidential — protecting them protects the deal, the seller, and your commission.</p>
+    </div>
   </div>
 
-  <!-- Acknowledgment -->
-  <div class="acknowledge-card">
-    <input type="checkbox" onchange="checkConfetti()" id="or4-acknowledge">
-    <label for="or4-acknowledge">I understand the investor verification process and NDA requirements.</label>
+  <!-- Acknowledgment (step 4) -->
+  <div class="reveal-section" data-step="4">
+    <span class="gold-label">Acknowledgment</span>
+    <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
+
+    <div class="acknowledge-card">
+      <input type="checkbox" onchange="checkConfetti()" id="or4-acknowledge">
+      <label for="or4-acknowledge">I understand the investor verification process and NDA requirements.</label>
+    </div>
   </div>
 
 </div>
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  var totalSteps = 4;
+  var currentStep = 0;
+
+  function updateProgress() {
+    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function addContinueButton(section, step) {
+    if (step >= totalSteps) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'continue-btn-wrap';
+    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    section.appendChild(wrap);
+  }
+
+  // Add continue buttons to each section (except the last)
+  document.querySelectorAll('.reveal-section').forEach(function(sec) {
+    var step = parseInt(sec.getAttribute('data-step'));
+    addContinueButton(sec, step);
+  });
+
+  function revealNext(step) {
+    var section = document.querySelector('[data-step="' + step + '"]');
+    if (!section) return;
+    section.classList.add('visible');
+    currentStep = step;
+    updateProgress();
+    setTimeout(function() {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    // Hide the continue button that was clicked
+    var prevStep = step - 1;
+    var prevSection;
+    if (prevStep === 0) {
+      prevSection = document.querySelector('.hero');
+    } else {
+      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
+    }
+    if (prevSection) {
+      var btn = prevSection.querySelector('.continue-btn-wrap');
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  updateProgress();
+</script>
 </body>
 </html>

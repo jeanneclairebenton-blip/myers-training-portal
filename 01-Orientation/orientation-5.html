@@ -10,13 +10,57 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  /* ── TOKENS ── */
+  :root {
+    --gold:   #C9941F;
+    --gold-light: #D4A94A;
+    --cream:  #FBE8B7;
+    --cream-bg: #FFF8EB;
+    --ink:    #1A1815;
+    --dark:   #2A2520;
+    --bg:     #FAFAF8;
+    --white:  #FFFFFF;
+    --gray:   #8A857D;
+    --border: #E8E4DC;
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(26,24,21,0.08);
+    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
+  }
+
   body {
-    font-family: 'Mulish', system-ui, sans-serif;
-    background: #FAFAF8;
-    color: #1A1815;
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
     line-height: 1.6;
     min-height: 100vh;
     font-size: 16px;
+  }
+
+  /* ─── Utility ─── */
+  .gold-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .section-heading em {
+    color: var(--gold);
+    font-style: italic;
   }
 
   /* ─── Hero ─── */
@@ -44,8 +88,8 @@
   }
   .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .hero h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 4vw, 2.25rem); color: var(--ink);
     line-height: 1.15; margin-bottom: 0.5rem;
   }
   .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
@@ -205,9 +249,70 @@
     .container { padding: 1.5rem 1rem 2rem; }
     .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
   }
+
+  /* ── PROGRESSIVE REVEAL ── */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.6s ease;
+    pointer-events: none;
+  }
+  .reveal-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 5000px;
+    overflow: visible;
+    pointer-events: auto;
+  }
+
+  .continue-btn-wrap {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms;
+    box-shadow: 0 4px 16px rgba(201,148,31,0.25);
+  }
+  .continue-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(201,148,31,0.35);
+  }
+  .continue-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--gold);
+    z-index: 9999;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(201,148,31,0.4);
+  }
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+
 <!-- Hero -->
 <header class="hero">
   <div class="hero-badge">
@@ -216,124 +321,123 @@
   </div>
   <h1>Flyers & Marketing Properties</h1>
   <div class="subtitle">Getting the word out — the right way.</div>
+  <div class="continue-btn-wrap">
+    <button class="continue-btn" onclick="revealNext(1)">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+  </div>
 </header>
 
 <!-- Main Content -->
 <div class="container">
 
-  <!-- Property Flyers -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">Property Flyers</div>
-    <div class="line"></div>
-  </div>
+  <!-- Property Flyers (step 1) -->
+  <div class="reveal-section" data-step="1">
+    <span class="gold-label">Flyers</span>
+    <h2 class="section-heading">Property <em>Flyers</em></h2>
 
-  <div class="doc-grid single-col">
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      </div>
-      <h3>What Goes on a Flyer</h3>
-      <p>Every property flyer must include: property photos, price, square footage, bed/bath count, lot size, and the Myers logo. Flyers are created and distributed after a property is acquired.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or5-flyer">
-        <label for="or5-flyer">Reviewed</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- Marketing Channels -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">Marketing Channels</div>
-    <div class="line"></div>
-  </div>
-
-  <div class="doc-grid">
-    <!-- Investor Network -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <h3>Investor Network</h3>
-      <p>Send flyers directly to your verified investor list via email (GMass).</p>
-    </div>
-
-    <!-- Social Media -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-      </div>
-      <h3>Social Media</h3>
-      <p>Post on Facebook, Instagram, and LinkedIn — but never include the property address in public posts.</p>
-    </div>
-
-    <!-- Email Campaigns -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      </div>
-      <h3>Email Campaigns</h3>
-      <p>Use GMass to send bulk property flyers to your investor database.</p>
-    </div>
-  </div>
-
-  <!-- GMass Video Walkthrough -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">GMass Video Walkthrough</div>
-    <div class="line"></div>
-  </div>
-
-  <div class="doc-grid single-col">
-    <div class="doc-card" style="background: #FFFDF6;">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-      </div>
-      <h3>How to Use GMass</h3>
-      <p>Watch the video walkthrough below to learn how to send bulk property emails to your investor list using GMass.</p>
-      <div style="margin-top: 1.25rem;">
-        <div class="yellow-callout" style="margin: 0; max-width: 100%;">
-          <div class="yellow-callout-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          </div>
-          <p><strong>Note:</strong> Your manager will add the GMass video walkthrough directly in TrainerCentral after this module.</p>
+    <div class="doc-grid single-col">
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>What Goes on a Flyer</h3>
+        <p>Every property flyer must include: property photos, price, square footage, bed/bath count, lot size, and the Myers logo. Flyers are created and distributed after a property is acquired.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or5-flyer">
+          <label for="or5-flyer">Reviewed</label>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Compliance Reminders -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <div class="label">Compliance Reminders</div>
-    <div class="line"></div>
-  </div>
+  <!-- Marketing Channels (step 2) -->
+  <div class="reveal-section" data-step="2">
+    <span class="gold-label">Distribution</span>
+    <h2 class="section-heading">Marketing <em>Channels</em></h2>
 
-  <div class="doc-grid two-col">
-    <!-- TREC Logo Required -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <div class="doc-grid">
+      <!-- Investor Network -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Investor Network</h3>
+        <p>Send flyers directly to your verified investor list via email (GMass).</p>
       </div>
-      <h3>TREC Logo Required</h3>
-      <p>The Myers logo must appear on all marketing materials where TREC requires it.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or5-trec-logo">
-        <label for="or5-trec-logo">Understood</label>
+
+      <!-- Social Media -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </div>
+        <h3>Social Media</h3>
+        <p>Post on Facebook, Instagram, and LinkedIn — but never include the property address in public posts.</p>
+      </div>
+
+      <!-- Email Campaigns -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>Email Campaigns</h3>
+        <p>Use GMass to send bulk property flyers to your investor database.</p>
       </div>
     </div>
+  </div>
 
-    <!-- No Addresses in Public Posts -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+  <!-- GMass Video Walkthrough (step 3) -->
+  <div class="reveal-section" data-step="3">
+    <span class="gold-label">Walkthrough</span>
+    <h2 class="section-heading">GMass Video <em>Walkthrough</em></h2>
+
+    <div class="doc-grid single-col">
+      <div class="doc-card" style="background: #FFFDF6;">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
+        <h3>How to Use GMass</h3>
+        <p>Watch the video walkthrough below to learn how to send bulk property emails to your investor list using GMass.</p>
+        <div style="margin-top: 1.25rem;">
+          <div class="yellow-callout" style="margin: 0; max-width: 100%;">
+            <div class="yellow-callout-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <p><strong>Note:</strong> Your manager will add the GMass video walkthrough directly in TrainerCentral after this module.</p>
+          </div>
+        </div>
       </div>
-      <h3>No Addresses in Public Posts</h3>
-      <p>Never reveal property addresses or showing times in any public marketing — social media, ads, or listings.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="or5-no-address">
-        <label for="or5-no-address">Understood</label>
+    </div>
+  </div>
+
+  <!-- Compliance Reminders (step 4) -->
+  <div class="reveal-section" data-step="4">
+    <span class="gold-label">Compliance</span>
+    <h2 class="section-heading">Compliance <em>Reminders</em></h2>
+
+    <div class="doc-grid two-col">
+      <!-- TREC Logo Required -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>TREC Logo Required</h3>
+        <p>The Myers logo must appear on all marketing materials where TREC requires it.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or5-trec-logo">
+          <label for="or5-trec-logo">Understood</label>
+        </div>
+      </div>
+
+      <!-- No Addresses in Public Posts -->
+      <div class="doc-card">
+        <div class="doc-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </div>
+        <h3>No Addresses in Public Posts</h3>
+        <p>Never reveal property addresses or showing times in any public marketing — social media, ads, or listings.</p>
+        <div class="doc-check">
+          <input type="checkbox" onchange="checkConfetti()" id="or5-no-address">
+          <label for="or5-no-address">Understood</label>
+        </div>
       </div>
     </div>
   </div>
@@ -341,5 +445,53 @@
 </div>
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  var totalSteps = 4;
+  var currentStep = 0;
+
+  function updateProgress() {
+    var pct = Math.round(((currentStep + 1) / (totalSteps + 1)) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function addContinueButton(section, step) {
+    if (step >= totalSteps) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'continue-btn-wrap';
+    wrap.innerHTML = '<button class="continue-btn" onclick="revealNext(' + (step + 1) + ')">Continue <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    section.appendChild(wrap);
+  }
+
+  // Add continue buttons to each section (except the last)
+  document.querySelectorAll('.reveal-section').forEach(function(sec) {
+    var step = parseInt(sec.getAttribute('data-step'));
+    addContinueButton(sec, step);
+  });
+
+  function revealNext(step) {
+    var section = document.querySelector('[data-step="' + step + '"]');
+    if (!section) return;
+    section.classList.add('visible');
+    currentStep = step;
+    updateProgress();
+    setTimeout(function() {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    // Hide the continue button that was clicked
+    var prevStep = step - 1;
+    var prevSection;
+    if (prevStep === 0) {
+      prevSection = document.querySelector('.hero');
+    } else {
+      prevSection = document.querySelector('[data-step="' + prevStep + '"]');
+    }
+    if (prevSection) {
+      var btn = prevSection.querySelector('.continue-btn-wrap');
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  updateProgress();
+</script>
 </body>
 </html>
