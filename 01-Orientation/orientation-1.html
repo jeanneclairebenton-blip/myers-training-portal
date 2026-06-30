@@ -178,11 +178,6 @@
      CONTINUE BUTTON — Fixed Bottom
      ══════════════════════════════════════ */
   .nav-btn {
-    position: fixed;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -202,10 +197,10 @@
   }
   .nav-btn:hover {
     background: #B8841A;
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(201,148,31,0.4);
   }
-  .nav-btn:active { transform: translateX(-50%) translateY(0); }
+  .nav-btn:active { transform: translateY(0); }
   .nav-btn svg {
     width: 18px; height: 18px;
     stroke: currentColor; fill: none;
@@ -213,16 +208,22 @@
   }
   .nav-btn.hidden { opacity: 0; pointer-events: none; }
 
-  .back-btn {
+  .nav-wrap {
     position: fixed;
     bottom: 36px;
     left: 50%;
-    transform: translateX(calc(-50% - 120px));
+    transform: translateX(-50%);
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.85);
     color: var(--gray);
     font-family: var(--sans);
     font-size: 15px;
@@ -232,11 +233,11 @@
     border: 1px solid var(--border);
     border-radius: 99px;
     cursor: pointer;
-    transition: background 200ms, color 200ms, border-color 200ms;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
     backdrop-filter: blur(8px);
   }
   .back-btn:hover {
-    background: rgba(255,255,255,0.15);
+    background: var(--white);
     color: var(--ink);
     border-color: var(--gold);
   }
@@ -784,7 +785,8 @@
     .thesis-cards { grid-template-columns: 1fr; }
     .ack-card { padding: 36px 24px; }
     .nav-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 32px; }
-    .back-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 24px; transform: translateX(calc(-50% - 100px)); }
+    .nav-wrap { bottom: 24px; }
+    .back-btn { height: 44px; font-size: 14px; padding: 0 24px; }
     .hero-title { font-size: clamp(1.8rem, 6vw, 2.6rem); }
     .slide-content { padding: 56px 16px 100px; }
     .hero-wrap { padding: 56px 16px 100px; }
@@ -851,14 +853,16 @@
 <!-- ══════════════════════════════════════
      CONTINUE / COMPLETE BUTTON
      ══════════════════════════════════════ -->
-<button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
-  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-  Back
-</button>
-<button class="nav-btn" id="navBtn" onclick="advanceSlide()">
-  Continue
-  <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-</button>
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="nav-btn" id="navBtn" onclick="advanceSlide()">
+    Continue
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+</div>
 
 <!-- ══════════════════════════════════════
      SLIDE DECK
