@@ -31,7 +31,7 @@ body {
   background: var(--ink);
   color: var(--ink);
   line-height: 1.6;
-  font-size: 16px;
+  font-size: 18px;
   overflow: hidden;
   height: 100vh;
   width: 100vw;
@@ -195,19 +195,6 @@ body {
   margin-top: 0.5rem;
   text-align: center;
 }
-.hero-image {
-  width: 100%;
-  max-width: 600px;
-  margin: 2rem auto 0;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
-.hero-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
 
 /* ── CARD GRID ── */
 .card-grid {
@@ -217,7 +204,6 @@ body {
 }
 .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
 .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
-.card-grid.cols-2x3 { grid-template-columns: repeat(2, 1fr); }
 
 .doc-card {
   background: var(--white);
@@ -314,13 +300,53 @@ body {
   font-size: 1.05rem; font-weight: 700; color: var(--ink); cursor: pointer;
 }
 
-/* ── CONTINUE BUTTON ── */
-.continue-btn {
+/* ── NAV WRAP ── */
+.nav-wrap {
   position: fixed;
-  bottom: 32px;
+  bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  max-width: 900px;
+  padding: 0 24px;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── BACK BUTTON ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #8A857D;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 0 28px;
+  height: 48px;
+  border: 1px solid #E8E4DC;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background 200ms, color 200ms, border-color 200ms;
+  backdrop-filter: blur(8px);
+}
+.back-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #1A1815;
+  border-color: #C9941F;
+}
+.back-btn svg {
+  width: 16px; height: 16px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.back-btn.hidden { opacity: 0; pointer-events: none; }
+
+/* ── CONTINUE BUTTON ── */
+.continue-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -335,10 +361,11 @@ body {
   cursor: pointer;
   transition: background 200ms, transform 200ms, box-shadow 200ms;
   box-shadow: 0 4px 24px rgba(201,148,31,0.35);
+  margin-left: auto;
 }
 .continue-btn:hover {
   background: #B8841A;
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(201,148,31,0.45);
 }
 .continue-btn svg {
@@ -354,7 +381,6 @@ body {
 @media (max-width: 768px) {
   .card-grid.cols-3 { grid-template-columns: 1fr; }
   .card-grid.cols-2 { grid-template-columns: 1fr; }
-  .card-grid.cols-2x3 { grid-template-columns: 1fr; }
   .tracker-step { min-width: 60px; }
   .tracker-line { width: 24px; }
   .tracker-label { font-size: 8px; }
@@ -362,40 +388,6 @@ body {
   .hero-title { font-size: 2rem; }
   .hero-stat { font-size: 3.5rem; }
 }
-
-  .back-btn {
-    position: fixed;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(calc(-50% - 120px));
-    z-index: 1000;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.1);
-    color: #8A857D;
-    font-family: var(--sans, 'Mulish', sans-serif);
-    font-size: 15px;
-    font-weight: 700;
-    padding: 0 28px;
-    height: 48px;
-    border: 1px solid #E8E4DC;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: background 200ms, color 200ms, border-color 200ms;
-    backdrop-filter: blur(8px);
-  }
-  .back-btn:hover {
-    background: rgba(255,255,255,0.15);
-    color: #1A1815;
-    border-color: #C9941F;
-  }
-  .back-btn svg {
-    width: 16px; height: 16px;
-    stroke: currentColor; fill: none;
-    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .back-btn.hidden { opacity: 0; pointer-events: none; }
 
 </style>
 </head>
@@ -417,7 +409,7 @@ body {
         <span class="step-num-text">2</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <span class="tracker-label">Responsibilities</span>
+      <span class="tracker-label">Discipline</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="2">
@@ -425,7 +417,7 @@ body {
         <span class="step-num-text">3</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <span class="tracker-label">Rules</span>
+      <span class="tracker-label">Shared Rules</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="3">
@@ -442,7 +434,7 @@ body {
 <div class="slider-viewport">
   <div class="slider" id="slider">
 
-    <!-- SLIDE 1: Your Role (Dark) -->
+    <!-- SLIDE 1: Your Role + Responsibilities (Dark) -->
     <div class="slide dark">
       <div class="slide-inner">
         <span class="gold-label">Orientation</span>
@@ -450,17 +442,8 @@ body {
         <p class="hero-subtitle">Find deals, make offers, negotiate.</p>
         <div class="hero-stat">60%</div>
         <div class="hero-stat-label">Up to per acquisition</div>
-        <div class="hero-image">
-          <img src="assets/acquisitions.png" alt="Acquisitions Agent">
-        </div>
-      </div>
-    </div>
 
-    <!-- SLIDE 2: Responsibilities (Light) -->
-    <div class="slide light">
-      <div class="slide-inner">
-        <span class="gold-label">Responsibilities</span>
-        <h2 class="section-heading">Your Day-to-Day <em>Responsibilities</em></h2>
+        <h2 class="section-heading" style="margin-top:2.5rem;">Your Day-to-Day <em>Responsibilities</em></h2>
 
         <div class="card-grid cols-3">
           <!-- Find Opportunities -->
@@ -493,13 +476,13 @@ body {
       </div>
     </div>
 
-    <!-- SLIDE 3: Rules (Dark) -->
+    <!-- SLIDE 2: Acquisition Discipline (Dark) -->
     <div class="slide dark">
       <div class="slide-inner">
-        <span class="gold-label">Rules</span>
-        <h2 class="section-heading">AA-Specific <em>Rules</em></h2>
+        <span class="gold-label">Discipline</span>
+        <h2 class="section-heading">Acquisition <em>Discipline</em></h2>
 
-        <div class="card-grid cols-2x3">
+        <div class="card-grid cols-3">
           <!-- See It Before You Buy It -->
           <div class="doc-card">
             <div class="doc-card-icon">
@@ -508,8 +491,8 @@ body {
             <h3>See It Before You Buy It</h3>
             <p>Don't acquire a property you haven't seen — unless the numbers are significantly de-risked.</p>
             <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2aa-see">
-              <label for="or2aa-see">Understood</label>
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-see">
+              <label for="or3aa-see">Understood</label>
             </div>
           </div>
 
@@ -521,34 +504,51 @@ body {
             <h3>Never Post Below Cost</h3>
             <p>Deals must not be posted for less than the price they were acquired for.</p>
             <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2aa-post">
-              <label for="or2aa-post">Understood</label>
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-post">
+              <label for="or3aa-post">Understood</label>
             </div>
           </div>
 
-          <!-- Verify Before You Disclose -->
+          <!-- Must Have Under Contract -->
           <div class="doc-card">
             <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
             </div>
-            <h3>Verify Before You Disclose</h3>
-            <p>Never share a property address until the investor is verified by signing the MVP agreement.</p>
+            <h3>Must Have Under Contract</h3>
+            <p>Never post a property for sale unless you have it under contract. No exceptions.</p>
             <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2aa-verify">
-              <label for="or2aa-verify">Understood</label>
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-contract">
+              <label for="or3aa-contract">Understood</label>
             </div>
           </div>
+        </div>
 
-          <!-- Confidentiality -->
+        <div class="yellow-callout">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <p><strong>As an AA, you are the first line of quality control.</strong> Every deal you bring in reflects on the entire team.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Shared Rules (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Compliance</span>
+        <h2 class="section-heading">Rules for <em>All Agents</em></h2>
+
+        <div class="card-grid cols-2">
+          <!-- TREC Logo Compliance -->
           <div class="doc-card">
             <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
             </div>
-            <h3>Confidentiality</h3>
-            <p>The address and showing time are confidential. Never reveal them in any public marketing, social media, or listings.</p>
+            <h3>TREC Logo Compliance</h3>
+            <p>The Myers logo goes on all marketing materials where TREC requires it. Stay compliant in everything you publish.</p>
             <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2aa-conf">
-              <label for="or2aa-conf">Understood</label>
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-trec">
+              <label for="or3aa-trec">Understood</label>
             </div>
           </div>
 
@@ -560,30 +560,10 @@ body {
             <h3>Report All Deals</h3>
             <p>All brokered or wholesaled transactions must be reported. Exception: deals you close to rent, flip, or hold yourself.</p>
             <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2aa-report">
-              <label for="or2aa-report">Understood</label>
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-report">
+              <label for="or3aa-report">Understood</label>
             </div>
           </div>
-
-          <!-- TREC Compliance -->
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-            </div>
-            <h3>TREC Compliance</h3>
-            <p>The Myers logo goes on all marketing materials where TREC requires it. Stay compliant in everything you publish.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2aa-trec">
-              <label for="or2aa-trec">Understood</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="yellow-callout">
-          <div class="yellow-callout-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <p><strong>As an AA, you are the first line of quality control.</strong> Every deal you bring in reflects on the entire team.</p>
         </div>
       </div>
     </div>
@@ -602,8 +582,8 @@ body {
         </div>
 
         <div class="acknowledge-block">
-          <input type="checkbox" onchange="checkConfetti()" id="or2aa-acknowledge">
-          <label for="or2aa-acknowledge">I understand my role, responsibilities, and rules as an Acquisitions Agent.</label>
+          <input type="checkbox" onchange="checkConfetti()" id="or3aa-acknowledge">
+          <label for="or3aa-acknowledge">I understand my role, responsibilities, and rules as an Acquisitions Agent.</label>
         </div>
       </div>
     </div>
@@ -611,15 +591,17 @@ body {
   </div>
 </div>
 
-<!-- ═══ CONTINUE BUTTON ═══ -->
-<button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
-  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-  Back
-</button>
-<button class="continue-btn" id="continueBtn" onclick="goNext()">
-  Continue
-  <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
-</button>
+<!-- ═══ NAV BUTTONS ═══ -->
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="continue-btn" id="continueBtn" onclick="goNext()">
+    Continue
+    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
+</div>
 
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
@@ -630,6 +612,13 @@ body {
   var btn = document.getElementById('continueBtn');
   var steps = document.querySelectorAll('.tracker-step');
   var lines = document.querySelectorAll('.tracker-line');
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
 
   function updateUI() {
     slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
@@ -648,6 +637,8 @@ body {
     } else {
       btn.innerHTML = 'Continue <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>';
     }
+
+    updateBackBtn();
   }
 
   function goNext() {
@@ -667,14 +658,6 @@ body {
   steps.forEach(function(step, i) {
     step.addEventListener('click', function() { goToSlide(i); });
   });
-
-  
-  function updateBackBtn() {
-    var backBtn = document.getElementById('backBtn');
-    if (!backBtn) return;
-    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
-    else { backBtn.classList.add('hidden'); }
-  }
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }

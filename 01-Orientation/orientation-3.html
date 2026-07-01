@@ -488,6 +488,20 @@ body {
     color: var(--ink);
   }
 
+  .video-placeholder {
+    background: #1A1815;
+    border-radius: 16px;
+    aspect-ratio: 16/9;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A857D;
+    font-family: var(--sans);
+    font-size: 1rem;
+  }
+
 </style>
 </head>
 <body>
@@ -508,7 +522,7 @@ body {
         <span class="step-num-text">2</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <span class="tracker-label">Rules</span>
+      <span class="tracker-label">SA Rules</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="2">
@@ -516,12 +530,28 @@ body {
         <span class="step-num-text">3</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <span class="tracker-label">FAQ</span>
+      <span class="tracker-label">MVP Video</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="3">
       <div class="tracker-circle">
         <span class="step-num-text">4</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">FAQ</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="4">
+      <div class="tracker-circle">
+        <span class="step-num-text">5</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Shared Rules</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="5">
+      <div class="tracker-circle">
+        <span class="step-num-text">6</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <span class="tracker-label">Complete</span>
@@ -608,31 +638,18 @@ body {
             </div>
           </div>
 
-          <!-- TREC Logo Compliance -->
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-            </div>
-            <h3>TREC Logo Compliance</h3>
-            <p>The Myers logo goes on all marketing materials where TREC requires it. Everything you publish must meet TREC requirements.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2sa-trec">
-              <label for="or2sa-trec">Understood</label>
-            </div>
-          </div>
+        </div>
+      </div>
+    </div>
 
-          <!-- Report All Deals -->
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            </div>
-            <h3>Report All Deals</h3>
-            <p>All brokered or wholesaled transactions must be reported to Myers. Exception: deals you close to rent, flip, or hold yourself.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or2sa-report">
-              <label for="or2sa-report">Understood</label>
-            </div>
-          </div>
+    <!-- SLIDE 3: MVP Walkthrough (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Video</span>
+        <h2 class="section-heading">MVP Agreement <em>Walkthrough</em></h2>
+        <p style="font-size:1rem;color:#3D362A;margin-bottom:28px;text-align:center;">The MVP Agreement is our investor verification document. Watch this walkthrough to understand what investors sign before accessing property details.</p>
+        <div class="video-placeholder">
+          <span>Video walkthrough will be added from Trainer Central</span>
         </div>
       </div>
     </div>
@@ -708,7 +725,43 @@ body {
       </div>
     </div>
 
-    <!-- SLIDE 5: Complete (Dark) -->
+    <!-- SLIDE 5: Shared Rules (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner">
+        <span class="gold-label">Compliance</span>
+        <h2 class="section-heading">Rules for <em>All Agents</em></h2>
+
+        <div class="card-grid cols-2">
+          <!-- TREC Logo Compliance -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            </div>
+            <h3>TREC Logo Compliance</h3>
+            <p>The Myers logo goes on all marketing materials where TREC requires it. Everything you publish must meet TREC requirements.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3sa-trec">
+              <label for="or3sa-trec">Understood</label>
+            </div>
+          </div>
+
+          <!-- Report All Deals -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Report All Deals</h3>
+            <p>All brokered or wholesaled transactions must be reported to Myers. Exception: deals you close to rent, flip, or hold yourself.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3sa-report">
+              <label for="or3sa-report">Understood</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Complete (Dark) -->
     <div class="slide dark">
       <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
         <span class="gold-label">Acknowledgment</span>
@@ -737,7 +790,7 @@ body {
 <script src="../persistence.js"></script>
 <script>
   var currentSlide = 0;
-  var totalSlides = 4;
+  var totalSlides = 6;
   var slider = document.getElementById('slider');
   var btn = document.getElementById('continueBtn');
   var steps = document.querySelectorAll('.tracker-step');
