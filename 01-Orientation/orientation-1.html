@@ -27,7 +27,7 @@
     --radius-sm: 8px;
     --shadow: 0 4px 24px rgba(26,24,21,0.08);
     --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
-    --total-slides: 9;
+    --total-slides: 7;
   }
 
   body {
@@ -131,8 +131,8 @@
   .tracker-line {
     position: absolute;
     top: 12px;
-    left: calc(100% / 22);
-    right: calc(100% / 22);
+    left: calc(100% / 14);
+    right: calc(100% / 14);
     height: 2px;
     background: #3D362A;
     z-index: 1;
@@ -175,7 +175,7 @@
   }
 
   /* ══════════════════════════════════════
-     CONTINUE BUTTON — Fixed Bottom
+     NAV BUTTONS — Fixed Bottom
      ══════════════════════════════════════ */
   .nav-btn {
     display: inline-flex;
@@ -278,25 +278,12 @@
   }
 
   /* ══════════════════════════════════════
-     SLIDE 1 — MISSION HERO
+     SLIDE 1 — INTRO
      ══════════════════════════════════════ */
-  .slide-hero {
-    background: url('assets/dfw-skyline.png') center center / cover no-repeat;
-    align-items: stretch;
+  .slide-intro {
+    background: linear-gradient(165deg, #FFFDF7 0%, #FFF8EB 40%, #FBF0D9 100%);
   }
-  .slide-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(26,24,21,0.78) 0%,
-      rgba(26,24,21,0.62) 50%,
-      rgba(26,24,21,0.82) 100%
-    );
-    z-index: 0;
-  }
-  .hero-wrap {
+  .intro-wrap {
     position: relative;
     z-index: 2;
     text-align: center;
@@ -309,36 +296,21 @@
     max-width: 760px;
     margin: 0 auto;
   }
-  .hero-title {
+  .intro-title {
     font-family: var(--serif);
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.15;
-    color: var(--white);
-    margin-bottom: 28px;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    line-height: 1.2;
+    color: var(--ink);
   }
-  .hero-title .gold { color: var(--gold); }
-  .hero-body {
-    font-family: var(--sans);
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    font-weight: 400;
-    color: rgba(255,255,255,0.72);
-    line-height: 1.75;
-    max-width: 620px;
+  .intro-title .gold-italic {
+    color: var(--gold);
+    font-style: italic;
   }
 
   /* ══════════════════════════════════════
      SLIDE 2 — CORE THESIS
      ══════════════════════════════════════ */
   .slide-thesis { background: var(--bg); }
-  .thesis-body {
-    font-size: 1.25rem;
-    color: #3D362A;
-    line-height: 1.8;
-    max-width: 640px;
-    margin: 0 auto 48px;
-    text-align: center;
-    font-weight: 500;
-  }
   .thesis-sub-label {
     font-family: var(--sans);
     font-size: 10px;
@@ -358,6 +330,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 32px 24px;
+    text-align: center;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .thesis-card:hover {
@@ -392,65 +365,9 @@
   }
 
   /* ══════════════════════════════════════
-     SLIDE 3 — PLATFORM
+     SLIDE 3 — COMMISSION + INCOME
      ══════════════════════════════════════ */
-  .slide-platform { background: var(--ink); }
-  .slide-platform .section-heading { color: var(--white); }
-  .platform-body {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.75;
-    max-width: 600px;
-    margin-bottom: 48px;
-  }
-  .platform-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-  .platform-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,148,31,0.12);
-    border-radius: var(--radius);
-    padding: 32px 20px;
-    text-align: center;
-    transition: transform 0.25s ease, border-color 0.25s ease;
-  }
-  .platform-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(201,148,31,0.3);
-  }
-  .platform-card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(201,148,31,0.2), rgba(201,148,31,0.06));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-  }
-  .platform-card-icon svg {
-    width: 24px; height: 24px;
-    stroke: var(--gold); fill: none;
-    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .platform-card-title {
-    font-family: var(--serif);
-    font-size: 0.95rem;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-  .platform-card-desc {
-    font-size: 12px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.55;
-  }
-
-  /* ══════════════════════════════════════
-     SLIDE 4 — STATS
-     ══════════════════════════════════════ */
-  .slide-stats { background: var(--ink); }
+  .slide-commission { background: var(--bg); }
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -459,9 +376,9 @@
   }
   .stat-box {
     padding: 40px 16px;
-    border: 1px solid rgba(201,148,31,0.15);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    background: rgba(255,255,255,0.03);
+    background: var(--white);
   }
   .stat-number {
     font-family: var(--serif);
@@ -478,11 +395,6 @@
     text-transform: uppercase;
     color: #3D362A;
   }
-
-  /* ══════════════════════════════════════
-     SLIDE 5 — COMMISSION SPLIT
-     ══════════════════════════════════════ */
-  .slide-commission { background: var(--bg); }
   .split-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
@@ -529,8 +441,74 @@
   .split-big-label { font-family: var(--serif); font-size: 1.3rem; color: var(--white); margin-bottom: 8px; }
   .split-big-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
 
+  /* Income streams compact row */
+  .income-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .income-mini-card {
+    text-align: center;
+    padding: 24px 12px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .income-mini-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .income-mini-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .income-mini-icon svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: var(--gold);
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .income-mini-title { font-family: var(--serif); font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+  .income-mini-desc { font-size: 12px; color: #3D362A; line-height: 1.45; }
+
   /* ══════════════════════════════════════
-     SLIDE 6 — CAREER PATH
+     SLIDE 4 — RETIREMENT / REVENUE SHARE
+     ══════════════════════════════════════ */
+  .slide-revshare { background: var(--bg); }
+  .revshare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .revshare-grid img { width: 100%; border-radius: var(--radius); }
+  .revshare-table { list-style: none; }
+  .revshare-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .revshare-row:last-child { border-bottom: none; }
+  .revshare-level-badge {
+    flex-shrink: 0; width: 70px;
+    padding: 4px 0; text-align: center;
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 100px;
+    background: rgba(201,148,31,0.06);
+  }
+  .revshare-desc { flex: 1; font-size: 13.5px; color: var(--gray); }
+  .revshare-pct {
+    flex-shrink: 0;
+    font-family: var(--serif); font-size: 1.3rem;
+    color: var(--gold); width: 50px; text-align: right;
+  }
+  .revshare-footnote { margin-top: 20px; font-size: 12px; color: var(--gray); font-style: italic; }
+
+  /* ══════════════════════════════════════
+     SLIDE 5 — YOUR PATH (CAREER)
      ══════════════════════════════════════ */
   .slide-career { background: var(--bg); }
   .slide-career .section-heading { color: var(--ink); }
@@ -591,91 +569,7 @@
   }
 
   /* ══════════════════════════════════════
-     SLIDE 7 — INCOME STREAMS
-     ══════════════════════════════════════ */
-  .slide-income { background: var(--bg); }
-  .streams-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-  }
-  .stream-card {
-    text-align: center;
-    padding: 36px 16px 32px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .stream-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-  .stream-icon {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 18px;
-  }
-  .stream-icon svg {
-    width: 26px; height: 26px;
-    fill: none; stroke: var(--gold);
-    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .stream-title { font-family: var(--serif); font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
-  .stream-desc { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
-
-  /* ══════════════════════════════════════
-     SLIDE 8 — CULTURE
-     ══════════════════════════════════════ */
-  .slide-culture { background: var(--white); }
-  .culture-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  .culture-grid img {
-    width: 100%; height: 320px;
-    object-fit: cover;
-    border-radius: var(--radius);
-  }
-
-  /* ══════════════════════════════════════
-     SLIDE 9 — REVENUE SHARE
-     ══════════════════════════════════════ */
-  .slide-revshare { background: var(--bg); }
-  .revshare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-  .revshare-grid img { width: 100%; border-radius: var(--radius); }
-  .revshare-table { list-style: none; }
-  .revshare-row {
-    display: flex; align-items: center; gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .revshare-row:last-child { border-bottom: none; }
-  .revshare-level-badge {
-    flex-shrink: 0; width: 70px;
-    padding: 4px 0; text-align: center;
-    font-size: 10px; font-weight: 800;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    border-radius: 100px;
-    background: rgba(201,148,31,0.06);
-  }
-  .revshare-desc { flex: 1; font-size: 13.5px; color: var(--gray); }
-  .revshare-pct {
-    flex-shrink: 0;
-    font-family: var(--serif); font-size: 1.3rem;
-    color: var(--gold); width: 50px; text-align: right;
-  }
-  .revshare-footnote { margin-top: 20px; font-size: 12px; color: var(--gray); font-style: italic; }
-
-  /* ══════════════════════════════════════
-     SLIDE 10 — ROLES
+     SLIDE 6 — ROLES
      ══════════════════════════════════════ */
   .slide-roles { background: var(--white); }
   .roles-grid {
@@ -698,7 +592,7 @@
   .role-card-desc { font-size: 14px; color: var(--gray); line-height: 1.65; }
 
   /* ══════════════════════════════════════
-     SLIDE 11 — COMPLETE / ACKNOWLEDGMENT
+     SLIDE 7 — COMPLETE / ACKNOWLEDGMENT
      ══════════════════════════════════════ */
   .slide-complete { background: var(--bg); }
   .ack-card {
@@ -760,10 +654,8 @@
     .split-grid { grid-template-columns: 1fr; gap: 36px; }
     .path-track { grid-template-columns: repeat(2, 1fr); gap: 48px 0; }
     .path-track::before { display: none; }
-    .streams-grid { grid-template-columns: repeat(3, 1fr); }
     .thesis-cards { grid-template-columns: 1fr; }
-    .platform-cards { grid-template-columns: repeat(2, 1fr); }
-    .culture-grid img { height: 260px; }
+    .income-row { grid-template-columns: repeat(3, 1fr); }
     .revshare-grid { grid-template-columns: 1fr; }
     .roles-grid { grid-template-columns: 1fr; }
   }
@@ -773,26 +665,23 @@
     .tracker-inner { gap: 0; padding: 0 12px; }
     .tracker { height: 44px; }
     .slide-content { padding: 60px 20px 110px; }
-    .hero-wrap { padding: 60px 20px 110px; }
+    .intro-wrap { padding: 60px 20px 110px; }
   }
 
   @media (max-width: 600px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .stat-box { padding: 28px 12px; }
-    .streams-grid { grid-template-columns: 1fr 1fr; }
+    .income-row { grid-template-columns: 1fr 1fr; }
     .path-track { grid-template-columns: 1fr 1fr; }
-    .culture-grid { grid-template-columns: 1fr; }
-    .culture-grid img { height: 220px; }
     .roles-grid { grid-template-columns: 1fr; }
-    .platform-cards { grid-template-columns: 1fr 1fr; }
     .thesis-cards { grid-template-columns: 1fr; }
     .ack-card { padding: 36px 24px; }
     .nav-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 32px; }
     .nav-wrap { bottom: 24px; }
     .back-btn { height: 44px; font-size: 14px; padding: 0 24px; }
-    .hero-title { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+    .intro-title { font-size: clamp(1.8rem, 6vw, 2.6rem); }
     .slide-content { padding: 56px 16px 100px; }
-    .hero-wrap { padding: 56px 16px 100px; }
+    .intro-wrap { padding: 56px 16px 100px; }
   }
 </style>
 </head>
@@ -808,7 +697,7 @@
     </div>
     <div class="tracker-step active" data-index="0">
       <div class="tracker-circle"><span class="step-num">1</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Mission</span>
+      <span class="tracker-label">Intro</span>
     </div>
     <div class="tracker-step" data-index="1">
       <div class="tracker-circle"><span class="step-num">2</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -816,37 +705,29 @@
     </div>
     <div class="tracker-step" data-index="2">
       <div class="tracker-circle"><span class="step-num">3</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Platform</span>
+      <span class="tracker-label">Commission</span>
     </div>
     <div class="tracker-step" data-index="3">
       <div class="tracker-circle"><span class="step-num">4</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Commission</span>
+      <span class="tracker-label">Retirement</span>
     </div>
     <div class="tracker-step" data-index="4">
       <div class="tracker-circle"><span class="step-num">5</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Rev Share</span>
+      <span class="tracker-label">Your Path</span>
     </div>
     <div class="tracker-step" data-index="5">
       <div class="tracker-circle"><span class="step-num">6</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Career</span>
+      <span class="tracker-label">Roles</span>
     </div>
     <div class="tracker-step" data-index="6">
       <div class="tracker-circle"><span class="step-num">7</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Income</span>
-    </div>
-    <div class="tracker-step" data-index="7">
-      <div class="tracker-circle"><span class="step-num">8</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Roles</span>
-    </div>
-    <div class="tracker-step" data-index="8">
-      <div class="tracker-circle"><span class="step-num">9</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <span class="tracker-label">Complete</span>
     </div>
   </div>
 </nav>
 
 <!-- ══════════════════════════════════════
-     CONTINUE / COMPLETE BUTTON
+     CONTINUE / BACK BUTTONS
      ══════════════════════════════════════ -->
 <div class="nav-wrap" id="navWrap">
   <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
@@ -864,16 +745,13 @@
      ══════════════════════════════════════ -->
 <div class="slider" id="slider">
 
-  <!-- ═══ SLIDE 1 — MISSION HERO ═══ -->
-  <div class="slide slide-hero" data-slide="0">
-    <div class="hero-wrap">
-      <span class="gold-label">Our Mission</span>
-      <h1 class="hero-title">
-        Where Agents Become<br><span class="gold">Investors.</span>
+  <!-- ═══ SLIDE 1 — INTRO ═══ -->
+  <div class="slide slide-intro" data-slide="0">
+    <div class="intro-wrap">
+      <img src="assets/logo.png" alt="Myers Home Buyers" style="max-width: 280px; margin: 0 auto 32px;">
+      <h1 class="intro-title">
+        Where Agents Become <span class="gold-italic">Investors</span>
       </h1>
-      <p class="hero-body">
-        You've spent your career helping other people build wealth through real estate. Myers is where you start building it for yourself. Same deal flow, same market access, same investor network you already serve &mdash; working for you instead.
-      </p>
     </div>
   </div>
 
@@ -884,78 +762,62 @@
       <h2 class="section-heading">
         Turn Real Estate Agents into<br><span class="gold-italic">Real Estate Investors.</span>
       </h2>
-      <div class="thesis-sub-label">Three Layers</div>
+      <div class="thesis-sub-label">Everything You Need to Win</div>
       <div class="thesis-cards">
-        <!-- For Agents -->
+        <!-- 1. Mentorship -->
         <div class="thesis-card">
           <div class="thesis-card-icon">
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           </div>
-          <div class="thesis-card-title">For Agents</div>
-          <div class="thesis-card-desc">A path from commission earner to wealth builder. Agents should eventually own deals, not just broker them.</div>
+          <div class="thesis-card-title">Personalized 1:1 Mentorship</div>
+          <div class="thesis-card-desc">Custom one-on-one training, provided leads, and accountability designed to help you hit your goals faster.</div>
         </div>
-        <!-- For Investors -->
+        <!-- 2. Training Platform -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          </div>
+          <div class="thesis-card-title">Self-Paced Training Platform</div>
+          <div class="thesis-card-desc">Access scripts, playbooks, deal walkthroughs, recorded classes, and step-by-step training whenever you need it.</div>
+        </div>
+        <!-- 3. Live Classes -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="thesis-card-title">Weekly Live Investor-Led Classes</div>
+          <div class="thesis-card-desc">Live classes taught by experienced investor-agents and vetted industry professionals to sharpen your skills and close more deals.</div>
+        </div>
+        <!-- 4. Career Partnership -->
         <div class="thesis-card">
           <div class="thesis-card-icon">
             <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <div class="thesis-card-title">For Investors</div>
-          <div class="thesis-card-desc">A reliable pipeline of vetted off-market properties in DFW. The showing process and verification system protect deal quality.</div>
+          <div class="thesis-card-title">Career Partnership</div>
+          <div class="thesis-card-desc">Build your own brand powered by Myers. Get your own website, lead generation, and a fully customizable CRM system to promote yourself — not just the Myers brand.</div>
         </div>
-        <!-- For the Company -->
+        <!-- 5. Social Events -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="15" r="3"/><circle cx="19" cy="15" r="3"/><line x1="12" y1="8" x2="5" y2="12"/><line x1="12" y1="8" x2="19" y2="12"/></svg>
+          </div>
+          <div class="thesis-card-title">Monthly Social Events</div>
+          <div class="thesis-card-desc">Build relationships with agents, investors, lenders, and industry partners at monthly networking events designed to help you grow.</div>
+        </div>
+        <!-- 6. Brokerage Support -->
         <div class="thesis-card">
           <div class="thesis-card-icon">
             <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
-          <div class="thesis-card-title">For the Company</div>
-          <div class="thesis-card-desc">A self-reinforcing network. Every agent adds deal flow, every deal adds investor relationships, every relationship creates opportunity.</div>
+          <div class="thesis-card-title">Brokerage Support</div>
+          <div class="thesis-card-desc">Get support with contracts, compliance, transaction coordination, systems, and questions as you build your business.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ SLIDE 3 — PLATFORM ═══ -->
-  <div class="slide slide-platform" data-slide="2">
-    <div class="slide-content">
-      <span class="gold-label">What Makes Us Different</span>
-      <h2 class="section-heading">
-        A Brokerage Built as a Platform for<br><span class="gold">Building Investment Careers.</span>
-      </h2>
-      <div class="platform-cards">
-        <div class="platform-card">
-          <div class="platform-card-icon">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-          <div class="platform-card-title">Acquisitions Pipeline</div>
-          <div class="platform-card-desc">Off-market deal sourcing and acquisition systems that feed your growth.</div>
-        </div>
-        <div class="platform-card">
-          <div class="platform-card-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div class="platform-card-title">Investor Network</div>
-          <div class="platform-card-desc">Direct access to active buyers and seasoned real estate investors.</div>
-        </div>
-        <div class="platform-card">
-          <div class="platform-card-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="platform-card-title">Showing/Auction System</div>
-          <div class="platform-card-desc">Structured showing process and competitive bidding to maximize deal value.</div>
-        </div>
-        <div class="platform-card">
-          <div class="platform-card-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          </div>
-          <div class="platform-card-title">Training Platform</div>
-          <div class="platform-card-desc">End-to-end education turning agents into confident real estate investors.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ SLIDE 4 — STATS + COMMISSION ═══ -->
-  <div class="slide slide-commission" data-slide="3">
+  <!-- ═══ SLIDE 3 — COMMISSION + INCOME ═══ -->
+  <div class="slide slide-commission" data-slide="2">
     <div class="slide-content">
       <span class="gold-label">The Split</span>
       <h2 class="section-heading">
@@ -980,7 +842,7 @@
           <div class="stat-label">Remote</div>
         </div>
       </div>
-      <div class="split-grid">
+      <div class="split-grid" style="margin-bottom: 48px;">
         <div>
           <div class="bar-group">
             <div class="bar-label-row">
@@ -1010,97 +872,51 @@
           <div class="split-big-sub">80% direct payout + 10% revenue share pool</div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- ═══ SLIDE 5 — REVENUE SHARE ═══ -->
-  <div class="slide slide-revshare" data-slide="4">
-    <div class="slide-content">
-      <span class="gold-label">Your Path at Myers</span>
-      <h2 class="section-heading">
-        From First Deal to<br><span class="gold">Full-Time Investor</span>
-      </h2>
-      <div class="path-track">
-        <div class="path-step">
-          <div class="path-circle">1</div>
-          <div class="path-step-title">Sales Agent</div>
-          <div class="path-step-desc">Close your first deal. Learn the math.</div>
-          <span class="path-badge">20% Commission</span>
-        </div>
-        <div class="path-step">
-          <div class="path-circle">2</div>
-          <div class="path-step-title">Acquisition Agent</div>
-          <div class="path-step-desc">Source your own off-market deals.</div>
-          <span class="path-badge">60% Acq. Payout</span>
-        </div>
-        <div class="path-step">
-          <div class="path-circle">3</div>
-          <div class="path-step-title">Team Lead</div>
-          <div class="path-step-desc">Mentor agents. Build your downline.</div>
-          <span class="path-badge">+ Rev Share</span>
-        </div>
-        <div class="path-step">
-          <div class="path-circle star">&#9733;</div>
-          <div class="path-step-title">Investor</div>
-          <div class="path-step-desc">Buy houses yourself. True wealth.</div>
-          <span class="path-badge">Generational</span>
-        </div>
-      </div>
-      <div class="path-callout">
-        Agents can begin investing at any stage &mdash; however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ SLIDE 7 — INCOME STREAMS ═══ -->
-  <div class="slide slide-income" data-slide="6">
-    <div class="slide-content">
-      <span class="gold-label">Earn 5 Ways</span>
-      <h2 class="section-heading">
-        Five Income Streams.<br><span class="gold">One Brokerage.</span>
-      </h2>
-      <div class="streams-grid">
-        <div class="stream-card">
-          <div class="stream-icon">
+      <!-- 5 Income Streams -->
+      <div class="thesis-sub-label" style="text-align:center;">Earn 5 Ways</div>
+      <div class="income-row">
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
             <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
           </div>
-          <div class="stream-title">Commissions</div>
-          <div class="stream-desc">Earn up to 80% on every closed transaction.</div>
+          <div class="income-mini-title">Commissions</div>
+          <div class="income-mini-desc">Up to 80% on every closed deal.</div>
         </div>
-        <div class="stream-card">
-          <div class="stream-icon">
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </div>
-          <div class="stream-title">Fix &amp; Flip</div>
-          <div class="stream-desc">Renovate and resell properties for profit.</div>
+          <div class="income-mini-title">Fix &amp; Flip</div>
+          <div class="income-mini-desc">Renovate and resell for profit.</div>
         </div>
-        <div class="stream-card">
-          <div class="stream-icon">
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
           </div>
-          <div class="stream-title">Rentals</div>
-          <div class="stream-desc">Build long-term cash flow with rental properties.</div>
+          <div class="income-mini-title">Rentals</div>
+          <div class="income-mini-desc">Long-term cash flow properties.</div>
         </div>
-        <div class="stream-card">
-          <div class="stream-icon">
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
             <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
-          <div class="stream-title">Wholesale</div>
-          <div class="stream-desc">Assign contracts for quick, low-risk income.</div>
+          <div class="income-mini-title">Wholesale</div>
+          <div class="income-mini-desc">Assign contracts for quick income.</div>
         </div>
-        <div class="stream-card">
-          <div class="stream-icon">
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="15" r="3"/><circle cx="19" cy="15" r="3"/><line x1="12" y1="8" x2="5" y2="12"/><line x1="12" y1="8" x2="19" y2="12"/></svg>
           </div>
-          <div class="stream-title">Revenue Share</div>
-          <div class="stream-desc">Earn passive income from your recruited network.</div>
+          <div class="income-mini-title">Revenue Share</div>
+          <div class="income-mini-desc">Passive income from your network.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ SLIDE 6 — CAREER PATH ═══ -->
-  <div class="slide slide-career" data-slide="5">
+  <!-- ═══ SLIDE 4 — RETIREMENT / REVENUE SHARE ═══ -->
+  <div class="slide slide-revshare" data-slide="3">
     <div class="slide-content">
       <span class="gold-label">Passive Income</span>
       <h2 class="section-heading">
@@ -1151,8 +967,47 @@
     </div>
   </div>
 
-  <!-- ═══ SLIDE 10 — ROLES ═══ -->
-  <div class="slide slide-roles" data-slide="7">
+  <!-- ═══ SLIDE 5 — YOUR PATH ═══ -->
+  <div class="slide slide-career" data-slide="4">
+    <div class="slide-content">
+      <span class="gold-label">Your Path at Myers</span>
+      <h2 class="section-heading">
+        From First Deal to<br><span class="gold-italic">Full-Time Investor</span>
+      </h2>
+      <div class="path-track">
+        <div class="path-step">
+          <div class="path-circle">1</div>
+          <div class="path-step-title">Sales Agent</div>
+          <div class="path-step-desc">Close your first deal. Learn the math.</div>
+          <span class="path-badge">20% Commission</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle">2</div>
+          <div class="path-step-title">Acquisition Agent</div>
+          <div class="path-step-desc">Source your own off-market deals.</div>
+          <span class="path-badge">60% Acq. Payout</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle">3</div>
+          <div class="path-step-title">Team Lead</div>
+          <div class="path-step-desc">Mentor agents. Build your downline.</div>
+          <span class="path-badge">+ Rev Share</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle star">&#9733;</div>
+          <div class="path-step-title">Investor</div>
+          <div class="path-step-desc">Buy houses yourself. True wealth.</div>
+          <span class="path-badge">Generational</span>
+        </div>
+      </div>
+      <div class="path-callout">
+        Agents can begin investing at any stage &mdash; however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 6 — ROLES ═══ -->
+  <div class="slide slide-roles" data-slide="5">
     <div class="slide-content">
       <span class="gold-label">Agent Roles</span>
       <h2 class="section-heading">
@@ -1183,8 +1038,8 @@
     </div>
   </div>
 
-  <!-- ═══ SLIDE 11 — COMPLETE ═══ -->
-  <div class="slide slide-complete" data-slide="8">
+  <!-- ═══ SLIDE 7 — COMPLETE ═══ -->
+  <div class="slide slide-complete" data-slide="6">
     <div class="slide-content" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 180px);">
       <div class="ack-card">
         <div class="ack-icon">
@@ -1209,7 +1064,7 @@
 <script>
   /* ── STATE ── */
   var currentSlide = 0;
-  var totalSlides = 9;
+  var totalSlides = 7;
   var isTransitioning = false;
 
   var slider = document.getElementById('slider');
@@ -1243,8 +1098,8 @@
       isTransitioning = false;
     }, 350);
 
-    /* Animate bar fills on commission slide (slide index 4) */
-    if (n === 4) {
+    /* Animate bar fills on commission slide (slide index 2) */
+    if (n === 2) {
       setTimeout(animateBars, 300);
     }
 
