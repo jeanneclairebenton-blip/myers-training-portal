@@ -27,7 +27,7 @@
     --radius-sm: 8px;
     --shadow: 0 4px 24px rgba(26,24,21,0.08);
     --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
-    --total-slides: 7;
+    --total-slides: 6;
   }
 
   body {
@@ -163,7 +163,7 @@
     overflow-x: hidden;
     flex-shrink: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
   }
@@ -292,7 +292,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: 100vh;
     padding: 80px 32px 120px;
     max-width: 760px;
     margin: 0 auto;
@@ -450,12 +450,11 @@
   }
   .income-mini-card {
     text-align: center;
-    padding: 20px 12px;
+    padding: 28px 14px;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -505,7 +504,7 @@
     border-radius: 100px;
     background: rgba(201,148,31,0.06);
   }
-  .revshare-desc { flex: 1; font-size: 13.5px; color: var(--gray); }
+  .revshare-desc { flex: 1; font-size: 15px; color: var(--gray); }
   .revshare-pct {
     flex-shrink: 0;
     font-family: var(--serif); font-size: 1.3rem;
@@ -553,14 +552,14 @@
     color: var(--gold);
   }
   .path-circle.star { font-size: 1.6rem; }
-  .path-step-title { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); margin-bottom: 8px; }
-  .path-step-desc { font-size: 14px; color: #3D362A; line-height: 1.5; margin-bottom: 14px; min-height: 40px; }
+  .path-step-title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); margin-bottom: 8px; }
+  .path-step-desc { font-size: 15px; color: #3D362A; line-height: 1.5; margin-bottom: 14px; min-height: 40px; }
   .path-badge {
     display: inline-block;
     padding: 4px 14px;
     border: 1px solid var(--gold);
     border-radius: 100px;
-    font-size: 11px; font-weight: 700;
+    font-size: 12px; font-weight: 700;
     color: var(--gold);
     letter-spacing: 0.5px;
   }
@@ -569,7 +568,7 @@
     border-left: 3px solid var(--gold);
     padding: 16px 24px;
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    font-size: 14px;
+    font-size: 15px;
     color: #3D362A;
     line-height: 1.65;
   }
@@ -595,7 +594,7 @@
   .role-card-body { padding: 28px 28px 32px; }
   .role-card-title { font-family: var(--serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 6px; }
   .role-card-badge { display: inline-block; font-family: var(--serif); font-size: 1rem; color: var(--gold); margin-bottom: 14px; }
-  .role-card-desc { font-size: 14px; color: var(--gray); line-height: 1.65; }
+  .role-card-desc { font-size: 16px; color: var(--gray); line-height: 1.65; }
 
   /* ══════════════════════════════════════
      SLIDE 7 — COMPLETE / ACKNOWLEDGMENT
@@ -723,10 +722,6 @@
     </div>
     <div class="tracker-step" data-index="5">
       <div class="tracker-circle"><span class="step-num">6</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="tracker-label">Roles</span>
-    </div>
-    <div class="tracker-step" data-index="6">
-      <div class="tracker-circle"><span class="step-num">7</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <span class="tracker-label">Complete</span>
     </div>
   </div>
@@ -754,7 +749,7 @@
   <!-- ═══ SLIDE 1 — INTRO ═══ -->
   <div class="slide slide-intro" data-slide="0">
     <div class="intro-wrap">
-      <img src="assets/logo.png" alt="Myers Home Buyers" style="max-width: 320px; margin: 0 auto 40px; filter: brightness(0) invert(1);">
+      <img src="assets/logo.png" alt="Myers Home Buyers" style="max-width: 320px; margin: 0 auto 40px;">
       <h1 class="intro-title">
         Where Agents Become <span class="gold-italic">Investors</span>
       </h1>
@@ -991,7 +986,7 @@
           <div class="path-circle">2</div>
           <div class="path-step-title">Acquisition Agent</div>
           <div class="path-step-desc">Source your own off-market deals.</div>
-          <span class="path-badge">60% Acq. Payout</span>
+          <span class="path-badge">60% Commission</span>
         </div>
         <div class="path-step">
           <div class="path-circle">3</div>
@@ -1003,49 +998,17 @@
           <div class="path-circle star">&#9733;</div>
           <div class="path-step-title">Investor</div>
           <div class="path-step-desc">Buy houses yourself. True wealth.</div>
-          <span class="path-badge">Generational</span>
+          <span class="path-badge">Generational Wealth</span>
         </div>
       </div>
       <div class="path-callout">
-        Agents can begin investing at any stage &mdash; however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
+        Agents can begin investing at any stage, however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
       </div>
     </div>
   </div>
 
-  <!-- ═══ SLIDE 6 — ROLES ═══ -->
-  <div class="slide slide-roles" data-slide="5">
-    <div class="slide-content">
-      <span class="gold-label">Agent Roles</span>
-      <h2 class="section-heading">
-        Two Paths.<br><span class="gold">One Mission.</span>
-      </h2>
-      <div class="roles-grid">
-        <div class="role-card">
-          <img class="role-card-img" src="assets/agent-success.png" alt="Sales agent">
-          <div class="role-card-body">
-            <div class="role-card-title">Sales Agent</div>
-            <div class="role-card-badge">20% Commission</div>
-            <p class="role-card-desc">
-              Your entry point into the Myers ecosystem. As a Sales Agent you work warm leads generated by the company, close transactions, and learn the investment math behind every deal. This role builds the foundation for everything that follows.
-            </p>
-          </div>
-        </div>
-        <div class="role-card">
-          <img class="role-card-img" src="assets/acquisitions.png" alt="Acquisitions agent">
-          <div class="role-card-body">
-            <div class="role-card-title">Acquisitions Agent</div>
-            <div class="role-card-badge">Up to 60%</div>
-            <p class="role-card-desc">
-              Source your own off-market deals, negotiate directly with sellers, and earn significantly higher payouts. Acquisitions agents operate with autonomy and build the skills to eventually invest in their own properties.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ SLIDE 7 — COMPLETE ═══ -->
-  <div class="slide slide-complete" data-slide="6">
+  <!-- ═══ SLIDE 6 — COMPLETE ═══ -->
+  <div class="slide slide-complete" data-slide="5">
     <div class="slide-content" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 180px);">
       <div class="ack-card">
         <div class="ack-icon">
@@ -1070,7 +1033,7 @@
 <script>
   /* ── STATE ── */
   var currentSlide = 0;
-  var totalSlides = 7;
+  var totalSlides = 6;
   var isTransitioning = false;
 
   var slider = document.getElementById('slider');
