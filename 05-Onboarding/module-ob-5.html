@@ -4,101 +4,340 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Step 5 — Email, Drives & Calendars | Myers Onboarding</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  /* ── RESET ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ── TOKENS ── */
+  :root {
+    --gold:   #C9941F;
+    --gold-light: #D4A94A;
+    --cream:  #FBE8B7;
+    --cream-bg: #FFF8EB;
+    --ink:    #1A1815;
+    --dark:   #2A2520;
+    --bg:     #FAFAF8;
+    --white:  #FFFFFF;
+    --gray:   #8A857D;
+    --border: #E8E4DC;
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(26,24,21,0.08);
+    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
+    --total-slides: 4;
+  }
+
   body {
-    font-family: 'Mulish', system-ui, sans-serif;
-    background: #FAFAF8;
-    color: #1A1815;
-    line-height: 1.6;
-    min-height: 100vh;
-    font-size: 16px;
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
   }
 
-  /* ─── Top Nav ─── */
-  .top-nav {
+  img { max-width: 100%; display: block; }
+
+  /* ══════════════════════════════════════
+     PROGRESS TRACKER — Fixed Top Bar
+     ══════════════════════════════════════ */
+  .tracker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
     background: #1A1815;
-    padding: 0.75rem 2rem;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
-  .top-nav a:hover { color: #C9941F; }
-  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
-
-  /* ─── Progress ─── */
-  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
-  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
-
-  /* ─── Hero ─── */
-  .hero {
-    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
-    padding: 2rem 2rem 1.75rem;
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid #E8E2D4;
-    text-align: center;
-  }
-  .hero::after {
-    content: ''; position: absolute; top: -50%; right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-badge {
-    display: flex; align-items: center; gap: 0.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    margin-left: auto; margin-right: auto; width: fit-content;
-    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
-    border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
   }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .hero h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
-    line-height: 1.15; margin-bottom: 0.5rem;
+  .tracker-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    padding: 0 20px;
+    max-width: 960px;
+    width: 100%;
   }
-  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+  .tracker-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    min-width: 0;
+  }
+  .tracker-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #3D362A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    color: #6B6358;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+  }
+  .tracker-circle svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--white);
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: none;
+  }
+  .tracker-label {
+    font-family: var(--sans);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #5A5449;
+    margin-top: 3px;
+    white-space: nowrap;
+    transition: color 0.4s ease;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.active .tracker-label { color: var(--gold); }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+  }
+  .tracker-step.completed .tracker-circle .step-num { display: none; }
+  .tracker-step.completed .tracker-circle svg { display: block; }
+  .tracker-step.completed .tracker-label { color: var(--gold); opacity: 0.7; }
 
-  /* ─── Container ─── */
-  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
-
-  /* ─── Intro Text ─── */
-  .intro-text {
-    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
-    margin-bottom: 2rem; max-width: 760px;
-    text-align: center; margin-left: auto; margin-right: auto;
+  .tracker-line {
+    position: absolute;
+    top: 12px;
+    left: calc(100% / 10);
+    right: calc(100% / 10);
+    height: 2px;
+    background: #3D362A;
+    z-index: 1;
+  }
+  .tracker-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* ─── Document Grid ─── */
+  /* ══════════════════════════════════════
+     SLIDER — Horizontal Slide Deck
+     ══════════════════════════════════════ */
+  .slider {
+    display: flex;
+    width: calc(var(--total-slides) * 100vw);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+  }
+  .slide-content {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 110px 32px 130px;
+  }
+
+  /* ══════════════════════════════════════
+     NAV BUTTONS — Fixed Bottom
+     ══════════════════════════════════════ */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 40px;
+    height: 48px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms, opacity 200ms;
+    box-shadow: 0 4px 24px rgba(201,148,31,0.3);
+    letter-spacing: 0.3px;
+  }
+  .nav-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
+  }
+  .nav-btn:active { transform: translateY(0); }
+  .nav-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .nav-btn.hidden { opacity: 0; pointer-events: none; }
+
+  .nav-wrap {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.85);
+    color: var(--gray);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
+    backdrop-filter: blur(8px);
+  }
+  .back-btn:hover {
+    background: var(--white);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
+  /* ══════════════════════════════════════
+     UTILITY CLASSES
+     ══════════════════════════════════════ */
+  .gold-label {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .section-heading .gold { color: var(--gold); }
+  .section-heading .gold-italic {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .section-heading em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 1 — OVERVIEW (DARK)
+     ══════════════════════════════════════ */
+  .slide-dark {
+    background: var(--ink);
+  }
+  .slide-dark .section-heading { color: var(--white); }
+  .slide-dark .section-heading em { color: var(--gold); font-style: italic; }
+  .intro-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 80px 32px 120px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .intro-subtitle {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: -20px;
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 2-3 — LIGHT BACKGROUNDS
+     ══════════════════════════════════════ */
+  .slide-light { background: var(--bg); }
+
+  /* ══════════════════════════════════════
+     DOC CARDS, GRID, ACTIONS, CHECKS
+     ══════════════════════════════════════ */
   .doc-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
+    gap: 20px;
+    margin-bottom: 24px;
   }
   .doc-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
   .doc-card {
-    background: #FFFDF6;
-    border: 1px solid #E8E2D4;
-    border-radius: 16px;
-    padding: 1.25rem 1.25rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
     transition: transform 200ms, box-shadow 200ms;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     text-align: left;
   }
   .doc-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+    box-shadow: var(--shadow-lg);
   }
   .doc-card.full-width {
     grid-column: 1 / -1;
@@ -106,308 +345,456 @@
   .doc-card-icon {
     width: 52px; height: 52px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.25rem;
-    background: rgba(201,148,31,0.12);
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
   }
   .doc-card-icon svg {
-    width: 26px; height: 26px; stroke: #C9941F; fill: none;
+    width: 26px; height: 26px; stroke: var(--gold); fill: none;
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
   .doc-card h3 {
-    font-family: 'Mulish', system-ui, sans-serif;
-    font-size: 1.1rem; font-weight: 800; color: #1A1815;
-    margin-bottom: 0.6rem; line-height: 1.35;
+    font-family: var(--sans);
+    font-size: 1.1rem; font-weight: 800; color: var(--ink);
+    margin-bottom: 8px; line-height: 1.35;
   }
   .doc-card p {
-    font-size: 1rem; color: #3D362A; line-height: 1.6;
+    font-size: 16px; color: #3D362A; line-height: 1.65;
     flex: 1;
   }
-  .doc-card .highlight {
-    color: #C9941F; font-weight: 700;
-  }
-  .doc-card .doc-check {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid #E8E2D4;
-    display: flex; align-items: center; gap: 0.6rem;
-  }
-  .doc-card .doc-check input[type="checkbox"] {
-    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
-  }
-  .doc-card .doc-check label {
-    font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
-  }
-  .doc-card .doc-action {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    margin-top: 1rem; padding: 0.55rem 1.1rem;
-    background: linear-gradient(135deg, #C9941F, #8B6B1A);
-    color: #FFFDF6; border-radius: 8px; text-decoration: none;
-    font-size: 0.9rem; font-weight: 700;
+  .doc-card p strong { color: var(--ink); }
+  .doc-action {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 16px; padding: 10px 20px;
+    background: linear-gradient(135deg, var(--gold), #8B6B1A);
+    color: var(--white); border-radius: var(--radius-sm); text-decoration: none;
+    font-size: 14px; font-weight: 700;
     box-shadow: 0 2px 8px rgba(201,148,31,0.25);
-    transition: all 0.2s;
+    transition: transform 200ms, box-shadow 200ms;
   }
-  .doc-card .doc-action:hover {
+  .doc-action:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(201,148,31,0.35);
   }
-  .doc-card .doc-action svg {
-    width: 14px; height: 14px; stroke: #FFFDF6; fill: none;
+  .doc-action svg {
+    width: 14px; height: 14px; stroke: var(--white); fill: none;
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
+  .doc-check {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .doc-check input[type="checkbox"] {
+    width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+  }
+  .doc-check label {
+    font-size: 15px; font-weight: 600; color: var(--gray); cursor: pointer;
+  }
 
-  /* ─── Yellow Callout Box ─── */
-  .yellow-callout {
-    background: #FBE8B7;
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-    margin: 1rem auto;
-    max-width: 700px; margin-left: auto; margin-right: auto;
-  }
-  .yellow-callout-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .yellow-callout-icon svg {
-    width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
-    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .yellow-callout p {
-    color: #3D362A; font-size: 1.05rem; font-weight: 500;
-  }
-  .yellow-callout strong { color: #1A1815; }
-  .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
-
-  /* ─── Section Divider ─── */
+  /* ── Section Divider ── */
   .section-divider {
-    display: flex; align-items: center; gap: 1rem;
-    margin: 2.5rem auto 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
+    display: flex; align-items: center; gap: 16px;
+    margin: 36px 0 24px;
   }
   .section-divider:first-child { margin-top: 0; }
-  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
+  .section-divider .line { flex: 1; height: 1px; background: var(--border); }
   .section-divider .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.12em; color: #7A7263;
+    font-family: var(--sans);
+    font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2.5px; color: var(--gray);
   }
 
-  /* ─── Info Block ─── */
-  .info-block {
-    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
-    overflow: hidden; margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    max-width: 800px; margin-left: auto; margin-right: auto;
+  /* ══════════════════════════════════════
+     SLIDE 4 — COMPLETE / ACKNOWLEDGMENT
+     ══════════════════════════════════════ */
+  .slide-complete { background: var(--bg); }
+  .ack-card {
+    max-width: 640px; margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 56px 48px;
+    text-align: center;
+    box-shadow: var(--shadow);
   }
-  .info-block-header {
-    background: #1A1815; padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .info-block-header .ib-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    background: rgba(201,148,31,0.2);
+  .ack-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
     display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
   }
-  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .info-block-header h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.3rem; color: #FFFDF6;
+  .ack-icon svg {
+    width: 28px; height: 28px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .info-block-body { padding: 1.5rem; text-align: left; }
-  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
-  .info-block-body .detail-row {
-    display: flex; gap: 2rem; margin-top: 1rem;
+  .ack-card-title {
+    font-family: var(--serif); font-size: 1.5rem;
+    color: var(--ink); margin-bottom: 8px; line-height: 1.3;
   }
-  .info-block-body .detail-item {
-    flex: 1;
+  .ack-card-sub {
+    font-size: 14px; color: var(--gray);
+    margin-bottom: 32px; line-height: 1.6;
   }
-  .info-block-body .detail-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
+  .ack-label {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer; user-select: none;
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border);
+    transition: border-color 0.3s ease, background 0.3s ease;
   }
-  .info-block-body .detail-value {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.4rem; color: #C9941F;
+  .ack-label:hover { border-color: var(--gold); background: rgba(201,148,31,0.04); }
+  .ack-label input[type="checkbox"] {
+    width: 22px; height: 22px;
+    accent-color: var(--gold); cursor: pointer;
   }
 
-  /* ─── Navigation ─── */
-  .module-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .module-nav a {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    text-decoration: none; font-weight: 700; font-size: 1rem;
-    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
-  }
-  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
-  .nav-prev:hover { background: #E8E2D4; }
-  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
-  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+  /* ══════════════════════════════════════
+     SCROLLBAR
+     ══════════════════════════════════════ */
+  .slide::-webkit-scrollbar { width: 5px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(201,148,31,0.25); border-radius: 100px; }
 
-  /* ─── Footer ─── */
-  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
+  /* ══════════════════════════════════════
+     RESPONSIVE
+     ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .doc-grid { grid-template-columns: 1fr; }
+    .doc-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+  }
 
   @media (max-width: 768px) {
+    .tracker-label { display: none; }
+    .tracker-inner { gap: 0; padding: 0 12px; }
+    .tracker { height: 44px; }
+    .slide-content { padding: 60px 20px 110px; }
+    .intro-wrap { padding: 60px 20px 110px; }
+  }
+
+  @media (max-width: 600px) {
     .doc-grid, .doc-grid.cols-3 { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.75rem; }
-    .hero { padding: 2rem 1.25rem; }
-    .container { padding: 1.5rem 1rem 2rem; }
-    .module-nav { flex-direction: column; gap: 0.75rem; }
-    .module-nav a { width: 100%; justify-content: center; }
-    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
+    .ack-card { padding: 36px 24px; }
+    .nav-btn { height: 44px; font-size: 14px; padding: 0 32px; }
+    .nav-wrap { bottom: 24px; }
+    .back-btn { height: 44px; font-size: 14px; padding: 0 24px; }
+    .slide-content { padding: 56px 16px 100px; }
+    .intro-wrap { padding: 56px 16px 100px; }
   }
 </style>
 </head>
 <body>
-<!-- Hero -->
-<header class="hero">
-  <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    Step 5
-  </div>
-  <h1>Email, Drives &amp; Calendars</h1>
-  <div class="subtitle">Get connected to all your essential tools and resources.</div>
-</header>
 
-<!-- Main Content -->
-<div class="container">
-
-  <!-- ═══ EMAIL SETUP ═══ -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Email Setup</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- Single Wide Task Card -->
-  <div class="doc-grid">
-    <div class="doc-card full-width">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      </div>
-      <h3>Activate Gmail Account</h3>
-      <p>Use credentials from your <strong>"Welcome To Myers!"</strong> email. Set up your email signature and add a professional headshot.</p>
-      <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="doc-action">
-        Email Signature Template
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob5-email">
-        <label for="ob5-email">Completed</label>
-      </div>
+<!-- ══════════════════════════════════════
+     PROGRESS TRACKER
+     ══════════════════════════════════════ -->
+<nav class="tracker">
+  <div class="tracker-inner">
+    <div class="tracker-line">
+      <div class="tracker-line-fill" id="trackerFill"></div>
+    </div>
+    <div class="tracker-step active" data-index="0">
+      <div class="tracker-circle"><span class="step-num">1</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Overview</span>
+    </div>
+    <div class="tracker-step" data-index="1">
+      <div class="tracker-circle"><span class="step-num">2</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Email</span>
+    </div>
+    <div class="tracker-step" data-index="2">
+      <div class="tracker-circle"><span class="step-num">3</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Tools</span>
+    </div>
+    <div class="tracker-step" data-index="3">
+      <div class="tracker-circle"><span class="step-num">4</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Complete</span>
     </div>
   </div>
+</nav>
 
-  <!-- ═══ CALENDARS ═══ -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Calendars</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="doc-grid">
-
-    <!-- Company Calendar -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </div>
-      <h3>Company Calendar</h3>
-      <p>Subscribe to stay updated on all company events.</p>
-      <a href="https://calendar.google.com/calendar/u/0?cid=Y183cG8ydWpwdDJwM2JqNm5sczYzNXE4MW9vZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="doc-action">
-        Subscribe
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob5-cal-company">
-        <label for="ob5-cal-company">Completed</label>
-      </div>
-    </div>
-
-    <!-- Showings Calendar -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/></svg>
-      </div>
-      <h3>Myers DFW Showings Calendar</h3>
-      <p>Stay updated on all property showings in real time.</p>
-      <a href="https://calendar.google.com/calendar/u/0?cid=am9zaGRlc2hvbmcuY29tX2QwMXNzMmdwZ2VlZXQxZ3F1Y2pkZDJnNmhvQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank" class="doc-action">
-        Subscribe
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob5-cal-showings">
-        <label for="ob5-cal-showings">Completed</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ SHARED DRIVES ═══ -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Shared Drives</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="doc-grid cols-3">
-
-    <!-- Myers Deals -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      </div>
-      <h3>Myers Deals</h3>
-      <p>Live Deals &amp; Property Flyers.</p>
-      <a href="https://drive.google.com/drive/folders/0AAKvoVvYPEK-Uk9PVA" target="_blank" class="doc-action">
-        Open Drive
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob5-drive-deals">
-        <label for="ob5-drive-deals">Completed</label>
-      </div>
-    </div>
-
-    <!-- Agent Resources -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      </div>
-      <h3>Agent Resources</h3>
-      <p>Training materials and resources.</p>
-      <a href="https://drive.google.com/drive/folders/0ADyroRsH9CCZUk9PVA" target="_blank" class="doc-action">
-        Open Drive
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob5-drive-resources">
-        <label for="ob5-drive-resources">Completed</label>
-      </div>
-    </div>
-
-    <!-- Marketing Drive -->
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      </div>
-      <h3>Marketing Drive</h3>
-      <p>Logos, Signature Templates, and more.</p>
-      <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="doc-action">
-        Open Drive
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob5-drive-marketing">
-        <label for="ob5-drive-marketing">Completed</label>
-      </div>
-    </div>
-
-  </div>
+<!-- ══════════════════════════════════════
+     CONTINUE / BACK BUTTONS
+     ══════════════════════════════════════ -->
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="nav-btn" id="navBtn" onclick="advanceSlide()">
+    Continue
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
 </div>
+
+<!-- ══════════════════════════════════════
+     SLIDE DECK
+     ══════════════════════════════════════ -->
+<div class="slider" id="slider">
+
+  <!-- ═══ SLIDE 1 — OVERVIEW (DARK) ═══ -->
+  <div class="slide slide-dark" data-slide="0">
+    <div class="intro-wrap">
+      <span class="gold-label">Step 5</span>
+      <h1 class="section-heading">
+        Email, Drives & <em>Calendars</em>
+      </h1>
+      <p class="intro-subtitle">Get connected to all your essential tools and resources.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 2 — EMAIL SETUP ═══ -->
+  <div class="slide slide-light" data-slide="1">
+    <div class="slide-content">
+      <span class="gold-label">Email</span>
+      <h2 class="section-heading">
+        Activate Your <em>Gmail</em>
+      </h2>
+
+      <div class="doc-grid">
+        <div class="doc-card full-width">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3>Activate Gmail Account</h3>
+          <p>Use credentials from your <strong>"Welcome To Myers!"</strong> email. Set up your email signature and add a professional headshot.</p>
+          <a href="https://docs.google.com/document/d/1qV6U8BreAibCf9zOdojKk883DguaA5SVUkgR4ixPETk/edit?tab=t.0" target="_blank" class="doc-action">
+            Email Signature Template
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob5-email">
+            <label for="ob5-email">Completed</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 3 — CALENDARS & SHARED DRIVES ═══ -->
+  <div class="slide slide-light" data-slide="2">
+    <div class="slide-content">
+      <span class="gold-label">Tools</span>
+      <h2 class="section-heading">
+        Calendars & <em>Shared Drives</em>
+      </h2>
+
+      <!-- Calendars Section -->
+      <div class="section-divider">
+        <div class="line"></div>
+        <span class="label">Calendars</span>
+        <div class="line"></div>
+      </div>
+
+      <div class="doc-grid">
+        <!-- Company Calendar -->
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>Company Calendar</h3>
+          <p>Subscribe to stay updated on all company events.</p>
+          <a href="https://calendar.google.com/calendar/u/0?cid=Y183cG8ydWpwdDJwM2JqNm5sczYzNXE4MW9vZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="doc-action">
+            Subscribe
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob5-cal-company">
+            <label for="ob5-cal-company">Completed</label>
+          </div>
+        </div>
+
+        <!-- Showings Calendar -->
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/></svg>
+          </div>
+          <h3>Myers DFW Showings Calendar</h3>
+          <p>Stay updated on all property showings in real time.</p>
+          <a href="https://calendar.google.com/calendar/u/0?cid=am9zaGRlc2hvbmcuY29tX2QwMXNzMmdwZ2VlZXQxZ3F1Y2pkZDJnNmhvQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank" class="doc-action">
+            Subscribe
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob5-cal-showings">
+            <label for="ob5-cal-showings">Completed</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shared Drives Section -->
+      <div class="section-divider">
+        <div class="line"></div>
+        <span class="label">Shared Drives</span>
+        <div class="line"></div>
+      </div>
+
+      <div class="doc-grid cols-3">
+        <!-- Myers Deals -->
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Myers Deals</h3>
+          <p>Live Deals &amp; Property Flyers.</p>
+          <a href="https://drive.google.com/drive/folders/0AAKvoVvYPEK-Uk9PVA" target="_blank" class="doc-action">
+            Open Drive
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob5-drive-deals">
+            <label for="ob5-drive-deals">Completed</label>
+          </div>
+        </div>
+
+        <!-- Agent Resources -->
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3>Agent Resources</h3>
+          <p>Training materials and resources.</p>
+          <a href="https://drive.google.com/drive/folders/0ADyroRsH9CCZUk9PVA" target="_blank" class="doc-action">
+            Open Drive
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob5-drive-resources">
+            <label for="ob5-drive-resources">Completed</label>
+          </div>
+        </div>
+
+        <!-- Marketing Drive -->
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <h3>Marketing Drive</h3>
+          <p>Logos, Signature Templates, and more.</p>
+          <a href="https://drive.google.com/drive/u/0/folders/11Wo44zwGzuZUL18kfltUjxN-DAuqtiPl" target="_blank" class="doc-action">
+            Open Drive
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob5-drive-marketing">
+            <label for="ob5-drive-marketing">Completed</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 4 — COMPLETE ═══ -->
+  <div class="slide slide-complete" data-slide="3">
+    <div class="slide-content" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 180px);">
+      <div class="ack-card">
+        <div class="ack-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="ack-card-title">Step Complete</div>
+        <p class="ack-card-sub">
+          I have set up my email, calendars, and shared drives.
+        </p>
+        <label class="ack-label">
+          <input type="checkbox" id="ob5-acknowledge" onchange="checkConfetti()">
+          <span>I acknowledge and agree</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.slider -->
+
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  /* ── STATE ── */
+  var currentSlide = 0;
+  var totalSlides = 4;
+  var isTransitioning = false;
+
+  var slider = document.getElementById('slider');
+  var navBtn = document.getElementById('navBtn');
+  var trackerFill = document.getElementById('trackerFill');
+  var trackerSteps = document.querySelectorAll('.tracker-step');
+
+  /* ── GO TO SLIDE ── */
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides || isTransitioning) return;
+    isTransitioning = true;
+    currentSlide = n;
+
+    /* Move slider */
+    slider.style.transform = 'translateX(-' + (n * 100) + 'vw)';
+
+    /* Update tracker */
+    updateTracker();
+    updateBackBtn();
+
+    /* Update button */
+    navBtn.classList.add('hidden');
+    setTimeout(function() {
+      if (currentSlide === totalSlides - 1) {
+        navBtn.style.display = 'none';
+      } else {
+        navBtn.innerHTML = 'Continue <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+        navBtn.style.display = '';
+        navBtn.classList.remove('hidden');
+      }
+      isTransitioning = false;
+    }, 350);
+
+    /* Reset scroll of target slide */
+    var targetSlide = document.querySelector('[data-slide="' + n + '"]');
+    if (targetSlide) targetSlide.scrollTop = 0;
+  }
+
+  /* ── ADVANCE ── */
+  function advanceSlide() {
+    goToSlide(currentSlide + 1);
+  }
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
+
+  /* ── TRACKER UPDATE ── */
+  function updateTracker() {
+    trackerSteps.forEach(function(step) {
+      var idx = parseInt(step.getAttribute('data-index'));
+      step.classList.remove('active', 'completed');
+      if (idx < currentSlide) {
+        step.classList.add('completed');
+      } else if (idx === currentSlide) {
+        step.classList.add('active');
+      }
+    });
+
+    /* Progress line fill */
+    var pct = totalSlides > 1 ? (currentSlide / (totalSlides - 1)) * 100 : 0;
+    trackerFill.style.width = pct + '%';
+  }
+
+  /* ── KEYBOARD NAV ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (currentSlide < totalSlides - 1) advanceSlide();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToSlide(currentSlide - 1);
+    }
+  });
+
+  /* ── INIT ── */
+  updateTracker();
+  updateBackBtn();
+</script>
 </body>
 </html>
