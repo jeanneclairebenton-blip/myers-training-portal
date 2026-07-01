@@ -280,7 +280,7 @@ body {
 /* ── STEP CARDS (Timeline) ── */
 .step-flow {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 0;
   margin-bottom: 1.5rem;
 }
@@ -290,8 +290,7 @@ body {
   border-radius: 16px;
   padding: 1.75rem 1.5rem;
   text-align: left;
-  flex: 1;
-  min-height: 220px;
+  flex: 1 1 0;
   box-shadow: 0 2px 8px rgba(26,24,21,0.06);
   transition: transform 200ms, box-shadow 200ms;
 }
@@ -460,6 +459,10 @@ body {
   align-items: center;
   gap: 16px;
   z-index: 1000;
+  pointer-events: none;
+}
+.continue-btn-wrap > * {
+  pointer-events: auto;
 }
 
 /* ── CONTINUE BUTTON ── */
