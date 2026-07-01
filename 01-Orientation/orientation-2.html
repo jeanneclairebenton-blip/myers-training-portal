@@ -288,9 +288,10 @@ body {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 1.5rem 1.25rem;
+  padding: 1.75rem 1.5rem;
   text-align: left;
   flex: 1;
+  min-height: 220px;
   box-shadow: 0 2px 8px rgba(26,24,21,0.06);
   transition: transform 200ms, box-shadow 200ms;
 }
@@ -307,11 +308,24 @@ body {
 }
 .step-card h3 {
   font-family: var(--sans);
-  font-size: 1.05rem; font-weight: 800; color: var(--ink);
-  margin-bottom: 0.4rem; line-height: 1.35;
+  font-size: 1.15rem; font-weight: 800; color: var(--ink);
+  margin-bottom: 0.5rem; line-height: 1.35;
+}
+.step-time {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 12px;
 }
 .step-card p {
-  font-size: 0.9rem; color: #5A5347; line-height: 1.5;
+  font-size: 1.05rem; color: #5A5347; line-height: 1.55;
 }
 .step-arrow {
   display: flex;
@@ -629,7 +643,8 @@ body {
           <div class="step-card">
             <div class="step-num">1</div>
             <h3>Showing Window</h3>
-            <p>One scheduled showing of the property. <strong>Showing window = 1 hour.</strong></p>
+            <div class="step-time">= 1 Hour</div>
+            <p>One scheduled showing of the property. Investors view, inspect, and decide.</p>
           </div>
 
           <div class="step-arrow">
@@ -640,7 +655,8 @@ body {
           <div class="step-card">
             <div class="step-num">2</div>
             <h3>Bidding Closes</h3>
-            <p>Bidding ends 1 hour after the end of the showing.</p>
+            <div class="step-time">= 1 Hour After Showing</div>
+            <p>Bidding ends 1 hour after the end of the showing. Submit your best offer.</p>
           </div>
 
           <div class="step-arrow">
@@ -650,8 +666,9 @@ body {
           <!-- Step 3 -->
           <div class="step-card">
             <div class="step-num">3</div>
-            <h3>Win &amp; Secure</h3>
-            <p>Winner has <strong>2 hours</strong> after bidding ends to submit wire + contract, or the AA moves to the next buyer.</p>
+            <h3>Secure Wire & Contracts</h3>
+            <div class="step-time">= 2 Hours After Bid</div>
+            <p>Winner has 2 hours after bidding ends to submit wire + contract, or the AA moves to the next buyer.</p>
           </div>
         </div>
 
