@@ -449,6 +449,19 @@ body {
   font-size: 1.05rem; font-weight: 700; color: var(--ink); cursor: pointer;
 }
 
+/* ── NAV BUTTON WRAP ── */
+.continue-btn-wrap {
+  position: fixed;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  z-index: 1000;
+}
+
 /* ── CONTINUE BUTTON ── */
 .continue-btn {
   display: inline-flex;
@@ -776,7 +789,7 @@ body {
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     Back
   </button>
-  <button class="continue-btn" id="continueBtn" onclick="goNext()" style="position:static;transform:none;">
+  <button class="continue-btn" id="continueBtn" onclick="goNext()">
     Continue
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
