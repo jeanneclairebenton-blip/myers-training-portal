@@ -508,7 +508,7 @@ body {
         <span class="step-num-text">2</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <span class="tracker-label">Responsibilities</span>
+      <span class="tracker-label">Rules</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="2">
@@ -516,20 +516,12 @@ body {
         <span class="step-num-text">3</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <span class="tracker-label">Rules</span>
+      <span class="tracker-label">FAQ</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="3">
       <div class="tracker-circle">
         <span class="step-num-text">4</span>
-        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <span class="tracker-label">FAQ</span>
-    </div>
-    <div class="tracker-line"></div>
-    <div class="tracker-step" data-slide="4">
-      <div class="tracker-circle">
-        <span class="step-num-text">5</span>
         <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <span class="tracker-label">Complete</span>
@@ -541,7 +533,7 @@ body {
 <div class="slider-viewport">
   <div class="slider" id="slider">
 
-    <!-- SLIDE 1: Your Role (Dark) -->
+    <!-- SLIDE 1: Your Role + Responsibilities (Dark) -->
     <div class="slide dark">
       <div class="slide-inner">
         <span class="gold-label">Orientation</span>
@@ -549,17 +541,8 @@ body {
         <p class="hero-subtitle">Meet investors, communicate opportunities, and sell.</p>
         <div class="hero-stat">20%</div>
         <div class="hero-stat-label">Commission per sale</div>
-        <div class="hero-image">
-          <img src="assets/agent-success.png" alt="Sales Agent Success">
-        </div>
-      </div>
-    </div>
 
-    <!-- SLIDE 2: Responsibilities (Light) -->
-    <div class="slide light">
-      <div class="slide-inner">
-        <span class="gold-label">Responsibilities</span>
-        <h2 class="section-heading">Your Day-to-Day <em>Responsibilities</em></h2>
+        <h2 class="section-heading" style="margin-top:2.5rem;">Your Day-to-Day <em>Responsibilities</em></h2>
 
         <div class="card-grid cols-3">
           <!-- Build Investor Relationships -->
@@ -754,7 +737,7 @@ body {
 <script src="../persistence.js"></script>
 <script>
   var currentSlide = 0;
-  var totalSlides = 5;
+  var totalSlides = 4;
   var slider = document.getElementById('slider');
   var btn = document.getElementById('continueBtn');
   var steps = document.querySelectorAll('.tracker-step');
