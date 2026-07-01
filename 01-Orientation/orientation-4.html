@@ -33,7 +33,7 @@
     background: var(--ink);
     color: var(--ink);
     line-height: 1.6;
-    font-size: 16px;
+    font-size: 18px;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
@@ -562,18 +562,26 @@
     .tracker-line { width: 20px; }
   }
 
-  .back-btn {
+  .nav-wrap {
     position: fixed;
     bottom: 36px;
     left: 50%;
-    transform: translateX(calc(-50% - 120px));
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.85);
     color: #8A857D;
-    font-family: var(--sans, 'Mulish', sans-serif);
+    font-family: var(--sans);
     font-size: 15px;
     font-weight: 700;
     padding: 0 28px;
@@ -581,11 +589,11 @@
     border: 1px solid #E8E4DC;
     border-radius: 99px;
     cursor: pointer;
-    transition: background 200ms, color 200ms, border-color 200ms;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
     backdrop-filter: blur(8px);
   }
   .back-btn:hover {
-    background: rgba(255,255,255,0.15);
+    background: #FFFFFF;
     color: #1A1815;
     border-color: #C9941F;
   }
@@ -610,12 +618,12 @@
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="1" onclick="goToSlide(1)">
       <div class="tracker-circle">2</div>
-      <span class="tracker-label">Documents</span>
+      <span class="tracker-label">Before/After</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="2" onclick="goToSlide(2)">
       <div class="tracker-circle">3</div>
-      <span class="tracker-label">Before/After</span>
+      <span class="tracker-label">Documents</span>
     </div>
     <div class="tracker-line"></div>
     <div class="tracker-step" data-slide="3" onclick="goToSlide(3)">
@@ -661,65 +669,7 @@
       </div>
     </div>
 
-    <!-- SLIDE 2: DOCUMENTS (Light) -->
-    <div class="slide slide-light">
-      <div class="slide-inner">
-        <span class="gold-label">Documents</span>
-        <h2 class="section-heading">What Investors <em>Sign</em></h2>
-
-        <div class="doc-grid">
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <h3>MVP Agreement</h3>
-            <p>The core agreement that verifies the investor and grants access to property details. Must be signed before any address is shared.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or4-mvp">
-              <label for="or4-mvp">Reviewed</label>
-            </div>
-          </div>
-
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-            </div>
-            <h3>Process Disclosures</h3>
-            <p>Outlines how Myers operates — deposit requirements, showing rules, bidding process, and non-negotiables.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or4-disclosures">
-              <label for="or4-disclosures">Reviewed</label>
-            </div>
-          </div>
-
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <h3>TREC Purchase Agreement</h3>
-            <p>The standard Texas Real Estate Commission purchase contract used for all transactions.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or4-trec">
-              <label for="or4-trec">Reviewed</label>
-            </div>
-          </div>
-
-          <div class="doc-card">
-            <div class="doc-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-            </div>
-            <h3>First Addendum to Purchase</h3>
-            <p>Additional terms specific to Myers transactions, including double close and funding requirements.</p>
-            <div class="doc-check">
-              <input type="checkbox" onchange="checkConfetti()" id="or4-addendum">
-              <label for="or4-addendum">Reviewed</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 3: BEFORE/AFTER (Dark) -->
+    <!-- SLIDE 2: BEFORE/AFTER (Dark) -->
     <div class="slide slide-dark">
       <div class="slide-inner">
         <span class="gold-label">Comparison</span>
@@ -793,6 +743,64 @@
       </div>
     </div>
 
+    <!-- SLIDE 3: DOCUMENTS (Light) -->
+    <div class="slide slide-light">
+      <div class="slide-inner">
+        <span class="gold-label">Documents</span>
+        <h2 class="section-heading">What Investors <em>Sign</em></h2>
+
+        <div class="doc-grid">
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h3>MVP Agreement</h3>
+            <p>The core agreement that verifies the investor and grants access to property details. Must be signed before any address is shared.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or4-mvp">
+              <label for="or4-mvp">Reviewed</label>
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            </div>
+            <h3>Process Disclosures</h3>
+            <p>Outlines how Myers operates — deposit requirements, showing rules, bidding process, and non-negotiables.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or4-disclosures">
+              <label for="or4-disclosures">Reviewed</label>
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3>TREC Purchase Agreement</h3>
+            <p>The standard Texas Real Estate Commission purchase contract used for all transactions.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or4-trec">
+              <label for="or4-trec">Reviewed</label>
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            </div>
+            <h3>First Addendum to Purchase</h3>
+            <p>Additional terms specific to Myers transactions, including double close and funding requirements.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or4-addendum">
+              <label for="or4-addendum">Reviewed</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SLIDE 4: COMPLETE (Light) -->
     <div class="slide slide-light">
       <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
@@ -816,13 +824,13 @@
   </div>
 </div>
 
-<!-- ── CONTINUE BUTTON ── -->
-<div class="continue-btn-wrap">
+<!-- ── NAV BUTTONS ── -->
+<div class="nav-wrap" id="navWrap">
   <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
-  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-  Back
-</button>
-<button class="continue-btn" id="continueBtn" onclick="nextSlide()">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="continue-btn" id="continueBtn" onclick="nextSlide()">
     Continue
     <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
   </button>
@@ -834,6 +842,13 @@
   var currentSlide = 0;
   var totalSlides = 4;
   var maxVisited = 0;
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
 
   function updateTracker() {
     var steps = document.querySelectorAll('.tracker-step');
@@ -872,15 +887,7 @@
     if (n > maxVisited) maxVisited = n;
     var slider = document.getElementById('slider');
     slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
-    
-  function updateBackBtn() {
-    var backBtn = document.getElementById('backBtn');
-    if (!backBtn) return;
-    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
-    else { backBtn.classList.add('hidden'); }
-  }
-
-  updateTracker();
+    updateTracker();
     updateBackBtn();
     updateButton();
   }
@@ -891,8 +898,13 @@
     }
   }
 
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { goToSlide(currentSlide - 1); }
+  });
+
   updateTracker();
-    updateBackBtn();
+  updateBackBtn();
   updateButton();
 </script>
 </body>
