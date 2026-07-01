@@ -498,71 +498,26 @@
     cursor: pointer;
   }
 
-  /* ── CONTINUE BUTTON ── */
-  .continue-btn-wrap {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    z-index: 999;
-    pointer-events: none;
-  }
-  .continue-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--gold);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0 36px;
-    height: 48px;
-    border: none;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: background 200ms, transform 200ms, box-shadow 200ms;
-    box-shadow: 0 4px 24px rgba(201,148,31,0.3);
-    pointer-events: auto;
-  }
-  .continue-btn:hover {
-    background: #B8841A;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
-  }
-  .continue-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  @media (max-width: 768px) {
-    .channel-grid { grid-template-columns: 1fr; }
-    .compliance-grid { grid-template-columns: 1fr; }
-    .slide-inner { padding: 60px 20px 120px; }
-    .tracker-step { padding: 0 10px; }
-    .tracker-line { width: 20px; }
-  }
-
-  .back-btn {
+  .nav-wrap {
     position: fixed;
     bottom: 36px;
     left: 50%;
-    transform: translateX(calc(-50% - 120px));
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.85);
     color: #8A857D;
-    font-family: var(--sans, 'Mulish', sans-serif);
+    font-family: var(--sans);
     font-size: 15px;
     font-weight: 700;
     padding: 0 28px;
@@ -570,11 +525,11 @@
     border: 1px solid #E8E4DC;
     border-radius: 99px;
     cursor: pointer;
-    transition: background 200ms, color 200ms, border-color 200ms;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
     backdrop-filter: blur(8px);
   }
   .back-btn:hover {
-    background: rgba(255,255,255,0.15);
+    background: #FFFFFF;
     color: #1A1815;
     border-color: #C9941F;
   }
@@ -692,7 +647,7 @@
             <div class="yellow-callout-icon">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
             </div>
-            <p><strong>Note:</strong> Your manager will add the GMass video walkthrough directly in TrainerCentral after this module.</p>
+            <p><strong>Note:</strong> Please watch the GMass video walkthrough after this powerpoint.</p>
           </div>
         </div>
       </div>
@@ -736,13 +691,13 @@
   </div>
 </div>
 
-<!-- ── CONTINUE BUTTON ── -->
-<div class="continue-btn-wrap">
+<!-- ── NAV BUTTONS ── -->
+<div class="nav-wrap" id="navWrap">
   <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
-  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-  Back
-</button>
-<button class="continue-btn" id="continueBtn" onclick="nextSlide()">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="continue-btn" id="continueBtn" onclick="nextSlide()">
     Continue
     <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
   </button>
@@ -754,6 +709,13 @@
   var currentSlide = 0;
   var totalSlides = 4;
   var maxVisited = 0;
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
 
   function updateTracker() {
     var steps = document.querySelectorAll('.tracker-step');
@@ -792,15 +754,7 @@
     if (n > maxVisited) maxVisited = n;
     var slider = document.getElementById('slider');
     slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
-    
-  function updateBackBtn() {
-    var backBtn = document.getElementById('backBtn');
-    if (!backBtn) return;
-    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
-    else { backBtn.classList.add('hidden'); }
-  }
-
-  updateTracker();
+    updateTracker();
     updateBackBtn();
     updateButton();
   }
@@ -811,8 +765,13 @@
     }
   }
 
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { goToSlide(currentSlide - 1); }
+  });
+
   updateTracker();
-    updateBackBtn();
+  updateBackBtn();
   updateButton();
 </script>
 </body>
