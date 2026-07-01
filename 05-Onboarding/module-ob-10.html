@@ -6,90 +6,212 @@
 <title>Step 10 — Payout Process | Myers Onboarding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  /* ── RESET ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ── TOKENS ── */
+  :root {
+    --gold:   #C9941F;
+    --ink:    #1A1815;
+    --bg:     #FAFAF8;
+    --white:  #FFFFFF;
+    --border: #E8E4DC;
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+  }
+
   body {
-    font-family: 'Mulish', system-ui, sans-serif;
-    background: #FAFAF8;
-    color: #1A1815;
-    line-height: 1.6;
-    min-height: 100vh;
-    font-size: 16px;
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
   }
 
-  /* ─── Top Nav ─── */
-  .top-nav {
-    background: #1A1815;
-    padding: 0.75rem 2rem;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .top-nav a { color: #FBE8B7; text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; transition: color 0.2s; }
-  .top-nav a:hover { color: #C9941F; }
-  .top-nav .cert-label { color: #7A7263; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
-
-  /* ─── Progress ─── */
-  .progress-wrap { background: #FFFDF6; border-bottom: 1px solid #E8E2D4; padding: 1rem 2rem; }
-  .progress-label { font-size: 0.85rem; color: #7A7263; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-  .progress-track { width: 100%; height: 8px; background: #E8E2D4; border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, #C9941F, #8B6B1A); border-radius: 99px; transition: width 0.6s ease; }
-
-  /* ─── Hero ─── */
-  .hero {
-    background: linear-gradient(135deg, #FFFDF6 0%, #FBE8B7 50%, #FDF1D0 100%);
-    padding: 2rem 2rem 1.75rem;
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid #E8E2D4;
-    text-align: center;
-  }
-  .hero::after {
-    content: ''; position: absolute; top: -50%; right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,148,31,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-badge {
-    display: flex; align-items: center; gap: 0.5rem;
+  /* ══════════════════════════════════════
+     PROGRESS TRACKER — Fixed Top Bar
+     ══════════════════════════════════════ */
+  .progress-tracker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: var(--ink);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    margin-left: auto; margin-right: auto; width: fit-content;
-    background: rgba(201,148,31,0.15); border: 1px solid rgba(201,148,31,0.3);
-    border-radius: 99px; padding: 0.4rem 1.1rem;
-    font-size: 0.8rem; color: #8B6B1A; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
   }
-  .hero-badge svg { width: 16px; height: 16px; stroke: #8B6B1A; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .hero h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(1.6rem, 4vw, 2.25rem); color: #1A1815;
-    line-height: 1.15; margin-bottom: 0.5rem;
+  .tracker-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
   }
-  .hero .subtitle { color: #8B6B1A; font-size: 1.2rem; font-weight: 600; }
+  .tracker-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    cursor: pointer;
+  }
+  .tracker-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #333;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    color: #6B6358;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+  }
+  .tracker-circle svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--white);
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: none;
+  }
+  .tracker-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #555;
+    margin-top: 3px;
+    white-space: nowrap;
+    transition: color 0.4s ease;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.active .tracker-label { color: var(--gold); }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+  .tracker-step.completed .tracker-circle .step-num { display: none; }
+  .tracker-step.completed .tracker-circle svg { display: block; }
+  .tracker-step.completed .tracker-label { color: var(--gold); opacity: 0.7; }
 
-  /* ─── Container ─── */
-  .container { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; text-align: center; }
+  .tracker-line {
+    width: 40px;
+    height: 2px;
+    background: #333;
+    margin: 0 4px;
+    border-radius: 2px;
+    transition: background 0.4s ease;
+  }
+  .tracker-line.filled { background: var(--gold); }
 
-  /* ─── Intro Text ─── */
-  .intro-text {
-    font-size: 1.1rem; color: #3D362A; line-height: 1.7;
-    margin-bottom: 2rem; max-width: 760px;
-    text-align: center; margin-left: auto; margin-right: auto;
+  /* ══════════════════════════════════════
+     SLIDER — Horizontal Slide Deck
+     ══════════════════════════════════════ */
+  .slider-viewport {
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 56px;
+  }
+  .slider {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .slide {
+    width: 100vw;
+    min-height: calc(100vh - 56px);
+    flex-shrink: 0;
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+  }
+  .slide-inner {
+    max-width: 900px;
+    width: 100%;
+    padding: 80px 32px 140px;
+    margin: 0 auto;
   }
 
-  /* ─── Stat Cards (3-column) ─── */
+  /* ── Slide Themes ── */
+  .slide.slide-dark  { background: var(--ink);  color: var(--bg); }
+  .slide.slide-light { background: var(--bg);   color: var(--ink); }
+
+  /* ══════════════════════════════════════
+     UTILITY CLASSES
+     ══════════════════════════════════════ */
+  .gold-label {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    background: rgba(201,148,31,0.12);
+    padding: 6px 16px;
+    border-radius: 99px;
+    margin-bottom: 16px;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .section-heading em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .slide-dark .section-heading  { color: var(--bg); }
+  .slide-light .section-heading { color: var(--ink); }
+
+  .subtitle {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    max-width: 600px;
+  }
+  .slide-dark .subtitle { color: rgba(250,250,248,0.7); }
+
+  /* ══════════════════════════════════════
+     STAT GRID — 3-Column Stat Cards
+     ══════════════════════════════════════ */
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
   }
   .stat-card {
-    background: #FFFDF6;
-    border: 1px solid #E8E2D4;
+    background: var(--white);
+    border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 2rem 1.5rem;
-    text-align: left;
+    padding: 2rem;
+    text-align: center;
     transition: transform 200ms, box-shadow 200ms;
     box-shadow: 0 1px 3px rgba(26,24,21,0.06);
     display: flex;
@@ -101,16 +223,24 @@
     box-shadow: 0 8px 24px rgba(26,24,21,0.08);
   }
   .stat-card-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
   }
-  .stat-card-number {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.75rem; color: #C9941F;
-    line-height: 1.2; margin-bottom: 0.75rem;
+  .stat-card-value {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
   }
   .stat-card-sub {
-    font-size: 0.95rem; color: #3D362A; line-height: 1.5;
+    font-size: 0.9rem;
+    color: #3D362A;
+    line-height: 1.5;
     flex: 1;
   }
   .stat-card .doc-action {
@@ -131,14 +261,9 @@
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
 
-  /* ─── Document Grid ─── */
-  .doc-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
+  /* ══════════════════════════════════════
+     DOC CARDS — Step Cards
+     ══════════════════════════════════════ */
   .doc-card {
     background: #FFFDF6;
     border: 1px solid #E8E2D4;
@@ -149,6 +274,7 @@
     display: flex;
     flex-direction: column;
     text-align: left;
+    margin-bottom: 1.5rem;
   }
   .doc-card:hover {
     transform: translateY(-3px);
@@ -165,16 +291,13 @@
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
   .doc-card h3 {
-    font-family: 'Mulish', system-ui, sans-serif;
-    font-size: 1.1rem; font-weight: 800; color: #1A1815;
+    font-family: var(--sans);
+    font-size: 1.1rem; font-weight: 800; color: var(--ink);
     margin-bottom: 0.6rem; line-height: 1.35;
   }
   .doc-card p {
     font-size: 1rem; color: #3D362A; line-height: 1.6;
     flex: 1;
-  }
-  .doc-card .highlight {
-    color: #C9941F; font-weight: 700;
   }
   .doc-card .doc-check {
     margin-top: 1.25rem;
@@ -183,20 +306,20 @@
     display: flex; align-items: center; gap: 0.6rem;
   }
   .doc-card .doc-check input[type="checkbox"] {
-    width: 22px; height: 22px; accent-color: #C9941F; cursor: pointer; flex-shrink: 0;
+    width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
   }
   .doc-card .doc-check label {
     font-size: 0.95rem; font-weight: 600; color: #7A7263; cursor: pointer;
   }
 
-  /* ─── Yellow Callout Box ─── */
+  /* ── Yellow Callout ── */
   .yellow-callout {
     background: #FBE8B7;
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     display: flex; align-items: center; gap: 1rem;
-    margin: 1rem auto;
-    max-width: 700px; margin-left: auto; margin-right: auto;
+    margin: 1rem auto 1.5rem;
+    max-width: 700px;
   }
   .yellow-callout-icon {
     width: 40px; height: 40px; flex-shrink: 0;
@@ -206,167 +329,419 @@
     width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
     stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .yellow-callout p {
-    color: #3D362A; font-size: 1.05rem; font-weight: 500;
-  }
+  .yellow-callout p { color: #3D362A; font-size: 1.05rem; font-weight: 500; }
   .yellow-callout strong { color: #1A1815; }
   .yellow-callout a { color: #C9941F; font-weight: 700; text-decoration: underline; }
 
-  /* ─── Section Divider ─── */
-  .section-divider {
-    display: flex; align-items: center; gap: 1rem;
-    margin: 2.5rem auto 1.5rem;
-    max-width: 800px; margin-left: auto; margin-right: auto;
+  /* ── Celebration Div ── */
+  .celebration-div {
+    background: linear-gradient(135deg, #FFFDF6, #FBE8B7);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    border: 2px solid var(--gold);
   }
-  .section-divider .line { flex: 1; height: 1px; background: #E8E2D4; }
-  .section-divider .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.12em; color: #7A7263;
+  .celebration-div h3 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .celebration-div p {
+    color: #3D362A;
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin: 0 auto;
   }
 
-  /* ─── Info Block ─── */
-  .info-block {
-    background: #FFFDF6; border: 1px solid #E8E2D4; border-radius: 16px;
-    overflow: hidden; margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
-    max-width: 800px; margin-left: auto; margin-right: auto;
+  /* ══════════════════════════════════════
+     NAV BUTTONS — Fixed Bottom
+     ══════════════════════════════════════ */
+  .nav-wrap {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  .info-block-header {
-    background: #1A1815; padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.85);
+    color: #8A857D;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid #E8E4DC;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
+    backdrop-filter: blur(8px);
   }
-  .info-block-header .ib-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    background: rgba(201,148,31,0.2);
+  .back-btn:hover {
+    background: #FFFFFF;
+    color: #1A1815;
+    border-color: var(--gold);
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
+  .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: white;
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 36px;
+    height: 48px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms;
+    box-shadow: 0 4px 24px rgba(201,148,31,0.3);
+    letter-spacing: 0.3px;
+  }
+  .continue-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
+  }
+  .continue-btn:active { transform: translateY(0); }
+  .continue-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ══════════════════════════════════════
+     ACKNOWLEDGMENT CARD
+     ══════════════════════════════════════ */
+  .ack-card {
+    max-width: 640px; margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 56px 48px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(26,24,21,0.08);
+  }
+  .ack-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
     display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
   }
-  .info-block-header .ib-icon svg { width: 22px; height: 22px; stroke: #C9941F; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .info-block-header h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.3rem; color: #FFFDF6;
+  .ack-icon svg {
+    width: 28px; height: 28px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .info-block-body { padding: 1.5rem; text-align: left; }
-  .info-block-body p { font-size: 1.05rem; color: #3D362A; line-height: 1.7; }
-  .info-block-body .detail-row {
-    display: flex; gap: 2rem; margin-top: 1rem;
+  .ack-card-title {
+    font-family: var(--serif); font-size: 1.5rem;
+    color: var(--ink); margin-bottom: 8px; line-height: 1.3;
   }
-  .info-block-body .detail-item {
-    flex: 1;
+  .ack-card-sub {
+    font-size: 14px; color: #8A857D;
+    margin-bottom: 32px; line-height: 1.6;
   }
-  .info-block-body .detail-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #7A7263; margin-bottom: 0.25rem;
+  .ack-label {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer; user-select: none;
+    padding: 16px 24px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    transition: border-color 0.3s ease, background 0.3s ease;
   }
-  .info-block-body .detail-value {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 1.4rem; color: #C9941F;
+  .ack-label:hover { border-color: var(--gold); background: rgba(201,148,31,0.04); }
+  .ack-label input[type="checkbox"] {
+    width: 22px; height: 22px;
+    accent-color: var(--gold); cursor: pointer;
   }
 
-  /* ─── Navigation ─── */
-  .module-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid #E8E2D4;
-    max-width: 800px; margin-left: auto; margin-right: auto;
-  }
-  .module-nav a {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    text-decoration: none; font-weight: 700; font-size: 1rem;
-    padding: 0.75rem 1.5rem; border-radius: 10px; transition: all 0.2s;
-  }
-  .nav-prev { color: #7A7263; background: #FFFDF6; border: 1px solid #E8E2D4; }
-  .nav-prev:hover { background: #E8E2D4; }
-  .nav-next { color: #FFFDF6; background: linear-gradient(135deg, #C9941F, #8B6B1A); box-shadow: 0 2px 8px rgba(201,148,31,0.25); }
-  .nav-next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,148,31,0.35); }
+  /* ══════════════════════════════════════
+     SCROLLBAR
+     ══════════════════════════════════════ */
+  .slide::-webkit-scrollbar { width: 5px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(201,148,31,0.25); border-radius: 100px; }
 
-  /* ─── Footer ─── */
-  .footer { text-align: center; padding: 2rem; color: #7A7263; font-size: 0.85rem; font-weight: 600; border-top: 1px solid #E8E2D4; margin-top: 2rem; }
-
+  /* ══════════════════════════════════════
+     RESPONSIVE
+     ══════════════════════════════════════ */
   @media (max-width: 768px) {
     .stat-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.75rem; }
-    .hero { padding: 2rem 1.25rem; }
-    .container { padding: 1.5rem 1rem 2rem; }
-    .module-nav { flex-direction: column; gap: 0.75rem; }
-    .module-nav a { width: 100%; justify-content: center; }
-    .info-block-body .detail-row { flex-direction: column; gap: 1rem; }
+    .slide-inner { padding: 60px 20px 120px; }
+    .tracker-label { display: none; }
+    .progress-tracker { height: 44px; }
+    .slider-viewport { padding-top: 44px; }
+    .slide { min-height: calc(100vh - 44px); }
+    .ack-card { padding: 36px 24px; }
+    .nav-wrap { bottom: 24px; }
+    .back-btn { height: 44px; font-size: 14px; padding: 0 24px; }
+    .continue-btn { height: 44px; font-size: 14px; padding: 0 28px; }
   }
 </style>
 </head>
 <body>
-<!-- Hero -->
-<header class="hero">
-  <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-    Step 10
+
+<!-- ══════════════════════════════════════
+     PROGRESS TRACKER
+     ══════════════════════════════════════ -->
+<nav class="progress-tracker">
+  <div class="tracker-steps">
+    <div class="tracker-step active" data-index="0">
+      <div class="tracker-circle"><span class="step-num">1</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Overview</span>
+    </div>
+    <div class="tracker-line" data-line="0"></div>
+    <div class="tracker-step" data-index="1">
+      <div class="tracker-circle"><span class="step-num">2</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Payouts</span>
+    </div>
+    <div class="tracker-line" data-line="1"></div>
+    <div class="tracker-step" data-index="2">
+      <div class="tracker-circle"><span class="step-num">3</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Complete</span>
+    </div>
   </div>
-  <h1>Payout Process</h1>
-  <div class="subtitle">Review how and when you get paid.</div>
-</header>
+</nav>
 
-<!-- Main Content -->
-<div class="container">
+<!-- ══════════════════════════════════════
+     SLIDER DECK
+     ══════════════════════════════════════ -->
+<div class="slider-viewport">
+  <div class="slider" id="slider">
 
-  <!-- 3-Column Stat Cards -->
-  <div class="stat-grid">
-
-    <!-- Normal Commission -->
-    <div class="stat-card">
-      <div class="stat-card-label">Normal Commission</div>
-      <div class="stat-card-number">15th &amp; Last Day</div>
-      <div class="stat-card-sub">Paid twice a month. Transaction must close and fund at least 2 days prior.</div>
-    </div>
-
-    <!-- Expedited Payout -->
-    <div class="stat-card">
-      <div class="stat-card-label">Expedited Payout</div>
-      <div class="stat-card-number">1% Fee</div>
-      <div class="stat-card-sub">Min $50. Same day payment. Contact Michael DeMott.</div>
-      <a href="mailto:mdemott@trelly.com" class="doc-action">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-        Email Michael
-      </a>
-    </div>
-
-    <!-- Rev Share -->
-    <div class="stat-card">
-      <div class="stat-card-label">Rev Share</div>
-      <div class="stat-card-number">Last Day</div>
-      <div class="stat-card-sub">Paid monthly. No expedited option available.</div>
-    </div>
-
-  </div>
-
-  <!-- Acknowledge Card -->
-  <div class="doc-grid">
-    <div class="doc-card">
-      <div class="doc-card-icon">
-        <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      </div>
-      <h3>Acknowledge Payout Policies</h3>
-      <p>Confirm that you have read and understand the commission payout timeline.</p>
-      <div class="doc-check">
-        <input type="checkbox" onchange="checkConfetti()" id="ob10-acknowledge">
-        <label for="ob10-acknowledge">I acknowledge</label>
+    <!-- ═══ SLIDE 1 — OVERVIEW ═══ -->
+    <div class="slide slide-dark" data-slide="0">
+      <div class="slide-inner" style="display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 56px);">
+        <span class="gold-label">Step 10</span>
+        <h1 class="section-heading">Payout <em>Process</em></h1>
+        <p class="subtitle">Review how and when you get paid.</p>
       </div>
     </div>
-  </div>
 
-  <!-- Yellow Callout -->
-  <div class="yellow-callout">
-    <div class="yellow-callout-icon">
-      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <!-- ═══ SLIDE 2 — PAYOUTS ═══ -->
+    <div class="slide slide-light" data-slide="1">
+      <div class="slide-inner">
+        <span class="gold-label">Payouts</span>
+        <h2 class="section-heading">Commission <em>Schedule</em></h2>
+
+        <!-- 3-Column Stat Grid -->
+        <div class="stat-grid">
+
+          <!-- Normal Commission -->
+          <div class="stat-card">
+            <div class="stat-card-label">Normal Commission</div>
+            <div class="stat-card-value">15th &amp; Last Day</div>
+            <div class="stat-card-sub">Paid twice a month. Transaction must close and fund at least 2 days prior.</div>
+          </div>
+
+          <!-- Expedited Payout -->
+          <div class="stat-card">
+            <div class="stat-card-label">Expedited Payout</div>
+            <div class="stat-card-value">1% Fee</div>
+            <div class="stat-card-sub">Min $50. Same day payment. Contact Michael DeMott.</div>
+            <a href="mailto:mdemott@trelly.com" class="doc-action">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+              Email Michael
+            </a>
+          </div>
+
+          <!-- Rev Share -->
+          <div class="stat-card">
+            <div class="stat-card-label">Rev Share</div>
+            <div class="stat-card-value">Last Day</div>
+            <div class="stat-card-sub">Paid monthly. No expedited option available.</div>
+          </div>
+
+        </div>
+
+        <!-- Acknowledge Payout Policies Doc Card -->
+        <div class="doc-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <h3>Acknowledge Payout Policies</h3>
+          <p>Confirm that you have read and understand the commission payout timeline.</p>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="ob10-acknowledge">
+            <label for="ob10-acknowledge">I acknowledge</label>
+          </div>
+        </div>
+
+        <!-- Yellow Callout -->
+        <div class="yellow-callout">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p><strong>Congratulations!</strong> Once you've completed all 10 steps, you're fully operational and ready to represent Myers Home Buyers. Welcome to the team!</p>
+        </div>
+
+        <!-- Celebration Div -->
+        <div class="celebration-div">
+          <h3>You're fully operational!</h3>
+          <p>All systems are set up. You're ready to start closing deals with Myers Home Buyers.</p>
+        </div>
+
+      </div>
     </div>
-    <p><strong>Congratulations!</strong> Once you've completed all 10 steps, you're fully operational and ready to represent Myers Home Buyers. Welcome to the team!</p>
-  </div>
 
-  <!-- Celebration Banner -->
-  <div style="background: linear-gradient(135deg, #FFFDF6, #FBE8B7); border: 2px solid #C9941F; text-align: center; padding: 3rem 2rem; border-radius: 16px; margin-top: 2rem;">
-    <div style="font-family: 'DM Serif Display', serif; font-size: 2rem; color: #1A1815; margin-bottom: 0.5rem;">You're fully operational!</div>
-    <p style="color: #3D362A; font-size: 1.1rem; max-width: 480px; margin: 0 auto;">All systems are set up. You're ready to start closing deals with Myers Home Buyers.</p>
-  </div>
+    <!-- ═══ SLIDE 3 — COMPLETE ═══ -->
+    <div class="slide slide-light" data-slide="2">
+      <div class="slide-inner" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px - 140px);">
+        <div class="ack-card">
+          <div class="ack-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="ack-card-title">Onboarding Complete</div>
+          <p class="ack-card-sub">
+            I have reviewed the payout process and understand all commission timelines.
+          </p>
+          <label class="ack-label">
+            <input type="checkbox" id="ob10-final" onchange="checkConfetti()">
+            <span>I acknowledge and confirm</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.slider -->
+</div><!-- /.slider-viewport -->
+
+<!-- ══════════════════════════════════════
+     CONTINUE / BACK BUTTONS
+     ══════════════════════════════════════ -->
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="continue-btn" id="continueBtn" onclick="nextSlide()">
+    Continue
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
 </div>
+
 <script src="confetti.js"></script>
 <script src="../persistence.js"></script>
+<script>
+  /* ── STATE ── */
+  var currentSlide = 0;
+  var totalSlides = 3;
+  var maxVisited = 0;
+  var isTransitioning = false;
+
+  var slider = document.getElementById('slider');
+  var continueBtn = document.getElementById('continueBtn');
+  var backBtn = document.getElementById('backBtn');
+  var trackerSteps = document.querySelectorAll('.tracker-step');
+  var trackerLines = document.querySelectorAll('.tracker-line');
+
+  /* ── UPDATE BACK BUTTON ── */
+  function updateBackBtn() {
+    if (currentSlide > 0) {
+      backBtn.classList.remove('hidden');
+    } else {
+      backBtn.classList.add('hidden');
+    }
+  }
+
+  /* ── UPDATE TRACKER ── */
+  function updateTracker() {
+    trackerSteps.forEach(function(step) {
+      var idx = parseInt(step.getAttribute('data-index'));
+      step.classList.remove('active', 'completed');
+      if (idx < currentSlide) {
+        step.classList.add('completed');
+      } else if (idx === currentSlide) {
+        step.classList.add('active');
+      }
+    });
+
+    trackerLines.forEach(function(line) {
+      var lineIdx = parseInt(line.getAttribute('data-line'));
+      if (lineIdx < currentSlide) {
+        line.classList.add('filled');
+      } else {
+        line.classList.remove('filled');
+      }
+    });
+  }
+
+  /* ── UPDATE BUTTON TEXT ── */
+  function updateButton() {
+    if (currentSlide === totalSlides - 1) {
+      continueBtn.style.display = 'none';
+    } else {
+      continueBtn.style.display = '';
+      continueBtn.innerHTML = 'Continue <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+    }
+  }
+
+  /* ── GO TO SLIDE ── */
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides || isTransitioning) return;
+    isTransitioning = true;
+    currentSlide = n;
+    if (n > maxVisited) maxVisited = n;
+
+    /* Move slider */
+    slider.style.transform = 'translateX(-' + (n * 100) + 'vw)';
+
+    /* Update UI */
+    updateTracker();
+    updateBackBtn();
+    updateButton();
+
+    /* Reset scroll of target slide */
+    var targetSlide = document.querySelector('[data-slide="' + n + '"]');
+    if (targetSlide) targetSlide.scrollTop = 0;
+
+    setTimeout(function() {
+      isTransitioning = false;
+    }, 500);
+  }
+
+  /* ── NEXT SLIDE ── */
+  function nextSlide() {
+    goToSlide(currentSlide + 1);
+  }
+
+  /* ── KEYBOARD NAV ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (currentSlide < totalSlides - 1) nextSlide();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToSlide(currentSlide - 1);
+    }
+  });
+
+  /* ── INIT ── */
+  updateTracker();
+  updateBackBtn();
+  updateButton();
+</script>
 </body>
 </html>
