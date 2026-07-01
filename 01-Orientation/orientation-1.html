@@ -171,7 +171,7 @@
     max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    padding: 90px 32px 130px;
+    padding: 110px 32px 130px;
   }
 
   /* ══════════════════════════════════════
@@ -450,11 +450,16 @@
   }
   .income-mini-card {
     text-align: center;
-    padding: 24px 12px 20px;
+    padding: 20px 12px;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .income-mini-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
   .income-mini-icon {
@@ -749,7 +754,7 @@
   <!-- ═══ SLIDE 1 — INTRO ═══ -->
   <div class="slide slide-intro" data-slide="0">
     <div class="intro-wrap">
-      <img src="assets/logo-white.png" alt="Myers Home Buyers" style="max-width: 320px; margin: 0 auto 40px;">
+      <img src="assets/logo.png" alt="Myers Home Buyers" style="max-width: 320px; margin: 0 auto 40px; filter: brightness(0) invert(1);">
       <h1 class="intro-title">
         Where Agents Become <span class="gold-italic">Investors</span>
       </h1>
