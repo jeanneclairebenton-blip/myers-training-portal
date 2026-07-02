@@ -123,7 +123,7 @@ body {
 }
 .slide {
   width: auto;
-  min-width: 100vw;
+  min-width: auto;
   height: 100%;
   overflow: visible;
   display: flex;
@@ -488,14 +488,17 @@ body {
     color: var(--ink);
   }
 
-
-
-
-/* ── SHOW/HIDE SLIDES ── */
-.slide { display: none !important; }
-.slide.active-slide { display: flex !important; }
-.nav-wrap, .continue-btn-wrap { margin: 0 auto; padding: 20px 24px 40px; }
+/* ── IFRAME FIX ── */
+.slider { display: block !important; transform: none !important; width: auto !important; transition: none !important; }
+.slide { display: none !important; width: auto !important; height: auto !important; min-height: auto !important; overflow: visible !important; flex-shrink: unset !important; }
+.slide.active-slide { display: block !important; }
+.nav-wrap { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; margin: 0 auto; padding: 20px 24px 40px; max-width: 900px; }
 .back-btn { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; }
+.continue-btn-wrap { position: relative !important; bottom: auto !important; }
+.tracker, .progress-tracker { position: sticky !important; top: 0 !important; z-index: 1000 !important; }
+.overview-wrap { min-height: auto !important; }
+.slide-content { padding-top: 40px !important; padding-bottom: 40px !important; }
+.intro-wrap { min-height: auto !important; padding-top: 40px !important; padding-bottom: 40px !important; }
 
 </style>
 </head>
@@ -736,7 +739,7 @@ body {
 
     <!-- SLIDE 5: Complete (Dark) -->
     <div class="slide dark">
-      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
+      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height: auto;padding-top:40px;padding-bottom:40px;">
         <span class="gold-label">Acknowledgment</span>
         <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
         <div class="acknowledge-block">
@@ -832,42 +835,37 @@ body {
 </script>
 
 <script>
-// ── SHOW/HIDE SLIDE SYSTEM ──
+// ── IFRAME SLIDE SYSTEM ──
 (function(){
   var slides = document.querySelectorAll('.slide');
   if (!slides.length) return;
-
   // Show first slide
   slides[0].classList.add('active-slide');
+  // Kill any transform on slider
+  var sl = document.getElementById('slider');
+  if (sl) { sl.style.transform = 'none'; sl.style.display = 'block'; sl.style.width = 'auto'; }
 
   // Patch goToSlide
-  var _orig = window.goToSlide;
   window.goToSlide = function(n) {
     var total = window.totalSlides || slides.length;
     if (n < 0 || n >= total) return;
     window.currentSlide = n;
     if (typeof window.maxVisited !== 'undefined' && n > window.maxVisited) window.maxVisited = n;
     slides.forEach(function(s, i) { s.classList.toggle('active-slide', i === n); });
-    // Also kill any transform
-    var slider = document.getElementById('slider');
-    if (slider) slider.style.transform = 'none';
+    if (sl) sl.style.transform = 'none';
     window.scrollTo(0, 0);
     if (typeof updateTracker === 'function') updateTracker();
     if (typeof updateBackBtn === 'function') updateBackBtn();
     if (typeof updateButton === 'function') updateButton();
   };
-  window.nextSlide = function() {
-    var total = window.totalSlides || slides.length;
-    if (window.currentSlide < total - 1) window.goToSlide(window.currentSlide + 1);
-  };
+  window.nextSlide = function() { if (window.currentSlide < (window.totalSlides || slides.length) - 1) window.goToSlide(window.currentSlide + 1); };
   window.advanceSlide = window.nextSlide;
 
   // Make tracker steps clickable
   document.querySelectorAll('.tracker-step').forEach(function(step, i) {
     step.style.cursor = 'pointer';
     step.addEventListener('click', function() {
-      var idx = parseInt(step.getAttribute('data-slide') || step.getAttribute('data-index') || i);
-      window.goToSlide(idx);
+      window.goToSlide(parseInt(step.getAttribute('data-slide') || step.getAttribute('data-index') || i));
     });
   });
 })();
