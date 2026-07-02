@@ -535,14 +535,6 @@
         <span class="sw" style="background:#fff;border-color:#e5e5e2"></span>
         <span class="nm">Light</span>
       </button>
-      <button data-theme="cream">
-        <span class="sw" style="background:var(--cream-soft)"></span>
-        <span class="nm">Cream</span>
-      </button>
-      <button data-theme="gold">
-        <span class="sw" style="background:var(--gold)"></span>
-        <span class="nm">Gold</span>
-      </button>
       <button data-theme="dark">
         <span class="sw" style="background:#0e0e0e"></span>
         <span class="nm">Dark</span>
@@ -608,27 +600,10 @@ function edit(field, opts){
   return `<span class="editable" data-field="${field}"${ph}>${esc(v)}</span>`;
 }
 
-/* Load saved edits, then override with onboarding agent data if available */
+/* Load saved edits */
 try{
   const saved = JSON.parse(localStorage.getItem('mhb-card') || '{}');
   Object.assign(state, saved);
-}catch(e){}
-
-// Auto-fill from URL params (from iframe injection) or local storage
-try{
-  const params = new URLSearchParams(window.location.search);
-  if(params.get('name')) state.name = params.get('name');
-  if(params.get('title')) state.title = params.get('title');
-  if(params.get('phone')) state.phone = params.get('phone');
-  if(params.get('email')) state.email = params.get('email');
-  
-  // Fallback to onboarding storage
-  const ob = JSON.parse(localStorage.getItem('myers-onboarding-v2') || '{}');
-  const a = ob.agent || {};
-  if(!params.get('name') && a.fullName) state.name = a.fullName;
-  if(!params.get('title') && a.title) state.title = a.title;
-  if(!params.get('phone') && a.phone) state.phone = a.phone;
-  if(!params.get('email') && a.email) state.email = a.email;
 }catch(e){}
 
 /* ---------------- Card markup ---------------- */
