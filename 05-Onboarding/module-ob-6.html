@@ -502,6 +502,62 @@
 .slide-content { padding-top: 40px !important; padding-bottom: 40px !important; }
 .intro-wrap { min-height: auto !important; padding-top: 40px !important; padding-bottom: 40px !important; }
 
+
+/* ── NAV BUTTONS: TOP, SMALL, TRANSPARENT ── */
+.nav-wrap {
+  position: sticky !important;
+  top: 44px !important;
+  z-index: 999 !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  max-width: 900px !important;
+  margin: 0 auto !important;
+  padding: 8px 24px !important;
+  background: transparent !important;
+}
+.back-btn {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  padding: 0 16px !important;
+  border-radius: 99px !important;
+  background: rgba(255,255,255,0.7) !important;
+  backdrop-filter: blur(6px) !important;
+  border: 1px solid #E8E4DC !important;
+  color: #8A857D !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+.back-btn:hover { background: #fff !important; color: #1A1815 !important; }
+.back-btn svg { width: 14px !important; height: 14px !important; }
+.nav-btn, .continue-btn {
+  height: 32px !important;
+  font-size: 12px !important;
+  padding: 0 20px !important;
+  border-radius: 99px !important;
+  background: #C9941F !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  box-shadow: none !important;
+}
+.nav-btn:hover, .continue-btn:hover { background: #B8841A !important; }
+.nav-btn svg, .continue-btn svg { width: 14px !important; height: 14px !important; }
+
 </style>
 </head>
 <body>
