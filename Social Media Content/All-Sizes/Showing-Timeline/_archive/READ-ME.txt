@@ -1,0 +1,12 @@
+SHOWING TIMELINE (training graphic)
+Source: Training Outline (Jeanne Claire & Josh, 7/24/26), The Showing Timeline section.
+
+What it shows: three stopwatches (1 hr showing, bidding closes 1 hr after showing ends,
+2 hr wire + contract window), a 0:00-to-4:00 clock bar, and the Buy It Now express lane.
+
+Sizes:
+- Slide (1920x1080): orientation deck + training portal
+- Facebook / Instagram / LinkedIn (1080x1350): social
+- Story (1080x1920): IG/FB story (extra space at bottom is intentional, story UI sits there)
+
+Brand: white chrome, Poppins, gold #C9972C, official MHB logo, "What it says" footer.

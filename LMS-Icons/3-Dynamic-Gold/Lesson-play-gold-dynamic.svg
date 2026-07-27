@@ -1,0 +1,16 @@
+<!-- @license lucide-static v1.26.0 - ISC -->
+<svg
+  class="lucide lucide-play"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="url(#g-play)"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+<defs><linearGradient id="g-play" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8BC5E"/><stop offset="1" stop-color="#A87B1F"/></linearGradient></defs><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" fill="#C9972C" fill-opacity="0.16" stroke="none"/>
+  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+<path d="M1 7.5h2" stroke="#C9972C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M1 12h2.8" stroke="#C9972C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M1 16.5h2" stroke="#C9972C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>

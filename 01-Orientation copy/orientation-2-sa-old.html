@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Agent — Rules & Responsibilities | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+
+:root {
+  --gold: #C9941F;
+  --gold-light: #D4A94A;
+  --cream: #FBE8B7;
+  --cream-bg: #FFF8EB;
+  --ink: #1A1815;
+  --dark: #2A2520;
+  --bg: #FAFAF8;
+  --white: #FFFFFF;
+  --gray: #8A857D;
+  --border: #E8E4DC;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Mulish', 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--ink);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ── PROGRESS TRACKER ── */
+.progress-tracker {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--ink);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid rgba(201,148,31,0.15);
+}
+.tracker-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  min-width: 80px;
+}
+.tracker-circle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  color: #555;
+  background: #333;
+  border: 2px solid #333;
+  transition: all 0.3s ease;
+}
+.tracker-step.active .tracker-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+.tracker-step.completed .tracker-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+.tracker-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #555;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+.tracker-step.active .tracker-label,
+.tracker-step.completed .tracker-label {
+  color: var(--gold);
+}
+.tracker-line {
+  width: 40px; height: 2px;
+  background: #333;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+.tracker-line.filled {
+  background: var(--gold);
+}
+
+/* ── SLIDER ── */
+.slider-viewport {
+  position: fixed;
+  top: 56px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide {
+  width: 100vw;
+  min-width: 100vw;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slide-inner {
+  max-width: 900px;
+  width: 100%;
+  padding: 80px 2rem 120px;
+}
+
+/* ── DARK / LIGHT SLIDES ── */
+.slide.dark {
+  background: var(--ink);
+  color: var(--bg);
+}
+.slide.light {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ── GOLD LABEL ── */
+.gold-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+  text-align: center;
+}
+
+/* ── SECTION HEADING ── */
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.2;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.slide.dark .section-heading { color: var(--bg); }
+.slide.light .section-heading { color: var(--ink); }
+.section-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* ── HERO TITLE ── */
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(251,232,183,0.7);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.hero-stat {
+  font-family: var(--serif);
+  font-size: 5rem;
+  color: var(--gold);
+  line-height: 1;
+  text-align: center;
+}
+.hero-stat-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.hero-image {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+.doc-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+  transition: transform 200ms, box-shadow 200ms;
+  box-shadow: 0 2px 8px rgba(26,24,21,0.06);
+}
+.doc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(26,24,21,0.1);
+}
+.slide.dark .doc-card {
+  background: var(--dark);
+  border-color: rgba(201,148,31,0.15);
+}
+.slide.dark .doc-card h3 { color: var(--cream); }
+.slide.dark .doc-card p { color: rgba(251,232,183,0.7); }
+
+.doc-card-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  background: rgba(201,148,31,0.12);
+}
+.doc-card-icon svg {
+  width: 26px; height: 26px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.doc-card h3 {
+  font-family: var(--sans);
+  font-size: 1.05rem; font-weight: 800; color: var(--ink);
+  margin-bottom: 0.5rem; line-height: 1.3;
+}
+.doc-card p {
+  font-size: 0.95rem; color: #5A5347; line-height: 1.6;
+}
+.doc-card .doc-check {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.slide.dark .doc-card .doc-check { border-top-color: rgba(201,148,31,0.15); }
+.doc-card .doc-check input[type="checkbox"] {
+  width: 20px; height: 20px;
+  accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+}
+.doc-card .doc-check label {
+  font-size: 0.9rem; font-weight: 600; color: var(--gray); cursor: pointer;
+}
+
+/* ── WIDE CARD ── */
+.doc-card.wide {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+}
+
+/* ── STAT DISPLAY ── */
+.stat-display {
+  text-align: center; margin-bottom: 0.75rem;
+}
+.stat-display .stat-number {
+  font-family: var(--serif);
+  font-size: 2.75rem; color: var(--gold); line-height: 1.1;
+}
+.stat-display .stat-label {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--gray); margin-top: 0.25rem;
+}
+
+/* ── YELLOW CALLOUT ── */
+.yellow-callout {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: 700px; margin: 1.5rem auto 0;
+}
+.yellow-callout-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.yellow-callout-icon svg {
+  width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.yellow-callout p {
+  color: #3D362A; font-size: 1rem; font-weight: 500; text-align: left;
+}
+.yellow-callout strong { color: var(--ink); }
+
+/* ── ACKNOWLEDGE BLOCK ── */
+.acknowledge-block {
+  background: rgba(201,148,31,0.08);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.acknowledge-block input[type="checkbox"] {
+  width: 24px; height: 24px;
+  accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+}
+.slide.dark .acknowledge-block label {
+  color: var(--cream);
+}
+.acknowledge-block label {
+  font-size: 1.05rem; font-weight: 700; color: var(--ink); cursor: pointer;
+}
+
+/* ── CONTINUE BUTTON ── */
+.continue-btn {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gold);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms, box-shadow 200ms;
+  box-shadow: 0 4px 24px rgba(201,148,31,0.35);
+}
+.continue-btn:hover {
+  background: #B8841A;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,148,31,0.45);
+}
+.continue-btn svg {
+  width: 18px; height: 18px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ── SVG CHECK ── */
+.check-svg { display: none; }
+.tracker-step.completed .check-svg { display: block; }
+.tracker-step.completed .step-num-text { display: none; }
+
+@media (max-width: 768px) {
+  .card-grid.cols-3 { grid-template-columns: 1fr; }
+  .card-grid.cols-2 { grid-template-columns: 1fr; }
+  .tracker-step { min-width: 56px; }
+  .tracker-line { width: 20px; }
+  .tracker-label { font-size: 8px; }
+  .slide-inner { padding: 60px 1.25rem 120px; }
+  .hero-title { font-size: 2rem; }
+  .hero-stat { font-size: 3.5rem; }
+}
+
+  .back-btn {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(calc(-50% - 120px));
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    color: #8A857D;
+    font-family: var(--sans, 'Mulish', sans-serif);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid #E8E4DC;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms;
+    backdrop-filter: blur(8px);
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.15);
+    color: #1A1815;
+    border-color: #C9941F;
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
+  /* ── FAQ CARDS ── */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .faq-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .faq-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(26,24,21,0.08); }
+  .faq-q {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .faq-badge {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .faq-question {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .faq-answer {
+    padding-left: 44px;
+    font-size: 16px;
+    color: #3D362A;
+  }
+  .faq-answer strong {
+    color: var(--gold);
+    font-weight: 800;
+  }
+  .faq-disclaimer {
+    background: rgba(201,148,31,0.08);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    font-size: 16px;
+    color: #3D362A;
+    line-height: 1.65;
+  }
+  .faq-disclaimer strong {
+    color: var(--ink);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ═══ PROGRESS TRACKER ═══ -->
+<nav class="progress-tracker">
+  <div class="tracker-steps">
+    <div class="tracker-step active" data-slide="0">
+      <div class="tracker-circle">
+        <span class="step-num-text">1</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Your Role</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="1">
+      <div class="tracker-circle">
+        <span class="step-num-text">2</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Responsibilities</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="2">
+      <div class="tracker-circle">
+        <span class="step-num-text">3</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Rules</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="3">
+      <div class="tracker-circle">
+        <span class="step-num-text">4</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">FAQ</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="4">
+      <div class="tracker-circle">
+        <span class="step-num-text">5</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Complete</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SLIDE DECK ═══ -->
+<div class="slider-viewport">
+  <div class="slider" id="slider">
+
+    <!-- SLIDE 1: Your Role (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner">
+        <span class="gold-label">Orientation</span>
+        <h1 class="hero-title">Sales Agent</h1>
+        <p class="hero-subtitle">Meet investors, communicate opportunities, and sell.</p>
+        <div class="hero-stat">20%</div>
+        <div class="hero-stat-label">Commission per sale</div>
+        <div class="hero-image">
+          <img src="assets/agent-success.png" alt="Sales Agent Success">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Responsibilities (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Responsibilities</span>
+        <h2 class="section-heading">Your Day-to-Day <em>Responsibilities</em></h2>
+
+        <div class="card-grid cols-3">
+          <!-- Build Investor Relationships -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Build Investor Relationships</h3>
+            <p>Network, prospect, and build a book of verified investors who trust you and buy from you consistently.</p>
+          </div>
+
+          <!-- Communicate Opportunities -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <h3>Communicate Opportunities</h3>
+            <p>When new properties hit the board, proactively reach out to your investors with deal details and showing schedules.</p>
+          </div>
+
+          <!-- Manage the Sale -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            </div>
+            <h3>Manage the Sale</h3>
+            <p>Guide investors through the showing, bidding, contract, and deposit process. Ensure every step is completed on time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Rules (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner">
+        <span class="gold-label">Rules</span>
+        <h2 class="section-heading">SA-Specific <em>Rules</em></h2>
+
+        <div class="card-grid cols-2">
+          <!-- Verify Before You Disclose -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Verify Before You Disclose</h3>
+            <p>Never share a property address until the investor has signed the MVP agreement. No exceptions.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or2sa-verify">
+              <label for="or2sa-verify">Understood</label>
+            </div>
+          </div>
+
+          <!-- Keep It Off The Open Market -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </div>
+            <h3>Keep It Off The Open Market</h3>
+            <p>Never reveal the address or showing time in any public post — social media, ads, or listings.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or2sa-market">
+              <label for="or2sa-market">Understood</label>
+            </div>
+          </div>
+
+          <!-- TREC Logo Compliance -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            </div>
+            <h3>TREC Logo Compliance</h3>
+            <p>The Myers logo goes on all marketing materials where TREC requires it. Everything you publish must meet TREC requirements.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or2sa-trec">
+              <label for="or2sa-trec">Understood</label>
+            </div>
+          </div>
+
+          <!-- Report All Deals -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Report All Deals</h3>
+            <p>All brokered or wholesaled transactions must be reported to Myers. Exception: deals you close to rent, flip, or hold yourself.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or2sa-report">
+              <label for="or2sa-report">Understood</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Common Investor Questions (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Scripts</span>
+        <h2 class="section-heading">Common Investor Questions</h2>
+        <p style="font-size:16px;color:#3D362A;margin-bottom:28px;font-style:italic;">What you'll hear most — and how Myers answers.</p>
+
+        <div class="faq-grid">
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">Can I get in before showings?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>Probably not</strong></div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">Can you assign the contract to me?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>No</strong></div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">Will you take $10K below buy-now right now?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>No</strong></div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">Can you cover your side of closing costs?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>No</strong></div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">Will you take $3K as the deposit?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>No</strong></div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">(Agents) Will you pay my commission for a referral?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>Depends</strong></div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-q">
+              <div class="faq-badge">Q</div>
+              <div class="faq-question">Are closing dates negotiable?</div>
+            </div>
+            <div class="faq-answer">Answer: <strong>No</strong></div>
+          </div>
+        </div>
+
+        <div class="faq-disclaimer">
+          <strong>Always get an offer — even if it's below the starting price.</strong> Offers below the start price can still be workable. More importantly, submitting offers shows your investors are tenacious and engaged. Leadership is more willing to help agents who bring activity to the table — it shows you're serious, and they want you to succeed.
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Complete (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding-top:40px;padding-bottom:40px;">
+        <span class="gold-label">Acknowledgment</span>
+        <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
+        <div class="acknowledge-block">
+          <input type="checkbox" onchange="checkConfetti()" id="or2sa-acknowledge">
+          <label for="or2sa-acknowledge">I understand my role, responsibilities, and rules as a Sales Agent.</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ CONTINUE BUTTON ═══ -->
+<button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  Back
+</button>
+<button class="continue-btn" id="continueBtn" onclick="goNext()">
+  Continue
+  <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+</button>
+
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+<script>
+  var currentSlide = 0;
+  var totalSlides = 5;
+  var slider = document.getElementById('slider');
+  var btn = document.getElementById('continueBtn');
+  var steps = document.querySelectorAll('.tracker-step');
+  var lines = document.querySelectorAll('.tracker-line');
+
+  function updateUI() {
+    // Move slider
+    slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
+
+    // Update tracker
+    steps.forEach(function(step, i) {
+      step.classList.remove('active', 'completed');
+      if (i < currentSlide) step.classList.add('completed');
+      else if (i === currentSlide) step.classList.add('active');
+    });
+    lines.forEach(function(line, i) {
+      line.classList.toggle('filled', i < currentSlide);
+    });
+
+    // Update button
+    if (currentSlide >= totalSlides - 1) {
+      btn.innerHTML = 'Complete <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else {
+      btn.innerHTML = 'Continue <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>';
+    }
+  }
+
+  function goNext() {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateUI();
+    }
+  }
+
+  function goToSlide(index) {
+    if (index <= currentSlide || index <= getMaxAllowed()) {
+      currentSlide = index;
+      updateUI();
+    }
+  }
+
+  function getMaxAllowed() {
+    return totalSlides - 1;
+  }
+
+  // Click on tracker steps
+  steps.forEach(function(step, i) {
+    step.addEventListener('click', function() { goToSlide(i); });
+  });
+
+  
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
+
+  // Keyboard nav
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { currentSlide--; updateUI(); }
+  });
+
+  updateUI();
+</script>
+</body>
+</html>

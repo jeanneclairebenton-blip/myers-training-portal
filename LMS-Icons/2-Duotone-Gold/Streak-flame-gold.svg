@@ -1,0 +1,16 @@
+<!-- @license lucide-static v1.26.0 - ISC -->
+<svg
+  class="lucide lucide-flame"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="url(#g-flame)"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+<defs><linearGradient id="g-flame" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8BC5E"/><stop offset="1" stop-color="#A87B1F"/></linearGradient></defs><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4z" fill="#C9972C" fill-opacity="0.15" stroke="none"/>
+  <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" />
+</svg>

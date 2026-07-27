@@ -1,0 +1,11 @@
+MYERS SOCIAL POST STANDARD
+==========================
+Every post is exported in 4 platform sizes, one folder per post:
+  • Facebook  1080x1350 (4:5 feed)
+  • Instagram 1080x1350 (4:5 feed)
+  • LinkedIn  1080x1350 (4:5 feed)
+  • Story     1080x1920 (9:16, stories/reels)
+
+Design rules: one focal point, one CTA, high contrast, generous margins,
+no font below ~28px on the 1080 canvas (~14pt). 4:5 is the shared feed
+standard for FB/IG/LinkedIn; Story is the distinct 9:16 layout.

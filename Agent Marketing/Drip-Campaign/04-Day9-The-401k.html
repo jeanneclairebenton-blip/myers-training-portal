@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Drip 4 — The 401(k)</title></head>
+<body style="margin:0;padding:0;background:#f2f2f2;font-family:Helvetica,Arial,sans-serif;">
+<div style="position:sticky;top:0;background:#1A1A1A;padding:12px;text-align:center;z-index:9;">
+  <button id="copyBtn" onclick="copyEmail()" style="background:#D6A73F;color:#1A1A1A;font-size:16px;font-weight:800;border:0;border-radius:10px;padding:12px 24px;cursor:pointer;">📋 Copy Email — paste into Gmail</button>
+  <div style="color:#bbb;font-size:12px;padding-top:6px;">SUBJECT: Real estate doesn't have a 401(k). We built one. &nbsp;|&nbsp; PREVIEW: A downline for agents, paid monthly.</div>
+</div>
+
+<div id="email" style="max-width:620px;margin:22px auto;background:#ffffff;padding:26px 28px;font-size:17px;color:#1A1A1A;line-height:1.55;font-family:Helvetica,Arial,sans-serif;">
+
+<p style="margin:0 0 16px 0;">Hi {FirstName},</p>
+<p style="margin:0 0 22px 0;">Commission stops the day you stop closing. So we built the thing this industry never had:</p>
+
+<div style="text-align:center;font-size:26px;font-weight:900;padding-bottom:4px;">Real Estate Doesn&rsquo;t Have A 401(k).</div>
+<div style="text-align:center;font-size:26px;font-weight:900;color:#C9972C;padding-bottom:18px;">Myers Built One.</div>
+
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="font-size:16px;">
+  <tr><td style="padding:8px 0;"><span style="border:2px solid #D6A73F;border-radius:16px;color:#C9972C;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;">LEVEL 1</span>&nbsp;&nbsp;Direct Recruit Production</td><td align="right" style="font-weight:800;color:#C9972C;">25%</td></tr>
+  <tr><td style="padding:8px 0;border-top:1px solid #EBECEF;"><span style="border:2px solid #D6A73F;border-radius:16px;color:#C9972C;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;">LEVEL 2</span>&nbsp;&nbsp;Recruit&rsquo;s Recruits</td><td align="right" style="font-weight:800;color:#C9972C;border-top:1px solid #EBECEF;">20%</td></tr>
+  <tr><td style="padding:8px 0;border-top:1px solid #EBECEF;"><span style="border:2px solid #D6A73F;border-radius:16px;color:#C9972C;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;">LEVEL 3</span>&nbsp;&nbsp;Third-Tier Network</td><td align="right" style="font-weight:800;color:#C9972C;border-top:1px solid #EBECEF;">15%</td></tr>
+  <tr><td style="padding:8px 0;border-top:1px solid #EBECEF;"><span style="border:2px solid #D6A73F;border-radius:16px;color:#C9972C;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;">LEVEL 4</span>&nbsp;&nbsp;Fourth-Tier Reach</td><td align="right" style="font-weight:800;color:#C9972C;border-top:1px solid #EBECEF;">10%</td></tr>
+  <tr><td style="padding:8px 0;border-top:1px solid #EBECEF;"><span style="border:2px solid #D6A73F;border-radius:16px;color:#C9972C;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;">LEVEL 5</span>&nbsp;&nbsp;Fifth-Tier Growth</td><td align="right" style="font-weight:800;color:#C9972C;border-top:1px solid #EBECEF;">5%</td></tr>
+  <tr><td style="padding:8px 0;border-top:1px solid #EBECEF;"><span style="border:2px solid #D6A73F;border-radius:16px;color:#C9972C;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;">LEVEL 6</span>&nbsp;&nbsp;Sixth-Tier Expansion</td><td align="right" style="font-weight:800;color:#C9972C;border-top:1px solid #EBECEF;">25%</td></tr>
+</table>
+<div style="font-size:13px;font-style:italic;color:#6B7280;padding:6px 0 20px 0;">*Each level&rsquo;s share of the revenue share pool, paid monthly. Open to every agent from day one.</div>
+
+<div style="background:#FBF7EC;border-left:5px solid #D6A73F;font-size:15px;color:#4A4F57;padding:13px 16px;margin-bottom:22px;">
+  And the ladder here has a top rung nobody else offers: <b>Investor.</b> Sales Agent, Acquisition Agent, Team Lead, then you&rsquo;re buying houses yourself.
+</div>
+
+<div style="text-align:center;padding:6px 0 8px 0;">
+  <a href="https://joinmyers.com" style="display:inline-block;background:#D6A73F;color:#1A1A1A;font-size:18px;font-weight:800;text-decoration:none;border-radius:14px;padding:15px 28px;">Apply To Myers</a>
+  <div style="font-size:14px;color:#6B7280;padding-top:10px;">Prefer to talk first? <a href="https://calendar.app.google/HYZr5JW9zkUSz92MA" style="color:#C9972C;font-weight:700;">Book 15 minutes.</a></div>
+</div>
+
+<p style="margin:18px 0 0 0;">Jeanne Claire<br>Myers Home Buyers &middot; Addison, TX</p>
+</div>
+
+<script>
+async function copyEmail(){
+  const el=document.getElementById('email');
+  try{
+    await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([el.outerHTML],{type:'text/html'}),'text/plain':new Blob([el.innerText],{type:'text/plain'})})]);
+    document.getElementById('copyBtn').textContent='✅ Copied! Paste into Gmail';
+  }catch(e){
+    const r=document.createRange();r.selectNode(el);
+    const s=getSelection();s.removeAllRanges();s.addRange(r);
+    document.execCommand('copy');s.removeAllRanges();
+    document.getElementById('copyBtn').textContent='✅ Copied! Paste into Gmail';
+  }
+}
+</script>
+</body></html>

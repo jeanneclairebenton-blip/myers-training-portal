@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One House. Two Myers Agents.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0C;
+            --surface: #151519;
+            --surface-2: #1E1E24;
+            --gold: #C8962E;
+            --gold-b: #E5B44A;
+            --gold-dim: rgba(200,150,46,0.12);
+            --gold-glow: rgba(200,150,46,0.3);
+            --text: #F0EDE8;
+            --text-dim: rgba(240,237,232,0.4);
+            --text-mid: rgba(240,237,232,0.7);
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw;-webkit-font-smoothing:antialiased}
+
+        .prog{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.03);z-index:300}
+        .prog-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-b));box-shadow:0 0 12px var(--gold-glow);transition:width .8s ease}
+
+        .viewport{position:fixed;inset:0;overflow:hidden}
+        .viewport::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(200,150,46,.03) 1px,transparent 1px);background-size:50px 50px;z-index:0}
+
+        .canvas{
+            width:3400px;height:1000px;
+            position:absolute;top:50%;left:50%;
+            transform-origin:center center;
+            transition:transform 1.2s cubic-bezier(.25,.46,.45,.94);
+            z-index:1;
+        }
+
+        /* HIDE CANVAS TEXT WHEN ZOOMED — .keep stays visible */
+        .canvas.zoomed .ic-label:not(.keep),
+        .canvas.zoomed .ic-desc:not(.keep),
+        .canvas.zoomed .ic-sub,
+        .canvas.zoomed .ctitle,
+        .canvas.zoomed .cfooter,
+        .canvas.zoomed .grp-label,
+        .canvas.zoomed .houses-label,
+        .canvas.zoomed .curved-lbl{
+            opacity:0!important;pointer-events:none;
+        }
+        /* Shrink icons when zoomed */
+        .canvas.zoomed .ic-circle.lg{width:90px;height:90px}
+        .canvas.zoomed .ic-circle.lg svg{width:40px;height:40px}
+        .canvas.zoomed .ic-circle:not(.lg){width:80px;height:80px}
+        .canvas.zoomed .ic-circle:not(.lg) svg{width:36px;height:36px}
+
+        /* ═══ ICONS ═══ */
+        .ic{
+            position:absolute;display:flex;flex-direction:column;align-items:center;
+            transform:translate(-50%,-50%);
+            /* SMOOTH POSITION ANIMATION */
+            transition:left 1s cubic-bezier(.25,.46,.45,.94),top 1s cubic-bezier(.25,.46,.45,.94);
+        }
+        .ic-label{
+            font-size:18px;font-weight:700;color:var(--text);
+            margin-bottom:14px;white-space:nowrap;text-align:center;
+            order:-1;transition:opacity .4s ease;
+        }
+        .ic-sub{font-size:13px;color:var(--text-dim);margin-top:10px;white-space:nowrap;transition:opacity .4s ease}
+        .ic-desc{font-size:13px;color:var(--text-mid);text-align:center;max-width:150px;margin-top:10px;line-height:1.4;transition:opacity .4s ease}
+        .ic-circle{
+            width:100px;height:100px;border-radius:50%;
+            background:var(--gold-dim);border:2px solid rgba(200,150,46,.18);
+            display:flex;align-items:center;justify-content:center;
+            transition:all .6s ease;
+        }
+        .ic-circle svg{width:44px;height:44px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+        .ic-circle.lg{width:130px;height:130px}
+        .ic-circle.lg svg{width:56px;height:56px}
+        .ic.glow .ic-circle{box-shadow:0 0 50px var(--gold-glow),0 0 100px rgba(200,150,46,.1);border-color:var(--gold)}
+        .curved-lbl{order:-1;margin-bottom:2px;overflow:visible}
+        .card-ic{width:28px;height:28px;padding:7px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px;display:block;border:1.5px solid rgba(200,150,46,.3);border-radius:50%;background:var(--gold-dim);box-sizing:content-box}
+
+        /* ═══ HOUSES ═══ */
+        .houses-wrap{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+        .houses-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:20px;transition:all .6s ease}
+        .houses-grid.glow .mini-house{filter:drop-shadow(0 0 6px var(--gold-glow));stroke:var(--gold)}
+        .mini-house{width:28px;height:28px;stroke:rgba(200,150,46,.35);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:all .6s ease}
+        .houses-label{font-size:16px;font-weight:700;color:var(--text-mid);margin-top:12px;transition:opacity .4s ease}
+
+        /* ═══ ARROWS ═══ */
+        .arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+        .arrow{fill:none;stroke:rgba(255,255,255,.06);stroke-width:2.5;stroke-linecap:round;transition:all .6s ease}
+        .arrow.on{stroke:var(--gold);stroke-dasharray:8 4;animation:dash 1s linear infinite}
+        .arrow.dim{stroke:rgba(255,255,255,.015)}
+        @keyframes dash{to{stroke-dashoffset:-24}}
+        .ah{fill:rgba(255,255,255,.06);transition:fill .6s ease}
+        .ah.on{fill:var(--gold)}.ah.dim{fill:rgba(255,255,255,.015)}
+
+        .grp-label{position:absolute;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);transform:translateX(-50%);transition:opacity .4s ease,left 1s ease,top 1s ease}
+
+        .ctitle{position:absolute;top:80px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap;transition:opacity .4s ease}
+        .ctitle h2{font-size:32px;font-weight:800;letter-spacing:-.5px}
+        .ctitle h2 .g{color:var(--gold)}
+        .ctitle p{font-size:14px;color:var(--text-dim);margin-top:5px}
+        .cfooter{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);text-align:center;transition:opacity .4s ease}
+        .cfooter p{font-size:14px;color:var(--gold);font-weight:600;font-style:italic;opacity:.5}
+
+        /* ═══ TOP TITLE (for sellers/investors steps) ═══ */
+        .top-title{
+            position:fixed;top:8%;left:0;right:0;text-align:center;z-index:200;
+            font-size:36px;font-weight:700;color:var(--text);letter-spacing:-1px;
+            transition:opacity .5s ease;pointer-events:none;
+        }
+        .top-title.hidden{opacity:0}
+
+        /* ═══ OVERLAY ═══ */
+        .overlay{
+            position:fixed;bottom:0;left:0;right:0;z-index:200;
+            padding:0 60px 100px;
+            display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+            background:linear-gradient(transparent 0%,rgba(10,10,12,.5) 8%,rgba(10,10,12,.92) 25%,var(--bg) 45%);
+            pointer-events:none;transition:opacity .4s ease;min-height:44vh;
+        }
+        .overlay.hidden{opacity:0}
+        .ov-tag{font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;text-align:center;width:100%}
+        .ov-title{font-size:42px;font-weight:700;text-align:center;margin-bottom:18px;letter-spacing:-1px;line-height:1.15;width:100%}
+        .ov-title .g{color:var(--gold)}
+        .ov-body{font-size:20px;color:var(--text);text-align:center;max-width:720px;line-height:1.7;margin-bottom:20px}
+        .ov-cards{display:flex;gap:20px;pointer-events:auto;flex-wrap:wrap;justify-content:center;max-width:1060px}
+        .ov-card{background:var(--surface);border:1px solid rgba(200,150,46,.1);border-left:3px solid var(--gold);border-radius:12px;padding:24px 28px;width:300px;flex:0 0 auto;transition:all .3s ease}
+        .ov-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(200,150,46,.1);border-color:rgba(200,150,46,.25)}
+        .ov-card .ct{font-size:18px;font-weight:700;color:var(--gold-b);margin-bottom:8px}
+        .ov-card .cd{font-size:17px;color:var(--text);line-height:1.6}
+        .ov-gci{display:block;text-align:center;margin:0 auto 16px;background:linear-gradient(135deg,var(--gold),var(--gold-b));color:var(--bg);font-size:26px;font-weight:800;padding:14px 36px;border-radius:12px;box-shadow:0 6px 30px rgba(200,150,46,.35);width:fit-content}
+        .ov-note{background:var(--gold-dim);border:1px solid rgba(200,150,46,.15);border-radius:10px;padding:16px 28px;font-size:15px;color:var(--gold-b);font-weight:600;text-align:center;max-width:600px}
+        .ov-anim>*{opacity:0;transform:translateY(16px);animation:rise .5s ease forwards}
+        .ov-anim>*:nth-child(1){animation-delay:.05s}
+        .ov-anim>*:nth-child(2){animation-delay:.15s}
+        .ov-anim>*:nth-child(3){animation-delay:.25s}
+        .ov-anim>*:nth-child(4){animation-delay:.35s}
+        .ov-anim>*:nth-child(5){animation-delay:.45s}
+        @keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+        .nav{position:fixed;bottom:24px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:20px;z-index:300}
+        .nb{padding:13px 30px;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s ease}
+        .nb.bk{background:var(--surface-2);color:var(--text-dim);border:1px solid rgba(255,255,255,.06)}
+        .nb.bk:hover{background:rgba(255,255,255,.08);color:var(--text)}
+        .nb.fw{background:linear-gradient(135deg,var(--gold),var(--gold-b));color:var(--bg);box-shadow:0 4px 20px rgba(200,150,46,.25)}
+        .nb.fw:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,150,46,.35)}
+        .nb:disabled{opacity:.2;cursor:default;transform:none!important}
+        .dots{display:flex;gap:5px}
+        .dt{width:6px;height:6px;border-radius:50%;background:var(--surface-2);transition:all .4s ease}
+        .dt.on{background:var(--gold);width:22px;border-radius:3px}
+        .dt.dn{background:rgba(200,150,46,.3)}
+    </style>
+</head>
+<body>
+
+<div class="prog"><div class="prog-bar" id="pb"></div></div>
+
+<div class="viewport">
+    <div class="canvas" id="cv">
+        <svg class="arrows" viewBox="0 0 3400 1000">
+            <defs>
+                <marker id="h1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m1"/></marker>
+                <marker id="h2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m2"/></marker>
+                <marker id="h3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m3"/></marker>
+                <marker id="h4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m4"/></marker>
+                <marker id="h5" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m5"/></marker>
+                <marker id="h6" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m6"/></marker>
+                <marker id="h7" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m7"/></marker>
+                <marker id="h8" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" class="ah" id="m8"/></marker>
+            </defs>
+            <!-- Sellers → AA (fan from vertical stack) -->
+            <path id="a1" class="arrow" d="M 510,350 C 700,350 900,420 1080,490" marker-end="url(#h1)"/>
+            <path id="a2" class="arrow" d="M 510,500 L 1080,500" marker-end="url(#h2)"/>
+            <path id="a3" class="arrow" d="M 510,650 C 700,650 900,580 1080,510" marker-end="url(#h3)"/>
+            <!-- AA → Myers -->
+            <path id="a4" class="arrow" d="M 1250,500 L 1530,500" marker-end="url(#h4)"/>
+            <!-- Myers → Sales -->
+            <path id="a5" class="arrow" d="M 1820,500 L 2100,500" marker-end="url(#h5)"/>
+            <!-- Sales → Investors (fan to vertical stack — mirrors sellers) -->
+            <path id="a6" class="arrow" d="M 2310,490 C 2500,420 2700,350 2840,350" marker-end="url(#h6)"/>
+            <path id="a7" class="arrow" d="M 2310,500 L 2840,500" marker-end="url(#h7)"/>
+            <path id="a8" class="arrow" d="M 2310,510 C 2500,580 2700,650 2840,650" marker-end="url(#h8)"/>
+        </svg>
+
+        <div class="ctitle"><h2>One House. <span class="g">Two Myers Agents.</span></h2><p>How every deal flows through Myers</p></div>
+
+        <!-- ═══ SELLERS — titles above, descriptions below ═══ -->
+        <div class="ic" id="s1" style="left:450px;top:350px">
+            <div class="ic-circle"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-label keep">Real Estate Agents</div>
+            <div class="ic-desc keep">An agent brings the deal to us.</div>
+        </div>
+        <div class="ic" id="s2" style="left:450px;top:500px">
+            <div class="ic-circle"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-label keep">Wholesalers</div>
+            <div class="ic-desc keep">Assigning a deal to us.</div>
+        </div>
+        <div class="ic" id="s3" style="left:450px;top:650px">
+            <div class="ic-circle"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-label keep">Sellers</div>
+            <div class="ic-desc keep">Buying straight from the seller.</div>
+        </div>
+        <div class="grp-label" id="sg" style="left:450px;top:780px">Seller Sources</div>
+
+        <!-- ═══ ACQUISITIONS AGENT — curved label ═══ -->
+        <div class="ic" id="aa" style="left:1150px;top:500px">
+            <svg class="curved-lbl" viewBox="0 0 220 55" width="220" height="55">
+                <defs><path id="cpAA" d="M 10,52 A 105,105 0 0 1 210,52" fill="none"/></defs>
+                <text fill="#C8962E" font-size="15" font-weight="700" font-family="Inter,sans-serif" letter-spacing="1">
+                    <textPath href="#cpAA" startOffset="50%" text-anchor="middle">Acquisitions Agent</textPath>
+                </text>
+            </svg>
+            <div class="ic-circle lg"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/></svg></div>
+            <div class="ic-sub">buys the house</div>
+        </div>
+
+        <!-- ═══ MARKETPLACE ═══ -->
+        <div class="houses-wrap" id="my" style="left:1670px;top:500px">
+            <div class="houses-grid" id="hgrid">
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg class="mini-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="houses-label">Marketplace</div>
+        </div>
+
+        <!-- ═══ SALES AGENT — curved label ═══ -->
+        <div class="ic" id="sa" style="left:2210px;top:500px">
+            <svg class="curved-lbl" viewBox="0 0 220 55" width="220" height="55">
+                <defs><path id="cpSA" d="M 10,52 A 105,105 0 0 1 210,52" fill="none"/></defs>
+                <text fill="#C8962E" font-size="15" font-weight="700" font-family="Inter,sans-serif" letter-spacing="1">
+                    <textPath href="#cpSA" startOffset="50%" text-anchor="middle">Sales Agent</textPath>
+                </text>
+            </svg>
+            <div class="ic-circle lg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-sub">sells the house</div>
+        </div>
+
+        <!-- ═══ INVESTORS — titles above, descriptions below ═══ -->
+        <div class="ic" id="b1" style="left:2900px;top:350px">
+            <div class="ic-circle"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-label keep">Institutional Investor</div>
+            <div class="ic-desc keep">Large-scale buyers acquiring multiple properties.</div>
+        </div>
+        <div class="ic" id="b2" style="left:2900px;top:500px">
+            <div class="ic-circle"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-label keep">Mom & Pop Investor</div>
+            <div class="ic-desc keep">Individual investors building personal portfolios.</div>
+        </div>
+        <div class="ic" id="b3" style="left:2900px;top:650px">
+            <div class="ic-circle"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="ic-label keep">All Other Investors</div>
+            <div class="ic-desc keep">Every other qualified buyer in the market.</div>
+        </div>
+        <div class="grp-label" id="bg" style="left:2900px;top:780px">Investor Buyers</div>
+
+        <div class="cfooter"><p>One deal, two Myers agents. One buys the house, one sells it.</p></div>
+    </div>
+</div>
+
+<div class="top-title hidden" id="tt"></div>
+<div class="overlay hidden" id="ov"><div class="ov-anim" id="ovi"></div></div>
+
+<div class="nav">
+    <button class="nb bk" id="bk" onclick="prev()" disabled>← Back</button>
+    <div class="dots" id="dots"></div>
+    <button class="nb fw" id="fw" onclick="next()">Next →</button>
+</div>
+
+<script>
+const CX=1700, CY=500;
+function zm(px,py,s,yShift){return{s,x:(CX-px)*s,y:(CY-py)*s+(yShift||0)}}
+const ARS=['a1','a2','a3','a4','a5','a6','a7','a8'];
+
+// Position layouts — sellers
+const SELL_V = {s1:[450,350],s2:[450,500],s3:[450,650],sg:[450,780]};
+const SELL_H = {s1:[320,480],s2:[520,480],s3:[720,480],sg:[520,600]};
+
+// Position layouts — investors (mirrors sellers exactly)
+const INV_V = {b1:[2900,350],b2:[2900,500],b3:[2900,650],bg:[2900,780]};
+const INV_H = {b1:[2700,480],b2:[2900,480],b3:[3100,480],bg:[2900,600]};
+
+const S=[
+  {// 0 — Overview
+    zoom:zm(1650,500,.38,0), zoomed:false, sellPos:'v', invPos:'v',
+    ar:{a1:'',a2:'',a3:'',a4:'on',a5:'on',a6:'',a7:'',a8:''},
+    glow:[],buyers:false
+  },
+  {// 1 — Sellers (spread horizontal, labels on canvas)
+    zoom:zm(520,480,1.7,-60), zoomed:true, sellPos:'h', invPos:'v',
+    ar:{a1:'on',a2:'on',a3:'on',a4:'dim',a5:'dim',a6:'dim',a7:'dim',a8:'dim'},
+    glow:['s1','s2','s3'],buyers:false,
+    topTitle:'Where Acquisitions Deals Come From'
+  },
+  {// 2 — You Are The Buyer
+    zoom:zm(1150,500,2.4,-220), zoomed:true, sellPos:'v', invPos:'v',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'on',a5:'dim',a6:'dim',a7:'dim',a8:'dim'},
+    glow:['aa'],buyers:false,
+    topTitle:'Acquisitions Your Role',
+    title:'<span class="g">You Are The Buyer</span>',
+    html:`<div class="ov-gci">Up To 60% Of GCI Per Acquisition</div>
+    <div class="ov-body">Find deals. Make offers. Negotiate terms. Get it under contract in your name (or your entity's). You put up the earnest & option.</div>`
+  },
+  {// 3 — AA How You Win
+    zoom:zm(1150,500,2.4,-220), zoomed:true, sellPos:'v', invPos:'v',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'on',a5:'dim',a6:'dim',a7:'dim',a8:'dim'},
+    glow:['aa'],buyers:false,
+    topTitle:'Acquisitions Your Role',
+    title:'How You <span class="g">Win</span>',
+    html:`<div class="ov-cards">
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div class="ct">Find Opportunities</div><div class="cd">Via networking with industry partners.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><div class="ct">Make Offers & Negotiate</div><div class="cd">Analyze ARV, estimate repairs, construct offers, negotiate with sellers and agents.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="ct">Secure The Property</div><div class="cd">Signed contracts, coordinate with title, shepherd deals to closing.</div></div>
+    </div><div class="ov-body" style="margin-top:16px;max-width:660px;margin-left:auto;margin-right:auto"><span style="color:var(--gold);font-weight:700">Go Deep</span> with your relationships; market for deals. Stay locked on your weekly offer target.</div>`
+  },
+  {// 4 — AA Discipline
+    zoom:zm(1150,500,2.4,-220), zoomed:true, sellPos:'v', invPos:'v',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'on',a5:'dim',a6:'dim',a7:'dim',a8:'dim'},
+    glow:['aa'],buyers:false,
+    topTitle:'Acquisitions Discipline',
+    title:'First Line Of <span class="g">Quality Control</span>',
+    html:`<div class="ov-cards">
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><div class="ct">See It Before You Buy It</div><div class="cd">Don't acquire a property you haven't seen.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><div class="ct">Never Post Below Cost</div><div class="cd">Deals cannot list below acquisition price.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div class="ct">Must Have Under Contract</div><div class="cd">Never post unless you have it under contract.</div></div>
+    </div>`
+  },
+  {// 5 — Marketplace Showings
+    zoom:zm(1670,500,2.2,-100), zoomed:true, sellPos:'v', invPos:'v',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'on',a5:'on',a6:'dim',a7:'dim',a8:'dim'},
+    glow:[],buyers:false,housesGlow:true,
+    topTitle:'Marketplace',
+    title:'<span class="g">Showings</span>',
+    html:`<div class="ov-body">Every property listed on the marketplace goes through a <span style="color:var(--gold);font-weight:700">scheduled showing</span>. One property, one time slot, one opportunity.</div>
+    <div class="ov-cards">
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="ct">The Showing</div><div class="cd">One scheduled 1-hour window. Walk the property, run your numbers, then submit your bid or pay the buy-now price.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="ct">Dallas, Collin, Denton, Tarrant & Rockwall</div><div class="cd">Showings are required in these counties. No exceptions.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><div class="ct">Outside Those Counties?</div><div class="cd">First come, first served. No showing required.</div></div>
+    </div>`
+  },
+  {// 6 — Sales Agent
+    zoom:zm(2210,500,2.4,-220), zoomed:true, sellPos:'v', invPos:'v',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'dim',a5:'on',a6:'on',a7:'on',a8:'on'},
+    glow:['sa'],buyers:false,
+    topTitle:'Sales Your Role',
+    title:'<span class="g">Sales Agent</span>',
+    html:`<div class="ov-body">Meet investors, communicate opportunities, and sell.</div>
+    <div class="ov-cards">
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="ct">Build Relationships</div><div class="cd">Network, prospect, build a book of verified investors.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg><div class="ct">Communicate Opportunities</div><div class="cd">Proactively reach out when properties hit the board.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><div class="ct">Manage The Sale</div><div class="cd">Guide through showing, bidding, contract, deposit.</div></div>
+    </div>`
+  },
+  {// 7 — Investors (spread horizontal, labels on canvas)
+    zoom:zm(2900,480,1.7,-60), zoomed:true, sellPos:'v', invPos:'h',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'dim',a5:'dim',a6:'on',a7:'on',a8:'on'},
+    glow:['b1','b2','b3'],buyers:true,
+    topTitle:'Who The Sales Agent Sells To'
+  },
+  {// 8 — Sales Rules
+    zoom:zm(2210,500,2.4,-220), zoomed:true, sellPos:'v', invPos:'v',
+    ar:{a1:'dim',a2:'dim',a3:'dim',a4:'dim',a5:'on',a6:'on',a7:'on',a8:'on'},
+    glow:['sa'],buyers:false,
+    topTitle:'Sales Rules',
+    title:'Protect The Deal. <span class="g">Protect The Investor.</span>',
+    html:`<div class="ov-cards">
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="ct">Verify Before You Disclose</div><div class="cd">Never share address until investor signs MVP. No exceptions.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div class="ct">Keep It Off The Open Market</div><div class="cd">Never reveal address or showing time publicly.</div></div>
+      <div class="ov-card"><svg class="card-ic" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><div class="ct">TREC Compliance</div><div class="cd">Everything you publish meets TREC requirements.</div></div>
+    </div>
+    <div class="ov-body" style="margin-top:20px;font-weight:700;font-size:20px;text-align:center;width:100%">One Deal. Two Agents. One Buys, One Sells.<br><span class="g">That's The Myers Model.</span></div>`
+  }
+];
+
+let cur=0;
+const cv=document.getElementById('cv'),ov=document.getElementById('ov'),ovi=document.getElementById('ovi');
+const total=S.length;
+const dC=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dt';dC.appendChild(d)}
+
+function setPos(map){
+  Object.entries(map).forEach(([id,pos])=>{
+    const el=document.getElementById(id);
+    if(el){el.style.left=pos[0]+'px';el.style.top=pos[1]+'px'}
+  });
+}
+
+function show(i){
+  cur=i;const s=S[i];
+
+  // Zoom
+  cv.style.transform=`translate(calc(-50% + ${s.zoom.x}px), calc(-50% + ${s.zoom.y}px)) scale(${s.zoom.s})`;
+  cv.classList.toggle('zoomed',!!s.zoomed);
+
+  // Animate seller positions
+  setPos(s.sellPos==='h' ? SELL_H : SELL_V);
+  // Animate investor positions
+  setPos(s.invPos==='h' ? INV_H : INV_V);
+
+  // Arrows
+  ARS.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const cls=s.ar[id]||'';
+    el.className='arrow '+cls;
+    const m=document.getElementById(id.replace('a','m'));
+    if(m)m.className='ah '+cls;
+  });
+
+  // Glow
+  document.querySelectorAll('.ic').forEach(el=>el.classList.remove('glow'));
+  (s.glow||[]).forEach(id=>document.getElementById(id)?.classList.add('glow'));
+  document.getElementById('hgrid').classList.toggle('glow',!!s.housesGlow);
+
+  // Top title
+  const tt=document.getElementById('tt');
+  if(s.topTitle){
+    tt.textContent=s.topTitle;
+    tt.classList.remove('hidden');
+  }else{
+    tt.classList.add('hidden');
+  }
+
+  // Overlay (show if step has html content)
+  if(s.html){
+    ov.classList.remove('hidden');
+    const titleHtml = s.title ? `<div class="ov-title">${s.title}</div>` : '';
+    ovi.innerHTML = titleHtml + s.html;
+    ovi.className='ov-anim';
+  }else if(!s.zoomed){
+    ov.classList.add('hidden');ovi.innerHTML='';
+  }else{
+    ov.classList.add('hidden');ovi.innerHTML='';
+  }
+
+  // Nav
+  document.getElementById('pb').style.width=((i+1)/total*100)+'%';
+  document.getElementById('bk').disabled=i<=0;
+  const fw=document.getElementById('fw');
+  fw.textContent=i>=total-1?'✓ Complete':'Next →';
+  fw.disabled=i>=total-1;
+  document.querySelectorAll('.dt').forEach((d,j)=>{d.className='dt'+(j===i?' on':j<i?' dn':'')});
+}
+
+function next(){if(cur<total-1)show(cur+1)}
+function prev(){if(cur>0)show(cur-1)}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}
+  if(e.key==='ArrowLeft'){e.preventDefault();prev()}
+});
+show(0);
+</script>
+</body>
+</html>

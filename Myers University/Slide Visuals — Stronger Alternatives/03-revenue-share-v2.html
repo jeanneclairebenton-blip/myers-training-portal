@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6-Level Revenue Share</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0F0F11;
+      color: #F0EDE8;
+      font-family: 'Poppins', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .slide-container {
+      width: 1440px;
+      height: 810px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 100px;
+      position: relative;
+    }
+
+    header {
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #C8962E;
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .left-side {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pool-context {
+      font-size: 18px;
+      color: rgba(240, 237, 232, 0.7);
+      margin-bottom: 40px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .pool-context span {
+      color: #E5B44A;
+      font-weight: 600;
+    }
+
+    .bars-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .level-label {
+      width: 80px;
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(240, 237, 232, 0.5);
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 48px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #C8962E 0%, #E5B44A 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      transition: width 1s ease-out;
+    }
+
+    .bar-value {
+      font-weight: 600;
+      font-size: 20px;
+      color: #0F0F11;
+      white-space: nowrap;
+    }
+
+    .bar-amount {
+      margin-left: 20px;
+      font-size: 22px;
+      font-weight: 600;
+      color: #F0EDE8;
+    }
+
+    .right-side {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+    }
+
+    .callout-card {
+      background-color: #1A1A1F;
+      border: 1.5px solid rgba(200, 150, 46, 0.25);
+      border-radius: 14px;
+      padding: 60px 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .callout-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(200, 150, 46, 0.1);
+      border-color: rgba(200, 150, 46, 0.4);
+    }
+
+    .huge-word {
+      font-size: 64px;
+      font-weight: 700;
+      color: #C8962E;
+      margin-bottom: 30px;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+    }
+
+    .callout-desc {
+      font-size: 24px;
+      line-height: 1.5;
+      color: #F0EDE8;
+      font-weight: 300;
+    }
+
+    .kicker {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .kicker-gold {
+      color: #C8962E;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <header>
+      <h1>6-Level Revenue Share</h1>
+      <div class="subtitle">Your Network Pays You Monthly</div>
+    </header>
+
+    <div class="content">
+      <div class="left-side">
+        <div class="pool-context">
+          One deal closes. $60,000 spread. <span>10% enters the pool = $6,000</span>
+        </div>
+        
+        <div class="bars-container">
+          <div class="bar-row">
+            <div class="level-label">Level 1</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 100%;">
+                <span class="bar-value">25%</span>
+              </div>
+            </div>
+            <div class="bar-amount">$1,500</div>
+          </div>
+          
+          <div class="bar-row">
+            <div class="level-label">Level 2</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 80%;">
+                <span class="bar-value">20%</span>
+              </div>
+            </div>
+            <div class="bar-amount">$1,200</div>
+          </div>
+          
+          <div class="bar-row">
+            <div class="level-label">Level 3</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 60%;">
+                <span class="bar-value">15%</span>
+              </div>
+            </div>
+            <div class="bar-amount">$900</div>
+          </div>
+          
+          <div class="bar-row">
+            <div class="level-label">Level 4</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 40%;">
+                <span class="bar-value">10%</span>
+              </div>
+            </div>
+            <div class="bar-amount">$600</div>
+          </div>
+          
+          <div class="bar-row">
+            <div class="level-label">Level 5</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 20%;">
+                <span class="bar-value">5%</span>
+              </div>
+            </div>
+            <div class="bar-amount">$300</div>
+          </div>
+          
+          <div class="bar-row">
+            <div class="level-label">Level 6</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 100%;">
+                <span class="bar-value">25%</span>
+              </div>
+            </div>
+            <div class="bar-amount">$1,500</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-side">
+        <div class="callout-card">
+          <div class="huge-word">MONTHLY</div>
+          <div class="callout-desc">
+            Every deal your network closes pays you. Whether you worked the deal or not.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kicker">
+      Your deals build your income. <span class="kicker-gold">Your network builds your wealth.</span>
+    </div>
+  </div>
+</body>
+</html>

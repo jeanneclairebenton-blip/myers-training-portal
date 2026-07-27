@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing Out the Bid</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9972C;--gdeep:#A87B1F;--glight:#E8BC5E;--ink:#1A1A1A;--gray:#6b7280;--cream:#FBF6EA;--red:#B3402A;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(180deg,#FFFFFF 0%,#FAF7F1 100%);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:44px 20px;}
+.stage{width:100%;max-width:860px;}
+h1{font-size:clamp(25px,4.4vw,40px);font-weight:800;text-align:center;line-height:1.15;letter-spacing:-0.5px;}
+h1 b{color:var(--gold);}
+.sub{text-align:center;color:var(--gold);font-size:clamp(15px,2.2vw,19px);font-weight:600;margin-top:6px;}
+.card{background:#fff;border-radius:26px;padding:32px;margin-top:22px;box-shadow:0 2px 6px rgba(26,26,26,.04), 0 16px 44px rgba(26,26,26,.08);}
+.hidden{display:none !important;}
+.center{text-align:center;}
+.coin{width:104px;height:104px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.startbtn{display:inline-block;margin-top:24px;background:var(--gold);color:#fff;border:none;font-family:'Poppins';font-weight:700;font-size:18px;padding:16px 48px;border-radius:99px;cursor:pointer;box-shadow:0 8px 22px rgba(201,151,44,.35);transition:all .15s;}
+.startbtn:hover{transform:translateY(-2px);}
+
+.banner{background:var(--cream);border-radius:14px;padding:14px 22px;text-align:center;font-size:clamp(14px,2vw,17px);font-weight:600;color:#374151;}
+.banner b{color:var(--gdeep);}
+
+.lane{margin-top:18px;}
+.lanehead{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gray);margin-bottom:10px;}
+.slotwrap{display:flex;flex-direction:column;gap:10px;min-height:60px;}
+.placed{display:flex;align-items:center;gap:14px;background:var(--cream);border-radius:14px;padding:13px 18px;animation:pop .25s ease;}
+@keyframes pop{0%{transform:scale(.95);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.pnum{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;}
+.placed h4{font-size:clamp(14px,2vw,17px);font-weight:700;}
+.placed .role{margin-left:auto;}
+
+.pool{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.pick{display:flex;align-items:center;gap:14px;text-align:left;background:#fff;border:1.5px solid #E7DFCE;border-radius:14px;padding:14px 18px;font-family:'Poppins';cursor:pointer;transition:all .15s;box-shadow:0 1px 3px rgba(26,26,26,.04);}
+.pick:hover{border-color:var(--gold);background:var(--cream);transform:translateY(-1px);}
+.pick h4{font-size:clamp(14px,2vw,17px);font-weight:700;color:var(--ink);}
+.pick.err{animation:shake .35s;border-color:var(--red);background:#FBF0ED;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+.role{font-size:12px;font-weight:800;letter-spacing:.1em;padding:4px 13px;border-radius:99px;flex:0 0 auto;}
+.role.sa{background:#fff;border:1.5px solid var(--gold);color:var(--gdeep);}
+.role.inv{background:#F1F2F4;border:1.5px solid #C9CDD3;color:#6b7280;}
+.role.aa{background:var(--gold);border:1.5px solid var(--gold);color:#fff;}
+.pick .role{margin-left:auto;}
+
+.hint{display:none;margin-top:14px;background:#F6F6F7;border-radius:14px;padding:15px 20px;font-size:clamp(13px,1.9vw,16px);font-weight:500;color:#374151;line-height:1.5;animation:pop .25s ease;}
+.hint.show{display:block;}
+.hint b{color:var(--gdeep);}
+.tally{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gray);text-align:center;margin-top:14px;}
+.tally b{color:var(--gdeep);}
+
+.big{font-size:clamp(46px,8vw,76px);font-weight:800;color:var(--gdeep);text-align:center;line-height:1;}
+.detail{margin-top:18px;text-align:left;}
+.drow{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #F0EBE0;}
+.drow:last-child{border-bottom:none;}
+.dnum{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-top:2px;}
+.drow p{font-size:clamp(13px,1.9vw,15.5px);color:#374151;font-weight:500;line-height:1.5;}
+.drow p b{color:var(--ink);}
+.confetti{position:fixed;top:-12px;border-radius:2px;pointer-events:none;z-index:99;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9;}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>Closing Out the <b>Bid</b></h1>
+  <div class="sub">When your investor is announced the winner, this is how it plays out. Tap the steps in order.</div>
+
+  <!-- START -->
+  <div class="card center" id="scrStart">
+    <div class="coin"><svg viewBox="0 0 24 24" width="50" height="50" fill="none" stroke="#C9972C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4" /><path d="m3 7 2 2 4-4"/><path d="M13 6h8M13 12h8M13 18h8"/></svg></div>
+    <h3 style="font-size:24px;font-weight:700;">Your investor is announced the winner.</h3>
+    <p style="font-size:16.5px;color:var(--gray);font-weight:500;margin-top:10px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;">
+      Myers never accepts an offer until the investor is fully committed.
+      Tap the steps in the order they play out.</p>
+    <button class="startbtn" onclick="start()">The Winner Is Announced</button>
+  </div>
+
+  <!-- GAME -->
+  <div class="card hidden" id="scrGame">
+    <div class="banner">The AA has final say as they&rsquo;re legal parties to the contract, and may pick a lower bid they trust more.</div>
+    <div class="lane">
+      <div class="lanehead">THE ORDER SO FAR</div>
+      <div class="slotwrap" id="slots"></div>
+    </div>
+    <div class="lane">
+      <div class="lanehead" id="poolhead">WHAT HAPPENS NEXT?</div>
+      <div class="pool" id="pool"></div>
+    </div>
+    <div class="hint" id="hint"></div>
+    <div class="tally" id="tally"></div>
+  </div>
+
+  <!-- END -->
+  <div class="card center hidden" id="scrEnd">
+    <div class="coin" style="width:120px;height:120px;">
+      <svg viewBox="0 0 24 24" width="70" height="70" fill="none" stroke="url(#g-trophy2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <defs><linearGradient id="g-trophy2" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8BC5E"/><stop offset="1" stop-color="#A87B1F"/></linearGradient></defs>
+        <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" fill="#C9972C" fill-opacity="0.16" stroke="none"/>
+        <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/>
+        <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/>
+        <path d="M18 9h1.5a1 1 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/>
+        <path d="M6 9H4.5a1 1 0 0 1 0-5H6"/>
+        <path d="M3.8 2.2 2.6 1" stroke="#C9972C"/>
+        <path d="M20.2 2.2 21.4 1" stroke="#C9972C"/>
+      </svg>
+    </div>
+    <div class="big" id="endScore"></div>
+    <h3 id="endTitle" style="font-size:25px;font-weight:700;margin-top:10px;"></h3>
+    <p id="endNote" style="font-size:16.5px;color:var(--gray);font-weight:500;margin-top:8px;line-height:1.6;max-width:560px;margin-left:auto;margin-right:auto;"></p>
+    <div class="detail" id="recap"></div>
+    <button class="startbtn" onclick="restart()">Run It Again</button>
+  </div>
+</div>
+
+<script>
+const STEPS = [
+ {role:'SA', cls:'sa', short:'Send the backside contract & wire instructions immediately',
+  detail:'Send the backside contract & wire instructions immediately.'},
+ {role:'INVESTOR', cls:'inv', short:'Investor signs first, delivers the $5,000, and sends proof',
+  detail:'Within 2 hours of the winner being announced.'},
+ {role:'SA', cls:'sa', short:'The SA posts the receipt screenshot to Slack',
+  detail:'The SA posts the receipt screenshot to Slack.'},
+ {role:'SA', cls:'sa', short:'Capture the lender',
+  detail:'If hard money, get the lender&rsquo;s name, phone, and email. The AA may call to confirm.'},
+ {role:'AA', cls:'aa', short:'AA signs last',
+  detail:'Only after the investor has signed and the deposit is confirmed. Investor first, AA last, no exceptions.'},
+ {role:'SA', cls:'sa', short:'Open title',
+  detail:'The SA sends the executed contract to the investor and opens title with Myers&rsquo; designated title company.'},
+];
+let next = 0, misses = 0, order = [];
+
+function shuffle(a){for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]];}return a;}
+
+function start(){
+  document.getElementById('scrStart').classList.add('hidden');
+  document.getElementById('scrGame').classList.remove('hidden');
+  next=0;misses=0;
+  order = shuffle(STEPS.map((s,idx)=>idx));
+  renderPool();renderSlots();updateTally();
+}
+function renderSlots(){
+  const w=document.getElementById('slots');w.innerHTML='';
+  for(let k=0;k<next;k++){
+    const s=STEPS[k];
+    w.innerHTML+='<div class="placed"><div class="pnum">'+(k+1)+'</div><h4>'+s.short+'</h4><span class="role '+s.cls+'">'+s.role+'</span></div>';
+  }
+  if(next===0)w.innerHTML='<div style="font-size:14px;color:#B9BEC6;font-weight:600;padding:8px 4px;">Nothing yet. Pick the first move below.</div>';
+}
+function renderPool(){
+  const p=document.getElementById('pool');p.innerHTML='';
+  order.filter(idx=>idx>=next).length; // noop
+  order.forEach(idx=>{
+    if(idx<next)return;
+    const s=STEPS[idx];
+    const b=document.createElement('button');b.className='pick';
+    b.innerHTML='<h4>'+s.short+'</h4><span class="role '+s.cls+'">'+s.role+'</span>';
+    b.onclick=()=>pick(idx,b);
+    p.appendChild(b);
+  });
+}
+function pick(idx,btn){
+  const hint=document.getElementById('hint');
+  if(idx===next){
+    next++;hint.className='hint';hint.innerHTML='';
+    confetti(10);
+    renderSlots();renderPool();updateTally();
+    if(next===STEPS.length)finish();
+  }else{
+    misses++;btn.classList.add('err');
+    setTimeout(()=>btn.classList.remove('err'),380);
+    hint.className='hint show';
+    hint.innerHTML='<b>Not yet. Next:</b> '+STEPS[next].short+'.';
+    updateTally();
+  }
+}
+function updateTally(){
+  document.getElementById('tally').innerHTML='PLACED &nbsp;<b>'+next+'</b> / '+STEPS.length+' &nbsp;&nbsp;&middot;&nbsp;&nbsp; MISSES &nbsp;<b>'+misses+'</b>';
+}
+function finish(){
+  setTimeout(()=>{
+    document.getElementById('scrGame').classList.add('hidden');
+    document.getElementById('scrEnd').classList.remove('hidden');
+    const t=document.getElementById('endTitle'),n=document.getElementById('endNote'),sc=document.getElementById('endScore');
+    if(misses===0){sc.textContent='Flawless';t.textContent='Perfect order.';n.textContent='Myers never accepts an offer until the investor is fully committed.';confetti(120);}
+    else if(misses<=2){sc.textContent=misses+(misses===1?' miss':' misses');t.textContent='Almost.';n.textContent='Investor first, AA last, no exceptions. Run it again.';confetti(40);}
+    else{sc.textContent=misses+' misses';t.textContent='Run it back.';n.textContent='Investor first, AA last, no exceptions. Run it again.';}
+    const r=document.getElementById('recap');r.innerHTML='';
+    STEPS.forEach((s,k)=>{r.innerHTML+='<div class="drow"><div class="dnum">'+(k+1)+'</div><p><b>'+s.short+'.</b> '+s.detail+'</p></div>';});
+  },450);
+}
+function restart(){
+  document.getElementById('scrEnd').classList.add('hidden');
+  document.getElementById('scrGame').classList.remove('hidden');
+  next=0;misses=0;order=shuffle(STEPS.map((s,idx)=>idx));
+  renderPool();renderSlots();updateTally();
+  document.getElementById('hint').className='hint';
+}
+function confetti(n){
+  const colors=['#C9972C','#E8BC5E','#A87B1F','#FBF6EA','#1A1A1A'];
+  for(let k=0;k<n;k++){
+    const c=document.createElement('div');c.className='confetti';
+    const s=6+Math.random()*8;
+    c.style.cssText='left:'+(Math.random()*100)+'vw;width:'+s+'px;height:'+(s*0.5)+'px;background:'+colors[k%colors.length]+';animation-duration:'+(1.6+Math.random()*1.6)+'s;animation-delay:'+(Math.random()*0.4)+'s;';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3600);
+  }
+}
+</script>
+</body>
+</html>

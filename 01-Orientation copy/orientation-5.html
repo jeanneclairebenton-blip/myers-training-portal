@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flyers & Marketing Properties | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+
+  :root {
+    --gold: #C9941F;
+    --gold-light: #D4A94A;
+    --cream: #FBE8B7;
+    --cream-bg: #FFF8EB;
+    --ink: #1A1815;
+    --dark: #2A2520;
+    --bg: #FAFAF8;
+    --white: #FFFFFF;
+    --gray: #8A857D;
+    --border: #E8E4DC;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Mulish', 'Segoe UI', Arial, sans-serif;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(26,24,21,0.08);
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--ink);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+    overflow-y: auto; overflow-x: hidden;
+    height: auto;
+    width: auto;
+  }
+
+  /* ── PROGRESS TRACKER ── */
+  .progress-tracker {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--ink);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
+  }
+  .tracker-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+  .tracker-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+  }
+  .tracker-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    background: #333029;
+    color: #5A564E;
+    border: 2px solid #3D382F;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+  }
+  .tracker-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #5A564E;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+  .tracker-step.active .tracker-label {
+    color: var(--gold);
+  }
+  .tracker-step.completed .tracker-label {
+    color: var(--gold);
+  }
+  .tracker-line {
+    width: 40px;
+    height: 2px;
+    background: #333029;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 14px;
+  }
+  .tracker-line.filled {
+    background: var(--gold);
+  }
+
+  /* ── SLIDER ── */
+  .slider-viewport {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: visible;
+  }
+  .slider {
+    display: block;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .slide {
+    min-width: auto;
+    width: auto;
+    height: 100%;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .slide-inner {
+    max-width: 900px;
+    width: 100%;
+    padding: 80px 32px 120px;
+    margin: 0 auto;
+  }
+
+  /* ── SLIDE BACKGROUNDS ── */
+  .slide-dark {
+    background: linear-gradient(180deg, #1A1815 0%, #2A2520 100%);
+    color: #FFFDF6;
+  }
+  .slide-light {
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .gold-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .slide-dark .section-heading { color: #FFFDF6; }
+  .slide-light .section-heading { color: var(--ink); }
+  .section-heading em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .subtitle {
+    font-size: 1.15rem;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: 48px;
+    line-height: 1.7;
+    max-width: 640px;
+  }
+  .slide-dark .subtitle { color: #D4CFC7; }
+  .slide-light .subtitle { color: #3D362A; }
+
+  /* ── DOC CARD ── */
+  .doc-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 24px;
+    transition: transform 200ms, box-shadow 200ms;
+    box-shadow: 0 1px 3px rgba(26,24,21,0.06);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,24,21,0.08);
+  }
+  .doc-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    background: rgba(201,148,31,0.12);
+  }
+  .doc-card-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .doc-card h3 {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .doc-card p {
+    font-size: 0.95rem;
+    color: #3D362A;
+    line-height: 1.6;
+    flex: 1;
+  }
+  .doc-card .doc-check {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #E8E2D4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .doc-card .doc-check input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .doc-card .doc-check label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #7A7263;
+    cursor: pointer;
+  }
+
+  /* ── FLYER CARD (Slide 1) ── */
+  .flyer-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 700px;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(26,24,21,0.06);
+  }
+  .flyer-card .doc-card-icon {
+    margin-bottom: 20px;
+  }
+  .flyer-card h3 {
+    font-family: var(--sans);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .flyer-card p {
+    font-size: 1rem;
+    color: #3D362A;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .flyer-card .doc-check {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #E8E2D4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .flyer-card .doc-check input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .flyer-card .doc-check label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #7A7263;
+    cursor: pointer;
+  }
+
+  /* ── CHANNEL GRID (Slide 2) ── */
+  .channel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+  .channel-card {
+    background: rgba(255,253,246,0.06);
+    border: 1px solid rgba(201,148,31,0.15);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: transform 200ms, box-shadow 200ms;
+  }
+  .channel-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(201,148,31,0.1);
+  }
+  .channel-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(201,148,31,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .channel-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .channel-card h3 {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #FFFDF6;
+    margin-bottom: 8px;
+  }
+  .channel-card p {
+    font-size: 0.9rem;
+    color: #D4CFC7;
+    line-height: 1.6;
+  }
+
+  /* ── GMASS CARD (Slide 3) ── */
+  .gmass-card {
+    background: #FFFDF6;
+    border: 1px solid #E8E2D4;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 700px;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(26,24,21,0.06);
+  }
+  .gmass-card .doc-card-icon {
+    margin-bottom: 20px;
+  }
+  .gmass-card h3 {
+    font-family: var(--sans);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .gmass-card p {
+    font-size: 1rem;
+    color: #3D362A;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  /* ── YELLOW CALLOUT ── */
+  .yellow-callout {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+  }
+  .yellow-callout-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .yellow-callout-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #8B6B1A;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .yellow-callout p {
+    color: #3D362A;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .yellow-callout strong { color: var(--ink); }
+
+  /* ── COMPLIANCE GRID (Slide 4) ── */
+  .compliance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+  .compliance-card {
+    background: rgba(255,253,246,0.06);
+    border: 1px solid rgba(201,148,31,0.15);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: left;
+  }
+  .compliance-card .cc-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(201,148,31,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .compliance-card .cc-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .compliance-card h3 {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #FFFDF6;
+    margin-bottom: 8px;
+  }
+  .compliance-card p {
+    font-size: 0.95rem;
+    color: #D4CFC7;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .compliance-card .cc-check {
+    padding-top: 16px;
+    border-top: 1px solid rgba(201,148,31,0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .compliance-card .cc-check input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .compliance-card .cc-check label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #B0A898;
+    cursor: pointer;
+  }
+
+  .nav-wrap {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.85);
+    color: #8A857D;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid #E8E4DC;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
+    backdrop-filter: blur(8px);
+  }
+  .back-btn:hover {
+    background: #FFFFFF;
+    color: #1A1815;
+    border-color: #C9941F;
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
+/* ── IFRAME FIX ── */
+.slider { display: block !important; transform: none !important; width: auto !important; transition: none !important; }
+.slide { display: none !important; width: auto !important; height: auto !important; min-height: auto !important; overflow: visible !important; flex-shrink: unset !important; }
+.slide.active-slide { display: block !important; }
+.nav-wrap { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; margin: 0 auto; padding: 20px 24px 40px; max-width: 900px; }
+.back-btn { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; }
+.continue-btn-wrap { position: relative !important; bottom: auto !important; }
+.tracker, .progress-tracker { position: sticky !important; top: 0 !important; z-index: 1000 !important; }
+.overview-wrap { min-height: auto !important; }
+.slide-content { padding-top: 40px !important; padding-bottom: 40px !important; }
+.intro-wrap { min-height: auto !important; padding-top: 40px !important; padding-bottom: 40px !important; }
+
+</style>
+</head>
+<body>
+
+<!-- ── PROGRESS TRACKER ── -->
+<nav class="progress-tracker">
+  <div class="tracker-steps">
+    <div class="tracker-step active" data-slide="0" onclick="goToSlide(0)">
+      <div class="tracker-circle">1</div>
+      <span class="tracker-label">Flyers</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="1" onclick="goToSlide(1)">
+      <div class="tracker-circle">2</div>
+      <span class="tracker-label">Channels</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="2" onclick="goToSlide(2)">
+      <div class="tracker-circle">3</div>
+      <span class="tracker-label">GMass</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="3" onclick="goToSlide(3)">
+      <div class="tracker-circle">4</div>
+      <span class="tracker-label">Compliance</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SLIDER ── -->
+<div class="slider-viewport">
+  <div class="slider" id="slider">
+
+    <!-- SLIDE 1: FLYERS (Light) -->
+    <div class="slide slide-light">
+      <div class="slide-inner">
+        <span class="gold-label">Orientation</span>
+        <h1 class="section-heading">Property <em>Flyers</em></h1>
+        <p class="subtitle">Every property flyer is your investor's first impression. Here's what goes on one and why it matters.</p>
+
+        <div class="flyer-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>What Goes on a Flyer</h3>
+          <p>Every property flyer must include: property photos, price, square footage, bed/bath count, lot size, and the Myers logo. Flyers are created and distributed after a property is acquired.</p>
+          <div class="doc-check">
+            <input type="checkbox" onchange="checkConfetti()" id="or5-flyer">
+            <label for="or5-flyer">Reviewed</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: CHANNELS (Dark) -->
+    <div class="slide slide-dark">
+      <div class="slide-inner">
+        <span class="gold-label">Distribution</span>
+        <h2 class="section-heading">Marketing <em>Channels</em></h2>
+        <p class="subtitle">Get property flyers in front of the right investors through these three channels.</p>
+
+        <div class="channel-grid">
+          <div class="channel-card">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Investor Network</h3>
+            <p>Send flyers directly to your verified investor list via email (GMass). Your network is your biggest asset.</p>
+          </div>
+
+          <div class="channel-card">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </div>
+            <h3>Social Media</h3>
+            <p>Post on Facebook, Instagram, and LinkedIn — but never include the property address in public posts.</p>
+          </div>
+
+          <div class="channel-card">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h3>Email / GMass</h3>
+            <p>Use GMass to send bulk property flyers to your investor database. Fast, efficient, trackable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: GMASS (Light) -->
+    <div class="slide slide-light">
+      <div class="slide-inner">
+        <span class="gold-label">Walkthrough</span>
+        <h2 class="section-heading">How to Use <em>GMass</em></h2>
+        <p class="subtitle">GMass is the tool you'll use to send bulk property emails to your investor list. Here's what you need to know.</p>
+
+        <div class="gmass-card">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3>How to Use GMass</h3>
+          <p>Watch the video walkthrough to learn how to send bulk property emails to your investor list using GMass. It integrates directly with Gmail for a seamless workflow.</p>
+
+          <div class="yellow-callout">
+            <div class="yellow-callout-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <p><strong>Note:</strong> Please watch the GMass video walkthrough after this powerpoint.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: COMPLIANCE (Dark) -->
+    <div class="slide slide-dark">
+      <div class="slide-inner">
+        <span class="gold-label">Compliance</span>
+        <h2 class="section-heading">Compliance <em>Reminders</em></h2>
+        <p class="subtitle">Two non-negotiable rules for all marketing materials and public communications.</p>
+
+        <div class="compliance-grid">
+          <div class="compliance-card">
+            <div class="cc-icon">
+              <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3>TREC Logo Required</h3>
+            <p>The Myers logo must appear on all marketing materials where TREC requires it. No exceptions.</p>
+            <div class="cc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or5-trec-logo">
+              <label for="or5-trec-logo">Understood</label>
+            </div>
+          </div>
+
+          <div class="compliance-card">
+            <div class="cc-icon">
+              <svg viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </div>
+            <h3>No Addresses in Public Posts</h3>
+            <p>Never reveal property addresses or showing times in any public marketing — social media, ads, or listings.</p>
+            <div class="cc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or5-no-address">
+              <label for="or5-no-address">Understood</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── NAV BUTTONS ── -->
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="continue-btn" id="continueBtn" onclick="nextSlide()">
+    Continue
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+</div>
+
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+<script>
+  var currentSlide = 0;
+  var totalSlides = 4;
+  var maxVisited = 0;
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
+
+  function updateTracker() {
+    var steps = document.querySelectorAll('.tracker-step');
+    var lines = document.querySelectorAll('.tracker-line');
+    steps.forEach(function(step, i) {
+      step.classList.remove('active', 'completed');
+      if (i === currentSlide) {
+        step.classList.add('active');
+      } else if (i < currentSlide) {
+        step.classList.add('completed');
+        var circle = step.querySelector('.tracker-circle');
+        circle.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      } else {
+        var circle = step.querySelector('.tracker-circle');
+        circle.textContent = (i + 1);
+      }
+    });
+    lines.forEach(function(line, i) {
+      line.classList.toggle('filled', i < currentSlide);
+    });
+  }
+
+  function updateButton() {
+    var btn = document.getElementById('continueBtn');
+    if (currentSlide >= totalSlides - 1) {
+      btn.innerHTML = 'Complete <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else {
+      btn.innerHTML = 'Continue <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+    }
+  }
+
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides) return;
+    if (n > maxVisited + 1) return;
+    currentSlide = n;
+    if (n > maxVisited) maxVisited = n;
+    var slider = document.getElementById('slider');
+    slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
+    updateTracker();
+    updateBackBtn();
+    updateButton();
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      goToSlide(currentSlide + 1);
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { goToSlide(currentSlide - 1); }
+  });
+
+  updateTracker();
+  updateBackBtn();
+  updateButton();
+</script>
+
+<script>
+// ── IFRAME SLIDE SYSTEM ──
+(function(){
+  var slides = document.querySelectorAll('.slide');
+  if (!slides.length) return;
+  // Show first slide
+  slides[0].classList.add('active-slide');
+  // Kill any transform on slider
+  var sl = document.getElementById('slider');
+  if (sl) { sl.style.transform = 'none'; sl.style.display = 'block'; sl.style.width = 'auto'; }
+
+  // Patch goToSlide
+  window.goToSlide = function(n) {
+    var total = window.totalSlides || slides.length;
+    if (n < 0 || n >= total) return;
+    window.currentSlide = n;
+    if (typeof window.maxVisited !== 'undefined' && n > window.maxVisited) window.maxVisited = n;
+    slides.forEach(function(s, i) { s.classList.toggle('active-slide', i === n); });
+    if (sl) sl.style.transform = 'none';
+    window.scrollTo(0, 0);
+    if (typeof updateTracker === 'function') updateTracker();
+    if (typeof updateBackBtn === 'function') updateBackBtn();
+    if (typeof updateButton === 'function') updateButton();
+  };
+  window.nextSlide = function() { if (window.currentSlide < (window.totalSlides || slides.length) - 1) window.goToSlide(window.currentSlide + 1); };
+  window.advanceSlide = window.nextSlide;
+
+  // Make tracker steps clickable
+  document.querySelectorAll('.tracker-step').forEach(function(step, i) {
+    step.style.cursor = 'pointer';
+    step.addEventListener('click', function() {
+      window.goToSlide(parseInt(step.getAttribute('data-slide') || step.getAttribute('data-index') || i));
+    });
+  });
+})();
+</script>
+</body>
+</html>

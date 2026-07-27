@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem We Solve - Myers University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0F0F11;
+            --surface: #1A1A1F;
+            --text-primary: #F0EDE8;
+            --text-dim: rgba(240, 237, 232, 0.5);
+            --accent: #C8962E;
+            --accent-bright: #E5B44A;
+            --border-gold: rgba(200, 150, 46, 0.25);
+            --border-dim: rgba(240, 237, 232, 0.08);
+            --red-dim: rgba(229, 115, 115, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            width: 1440px;
+            height: 810px;
+            position: relative;
+            padding: 100px 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .competitors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .card {
+            background-color: var(--surface);
+            border-radius: 14px;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .competitor-card {
+            border: 1.5px solid var(--border-dim);
+        }
+
+        .competitor-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(229, 115, 115, 0.15);
+            box-shadow: 0 8px 24px rgba(229, 115, 115, 0.05);
+        }
+
+        .myers-card {
+            border: 1.5px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .myers-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(200, 150, 46, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .competitor-card .card-title {
+            color: var(--text-primary);
+        }
+
+        .myers-card .card-title {
+            color: var(--accent-bright);
+            font-size: 32px;
+        }
+
+        .card-desc {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        .myers-card .card-desc {
+            color: var(--text-primary);
+            font-size: 24px;
+            max-width: 500px;
+            font-weight: 400;
+        }
+
+        .icon-x {
+            stroke: var(--red-dim);
+        }
+
+        .icon-check {
+            stroke: var(--accent-bright);
+        }
+
+        .signal-stat {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-left: 40px;
+            border-left: 1px solid var(--border-gold);
+        }
+
+        .stat-number {
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--accent-bright);
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .stat-text {
+            font-size: 20px;
+            color: var(--text-dim);
+            line-height: 1.4;
+            max-width: 200px;
+            font-weight: 400;
+        }
+
+        .kicker {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text-dim);
+            letter-spacing: 0.5px;
+        }
+
+        .kicker .gold {
+            color: var(--accent-bright);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <!-- Top row: Competitor dead ends -->
+        <div class="competitors-grid">
+            <div class="card competitor-card">
+                <div class="card-header">
+                    <div class="card-title">College</div>
+                    <svg class="icon-x" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+                <div class="card-desc">4 years. $120K in debt. Zero deals done.</div>
+            </div>
+            
+            <div class="card competitor-card">
+                <div class="card-header">
+                    <div class="card-title">The Guru</div>
+                    <svg class="icon-x" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+                <div class="card-desc">$8,000 weekend course. No license. No deal flow. You're on your own.</div>
+            </div>
+
+            <div class="card competitor-card">
+                <div class="card-header">
+                    <div class="card-title">Big Brokerage</div>
+                    <svg class="icon-x" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+                <div class="card-desc">You build their brand. They keep 50% of your commission.</div>
+            </div>
+        </div>
+
+        <!-- Bottom row: Myers Solution -->
+        <div class="card myers-card">
+            <div>
+                <div class="card-header">
+                    <div class="card-title">Myers</div>
+                    <svg class="icon-check" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <div class="card-desc">Real investing education. Your own brokerage. Live deal flow. Day one.</div>
+            </div>
+            <div class="signal-stat">
+                <div class="stat-number">90%</div>
+                <div class="stat-text">of every commission stays in the agent network</div>
+            </div>
+        </div>
+
+        <!-- Footer Kicker -->
+        <div class="kicker">
+            Everyone else trains you to create value for someone else. <span class="gold">Myers trains you to capture it for yourself.</span>
+        </div>
+    </div>
+</body>
+</html>

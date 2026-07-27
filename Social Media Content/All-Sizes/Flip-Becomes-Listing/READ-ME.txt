@@ -1,0 +1,7 @@
+WHICH FILE GOES WHERE
+- Facebook (1080x1350).png  -> Facebook feed post
+- Instagram (1080x1350).png -> Instagram feed post
+- LinkedIn (1080x1350).png  -> LinkedIn feed post
+- Story (1080x1920).png     -> IG/FB Story + Reels
+
+Myers post standard: 4:5 shared feed size, 9:16 story, min type ~28px @1080.

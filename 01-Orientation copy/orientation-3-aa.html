@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AA Rules & Responsibilities | Myers Orientation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+
+:root {
+  --gold: #C9941F;
+  --gold-light: #D4A94A;
+  --cream: #FBE8B7;
+  --cream-bg: #FFF8EB;
+  --ink: #1A1815;
+  --dark: #2A2520;
+  --bg: #FAFAF8;
+  --white: #FFFFFF;
+  --gray: #8A857D;
+  --border: #E8E4DC;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Mulish', 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--ink);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 18px;
+  overflow-y: auto; overflow-x: hidden;
+  height: auto;
+  width: auto;
+}
+
+/* ── PROGRESS TRACKER ── */
+.progress-tracker {
+  position: sticky;
+  top: 0; left: 0; right: 0;
+  height: 44px;
+  background: var(--ink);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid rgba(201,148,31,0.15);
+}
+.tracker-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  min-width: 80px;
+}
+.tracker-circle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  color: #555;
+  background: #333;
+  border: 2px solid #333;
+  transition: all 0.3s ease;
+}
+.tracker-step.active .tracker-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+.tracker-step.completed .tracker-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+.tracker-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #555;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+.tracker-step.active .tracker-label,
+.tracker-step.completed .tracker-label {
+  color: var(--gold);
+}
+.tracker-line {
+  width: 48px; height: 2px;
+  background: #333;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+.tracker-line.filled {
+  background: var(--gold);
+}
+
+/* ── SLIDER ── */
+.slider-viewport {
+  position: fixed;
+  top: 56px; left: 0; right: 0; bottom: 0;
+  overflow: visible;
+}
+.slider {
+  display: block;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide {
+  width: auto;
+  min-width: auto;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slide-inner {
+  max-width: 900px;
+  width: 100%;
+  padding: 80px 2rem 120px;
+}
+
+.slide.dark { background: var(--ink); color: var(--bg); }
+.slide.light { background: var(--bg); color: var(--ink); }
+
+/* ── GOLD LABEL ── */
+.gold-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+  text-align: center;
+}
+
+/* ── SECTION HEADING ── */
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.2;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.slide.dark .section-heading { color: var(--bg); }
+.slide.light .section-heading { color: var(--ink); }
+.section-heading em { font-style: italic; color: var(--gold); }
+
+/* ── HERO TITLE ── */
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(251,232,183,0.7);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.hero-stat {
+  font-family: var(--serif);
+  font-size: 5rem;
+  color: var(--gold);
+  line-height: 1;
+  text-align: center;
+}
+.hero-stat-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+.doc-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+  transition: transform 200ms, box-shadow 200ms;
+  box-shadow: 0 2px 8px rgba(26,24,21,0.06);
+}
+.doc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(26,24,21,0.1);
+}
+.slide.dark .doc-card {
+  background: var(--dark);
+  border-color: rgba(201,148,31,0.15);
+}
+.slide.dark .doc-card h3 { color: var(--cream); }
+.slide.dark .doc-card p { color: rgba(251,232,183,0.7); }
+
+.doc-card-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  background: rgba(201,148,31,0.12);
+}
+.doc-card-icon svg {
+  width: 26px; height: 26px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.doc-card h3 {
+  font-family: var(--sans);
+  font-size: 1.05rem; font-weight: 800; color: var(--ink);
+  margin-bottom: 0.5rem; line-height: 1.3;
+}
+.doc-card p {
+  font-size: 0.95rem; color: #5A5347; line-height: 1.6;
+}
+.doc-card .doc-check {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.slide.dark .doc-card .doc-check { border-top-color: rgba(201,148,31,0.15); }
+.doc-card .doc-check input[type="checkbox"] {
+  width: 20px; height: 20px;
+  accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+}
+.doc-card .doc-check label {
+  font-size: 0.9rem; font-weight: 600; color: var(--gray); cursor: pointer;
+}
+
+/* ── YELLOW CALLOUT ── */
+.yellow-callout {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: 700px; margin: 1.5rem auto 0;
+}
+.yellow-callout-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.yellow-callout-icon svg {
+  width: 24px; height: 24px; stroke: #8B6B1A; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.yellow-callout p {
+  color: #3D362A; font-size: 1rem; font-weight: 500; text-align: left;
+}
+.yellow-callout strong { color: var(--ink); }
+
+/* ── ACKNOWLEDGE BLOCK ── */
+.acknowledge-block {
+  background: rgba(201,148,31,0.08);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.acknowledge-block input[type="checkbox"] {
+  width: 24px; height: 24px;
+  accent-color: var(--gold); cursor: pointer; flex-shrink: 0;
+}
+.slide.dark .acknowledge-block label { color: var(--cream); }
+.acknowledge-block label {
+  font-size: 1.05rem; font-weight: 700; color: var(--ink); cursor: pointer;
+}
+
+/* ── NAV WRAP ── */
+.nav-wrap {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  width: 100%;
+  max-width: 900px;
+  padding: 0 24px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── BACK BUTTON ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #8A857D;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 0 28px;
+  height: 48px;
+  border: 1px solid #E8E4DC;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background 200ms, color 200ms, border-color 200ms;
+  backdrop-filter: blur(8px);
+}
+.back-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #1A1815;
+  border-color: #C9941F;
+}
+.back-btn svg {
+  width: 16px; height: 16px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.back-btn.hidden { opacity: 0; pointer-events: none; }
+
+/* ── CONTINUE BUTTON ── */
+.continue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gold);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms, box-shadow 200ms;
+  box-shadow: 0 4px 24px rgba(201,148,31,0.35);
+  margin-left: auto;
+}
+.continue-btn:hover {
+  background: #B8841A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,148,31,0.45);
+}
+.continue-btn svg {
+  width: 18px; height: 18px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.check-svg { display: none; }
+.tracker-step.completed .check-svg { display: block; }
+.tracker-step.completed .step-num-text { display: none; }
+
+@media (max-width: 768px) {
+  .card-grid.cols-3 { grid-template-columns: 1fr; }
+  .card-grid.cols-2 { grid-template-columns: 1fr; }
+  .tracker-step { min-width: 60px; }
+  .tracker-line { width: 24px; }
+  .tracker-label { font-size: 8px; }
+  .slide-inner { padding: 60px 1.25rem 120px; }
+  .hero-title { font-size: 2rem; }
+  .hero-stat { font-size: 3.5rem; }
+}
+
+/* ── IFRAME FIX ── */
+.slider { display: block !important; transform: none !important; width: auto !important; transition: none !important; }
+.slide { display: none !important; width: auto !important; height: auto !important; min-height: auto !important; overflow: visible !important; flex-shrink: unset !important; }
+.slide.active-slide { display: block !important; }
+.nav-wrap { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; margin: 0 auto; padding: 20px 24px 40px; max-width: 900px; }
+.back-btn { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; }
+.continue-btn-wrap { position: relative !important; bottom: auto !important; }
+.tracker, .progress-tracker { position: sticky !important; top: 0 !important; z-index: 1000 !important; }
+.overview-wrap { min-height: auto !important; }
+.slide-content { padding-top: 40px !important; padding-bottom: 40px !important; }
+.intro-wrap { min-height: auto !important; padding-top: 40px !important; padding-bottom: 40px !important; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══ PROGRESS TRACKER ═══ -->
+<nav class="progress-tracker">
+  <div class="tracker-steps">
+    <div class="tracker-step active" data-slide="0">
+      <div class="tracker-circle">
+        <span class="step-num-text">1</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Your Role</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="1">
+      <div class="tracker-circle">
+        <span class="step-num-text">2</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Discipline</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="2">
+      <div class="tracker-circle">
+        <span class="step-num-text">3</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Shared Rules</span>
+    </div>
+    <div class="tracker-line"></div>
+    <div class="tracker-step" data-slide="3">
+      <div class="tracker-circle">
+        <span class="step-num-text">4</span>
+        <svg class="check-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="tracker-label">Complete</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SLIDE DECK ═══ -->
+<div class="slider-viewport">
+  <div class="slider" id="slider">
+
+    <!-- SLIDE 1: Your Role + Responsibilities (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner">
+        <span class="gold-label">Orientation</span>
+        <h1 class="hero-title">Acquisitions Agent</h1>
+        <p class="hero-subtitle">Find deals, make offers, negotiate.</p>
+        <div class="hero-stat">60%</div>
+        <div class="hero-stat-label">Up to per acquisition</div>
+
+        <h2 class="section-heading" style="margin-top:2.5rem;">Your Day-to-Day <em>Responsibilities</em></h2>
+
+        <div class="card-grid cols-3">
+          <!-- Find Opportunities -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3>Find Opportunities</h3>
+            <p>Prospect for off-market properties, driving for dollars, cold calling, and working inbound leads.</p>
+          </div>
+
+          <!-- Make Offers & Negotiate -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3>Make Offers &amp; Negotiate</h3>
+            <p>Calculate ARV, estimate repairs, build offers, and negotiate with sellers and their agents.</p>
+          </div>
+
+          <!-- Secure the Property -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>Secure the Property</h3>
+            <p>Get contracts signed, coordinate with title, and move the deal through closing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Acquisition Discipline (Dark) -->
+    <div class="slide dark">
+      <div class="slide-inner">
+        <span class="gold-label">Discipline</span>
+        <h2 class="section-heading">Acquisition <em>Discipline</em></h2>
+
+        <div class="card-grid cols-3">
+          <!-- See It Before You Buy It -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>See It Before You Buy It</h3>
+            <p>Don't acquire a property you haven't seen — unless the numbers are significantly de-risked.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-see">
+              <label for="or3aa-see">Understood</label>
+            </div>
+          </div>
+
+          <!-- Never Post Below Cost -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+            </div>
+            <h3>Never Post Below Cost</h3>
+            <p>Deals must not be posted for less than the price they were acquired for.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-post">
+              <label for="or3aa-post">Understood</label>
+            </div>
+          </div>
+
+          <!-- Must Have Under Contract -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            </div>
+            <h3>Must Have Under Contract</h3>
+            <p>Never post a property for sale unless you have it under contract. No exceptions.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-contract">
+              <label for="or3aa-contract">Understood</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="yellow-callout">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <p><strong>As an AA, you are the first line of quality control.</strong> Every deal you bring in reflects on the entire team.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Shared Rules (Light) -->
+    <div class="slide light">
+      <div class="slide-inner">
+        <span class="gold-label">Compliance</span>
+        <h2 class="section-heading">Rules for <em>All Agents</em></h2>
+
+        <div class="card-grid cols-2">
+          <!-- TREC Logo Compliance -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            </div>
+            <h3>TREC Logo Compliance</h3>
+            <p>The Myers logo goes on all marketing materials where TREC requires it. Stay compliant in everything you publish.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-trec">
+              <label for="or3aa-trec">Understood</label>
+            </div>
+          </div>
+
+          <!-- Report All Deals -->
+          <div class="doc-card">
+            <div class="doc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Report All Deals — No Exceptions</h3>
+            <p>Every brokered or wholesaled transaction must be reported to Myers. Unreported deals expose the brokerage to legal liability, violate your fiduciary duty, and constitute a breach of your agreement. <strong>Myers will pursue all legal remedies available.</strong> The only exception: deals you personally close to rent, flip, or hold.</p>
+            <div class="doc-check">
+              <input type="checkbox" onchange="checkConfetti()" id="or3aa-report">
+              <label for="or3aa-report">Understood</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Complete (Light) -->
+    <div class="slide light">
+      <div class="slide-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height: auto;padding-top:40px;padding-bottom:40px;">
+        <span class="gold-label">Acknowledgment</span>
+        <h2 class="section-heading">Confirm Your <em>Understanding</em></h2>
+
+        <div class="yellow-callout" style="margin-bottom:2rem;">
+          <div class="yellow-callout-icon">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <p><strong>You've reviewed all AA rules and responsibilities.</strong> Check the box below to confirm your understanding.</p>
+        </div>
+
+        <div class="acknowledge-block">
+          <input type="checkbox" onchange="checkConfetti()" id="or3aa-acknowledge">
+          <label for="or3aa-acknowledge">I understand my role, responsibilities, and rules as an Acquisitions Agent.</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ NAV BUTTONS ═══ -->
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="continue-btn" id="continueBtn" onclick="goNext()">
+    Continue
+    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
+</div>
+
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+<script>
+  var currentSlide = 0;
+  var totalSlides = 4;
+  var slider = document.getElementById('slider');
+  var btn = document.getElementById('continueBtn');
+  var steps = document.querySelectorAll('.tracker-step');
+  var lines = document.querySelectorAll('.tracker-line');
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
+
+  function updateUI() {
+    slider.style.transform = 'translateX(-' + (currentSlide * 100) + 'vw)';
+
+    steps.forEach(function(step, i) {
+      step.classList.remove('active', 'completed');
+      if (i < currentSlide) step.classList.add('completed');
+      else if (i === currentSlide) step.classList.add('active');
+    });
+    lines.forEach(function(line, i) {
+      line.classList.toggle('filled', i < currentSlide);
+    });
+
+    if (currentSlide >= totalSlides - 1) {
+      btn.innerHTML = 'Complete <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else {
+      btn.innerHTML = 'Continue <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>';
+    }
+
+    updateBackBtn();
+  }
+
+  function goNext() {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateUI();
+    }
+  }
+
+  function goToSlide(index) {
+    if (index <= currentSlide || index <= totalSlides - 1) {
+      currentSlide = index;
+      updateUI();
+    }
+  }
+
+  steps.forEach(function(step, i) {
+    step.addEventListener('click', function() { goToSlide(i); });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+    if (e.key === 'ArrowLeft' && currentSlide > 0) { currentSlide--; updateUI(); }
+  });
+
+  updateUI();
+</script>
+
+<script>
+// ── IFRAME SLIDE SYSTEM ──
+(function(){
+  var slides = document.querySelectorAll('.slide');
+  if (!slides.length) return;
+  // Show first slide
+  slides[0].classList.add('active-slide');
+  // Kill any transform on slider
+  var sl = document.getElementById('slider');
+  if (sl) { sl.style.transform = 'none'; sl.style.display = 'block'; sl.style.width = 'auto'; }
+
+  // Patch goToSlide
+  window.goToSlide = function(n) {
+    var total = window.totalSlides || slides.length;
+    if (n < 0 || n >= total) return;
+    window.currentSlide = n;
+    if (typeof window.maxVisited !== 'undefined' && n > window.maxVisited) window.maxVisited = n;
+    slides.forEach(function(s, i) { s.classList.toggle('active-slide', i === n); });
+    if (sl) sl.style.transform = 'none';
+    window.scrollTo(0, 0);
+    if (typeof updateTracker === 'function') updateTracker();
+    if (typeof updateBackBtn === 'function') updateBackBtn();
+    if (typeof updateButton === 'function') updateButton();
+  };
+  window.nextSlide = function() { if (window.currentSlide < (window.totalSlides || slides.length) - 1) window.goToSlide(window.currentSlide + 1); };
+  window.advanceSlide = window.nextSlide;
+
+  // Make tracker steps clickable
+  document.querySelectorAll('.tracker-step').forEach(function(step, i) {
+    step.style.cursor = 'pointer';
+    step.addEventListener('click', function() {
+      window.goToSlide(parseInt(step.getAttribute('data-slide') || step.getAttribute('data-index') || i));
+    });
+  });
+})();
+</script>
+</body>
+</html>

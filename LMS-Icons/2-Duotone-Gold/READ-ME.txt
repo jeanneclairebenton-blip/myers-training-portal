@@ -1,0 +1,25 @@
+MYERS LMS ICON SET (duotone gold, v2)
+Library base: Lucide (lucide.dev), ISC license, free for commercial use.
+Treatment: gradient gold stroke (#E8BC5E to #A87B1F, 2px) + soft gold fill (#C9972C at 10-16%) behind the key shape.
+Style rule: line icons only, one family, never mix with filled icons from other sets.
+Inactive state: change both gradient stops to #6B6B6B and the fill to #6B6B6B at 8%.
+
+FILE = WHERE IT'S USED
+Home-home ............... Home tab / dashboard
+Certificate-award ....... Certificate section + earned badge
+Lesson-play ............. Lesson tab, video play
+Path-map ................ Progress board / journey
+Profile-user ............ Profile tab
+Cohort-users ............ Cohort cards + Investors badge
+Streak-flame ............ Streak counter
+Refresher-mail .......... Weekly refresher card
+Mentor-Chat-message-circle  Mentor / help
+Streak-Repair-life-buoy . Streak repair card
+Reminder-clock .......... Reminder settings
+You-Are-Here-map-pin .... Pin on the progress board (solid gold dot)
+Your-Role-compass ....... Your Role badge (filled needle)
+Certification-trophy .... Final investor-agent certification
+Locked-lock ............. Locked modules
+Complete-check .......... Completed modules (soft gold badge circle)
+
+See Icon-Preview.html for all 16 on one sheet.

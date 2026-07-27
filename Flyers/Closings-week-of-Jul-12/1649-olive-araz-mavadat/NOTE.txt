@@ -1,0 +1,5 @@
+WHICH FILE GOES WHERE
+instagram-feed.png -> Instagram feed (4:5)
+facebook-feed.png -> Facebook feed (4:5, 1200px)
+linkedin.png -> LinkedIn (square)
+story.png -> IG/FB Story + Reels (9:16)

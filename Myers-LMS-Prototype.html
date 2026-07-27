@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myers LMS: The Platform Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#C9972C; --gold-soft:#F7EEDD; --gold-deep:#A87B1F;
+    --ink:#1A1A1A; --gray:#6B6B6B; --line:#EAE4D8; --bg:#FAF8F4;
+    --green:#2E7D32; --red:#B3402A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',-apple-system,'Segoe UI',sans-serif;}
+  body{background:var(--bg);color:var(--ink);}
+  .top{max-width:1150px;margin:0 auto;padding:34px 20px 10px;}
+  .kicker{font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;}
+  h1{font-size:clamp(22px,3.4vw,34px);font-weight:700;margin:6px 0 6px;}
+  .sub{color:var(--gray);font-size:14px;max-width:760px;line-height:1.6;}
+  .wrap{max-width:1150px;margin:18px auto 60px;padding:0 20px;display:flex;gap:28px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+
+  /* phone */
+  .phone{width:392px;flex:0 0 392px;background:#fff;border:1px solid var(--line);border-radius:38px;box-shadow:0 24px 60px rgba(26,26,26,.10);overflow:hidden;position:relative;}
+  .notch{height:26px;display:flex;align-items:center;justify-content:center;}
+  .notch span{width:110px;height:8px;background:#EFEAE0;border-radius:8px;}
+  .screen{min-height:640px;max-height:640px;overflow-y:auto;padding:10px 20px 86px;display:none;}
+  .screen.on{display:block;}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;}
+  .tab{flex:1;padding:11px 0 14px;text-align:center;font-size:9.5px;font-weight:600;color:#9C9C9C;cursor:pointer;border:none;background:none;}
+  .tab .ic{display:block;width:19px;height:19px;margin:0 auto 3px;}
+  .tab.on{color:var(--gold-deep);}
+  .svgi{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;width:100%;height:100%;}
+  .ci{display:inline-block;width:15px;height:15px;vertical-align:-2px;margin-right:6px;color:var(--gold-deep);}
+  .pillic{display:inline-block;width:13px;height:13px;vertical-align:-2px;margin-right:4px;}
+
+  /* shared phone bits */
+  .brandrow{display:flex;justify-content:space-between;align-items:center;margin:4px 0 14px;}
+  .logo{font-weight:800;font-size:15px;}
+  .logo em{color:var(--gold);font-style:normal;}
+  .streakpill{background:var(--gold-soft);border:1px solid #EAD9B4;color:var(--gold-deep);font-size:12px;font-weight:700;padding:5px 12px;border-radius:99px;}
+  .hello{font-size:20px;font-weight:700;line-height:1.25;}
+  .hello small{display:block;font-size:12px;color:var(--gray);font-weight:500;margin-top:2px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 2px 8px rgba(26,26,26,.04);}
+  .card h4{font-size:13px;font-weight:700;margin-bottom:4px;}
+  .muted{color:var(--gray);font-size:11.5px;line-height:1.5;}
+  .goldbtn{display:block;width:100%;background:var(--gold);color:#fff;border:none;font-family:'Poppins';font-weight:700;font-size:14px;padding:14px;border-radius:14px;cursor:pointer;margin-top:12px;box-shadow:0 6px 16px rgba(201,151,44,.35);}
+  .goldbtn:active{transform:scale(.98);}
+
+  /* progress ring */
+  .ringrow{display:flex;gap:16px;align-items:center;}
+  .ring{position:relative;width:86px;height:86px;flex:0 0 86px;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:17px;}
+  .ring .val small{font-size:8.5px;color:var(--gray);font-weight:600;letter-spacing:.05em;}
+
+  .modline{display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid #F3EFE7;}
+  .modline:last-child{border-bottom:none;}
+  .dot{width:22px;height:22px;flex:0 0 22px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;}
+  .dot.done{background:var(--gold);border-color:var(--gold);}
+  .dot.now{border-color:var(--gold);color:var(--gold);font-weight:800;}
+  .modline .t{font-size:12.5px;font-weight:600;flex:1;line-height:1.35;}
+  .modline .d{font-size:10.5px;color:var(--gray);}
+  .modline.locked{opacity:.45;}
+
+  .chip{display:inline-block;background:var(--gold-soft);color:var(--gold-deep);font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;margin-right:5px;}
+
+  /* lesson */
+  .vid{background:linear-gradient(135deg,#211C12,#3A3020);border-radius:16px;height:172px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin-top:12px;position:relative;}
+  .vid .play{width:52px;height:52px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;box-shadow:0 8px 20px rgba(201,151,44,.5);}
+  .vid .len{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.55);font-size:10.5px;padding:3px 8px;border-radius:6px;}
+  .vid .cap{margin-top:10px;font-size:11px;color:#E8DFC9;}
+  .qbox{margin-top:14px;}
+  .qq{font-size:13px;font-weight:700;line-height:1.45;margin-bottom:10px;}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font-size:12px;font-weight:500;font-family:'Poppins';cursor:pointer;margin-bottom:8px;line-height:1.4;}
+  .opt.correct{border-color:var(--green);background:#EEF6EE;}
+  .opt.wrong{border-color:var(--red);background:#FBEFEC;}
+  .why{display:none;font-size:11.5px;line-height:1.55;border-left:3px solid var(--gold);background:var(--gold-soft);padding:10px 12px;border-radius:0 10px 10px 0;margin:4px 0 10px;}
+  .why.show{display:block;}
+  .qprog{font-size:10.5px;color:var(--gray);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin:14px 0 8px;}
+
+  /* journey */
+  .rung{display:flex;gap:13px;position:relative;padding-bottom:26px;}
+  .rung:before{content:'';position:absolute;left:15px;top:34px;bottom:0;width:2px;background:var(--line);}
+  .rung:last-child:before{display:none;}
+  .rung .node{width:32px;height:32px;flex:0 0 32px;border-radius:50%;border:2.5px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;z-index:1;}
+  .rung.done .node{background:var(--gold);border-color:var(--gold);color:#fff;}
+  .rung.now .node{border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,151,44,.18);}
+  .rung h5{font-size:13px;font-weight:700;line-height:1.3;}
+  .rung .rs{font-size:11px;color:var(--gray);margin-top:2px;line-height:1.45;}
+  .youpin{display:inline-block;background:var(--ink);color:#fff;font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:99px;margin-top:5px;}
+
+  /* profile */
+  .certgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  .cert{border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;}
+  .cert .medal{font-size:22px;}
+  .cert h6{font-size:10.5px;font-weight:700;margin-top:5px;line-height:1.3;}
+  .cert .st{font-size:9.5px;color:var(--gray);margin-top:2px;}
+  .cert.earned{background:var(--gold-soft);border-color:#EAD9B4;}
+  .statrow{display:flex;gap:10px;margin-top:12px;}
+  .stat{flex:1;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;}
+  .stat b{display:block;font-size:19px;font-weight:800;color:var(--gold-deep);}
+  .stat span{font-size:9.5px;color:var(--gray);font-weight:600;}
+
+  /* annotations */
+  .notes{flex:1 1 420px;max-width:560px;}
+  .notes h2{font-size:17px;font-weight:700;margin-bottom:4px;}
+  .notes .lead{color:var(--gray);font-size:13px;line-height:1.6;margin-bottom:14px;}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:13px 15px;margin-bottom:10px;}
+  .note h5{font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+  .conf{font-size:10px;font-weight:700;color:var(--gold-deep);background:var(--gold-soft);padding:2px 9px;border-radius:99px;white-space:nowrap;}
+  .conf.mid{color:#7A6A3A;background:#F3F0E6;}
+  .note p{font-size:12px;color:#444;line-height:1.6;margin-top:4px;}
+  .noteset{display:none;}
+  .noteset.on{display:block;}
+
+  /* celebration */
+  .cele{position:absolute;inset:0;background:rgba(255,255,255,.96);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;z-index:9;}
+  .cele.show{display:flex;}
+  .cele .big{font-size:52px;}
+  .cele h3{font-size:19px;font-weight:800;margin-top:8px;}
+  .cele p{font-size:12.5px;color:var(--gray);margin-top:8px;line-height:1.6;max-width:280px;}
+  .cele .goldbtn{max-width:240px;}
+
+  .foot{max-width:1150px;margin:0 auto 50px;padding:0 20px;color:var(--gray);font-size:11.5px;line-height:1.7;}
+  @media(max-width:860px){.wrap{flex-direction:column;align-items:center;}.notes{max-width:392px;}}
+
+  /* view toggle */
+  .vtoggle{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:99px;padding:4px;margin-top:16px;}
+  .vtoggle button{border:none;background:none;font-family:'Poppins';font-weight:700;font-size:12.5px;color:var(--gray);padding:8px 22px;border-radius:99px;cursor:pointer;}
+  .vtoggle button.on{background:var(--gold);color:#fff;box-shadow:0 4px 12px rgba(201,151,44,.3);}
+
+  /* laptop */
+  #view-laptop{display:none;max-width:1150px;margin:18px auto 24px;padding:0 20px;}
+  #view-laptop.on{display:block;}
+  .lapframe{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px rgba(26,26,26,.10);overflow:hidden;}
+  .lapbar{background:#F4F0E8;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:8px;}
+  .lapbar i{width:10px;height:10px;border-radius:50%;background:#DDD5C4;display:inline-block;}
+  .lapbar .url{flex:1;background:#fff;border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--gray);padding:5px 12px;margin-left:10px;}
+  .lapbody{display:flex;min-height:600px;}
+  .side{width:212px;flex:0 0 212px;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;}
+  .side .logo{font-size:18px;margin-bottom:22px;padding-left:8px;}
+  .navi{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;font-size:12.5px;font-weight:600;color:var(--gray);cursor:pointer;margin-bottom:3px;}
+  .navi .nic{width:17px;height:17px;flex:0 0 17px;}
+  .navi.on{background:var(--gold-soft);color:var(--gold-deep);}
+  .mentorbox{margin-top:auto;background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:12px;font-size:11px;line-height:1.5;}
+  .mentorbox b{font-size:11.5px;}
+  .mainc{flex:1;padding:24px 26px;background:var(--bg);}
+  .rail{width:264px;flex:0 0 264px;border-left:1px solid var(--line);padding:22px 18px;background:#fff;}
+  .lap-hello{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .lap-hello h3{font-size:20px;font-weight:700;}
+  .lap-hello small{color:var(--gray);font-size:12px;font-weight:500;}
+  .hero{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;gap:20px;align-items:center;box-shadow:0 2px 8px rgba(26,26,26,.04);}
+  .hero .goldbtn{margin-top:10px;max-width:300px;}
+  .boardcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 2px 8px rgba(26,26,26,.04);}
+  .boardcard h4{font-size:14px;font-weight:700;margin-bottom:14px;}
+  .railcard{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .railcard h5{font-size:12px;font-weight:700;margin-bottom:6px;}
+  .bar{height:7px;background:#F0EBDF;border-radius:99px;overflow:hidden;margin:5px 0 9px;}
+  .bar i{display:block;height:100%;background:var(--gold);border-radius:99px;}
+  .cohortline{font-size:11px;font-weight:600;display:flex;justify-content:space-between;color:#444;}
+  @media(max-width:960px){.rail{display:none;}}
+  @media(max-width:720px){.side{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="kicker">Myers Home Buyers · Platform Blueprint</div>
+  <h1>The Myers LMS: what it looks like</h1>
+  <p class="sub">A working prototype built from the research report and your Training Outline. Tap the tabs at the bottom of the phone. The panel beside it explains the research behind every element on the screen you are viewing, with confidence scores. Try the quiz on the Lesson tab: it uses your real Non-Negotiables.</p>
+  <div class="vtoggle">
+    <button class="on" id="vb-phone" onclick="setView('phone')">Phone</button>
+    <button id="vb-laptop" onclick="setView('laptop')">Laptop</button>
+  </div>
+</div>
+
+<div class="wrap" id="view-phone">
+  <div class="phone">
+    <div class="notch"><span></span></div>
+
+    <!-- DASHBOARD -->
+    <div class="screen on" id="s-home">
+      <div class="brandrow"><div class="logo">My<em>e</em>rs</div><div class="streakpill"><svg class="svgi pillic" viewBox="0 0 24 24"><path d="M12 3c1 3.5-5 6-5 10.5a5 5 0 0 0 10 0C17 9.5 13 8 12 3z"/></svg>6 day streak</div></div>
+      <div class="hello">Good morning, Jordan.<small>Cohort 12 · Mentor: Sarah M.</small></div>
+
+      <div class="card">
+        <div class="ringrow">
+          <div class="ring">
+            <svg width="86" height="86"><circle cx="43" cy="43" r="37" fill="none" stroke="#F0EBDF" stroke-width="8"/><circle cx="43" cy="43" r="37" fill="none" stroke="#C9972C" stroke-width="8" stroke-linecap="round" stroke-dasharray="232.4" stroke-dashoffset="145.25"/></svg>
+            <div class="val">3/8<small>MODULES</small></div>
+          </div>
+          <div>
+            <span class="chip">CERTIFICATE 2 OF 5</span>
+            <h4 style="margin-top:6px;">The Myers Model</h4>
+            <div class="muted">22 minutes left · target: Fri, Aug 7</div>
+          </div>
+        </div>
+        <button class="goldbtn" onclick="go('lesson')">Continue: 2.4 The Showing Timeline ▸</button>
+      </div>
+
+      <div class="card">
+        <h4><svg class="svgi ci" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Weekly refresher · 5 questions</h4>
+        <div class="muted">From Certificate 1 (Orientation). Takes 3 minutes. Keeps what you learned from fading.</div>
+      </div>
+
+      <div class="card">
+        <h4><svg class="svgi ci" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4"/><path d="M18 14.7c2.2.8 3.5 2.6 3.5 5.3"/></svg>Cohort 12 this week</h4>
+        <div class="muted">4 of 6 teammates finished Module 2.3. Live class Thursday assumes 2.1 to 2.4 are done.</div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE -->
+    <div class="screen" id="s-cert">
+      <div class="brandrow"><div class="logo">My<em>e</em>rs</div><div class="streakpill"><svg class="svgi pillic" viewBox="0 0 24 24"><path d="M12 3c1 3.5-5 6-5 10.5a5 5 0 0 0 10 0C17 9.5 13 8 12 3z"/></svg>6</div></div>
+      <span class="chip">CERTIFICATE 2 OF 5</span>
+      <div class="hello" style="margin-top:6px;">The Myers Model<small>Think like an investor. Get paid like one. · Target: Fri, Aug 7</small></div>
+      <div class="card" style="padding:8px 14px;">
+        <div class="modline"><div class="dot done">✓</div><div class="t">2.1 One Lead, Four Ways to Win</div><div class="d">5 min</div></div>
+        <div class="modline"><div class="dot done">✓</div><div class="t">2.2 One House, Two Myers Agents</div><div class="d">4 min</div></div>
+        <div class="modline"><div class="dot done">✓</div><div class="t">2.3 Assignment vs Double Close</div><div class="d">6 min</div></div>
+        <div class="modline"><div class="dot now">▸</div><div class="t">2.4 The Showing Timeline</div><div class="d">5 min</div></div>
+        <div class="modline locked"><div class="dot"></div><div class="t">2.5 Three Parties, Two Contracts</div><div class="d">6 min</div></div>
+        <div class="modline locked"><div class="dot"></div><div class="t">2.6 The Marketplace &amp; Property Board</div><div class="d">4 min</div></div>
+        <div class="modline locked"><div class="dot"></div><div class="t">2.7 Buy It Now vs The Auction</div><div class="d">4 min</div></div>
+        <div class="modline locked"><div class="dot"></div><div class="t">2.8 Certificate Check · 10 questions</div><div class="d">80%+</div></div>
+      </div>
+      <div class="card">
+        <h4><svg class="svgi ci" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>Stuck on anything?</h4>
+        <div class="muted">Message Sarah, or bring it to Thursday's live class. Real humans, always one tap away.</div>
+      </div>
+    </div>
+
+    <!-- LESSON -->
+    <div class="screen" id="s-lesson">
+      <div class="brandrow"><div class="logo">My<em>e</em>rs</div><div class="streakpill"><svg class="svgi pillic" viewBox="0 0 24 24"><path d="M12 3c1 3.5-5 6-5 10.5a5 5 0 0 0 10 0C17 9.5 13 8 12 3z"/></svg>6</div></div>
+      <span class="chip">MODULE 4.2 · NON-NEGOTIABLES</span>
+      <div class="hello" style="margin-top:6px;">The Six Non-Negotiables<small>One idea: the rules that protect every deal. 5 min video + 3 questions.</small></div>
+      <div class="vid">
+        <div class="play"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;margin-left:3px;"><polygon points="6 3 20 12 6 21"/></svg></div>
+        <div class="cap">Narrated over visuals · transcript below</div>
+        <div class="len">4:52</div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="background:var(--gold-soft);padding:8px 14px;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--gold-deep);display:flex;justify-content:space-between;"><span>AFTER THE VIDEO: ONE IDEA PER TAP</span><span id="stepN">CARD 1 OF 3</span></div>
+        <div style="padding:16px 16px 6px;min-height:118px;">
+          <div class="stepcard" style="display:block;">
+            <h4 style="font-size:14px;">The deposit is $5,000.</h4>
+            <p class="muted" style="margin-top:6px;font-size:12px;">Not earnest money. Paid directly to Myers. Non-refundable, wire or cashier's check only.</p>
+          </div>
+          <div class="stepcard" style="display:none;">
+            <h4 style="font-size:14px;">The clock is 2 hours.</h4>
+            <p class="muted" style="margin-top:6px;font-size:12px;">Winner signs and delivers the deposit within 2 hours of bidding closing, or the AA moves to the next buyer. Say it out loud up front.</p>
+          </div>
+          <div class="stepcard" style="display:none;">
+            <h4 style="font-size:14px;">Every deal is a double close.</h4>
+            <p class="muted" style="margin-top:6px;font-size:12px;">Myers sells to the investor as a principal, through Myers' title company. A title policy protects everyone.</p>
+          </div>
+        </div>
+        <button class="goldbtn" id="stepBtn" style="margin:0;border-radius:0;box-shadow:none;" onclick="nextStep()">Got it, next ▸</button>
+      </div>
+      <div class="qbox">
+        <div class="qprog">Check · Question 1 of 3</div>
+        <div class="qq">An investor says: "Will you take $3K as the deposit? I'm good for the rest."</div>
+        <button class="opt" data-ok="0" data-q="q1">Sure, if they've bought from us before.</button>
+        <button class="opt" data-ok="1" data-q="q1">No. The deposit is $5,000, non-refundable, wire or cashier's check only.</button>
+        <button class="opt" data-ok="0" data-q="q1">Take $3K now and collect $2K at closing.</button>
+        <div class="why" id="why-q1"><b>Why:</b> Non-Negotiable #1: investors bring their own EMD, and the deposit is $5,000, paid directly to Myers. No financing the deposit, no exceptions. This is a pass/fail rule: on the certificate check it requires 100%, not 80%.</div>
+
+        <div class="qprog">Check · Question 2 of 3</div>
+        <div class="qq">Bidding closed an hour ago. The winner hasn't sent the wire or contract yet. What happens at the 2 hour mark?</div>
+        <button class="opt" data-ok="0" data-q="q2">The AA calls to renegotiate the price.</button>
+        <button class="opt" data-ok="0" data-q="q2">The deal pauses until the investor is ready.</button>
+        <button class="opt" data-ok="1" data-q="q2">The AA moves to the next buyer in line.</button>
+        <div class="why" id="why-q2"><b>Why:</b> No delaying the deposit: wire plus contract are due within 2 hours of bidding closing, or the deal goes to the next buyer. Say it out loud up front so nobody is surprised.</div>
+
+        <div class="qprog">Check · Question 3 of 3</div>
+        <div class="qq">An investor asks: "Can you just assign the contract to me?"</div>
+        <button class="opt" data-ok="1" data-q="q3">No. All transactions run as a double close through Myers' title company.</button>
+        <button class="opt" data-ok="0" data-q="q3">Yes, assignment is cheaper for everyone.</button>
+        <button class="opt" data-ok="0" data-q="q3">Only for verified repeat buyers.</button>
+        <div class="why" id="why-q3"><b>Why:</b> Double close is Non-Negotiable #4, and it protects the investor too: a title policy is in place. This is also one of the Seven Questions every investor will test you with in the first conversation.</div>
+
+        <button class="goldbtn" id="finishBtn" style="display:none;" onclick="celebrate()">Finish module ✓</button>
+      </div>
+    </div>
+
+    <!-- JOURNEY -->
+    <div class="screen" id="s-journey">
+      <div class="brandrow"><div class="logo">My<em>e</em>rs</div><div class="streakpill"><svg class="svgi pillic" viewBox="0 0 24 24"><path d="M12 3c1 3.5-5 6-5 10.5a5 5 0 0 0 10 0C17 9.5 13 8 12 3z"/></svg>6</div></div>
+      <div class="hello">Your path<small>From licensed agent to investor-agent.</small></div>
+      <div class="card">
+        <div class="rung done"><div class="node">✓</div><div><h5>Onboarding</h5><div class="rs">Logins and systems: done on day one. You started at 1 of 6, not zero.</div></div></div>
+        <div class="rung done"><div class="node">✓</div><div><h5>Certificate 1 · Orientation</h5><div class="rs">Why we exist. Our promise: we train investors, not open-house hosts.</div></div></div>
+        <div class="rung now"><div class="node"><svg class="svgi" viewBox="0 0 24 24" style="width:15px;height:15px;color:var(--gold-deep);"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></div><div><h5>Certificate 2 · The Myers Model</h5><div class="rs">One lead, four ways to win. The showing timeline. Double close.</div><span class="youpin"><svg class="svgi" viewBox="0 0 24 24" style="width:10px;height:10px;vertical-align:-1px;margin-right:3px;"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg>YOU ARE HERE · 3 of 8</span></div></div>
+        <div class="rung"><div class="node">2</div><div><h5>Certificate 3 · Your Role</h5><div class="rs">Acquisitions and Sales: your day-to-day, your rules, your discipline.</div></div></div>
+        <div class="rung"><div class="node">3</div><div><h5>Certificate 4 · Investors</h5><div class="rs">The Six Non-Negotiables, the Seven Questions, the MVP.</div></div></div>
+        <div class="rung"><div class="node"><svg class="svgi" viewBox="0 0 24 24" style="width:15px;height:15px;color:var(--gold-deep);"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/></svg></div><div><h5>Investor-Agent · Launch Week</h5><div class="rs">15-name list, five MVPs signed, two coffees booked. Certified when your first deal closes.</div></div></div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="screen" id="s-profile">
+      <div class="brandrow"><div class="logo">My<em>e</em>rs</div><div class="streakpill"><svg class="svgi pillic" viewBox="0 0 24 24"><path d="M12 3c1 3.5-5 6-5 10.5a5 5 0 0 0 10 0C17 9.5 13 8 12 3z"/></svg>6</div></div>
+      <div class="hello">Jordan Reyes<small>Cohort 12 · joined Jul 14, 2026</small></div>
+      <div class="statrow">
+        <div class="stat"><b>6</b><span>DAY STREAK</span></div>
+        <div class="stat"><b>92%</b><span>REFRESHER AVG</span></div>
+        <div class="stat"><b>11</b><span>MODULES DONE</span></div>
+      </div>
+      <div class="certgrid">
+        <div class="cert earned"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><circle cx="12" cy="8" r="5"/><path d="M8.8 12.6 7 22l5-3 5 3-1.8-9.4"/></svg></div><h6>Orientation</h6><div class="st">Earned Jul 17</div></div>
+        <div class="cert"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></div><h6>The Myers Model</h6><div class="st">In progress · 3/8</div></div>
+        <div class="cert"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg></div><h6>Your Role</h6><div class="st">Locked</div></div>
+        <div class="cert"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4"/><path d="M18 14.7c2.2.8 3.5 2.6 3.5 5.3"/></svg></div><h6>Investors</h6><div class="st">Locked</div></div>
+      </div>
+      <div class="card">
+        <h4><svg class="svgi ci" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6"/><path d="m14.8 14.8 3.6 3.6"/><path d="m14.8 9.2 3.6-3.6"/><path d="m5.6 18.4 3.6-3.6"/></svg>One streak repair available</h4>
+        <div class="muted">Life happens. Miss a day this week and your streak survives, once.</div>
+      </div>
+      <div class="card">
+        <h4><svg class="svgi ci" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Your reminder</h4>
+        <div class="muted">Weekdays at 7:45 AM, your pick. "Coffee's hot. Module 2.4 is 5 minutes. Let's go."</div>
+      </div>
+    </div>
+
+    <!-- CELEBRATION -->
+    <div class="cele" id="cele">
+      <div class="big" style="font-size:0;"><svg class="svgi" viewBox="0 0 24 24" style="width:56px;height:56px;color:var(--gold);"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/></svg></div>
+      <h3>Module 4.2 complete!</h3>
+      <p>3 for 3 on the Non-Negotiables. When you finish this certificate, Cohort 12 hears about it the same day, gold graphic and all.</p>
+      <button class="goldbtn" onclick="document.getElementById('cele').classList.remove('show')">Keep going ▸</button>
+    </div>
+
+    <div class="tabbar">
+      <button class="tab on" data-s="home" onclick="go('home')"><span class="ic"><svg class="svgi" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></span>Home</button>
+      <button class="tab" data-s="cert" onclick="go('cert')"><span class="ic"><svg class="svgi" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M8.8 12.6 7 22l5-3 5 3-1.8-9.4"/></svg></span>Certificate</button>
+      <button class="tab" data-s="lesson" onclick="go('lesson')"><span class="ic"><svg class="svgi" viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20"/></svg></span>Lesson</button>
+      <button class="tab" data-s="journey" onclick="go('journey')"><span class="ic"><svg class="svgi" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14"/><path d="M15 6v14"/></svg></span>Path</button>
+      <button class="tab" data-s="profile" onclick="go('profile')"><span class="ic"><svg class="svgi" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6.5 8-6.5s8 2.5 8 6.5"/></svg></span>Me</button>
+    </div>
+  </div>
+
+  <!-- ANNOTATIONS -->
+  <div class="notes">
+    <div class="noteset on" id="n-home">
+      <h2>Dashboard: one obvious next action</h2>
+      <p class="lead">The whole screen answers one question: what do I do right now? Everything else is quiet.</p>
+      <div class="note"><h5>One gold Continue button <span class="conf">Confidence 80</span></h5><p>Usability research: every unit of attention spent navigating is stolen from learning. Two clicks max from opening the app to learning.</p></div>
+      <div class="note"><h5>Progress ring, 3 of 8, minutes left <span class="conf">Confidence 90</span></h5><p>Goal gradient effect: effort accelerates as people feel close to a goal. Showing "22 minutes left" makes the rung feel reachable today.</p></div>
+      <div class="note"><h5>Streak with the flame <span class="conf mid">Confidence 70</span></h5><p>Duolingo's highest-impact mechanic (streak wagers lifted day 14 retention 14 percent). Consumer app evidence, so test it on one cohort first.</p></div>
+      <div class="note"><h5>Weekly refresher card <span class="conf">Confidence 90</span></h5><p>Spaced retrieval is the highest-evidence feature in the entire model. Five questions from older material, weekly, for 4 weeks after each certificate.</p></div>
+      <div class="note"><h5>Cohort card + live class tie-in <span class="conf">Confidence 85</span></h5><p>Relatedness is the strongest need gamification satisfies (g = 1.78). The portal teaches, Thursday's live class practices. Public team progress is gentle accountability.</p></div>
+    </div>
+
+    <div class="noteset" id="n-cert">
+      <h2>Certificate: the visible ladder rung</h2>
+      <p class="lead">Small module counts so the rung never feels far. Your outline's content, chunked.</p>
+      <div class="note"><h5>6 to 9 modules per certificate <span class="conf">Confidence 90</span></h5><p>Goal gradient: a rung you can finish in a week keeps pull strong. This one is your Myers Model section: funnel, two agents, double close, showing timeline.</p></div>
+      <div class="note"><h5>Durations shown on every module <span class="conf">Confidence 85</span></h5><p>Honest expectations reduce abandonment. A 5 minute promise is a promise the agent can keep in a parking lot between showings.</p></div>
+      <div class="note"><h5>Sequential unlock <span class="conf mid">Confidence 75</span></h5><p>Drip pacing beats open buffet in completion data. Locked modules also protect the risk-based teaching order you and Josh set.</p></div>
+      <div class="note"><h5>Target date + human help <span class="conf">Confidence 85</span></h5><p>Deadlines lift completion; a visible mentor covers relatedness. When someone stalls 7 days, Sarah reaches out personally, not a robot.</p></div>
+    </div>
+
+    <div class="noteset" id="n-lesson">
+      <h2>Lesson: the 5 minute atom</h2>
+      <p class="lead">Try the quiz. It's your real content: the Six Non-Negotiables and the Seven Questions, taught the way memory actually works.</p>
+      <div class="note"><h5>Step, don't scroll <span class="conf">Confidence 90</span></h5><p>This is the answer to the presentation question. Mayer's segmenting principle: people learn more from learner-paced chunks with a Next action than from one continuous scroll. A scroll invites skimming; a tap is a tiny commitment that keeps attention. Long-scroll pages are for reference material only (glossary, scripts shelf), never for teaching.</p></div>
+      <div class="note"><h5>Video under 6 minutes <span class="conf">Confidence 85</span></h5><p>MIT/edX, 6.9 million sessions: engagement falls off a cliff after 6 minutes. One idea per module, narrated over visuals (Mayer's modality principle).</p></div>
+      <div class="note"><h5>3 question check on every module <span class="conf">Confidence 95</span></h5><p>Retrieval practice, g = 0.50, the strongest finding in the report. Answering beats rewatching, every time. Gating progress on it protects agents from the fluency trap.</p></div>
+      <div class="note"><h5>Questions look like the job <span class="conf">Confidence 95</span></h5><p>Transfer requires format matching. These aren't trivia: they're the exact sentences investors will say on the phone, pulled from your Seven Questions table.</p></div>
+      <div class="note"><h5>Instant feedback with the why <span class="conf">Confidence 90</span></h5><p>Wrong answers become lessons on the spot. Feedback also feeds competence, the psychological need gamification usually fails to meet.</p></div>
+    </div>
+
+    <div class="noteset" id="n-journey">
+      <h2>Path: never show a zero</h2>
+      <p class="lead">Your gold path visual, turned into the app's spine.</p>
+      <div class="note"><h5>Onboarding pre-checked on day one <span class="conf">Confidence 90</span></h5><p>Endowed progress effect (Nunes & Dreze): people given a head start finish far more often. A new agent's first view is 1 of 6 done, never 0.</p></div>
+      <div class="note"><h5>The pin: you are here <span class="conf">Confidence 90</span></h5><p>Goal gradient again, plus it mirrors your Drop Your Pin moment from Orientation. The map is the brand: where agents become investors.</p></div>
+      <div class="note"><h5>Final rung requires a closed deal <span class="conf">Confidence 85</span></h5><p>A credential earned by doing is what keeps the gamification honest. Game elements must mark real skill or adults see through them.</p></div>
+      <div class="note"><h5>Launch Week as the capstone <span class="conf">Confidence 85</span></h5><p>Your outline's Agent Launch Week (15 names, 5 MVPs, 2 coffees) becomes the bridge from learning to earning: four numbers by Friday.</p></div>
+    </div>
+
+    <div class="noteset" id="n-profile">
+      <h2>Profile: competence made visible</h2>
+      <p class="lead">The trophy case, plus the two forgiveness features that keep motivation healthy.</p>
+      <div class="note"><h5>Certificates as a trophy case <span class="conf mid">Confidence 75</span></h5><p>Badges tied to real credentials drove a 116 percent referral jump at Duolingo. Each earned certificate ships a shareable gold graphic: recruiting content on autopilot.</p></div>
+      <div class="note"><h5>Refresher average, not just completion <span class="conf">Confidence 85</span></h5><p>Measures memory, not attendance. This is the number that tells you training actually stuck.</p></div>
+      <div class="note"><h5>One streak repair per week <span class="conf mid">Confidence 70</span></h5><p>Loss aversion motivates until it punishes, then it churns the exact people you want to keep. Forgiveness is a feature, not a loophole.</p></div>
+      <div class="note"><h5>Agent picks the reminder time <span class="conf">Confidence 85</span></h5><p>Autonomy support is the largest SDT effect (g = 1.14). Choosing the time turns a nag into a standing appointment, with a voice that sounds like Myers.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="view-laptop">
+  <div class="lapframe">
+    <div class="lapbar"><i></i><i></i><i></i><span class="url">training.joinmyers.com/home</span></div>
+    <div class="lapbody">
+
+      <div class="side">
+        <div class="logo">My<em>e</em>rs</div>
+        <div class="navi on"><span class="nic"><svg class="svgi" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></span>Home</div>
+        <div class="navi"><span class="nic"><svg class="svgi" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M8.8 12.6 7 22l5-3 5 3-1.8-9.4"/></svg></span>My Certificate</div>
+        <div class="navi"><span class="nic"><svg class="svgi" viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20"/></svg></span>Lessons</div>
+        <div class="navi"><span class="nic"><svg class="svgi" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14"/><path d="M15 6v14"/></svg></span>My Path</div>
+        <div class="navi"><span class="nic"><svg class="svgi" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4"/><path d="M18 14.7c2.2.8 3.5 2.6 3.5 5.3"/></svg></span>Cohort 12</div>
+        <div class="navi"><span class="nic"><svg class="svgi" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6.5 8-6.5s8 2.5 8 6.5"/></svg></span>Profile</div>
+        <div class="mentorbox"><b>Your mentor: Sarah M.</b><br>Replies fast on Slack. Live class Thu 12:00.</div>
+      </div>
+
+      <div class="mainc">
+        <div class="lap-hello">
+          <div><h3>Good morning, Jordan.</h3><small>Certificate 2 of 5 · target Fri, Aug 7</small></div>
+          <div class="streakpill"><svg class="svgi pillic" viewBox="0 0 24 24"><path d="M12 3c1 3.5-5 6-5 10.5a5 5 0 0 0 10 0C17 9.5 13 8 12 3z"/></svg>6 day streak</div>
+        </div>
+
+        <div class="hero">
+          <div class="ring">
+            <svg width="86" height="86"><circle cx="43" cy="43" r="37" fill="none" stroke="#F0EBDF" stroke-width="8"/><circle cx="43" cy="43" r="37" fill="none" stroke="#C9972C" stroke-width="8" stroke-linecap="round" stroke-dasharray="232.4" stroke-dashoffset="145.25"/></svg>
+            <div class="val">3/8<small>MODULES</small></div>
+          </div>
+          <div style="flex:1;">
+            <span class="chip">UP NEXT · 5 MIN</span>
+            <h4 style="font-size:15px;font-weight:700;margin-top:6px;">2.4 The Showing Timeline</h4>
+            <div class="muted">One idea: the 1 hour showing, the 1 hour auction, the 2 hour clock.</div>
+            <button class="goldbtn">Continue lesson ▸</button>
+          </div>
+        </div>
+
+        <div class="boardcard">
+          <h4>Your path: licensed agent to investor-agent</h4>
+          <div class="rung done"><div class="node">✓</div><div><h5>Onboarding</h5><div class="rs">Systems and logins, done day one. You started at 1 of 6, not zero.</div></div></div>
+          <div class="rung done"><div class="node">✓</div><div><h5>Certificate 1 · Orientation</h5><div class="rs">Why we exist. We train investors, not open-house hosts.</div></div></div>
+          <div class="rung now"><div class="node"><svg class="svgi" viewBox="0 0 24 24" style="width:15px;height:15px;color:var(--gold-deep);"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></div><div><h5>Certificate 2 · The Myers Model</h5><div class="rs">One lead, four ways to win. Double close. The showing timeline.</div><span class="youpin"><svg class="svgi" viewBox="0 0 24 24" style="width:10px;height:10px;vertical-align:-1px;margin-right:3px;"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg>YOU ARE HERE · 3 OF 8</span></div></div>
+          <div class="rung"><div class="node">2</div><div><h5>Certificate 3 · Your Role</h5><div class="rs">Acquisitions and Sales: day-to-day, rules, discipline.</div></div></div>
+          <div class="rung"><div class="node">3</div><div><h5>Certificate 4 · Investors</h5><div class="rs">The Six Non-Negotiables, the Seven Questions, the MVP.</div></div></div>
+          <div class="rung"><div class="node"><svg class="svgi" viewBox="0 0 24 24" style="width:15px;height:15px;color:var(--gold-deep);"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/></svg></div><div><h5>Investor-Agent · Launch Week</h5><div class="rs">15 names, 5 MVPs signed, 2 coffees. Certified when your first deal closes.</div></div></div>
+        </div>
+      </div>
+
+      <div class="rail">
+        <div class="railcard">
+          <h5>Badges</h5>
+          <div class="certgrid" style="margin-top:8px;">
+            <div class="cert earned"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><circle cx="12" cy="8" r="5"/><path d="M8.8 12.6 7 22l5-3 5 3-1.8-9.4"/></svg></div><h6>Orientation</h6><div class="st">Jul 17</div></div>
+            <div class="cert"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></div><h6>Myers Model</h6><div class="st">3/8</div></div>
+            <div class="cert"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg></div><h6>Your Role</h6><div class="st">Locked</div></div>
+            <div class="cert"><div class="medal"><svg class="svgi" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--gold-deep);"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4"/><path d="M18 14.7c2.2.8 3.5 2.6 3.5 5.3"/></svg></div><h6>Investors</h6><div class="st">Locked</div></div>
+          </div>
+        </div>
+        <div class="railcard">
+          <h5>Weekly refresher</h5>
+          <div class="muted" style="font-size:11px;">5 questions from Orientation. 3 minutes. Due Friday.</div>
+          <div class="bar"><i style="width:40%;"></i></div>
+          <div class="cohortline"><span>2 of 5 answered</span><span>92% avg</span></div>
+        </div>
+        <div class="railcard">
+          <h5>Cohort 12 this week</h5>
+          <div class="cohortline"><span>You</span><span>Module 2.4</span></div>
+          <div class="bar"><i style="width:44%;"></i></div>
+          <div class="cohortline"><span>Marcus</span><span>Module 2.6</span></div>
+          <div class="bar"><i style="width:69%;"></i></div>
+          <div class="cohortline"><span>Dana</span><span>Module 2.3</span></div>
+          <div class="bar"><i style="width:31%;"></i></div>
+          <div class="muted" style="font-size:10.5px;margin-top:6px;">Team goal: everyone through 2.4 before Thursday's live class.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="notes" style="max-width:none;margin-top:22px;">
+    <h2>What changes on a laptop, and what never changes</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:10px;">
+      <div class="note"><h5>Same five sections, sidebar instead of tabs <span class="conf">Confidence 85</span></h5><p>Consistency across devices reduces cognitive load: nothing to relearn when an agent switches from phone to desk. The phone is for doing today's lesson; the laptop is where the bigger picture lives.</p></div>
+      <div class="note"><h5>The progress board gets center stage <span class="conf">Confidence 90</span></h5><p>The extra width goes to the thing you love: the full path, always visible, pin and all. Goal gradient works best when the next rung is permanently in view.</p></div>
+      <div class="note"><h5>Badges and cohort move to a right rail <span class="conf mid">Confidence 75</span></h5><p>Motivation lives in the periphery, learning lives in the center. Teammate progress bars are the competition-plus-collaboration mix the meta-analysis favors: a shared Thursday goal, not a ranking.</p></div>
+      <div class="note"><h5>Still exactly one gold button <span class="conf">Confidence 80</span></h5><p>More space is not permission for more choices. The screen still answers one question: what do I do right now?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <b>No Zoho anywhere:</b> reminders, refreshers, and stall alerts run on email, Slack, or the platform itself. Built from Myers-LMS-Research-Report.docx (July 25, 2026) and the Training Outline (Jeanne Claire &amp; Josh, July 24, 2026). Confidence scores match the report: 90+ bedrock science, 70 to 89 strong with caveats, below 70 test before leaning on it.
+</div>
+
+<script>
+function setView(v){
+  document.getElementById('view-phone').style.display = v==='phone' ? 'flex' : 'none';
+  document.getElementById('view-laptop').classList.toggle('on', v==='laptop');
+  document.getElementById('vb-phone').classList.toggle('on', v==='phone');
+  document.getElementById('vb-laptop').classList.toggle('on', v==='laptop');
+}
+function go(s){
+  document.querySelectorAll('.screen').forEach(e=>e.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('on', e.dataset.s===s));
+  document.querySelectorAll('.noteset').forEach(e=>e.classList.remove('on'));
+  var n=document.getElementById('n-'+s); if(n)n.classList.add('on');
+  document.getElementById('cele').classList.remove('show');
+}
+var answered={};
+document.querySelectorAll('.opt').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var q=btn.dataset.q;
+    if(answered[q])return;
+    answered[q]=true;
+    if(btn.dataset.ok==='1'){btn.classList.add('correct');}
+    else{
+      btn.classList.add('wrong');
+      document.querySelectorAll('.opt[data-q="'+q+'"][data-ok="1"]').forEach(function(c){c.classList.add('correct');});
+    }
+    document.getElementById('why-'+q).classList.add('show');
+    if(answered.q1&&answered.q2&&answered.q3){document.getElementById('finishBtn').style.display='block';}
+  });
+});
+function celebrate(){document.getElementById('cele').classList.add('show');}
+var step=0;
+function nextStep(){
+  var cards=document.querySelectorAll('.stepcard');
+  if(step<cards.length-1){
+    cards[step].style.display='none';step++;
+    cards[step].style.display='block';
+    document.getElementById('stepN').textContent='CARD '+(step+1)+' OF 3';
+    if(step===cards.length-1){document.getElementById('stepBtn').textContent='Done, on to the check ✓';}
+  } else {
+    document.getElementById('stepBtn').textContent='✓ Complete';
+    document.getElementById('stepBtn').style.background='#2E7D32';
+  }
+}
+</script>
+</body>
+</html>

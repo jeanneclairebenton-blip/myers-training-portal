@@ -1,0 +1,9 @@
+WHICH FILE GOES WHERE
+instagram-feed.png -> Instagram feed post (4:5)
+facebook-feed.png  -> Facebook feed post (4:5, FB-recommended 1200px width)
+linkedin.png       -> LinkedIn feed post (square)
+story.png          -> Instagram/Facebook Story and Reels (9:16)
+
+Standards: Myers post system, Inter only, min type 28px @1080-scale.
+
+Legacy asset: brand-padded (never stretched/cropped).

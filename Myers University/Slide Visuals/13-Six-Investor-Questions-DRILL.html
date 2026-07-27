@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Six Questions: Hold the Line</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9972C;--gdeep:#A87B1F;--glight:#E8BC5E;--ink:#1A1A1A;--gray:#6b7280;--cream:#FBF6EA;--green:#2E7D32;--red:#B3402A;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(180deg,#FFFFFF 0%,#FAF7F1 100%);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:48px 20px;}
+.stage{width:100%;max-width:800px;}
+h1{font-size:clamp(26px,4.5vw,42px);font-weight:800;text-align:center;line-height:1.15;letter-spacing:-0.5px;}
+h1 b{color:var(--gold);}
+.sub{text-align:center;color:var(--gold);font-size:clamp(15px,2.2vw,20px);font-weight:600;margin-top:6px;}
+.card{background:#fff;border-radius:28px;padding:38px;margin-top:26px;box-shadow:0 2px 6px rgba(26,26,26,.04), 0 18px 50px rgba(26,26,26,.08);}
+
+.dots{display:flex;justify-content:center;gap:9px;margin-top:26px;}
+.dot{width:34px;height:6px;border-radius:99px;background:#ECE6D9;transition:all .25s;}
+.dot.now{background:var(--gold);}
+.dot.win{background:var(--glight);}
+.dot.lose{background:#D6DADF;}
+
+.caller{display:flex;gap:16px;align-items:flex-start;}
+.caller .avi{flex:0 0 56px;width:56px;height:56px;border-radius:50%;background:#F4F5F6;display:flex;align-items:center;justify-content:center;}
+.bubble{background:#F6F6F7;border-radius:4px 20px 20px 20px;padding:18px 22px;flex:1;}
+.bubble .who{font-size:12px;font-weight:700;letter-spacing:.14em;color:#9CA3AF;}
+.bubble p{font-size:clamp(18px,2.6vw,23px);font-weight:700;color:#374151;margin-top:4px;line-height:1.4;}
+.ring{font-size:13px;font-weight:700;color:var(--gray);letter-spacing:.14em;margin-bottom:16px;text-align:center;}
+
+.opts{margin-top:22px;display:flex;flex-direction:column;gap:12px;}
+.opt{text-align:left;background:#fff;border:1.5px solid #E7DFCE;border-radius:16px;padding:17px 22px;font-size:clamp(16px,2.2vw,19px);font-weight:600;font-family:'Poppins';color:var(--ink);cursor:pointer;transition:all .15s;line-height:1.45;box-shadow:0 1px 3px rgba(26,26,26,.04);}
+.opt:hover{border-color:var(--gold);background:var(--cream);transform:translateY(-1px);box-shadow:0 6px 16px rgba(201,151,44,.14);}
+.opt.right{background:#EFF7EF;border-color:var(--green);}
+.opt.wrong{background:#FBF0ED;border-color:var(--red);}
+.opt.dim{opacity:.45;pointer-events:none;}
+.opt:disabled{cursor:default;transform:none;}
+
+.fb{display:none;margin-top:20px;border-radius:18px;padding:22px 26px;animation:pop .3s ease;}
+@keyframes pop{0%{transform:scale(.95);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.fb.good{display:block;background:var(--cream);}
+.fb.bad{display:block;background:#F6F6F7;}
+.fb h3{font-size:clamp(18px,2.5vw,22px);font-weight:700;}
+.fb.good h3{color:var(--gdeep);}
+.fb.bad h3{color:#4b5563;}
+.fb p{font-size:clamp(15px,2vw,18px);color:#374151;font-weight:500;margin-top:6px;line-height:1.55;}
+.fb .line{margin-top:12px;background:#fff;border-left:4px solid var(--gold);padding:13px 18px;border-radius:0 12px 12px 0;font-size:clamp(15px,2vw,18px);font-weight:700;color:var(--ink);}
+
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:14px;}
+.backbtn{background:#fff;color:var(--gray);border:1.5px solid #E2DCCE;font-family:'Poppins';font-weight:600;font-size:16px;padding:13px 30px;border-radius:99px;cursor:pointer;transition:all .15s;visibility:hidden;}
+.backbtn.show{visibility:visible;}
+.backbtn:hover{border-color:var(--gold);color:var(--gdeep);}
+.nextbtn{visibility:hidden;background:var(--gold);color:#fff;border:none;font-family:'Poppins';font-weight:700;font-size:17px;padding:14px 40px;border-radius:99px;cursor:pointer;box-shadow:0 6px 18px rgba(201,151,44,.35);transition:all .15s;}
+.nextbtn.show{visibility:visible;}
+.nextbtn:hover{transform:translateY(-1px);}
+.tally{font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--gray);text-align:center;margin-top:16px;}
+.tally b{color:var(--gdeep);}
+
+.hidden{display:none !important;}
+.big{font-size:clamp(54px,9vw,88px);font-weight:800;color:var(--gdeep);text-align:center;line-height:1;}
+.center{text-align:center;}
+.startbtn{display:inline-block;margin-top:26px;background:var(--gold);color:#fff;border:none;font-family:'Poppins';font-weight:700;font-size:19px;padding:17px 52px;border-radius:99px;cursor:pointer;box-shadow:0 8px 22px rgba(201,151,44,.35);transition:all .15s;}
+.startbtn:hover{transform:translateY(-2px);}
+.coin{width:110px;height:110px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+
+.confetti{position:fixed;top:-12px;border-radius:2px;pointer-events:none;z-index:99;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9;}}
+.shake{animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>The Six Questions <b>Hold the Line</b></h1>
+  <div class="sub">Every investor will test the rules. Answer like a Myers agent.</div>
+  <div class="dots" id="dots"></div>
+
+  <!-- START -->
+  <div class="card center" id="scrStart">
+    <div class="coin"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="#C9972C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" fill="#C9972C" fill-opacity="0.14"/></svg></div>
+    <h3 style="font-size:25px;font-weight:700;">An investor is calling.</h3>
+    <p style="font-size:17px;color:var(--gray);font-weight:500;margin-top:10px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6;">
+      They will test every rule you just learned, usually in the first conversation.
+      Pick the answer a Myers agent gives.</p>
+    <button class="startbtn" onclick="start()">Take the Call</button>
+  </div>
+
+  <!-- QUESTION -->
+  <div class="card hidden" id="scrQ">
+    <div class="ring" id="ring">QUESTION 1 OF 6</div>
+    <div class="caller">
+      <div class="avi"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="7.5" r="4.2"/><path d="M3.5 21.5c1-6 4.5-8.5 8.5-8.5s7.5 2.5 8.5 8.5"/></svg></div>
+      <div class="bubble"><div class="who">THE INVESTOR</div><p id="qText"></p></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div class="navrow">
+      <button class="backbtn" id="backBtn" onclick="back()">&#8249; Back</button>
+      <button class="nextbtn" id="nextBtn" onclick="next()">Next Question &#8250;</button>
+    </div>
+    <div class="tally" id="tally"></div>
+  </div>
+
+  <!-- END -->
+  <div class="card center hidden" id="scrEnd">
+    <div class="coin" style="width:130px;height:130px;">
+      <svg viewBox="0 0 24 24" width="76" height="76" fill="none" stroke="url(#g-trophy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <defs><linearGradient id="g-trophy" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8BC5E"/><stop offset="1" stop-color="#A87B1F"/></linearGradient></defs>
+        <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" fill="#C9972C" fill-opacity="0.16" stroke="none"/>
+        <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/>
+        <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/>
+        <path d="M18 9h1.5a1 1 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/>
+        <path d="M6 9H4.5a1 1 0 0 1 0-5H6"/>
+        <path d="M3.8 2.2 2.6 1" stroke="#C9972C"/>
+        <path d="M20.2 2.2 21.4 1" stroke="#C9972C"/>
+      </svg>
+    </div>
+    <div class="big" id="score">6/6</div>
+    <h3 id="endTitle" style="font-size:26px;font-weight:700;margin-top:12px;">You held the line.</h3>
+    <p id="endNote" style="font-size:17px;color:var(--gray);font-weight:500;margin-top:10px;line-height:1.6;max-width:540px;margin-left:auto;margin-right:auto;"></p>
+    <button class="startbtn" onclick="restart()">Run It Again</button>
+  </div>
+</div>
+
+<script>
+const QS = [
+ {q:"“Can I get in before showings?”",
+  opts:[["If it's vacant, yes. If it's occupied, no.",1],
+        ["No. Never. Showings only, no exceptions.",0],
+        ["Sure, I can meet you there early if you're serious.",0]],
+  why:"Occupied homes get one fair, scheduled showing for everyone. Vacant? We can usually get you in.",
+  line:"“Occupied: no. Vacant: yes.”"},
+ {q:"“Will you take $3K as the deposit?”",
+  opts:[["No. The deposit is $5,000, non-refundable, wire or cashier's check only.",1],
+        ["We can start with $3K and collect the rest at closing.",0],
+        ["For a repeat buyer like you? Sure.",0]],
+  why:"Non-Negotiable: the deposit is $5,000, non-refundable, and nobody finances or splits it.",
+  line:"“$5,000, non-refundable. Wire or cashier's check only.”"},
+ {q:"“Are closing dates negotiable?”",
+  opts:[["No. Closing dates are firm and set by Myers.",1],
+        ["We can push it a week if your lender needs more time.",0],
+        ["That depends on the seller's timeline.",0]],
+  why:"Firm dates protect every party in a double close. A slipping date breaks two closings, not one.",
+  line:"“Closing dates are firm, and set by Myers.”"},
+ {q:"“Can you just assign the contract to me?”",
+  opts:[["No. All transactions run as a double close through Myers' title company.",1],
+        ["Yes, assignment is cheaper for both of us.",0],
+        ["Only for verified repeat buyers.",0]],
+  why:"Non-Negotiable: every deal is a double close, Myers sells as principal, and a title policy protects you both.",
+  line:"“Every deal double closes through Myers' title company.”"},
+ {q:"“Can you cover your side of closing costs?”",
+  opts:[["No. The investor covers the closing costs.",1],
+        ["We can split them down the middle.",0],
+        ["We'll credit them back to you at closing.",0]],
+  why:"Budget roughly 3% of purchase price. It's in the math from day one, never a surprise.",
+  line:"“The investor covers the closing costs.”"},
+ {q:"“Will you pay my commission for a referral?”",
+  opts:[["It depends, but usually no. Investors typically cover their own agent.",1],
+        ["Absolutely, we pay referral commissions on every deal.",0],
+        ["No. We don't work with outside agents, ever.",0]],
+  why:"This one is a judgment call, so don't promise either extreme. Route it to your team lead, case by case.",
+  line:"“It depends, usually no. Check with your team lead.”"},
+];
+let i = 0, score = 0, answered = false;
+const results = new Array(QS.length).fill(undefined);
+
+const dots = document.getElementById('dots');
+QS.forEach(()=>{const d=document.createElement('div');d.className='dot';dots.appendChild(d);});
+
+function start(){
+  document.getElementById('scrStart').classList.add('hidden');
+  document.getElementById('scrQ').classList.remove('hidden');
+  i=0;score=0;results.fill(undefined);render();
+}
+function shuffle(a){for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]];}return a;}
+function paintDots(){
+  [...dots.children].forEach((d,k)=>{
+    d.className='dot'+(k===i?' now':(results[k]===1?' win':results[k]===0?' lose':''));
+  });
+}
+function render(){
+  answered=false;
+  const Q=QS[i];
+  document.getElementById('ring').textContent='QUESTION '+(i+1)+' OF '+QS.length;
+  document.getElementById('qText').textContent=Q.q;
+  const box=document.getElementById('opts');box.innerHTML='';
+  shuffle(Q.opts.slice()).forEach(([t,ok])=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=t;
+    b.onclick=()=>pick(b,ok,Q);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='fb';fb.innerHTML='';
+  document.getElementById('nextBtn').classList.remove('show');
+  document.getElementById('backBtn').classList.toggle('show', i>0);
+  const done=results.filter(r=>r!==undefined).length;
+  document.getElementById('tally').innerHTML='LINE HELD &nbsp;<b>'+score+'</b> / '+done;
+  paintDots();
+}
+function pick(btn,ok,Q){
+  if(answered)return;answered=true;
+  const fb=document.getElementById('fb');
+  [...document.getElementById('opts').children].forEach(b=>{
+    if(b===btn)b.classList.add(ok?'right':'wrong');
+    else{b.classList.add('dim');if(!ok&&Q.opts.find(o=>o[0]===b.textContent&&o[1]===1))b.classList.add('right');}
+    b.disabled=true;
+  });
+  if(results[i]===1)score--;
+  results[i]=ok?1:0;
+  if(ok){
+    score++;confetti(26);
+    fb.className='fb good';
+    fb.innerHTML='<h3>Line held.</h3><p>'+Q.why+'</p>';
+  }else{
+    document.getElementById('scrQ').classList.add('shake');
+    setTimeout(()=>document.getElementById('scrQ').classList.remove('shake'),450);
+    fb.className='fb bad';
+    fb.innerHTML='<h3>Not quite. Here&rsquo;s the line:</h3><p>'+Q.why+'</p><div class="line">'+Q.line+'</div>';
+  }
+  document.getElementById('nextBtn').classList.add('show');
+  const done=results.filter(r=>r!==undefined).length;
+  document.getElementById('tally').innerHTML='LINE HELD &nbsp;<b>'+score+'</b> / '+done;
+  paintDots();
+}
+function back(){
+  if(i===0)return;
+  i--;
+  if(results[i]!==undefined){score-=results[i];results[i]=undefined;}
+  render();
+}
+function next(){
+  i++;
+  if(i<QS.length){render();}
+  else{
+    document.getElementById('scrQ').classList.add('hidden');
+    document.getElementById('scrEnd').classList.remove('hidden');
+    document.getElementById('score').textContent=score+'/'+QS.length;
+    const t=document.getElementById('endTitle'),n=document.getElementById('endNote');
+    if(score===QS.length){t.textContent='Perfect. You held every line.';n.textContent='Six tests, six holds. This is how trust gets built with investors: the rules never move, so their expectations never miss.';confetti(120);}
+    else if(score>=5){t.textContent='Strong. The line mostly held.';n.textContent='Review the ones that slipped: those are the exact sentences an investor will push on this week. Run it again until it is perfect.';}
+    else{t.textContent='The investor just negotiated you.';n.textContent='Every miss above cost real money or real control. Read the corrections, then run it again. Agents retake this until it is perfect.';}
+  }
+}
+function restart(){
+  document.getElementById('scrEnd').classList.add('hidden');
+  document.getElementById('scrQ').classList.remove('hidden');
+  i=0;score=0;results.fill(undefined);render();
+}
+function confetti(n){
+  const colors=['#C9972C','#E8BC5E','#A87B1F','#FBF6EA','#1A1A1A'];
+  for(let k=0;k<n;k++){
+    const c=document.createElement('div');c.className='confetti';
+    const s=6+Math.random()*8;
+    c.style.cssText='left:'+(Math.random()*100)+'vw;width:'+s+'px;height:'+(s*0.5)+'px;background:'+colors[k%colors.length]+';animation-duration:'+(1.6+Math.random()*1.6)+'s;animation-delay:'+(Math.random()*0.4)+'s;';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3600);
+  }
+}
+</script>
+</body>
+</html>

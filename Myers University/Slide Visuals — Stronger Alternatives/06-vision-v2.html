@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where It's Going</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-color: #0F0F11;
+            --surface-color: #1A1A1F;
+            --text-primary: #F0EDE8;
+            --text-dim: rgba(240, 237, 232, 0.5);
+            --accent-gold: #C8962E;
+            --accent-bright: #E5B44A;
+            --border-base: rgba(200, 150, 46, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Viewport scaling */
+            aspect-ratio: 16 / 9;
+            max-height: 100vh;
+            max-width: 177.78vh; /* 16/9 * 100 */
+            margin: auto;
+        }
+
+        .slide-container {
+            width: 1440px;
+            height: 810px;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 100px;
+            transform: scale(min(calc(100vw / 1440), calc(100vh / 810)));
+            transform-origin: center;
+            position: absolute;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .phases-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 60px;
+            justify-content: center;
+        }
+
+        .phase-card {
+            background-color: var(--surface-color);
+            border-radius: 14px;
+            padding: 40px 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1.5px solid var(--border-base);
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(200, 150, 46, 0.1);
+        }
+
+        /* Brighter borders left to right */
+        .phase-card:nth-child(1) { border-color: rgba(200, 150, 46, 0.25); }
+        .phase-card:nth-child(2) { border-color: rgba(200, 150, 46, 0.4); }
+        .phase-card:nth-child(3) { border-color: rgba(200, 150, 46, 0.6); }
+        .phase-card:nth-child(4) { border-color: rgba(200, 150, 46, 0.8); }
+
+        .phase-year {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .phase-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .phase-desc {
+            font-size: 18px;
+            color: var(--text-dim);
+            line-height: 1.4;
+            margin-top: auto;
+        }
+
+        .callout-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: auto;
+        }
+
+        .callout-card {
+            background-color: var(--surface-color);
+            border: 1.5px solid var(--accent-bright);
+            border-radius: 14px;
+            padding: 30px 60px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .callout-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(229, 180, 74, 0.15);
+        }
+
+        .callout-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--accent-bright);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .callout-desc {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+
+        .kicker {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .kicker-gold {
+            color: var(--accent-gold);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>Where It's Going</h1>
+            <div class="subtitle">And Where You Fit In</div>
+        </div>
+
+        <div class="phases-row">
+            <div class="phase-card">
+                <div class="phase-year">NOW</div>
+                <div class="phase-title">DFW Headquarters</div>
+                <div class="phase-desc">Building the playbook</div>
+            </div>
+            <div class="phase-card">
+                <div class="phase-year">2027</div>
+                <div class="phase-title">All of Texas</div>
+                <div class="phase-desc">Houston &middot; Austin &middot; San Antonio</div>
+            </div>
+            <div class="phase-card">
+                <div class="phase-year">2028</div>
+                <div class="phase-title">Sun Belt</div>
+                <div class="phase-desc">Phoenix &middot; Atlanta &middot; Nashville</div>
+            </div>
+            <div class="phase-card">
+                <div class="phase-year">2030</div>
+                <div class="phase-title">Nationwide</div>
+                <div class="phase-desc">10,000+ Investor-Agents</div>
+            </div>
+        </div>
+
+        <div class="callout-container">
+            <div class="callout-card">
+                <div class="callout-title">First-Mover Advantage</div>
+                <div class="callout-desc">Your tree grows with every market we open.</div>
+            </div>
+        </div>
+
+        <div class="kicker">
+            Scale isn't a side effect. <span class="kicker-gold">It's the whole point.</span>
+        </div>
+    </div>
+</body>
+</html>

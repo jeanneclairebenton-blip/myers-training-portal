@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not an MLM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0F0F11;
+            color: #F0EDE8;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1440px;
+            height: 810px;
+            padding: 80px 100px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .headline {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            font-size: 28px;
+            font-weight: 600;
+            color: #C8962E;
+            letter-spacing: 0.5px;
+        }
+        .columns {
+            display: flex;
+            gap: 40px;
+            flex: 1;
+        }
+        .card {
+            flex: 1;
+            background-color: #1A1A1F;
+            border: 1.5px solid rgba(200,150,46,0.25);
+            border-top: 4px solid #C8962E;
+            border-radius: 14px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(200, 150, 46, 0.15);
+        }
+        .card-title {
+            color: #C8962E;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .card-footer {
+            text-align: center;
+            font-size: 17px;
+            color: rgba(240,237,232,0.8);
+            font-weight: 600;
+            margin-top: auto;
+            padding-top: 30px;
+        }
+
+        /* Column 1 */
+        .flow-item {
+            font-size: 19px;
+            font-weight: 600;
+            padding: 12px 20px;
+            text-align: center;
+            width: 100%;
+            background: rgba(240,237,232,0.03);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .flow-arrow {
+            color: #C8962E;
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        /* Column 2 */
+        .stack-box {
+            width: 100%;
+            padding: 24px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .box-grey {
+            background-color: rgba(240,237,232,0.05);
+            color: rgba(240,237,232,0.7);
+        }
+        .box-gold {
+            background-color: rgba(200,150,46,0.1);
+            border: 1.5px solid #C8962E;
+            color: #F0EDE8;
+        }
+        .box-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        /* Column 3 */
+        .side-labels {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            width: 100%;
+            height: 100%;
+            align-items: stretch;
+        }
+        .label {
+            flex: 1;
+            padding: 20px 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .label-grey {
+            background-color: rgba(240,237,232,0.05);
+            color: rgba(240,237,232,0.7);
+        }
+        .label-gold {
+            background-color: rgba(200,150,46,0.1);
+            border: 1.5px solid #C8962E;
+            color: #F0EDE8;
+        }
+
+        .kicker {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        .text-gold {
+            color: #C8962E;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1 class="headline">Isn't This Just an MLM?</h1>
+            <div class="subtitle">Three Differences. One Answer: No.</div>
+        </div>
+
+        <div class="columns">
+            <!-- Column 1 -->
+            <div class="card">
+                <div class="card-title">The Money</div>
+                <div class="card-content">
+                    <div class="flow-item">House Sells</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-item">GCI Earned</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-item">10% Funds Pool</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-item">Pool Pays Tree</div>
+                </div>
+                <div class="card-footer">Every dollar started as a closed deal.</div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="card">
+                <div class="card-title">The Graduation</div>
+                <div class="card-content" style="justify-content: center;">
+                    <div class="stack-box box-grey">
+                        <div class="box-title">MLM</div>
+                        Top person quits<br>↓<br>Income collapses
+                    </div>
+                    <div class="stack-box box-gold">
+                        <div class="box-title">Myers</div>
+                        Top person graduates<br>↓<br>Still your income
+                    </div>
+                </div>
+                <div class="card-footer">Departure proves the model works.</div>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="card">
+                <div class="card-title">The Structure</div>
+                <div class="card-content">
+                    <div class="side-labels">
+                        <div class="label label-grey">
+                            <div class="box-title">MLM</div>
+                            <div>People fund people above</div>
+                        </div>
+                        <div class="label label-gold">
+                            <div class="box-title">Myers</div>
+                            <div>Deals fund everyone</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">Same shape. Opposite money.</div>
+            </div>
+        </div>
+
+        <div class="kicker">
+            An MLM needs you to recruit. <span class="text-gold">Myers needs you to close deals.</span>
+        </div>
+    </div>
+</body>
+</html>

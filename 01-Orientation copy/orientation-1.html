@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orientation — Myers &amp; Myers Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ── TOKENS ── */
+  :root {
+    --gold:   #C9941F;
+    --gold-light: #D4A94A;
+    --cream:  #FBE8B7;
+    --cream-bg: #FFF8EB;
+    --ink:    #1A1815;
+    --dark:   #2A2520;
+    --bg:     #FAFAF8;
+    --white:  #FFFFFF;
+    --gray:   #8A857D;
+    --border: #E8E4DC;
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'Mulish', 'Segoe UI', Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(26,24,21,0.08);
+    --shadow-lg: 0 12px 48px rgba(26,24,21,0.12);
+    --total-slides: 6;
+  }
+
+  body {
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-y: auto; overflow-x: hidden;
+    height: auto;
+    width: auto;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  /* ══════════════════════════════════════
+     PROGRESS TRACKER — Fixed Top Bar
+     ══════════════════════════════════════ */
+  .tracker {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background: #1A1815;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(201,148,31,0.15);
+  }
+  .tracker-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    padding: 0 20px;
+    max-width: 960px;
+    width: 100%;
+  }
+  .tracker-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    min-width: 0;
+  }
+  .tracker-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #3D362A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    color: #6B6358;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+  }
+  .tracker-circle svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--white);
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: none;
+  }
+  .tracker-label {
+    font-family: var(--sans);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #5A5449;
+    margin-top: 3px;
+    white-space: nowrap;
+    transition: color 0.4s ease;
+  }
+  .tracker-step.active .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+    box-shadow: 0 0 12px rgba(201,148,31,0.4);
+  }
+  .tracker-step.active .tracker-label { color: var(--gold); }
+  .tracker-step.completed .tracker-circle {
+    background: var(--gold);
+    color: var(--white);
+  }
+  .tracker-step.completed .tracker-circle .step-num { display: none; }
+  .tracker-step.completed .tracker-circle svg { display: block; }
+  .tracker-step.completed .tracker-label { color: var(--gold); opacity: 0.7; }
+
+  .tracker-line {
+    position: absolute;
+    top: 12px;
+    left: calc(100% / 14);
+    right: calc(100% / 14);
+    height: 2px;
+    background: #3D362A;
+    z-index: 1;
+  }
+  .tracker-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ══════════════════════════════════════
+     SLIDER — Horizontal Slide Deck
+     ══════════════════════════════════════ */
+  .slider {
+    display: block;
+    width: auto;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .slide {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+  }
+  .slide-content {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 32px 40px;
+  }
+
+  /* ══════════════════════════════════════
+     NAV BUTTONS — Fixed Bottom
+     ══════════════════════════════════════ */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 40px;
+    height: 48px;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms, box-shadow 200ms, opacity 200ms;
+    box-shadow: 0 4px 24px rgba(201,148,31,0.3);
+    letter-spacing: 0.3px;
+  }
+  .nav-btn:hover {
+    background: #B8841A;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,148,31,0.4);
+  }
+  .nav-btn:active { transform: translateY(0); }
+  .nav-btn svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .nav-btn.hidden { opacity: 0; pointer-events: none; }
+
+  .nav-wrap {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.85);
+    color: var(--gray);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 28px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms, opacity 200ms;
+    backdrop-filter: blur(8px);
+  }
+  .back-btn:hover {
+    background: var(--white);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+  .back-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .back-btn.hidden { opacity: 0; pointer-events: none; }
+
+  /* ══════════════════════════════════════
+     UTILITY CLASSES
+     ══════════════════════════════════════ */
+  .gold-label {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .section-heading .gold { color: var(--gold); }
+  .section-heading .gold-italic {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 1 — INTRO
+     ══════════════════════════════════════ */
+  .slide-intro {
+    background: linear-gradient(to bottom, rgba(26,24,21,0.7), rgba(26,24,21,0.85)),
+                url('assets/dfw-skyline.png') center/cover no-repeat;
+  }
+  .intro-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: auto;
+    padding: 80px 32px 120px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .intro-title {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5.5vw, 3.2rem);
+    line-height: 1.2;
+    color: var(--white);
+  }
+  .intro-title .gold-italic {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 2 — CORE THESIS
+     ══════════════════════════════════════ */
+  .slide-thesis { background: var(--bg); }
+  .thesis-sub-label {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .thesis-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .thesis-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .thesis-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .thesis-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+  }
+  .thesis-card-icon svg {
+    width: 22px; height: 22px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .thesis-card-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .thesis-card-desc {
+    font-size: 16px;
+    color: #3D362A;
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 3 — COMMISSION + INCOME
+     ══════════════════════════════════════ */
+  .slide-commission { background: var(--bg); }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  .stat-box {
+    padding: 40px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .stat-number {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .stat-label {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3D362A;
+  }
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .bar-group { margin-bottom: 28px; }
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .bar-label { font-weight: 700; font-size: 16px; color: var(--ink); }
+  .bar-pct { font-family: var(--serif); font-size: 17px; color: var(--gold); font-weight: 600; }
+  .bar-track {
+    width: 100%; height: 18px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 100px;
+    transition: width 1.2s cubic-bezier(.22,.61,.36,1);
+    width: 0%;
+  }
+  .bar-fill.agent   { background: linear-gradient(90deg, #8B6914, var(--gold)); }
+  .bar-fill.revshare { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .bar-fill.ops      { background: linear-gradient(90deg, var(--gold-light), var(--cream)); }
+
+  .split-highlight {
+    text-align: center;
+    padding: 48px 32px;
+    background: var(--ink);
+    border-radius: var(--radius);
+  }
+  .split-big-number {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 8vw, 6rem);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .split-big-label { font-family: var(--serif); font-size: 1.3rem; color: var(--white); margin-bottom: 8px; }
+  .split-big-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  /* Income streams compact row */
+  .income-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .income-mini-card {
+    text-align: center;
+    padding: 28px 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .income-mini-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .income-mini-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .income-mini-icon svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: var(--gold);
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .income-mini-title { font-family: var(--serif); font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+  .income-mini-desc { font-size: 14px; color: #3D362A; line-height: 1.5; }
+
+  /* ══════════════════════════════════════
+     SLIDE 4 — RETIREMENT / REVENUE SHARE
+     ══════════════════════════════════════ */
+  .slide-revshare { background: var(--bg); }
+  .revshare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .revshare-grid img { width: 100%; border-radius: var(--radius); }
+  .revshare-table { list-style: none; }
+  .revshare-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .revshare-row:last-child { border-bottom: none; }
+  .revshare-level-badge {
+    flex-shrink: 0; width: 70px;
+    padding: 4px 0; text-align: center;
+    font-size: 12px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 100px;
+    background: rgba(201,148,31,0.06);
+  }
+  .revshare-desc { flex: 1; font-size: 18px; color: var(--ink); font-weight: 600; }
+  .revshare-pct {
+    flex-shrink: 0;
+    font-family: var(--serif); font-size: 1.5rem;
+    color: var(--gold); width: 60px; text-align: right;
+  }
+  .revshare-footnote { margin-top: 20px; font-size: 15px; color: var(--ink); font-style: italic; }
+
+  /* ══════════════════════════════════════
+     SLIDE 5 — YOUR PATH (CAREER)
+     ══════════════════════════════════════ */
+  .slide-career { background: var(--bg); }
+  .slide-career .section-heading { color: var(--ink); }
+
+  .path-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .path-track::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 8%; right: 8%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 0;
+  }
+  .path-step {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 0 12px;
+  }
+  .path-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--gold);
+  }
+  .path-circle.star { font-size: 1.6rem; }
+  .path-step-title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); margin-bottom: 8px; }
+  .path-step-desc { font-size: 15px; color: #3D362A; line-height: 1.5; margin-bottom: 14px; min-height: 40px; }
+  .path-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border: 1px solid var(--gold);
+    border-radius: 100px;
+    font-size: 12px; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+  .path-callout {
+    background: rgba(201,148,31,0.12);
+    border-left: 3px solid var(--gold);
+    padding: 16px 24px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 15px;
+    color: #3D362A;
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 6 — ROLES
+     ══════════════════════════════════════ */
+  .slide-roles { background: var(--white); }
+  .roles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .role-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .role-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .role-card-img { width: 100%; height: 220px; object-fit: cover; }
+  .role-card-body { padding: 28px 28px 32px; }
+  .role-card-title { font-family: var(--serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 6px; }
+  .role-card-badge { display: inline-block; font-family: var(--serif); font-size: 1rem; color: var(--gold); margin-bottom: 14px; }
+  .role-card-desc { font-size: 16px; color: var(--gray); line-height: 1.65; }
+
+  /* ══════════════════════════════════════
+     SLIDE 7 — COMPLETE / ACKNOWLEDGMENT
+     ══════════════════════════════════════ */
+  .slide-complete { background: var(--bg); }
+  .ack-card {
+    max-width: 640px; margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 56px 48px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .ack-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,148,31,0.15), rgba(201,148,31,0.05));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .ack-icon svg {
+    width: 28px; height: 28px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .ack-card-title {
+    font-family: var(--serif); font-size: 1.5rem;
+    color: var(--ink); margin-bottom: 8px; line-height: 1.3;
+  }
+  .ack-card-sub {
+    font-size: 14px; color: var(--gray);
+    margin-bottom: 32px; line-height: 1.6;
+  }
+  .ack-label {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer; user-select: none;
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border);
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .ack-label:hover { border-color: var(--gold); background: rgba(201,148,31,0.04); }
+  .ack-label input[type="checkbox"] {
+    width: 22px; height: 22px;
+    accent-color: var(--gold); cursor: pointer;
+  }
+
+  /* ══════════════════════════════════════
+     SCROLLBAR
+     ══════════════════════════════════════ */
+  .slide::-webkit-scrollbar { width: 5px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(201,148,31,0.25); border-radius: 100px; }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+     ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .split-grid { grid-template-columns: 1fr; gap: 36px; }
+    .path-track { grid-template-columns: repeat(2, 1fr); gap: 48px 0; }
+    .path-track::before { display: none; }
+    .thesis-cards { grid-template-columns: 1fr; }
+    .income-row { grid-template-columns: repeat(3, 1fr); }
+    .revshare-grid { grid-template-columns: 1fr; }
+    .roles-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .tracker-label { display: none; }
+    .tracker-inner { gap: 0; padding: 0 12px; }
+    .tracker { height: 44px; }
+    .slide-content { padding: 60px 20px 110px; }
+    .intro-wrap { padding: 60px 20px 110px; }
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-box { padding: 28px 12px; }
+    .income-row { grid-template-columns: 1fr 1fr; }
+    .path-track { grid-template-columns: 1fr 1fr; }
+    .roles-grid { grid-template-columns: 1fr; }
+    .thesis-cards { grid-template-columns: 1fr; }
+    .ack-card { padding: 36px 24px; }
+    .nav-btn { bottom: 24px; height: 44px; font-size: 14px; padding: 0 32px; }
+    .nav-wrap { bottom: auto; }
+    .back-btn { height: 44px; font-size: 14px; padding: 0 24px; }
+    .intro-title { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+    .slide-content { padding: 56px 16px 100px; }
+    .intro-wrap { padding: 56px 16px 100px; }
+  }
+
+/* ── IFRAME FIX ── */
+.slider { display: block !important; transform: none !important; width: auto !important; transition: none !important; }
+.slide { display: none !important; width: auto !important; height: auto !important; min-height: auto !important; overflow: visible !important; flex-shrink: unset !important; }
+.slide.active-slide { display: block !important; }
+.nav-wrap { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; margin: 0 auto; padding: 20px 24px 40px; max-width: 900px; }
+.back-btn { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; }
+.continue-btn-wrap { position: relative !important; bottom: auto !important; }
+.tracker, .progress-tracker { position: sticky !important; top: 0 !important; z-index: 1000 !important; }
+.overview-wrap { min-height: auto !important; }
+.slide-content { padding-top: 40px !important; padding-bottom: 40px !important; }
+.intro-wrap { min-height: auto !important; padding-top: 40px !important; padding-bottom: 40px !important; }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PROGRESS TRACKER
+     ══════════════════════════════════════ -->
+<nav class="tracker">
+  <div class="tracker-inner">
+    <div class="tracker-line">
+      <div class="tracker-line-fill" id="trackerFill"></div>
+    </div>
+    <div class="tracker-step active" data-index="0">
+      <div class="tracker-circle"><span class="step-num">1</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Intro</span>
+    </div>
+    <div class="tracker-step" data-index="1">
+      <div class="tracker-circle"><span class="step-num">2</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Thesis</span>
+    </div>
+    <div class="tracker-step" data-index="2">
+      <div class="tracker-circle"><span class="step-num">3</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Commission</span>
+    </div>
+    <div class="tracker-step" data-index="3">
+      <div class="tracker-circle"><span class="step-num">4</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Retirement</span>
+    </div>
+    <div class="tracker-step" data-index="4">
+      <div class="tracker-circle"><span class="step-num">5</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Your Path</span>
+    </div>
+    <div class="tracker-step" data-index="5">
+      <div class="tracker-circle"><span class="step-num">6</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="tracker-label">Complete</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     CONTINUE / BACK BUTTONS
+     ══════════════════════════════════════ -->
+<div class="nav-wrap" id="navWrap">
+  <button class="back-btn hidden" id="backBtn" onclick="goToSlide(currentSlide - 1)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <button class="nav-btn" id="navBtn" onclick="advanceSlide()">
+    Continue
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE DECK
+     ══════════════════════════════════════ -->
+<div class="slider" id="slider">
+
+  <!-- ═══ SLIDE 1 — INTRO ═══ -->
+  <div class="slide slide-intro" data-slide="0">
+    <div class="intro-wrap">
+      <img src="assets/mhb-logo-neg.png" alt="Myers Home Buyers" style="max-width: 320px; margin: 0 auto 40px;">
+      <h1 class="intro-title">
+        Where Agents Become <span class="gold-italic">Investors</span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 2 — CORE THESIS ═══ -->
+  <div class="slide slide-thesis" data-slide="1">
+    <div class="slide-content" style="text-align: center;">
+      <span class="gold-label">The Core Thesis</span>
+      <h2 class="section-heading">
+        Turn Real Estate Agents into<br><span class="gold-italic">Real Estate Investors.</span>
+      </h2>
+      <div class="thesis-sub-label">Everything You Need to Win</div>
+      <div class="thesis-cards">
+        <!-- 1. Mentorship -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="thesis-card-title">Personalized 1:1 Mentorship</div>
+          <div class="thesis-card-desc">Custom one-on-one training, provided leads, and accountability designed to help you hit your goals faster.</div>
+        </div>
+        <!-- 2. Training Platform -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          </div>
+          <div class="thesis-card-title">Self-Paced Training Platform</div>
+          <div class="thesis-card-desc">Access scripts, playbooks, deal walkthroughs, recorded classes, and step-by-step training whenever you need it.</div>
+        </div>
+        <!-- 3. Live Classes -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="thesis-card-title">Weekly Live Investor-Led Classes</div>
+          <div class="thesis-card-desc">Live classes taught by experienced investor-agents and vetted industry professionals to sharpen your skills and close more deals.</div>
+        </div>
+        <!-- 4. Career Partnership -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="thesis-card-title">Career Partnership</div>
+          <div class="thesis-card-desc">Build your own brand powered by Myers. Get your own website, lead generation, and a fully customizable CRM system to promote yourself — not just the Myers brand.</div>
+        </div>
+        <!-- 5. Social Events -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="15" r="3"/><circle cx="19" cy="15" r="3"/><line x1="12" y1="8" x2="5" y2="12"/><line x1="12" y1="8" x2="19" y2="12"/></svg>
+          </div>
+          <div class="thesis-card-title">Monthly Social Events</div>
+          <div class="thesis-card-desc">Build relationships with agents, investors, lenders, and industry partners at monthly networking events designed to help you grow.</div>
+        </div>
+        <!-- 6. Brokerage Support -->
+        <div class="thesis-card">
+          <div class="thesis-card-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="thesis-card-title">Brokerage Support</div>
+          <div class="thesis-card-desc">Get support with contracts, compliance, transaction coordination, systems, and questions as you build your business.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 3 — COMMISSION + INCOME ═══ -->
+  <div class="slide slide-commission" data-slide="2">
+    <div class="slide-content">
+      <span class="gold-label">The Split</span>
+      <h2 class="section-heading">
+        The Highest Commission in the Industry<br>
+        <span class="gold-italic">...And It's Yours</span>
+      </h2>
+      <div class="stats-grid" style="margin-bottom: 40px;">
+        <div class="stat-box">
+          <div class="stat-number">90%</div>
+          <div class="stat-label">Highest in the Industry</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Income Streams</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">3,000+</div>
+          <div class="stat-label">Deals Closed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Remote</div>
+        </div>
+      </div>
+      <div class="split-grid" style="margin-bottom: 48px;">
+        <div>
+          <div class="bar-group">
+            <div class="bar-label-row">
+              <span class="bar-label">Agent Payout</span>
+              <span class="bar-pct">80%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill agent" data-width="80"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label-row">
+              <span class="bar-label">Revenue Share Pool</span>
+              <span class="bar-pct">10%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill revshare" data-width="10"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label-row">
+              <span class="bar-label">Myers Ops</span>
+              <span class="bar-pct">10%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill ops" data-width="10"></div></div>
+          </div>
+        </div>
+        <div class="split-highlight">
+          <div class="split-big-number">90%</div>
+          <div class="split-big-label">Goes Back to Our Agents</div>
+          <div class="split-big-sub">80% direct payout + 10% revenue share pool</div>
+        </div>
+      </div>
+
+      <!-- 5 Income Streams -->
+      <div class="thesis-sub-label" style="text-align:center;">Five Ways to Earn</div>
+      <div class="income-row">
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="income-mini-title">Commissions</div>
+          <div class="income-mini-desc">Up to 80% on every closed deal.</div>
+        </div>
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="15" r="3"/><circle cx="19" cy="15" r="3"/><line x1="12" y1="8" x2="5" y2="12"/><line x1="12" y1="8" x2="19" y2="12"/></svg>
+          </div>
+          <div class="income-mini-title">Revenue Share</div>
+          <div class="income-mini-desc">Passive income from your network, 6 levels deep.</div>
+        </div>
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="income-mini-title">Fix &amp; Flip</div>
+          <div class="income-mini-desc">Renovate and resell for profit.</div>
+        </div>
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          </div>
+          <div class="income-mini-title">Rentals</div>
+          <div class="income-mini-desc">Long-term cash flow properties.</div>
+        </div>
+        <div class="income-mini-card">
+          <div class="income-mini-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          </div>
+          <div class="income-mini-title">Traditional RE</div>
+          <div class="income-mini-desc">Get 80% on traditional real estate fees and leasing commissions and 100% on referral fees.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 4 — RETIREMENT / REVENUE SHARE ═══ -->
+  <div class="slide slide-revshare" data-slide="3">
+    <div class="slide-content">
+      <span class="gold-label">Passive Income</span>
+      <h2 class="section-heading">
+        6-Level<br><span class="gold">Revenue Share</span>
+      </h2>
+      <div class="revshare-grid">
+        <div>
+          <img src="assets/revshare-tree.png" alt="Revenue share tree diagram">
+        </div>
+        <div>
+          <ul class="revshare-table">
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 1</span>
+              <span class="revshare-desc">Direct recruit production</span>
+              <span class="revshare-pct">25%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 2</span>
+              <span class="revshare-desc">Recruit's recruits</span>
+              <span class="revshare-pct">20%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 3</span>
+              <span class="revshare-desc">Third-tier network</span>
+              <span class="revshare-pct">15%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 4</span>
+              <span class="revshare-desc">Fourth-tier reach</span>
+              <span class="revshare-pct">10%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 5</span>
+              <span class="revshare-desc">Fifth-tier growth</span>
+              <span class="revshare-pct">5%</span>
+            </li>
+            <li class="revshare-row">
+              <span class="revshare-level-badge">Level 6</span>
+              <span class="revshare-desc">Sixth-tier expansion</span>
+              <span class="revshare-pct">25%</span>
+            </li>
+          </ul>
+          <p class="revshare-footnote">
+            *Percentages represent share of revenue share pool, paid monthly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 5 — YOUR PATH ═══ -->
+  <div class="slide slide-career" data-slide="4">
+    <div class="slide-content">
+      <span class="gold-label">Your Path at Myers</span>
+      <h2 class="section-heading">
+        From First Deal to<br><span class="gold-italic">Full-Time Investor</span>
+      </h2>
+      <div class="path-track">
+        <div class="path-step">
+          <div class="path-circle">1</div>
+          <div class="path-step-title">Sales Agent</div>
+          <div class="path-step-desc">Close your first deal. Learn the math.</div>
+          <span class="path-badge">20% Commission</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle">2</div>
+          <div class="path-step-title">Acquisition Agent</div>
+          <div class="path-step-desc">Source your own off-market deals.</div>
+          <span class="path-badge">60% Commission</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle">3</div>
+          <div class="path-step-title">Team Lead</div>
+          <div class="path-step-desc">Mentor agents. Build your downline.</div>
+          <span class="path-badge">+ Rev Share</span>
+        </div>
+        <div class="path-step">
+          <div class="path-circle star">&#9733;</div>
+          <div class="path-step-title">Investor</div>
+          <div class="path-step-desc">Buy houses yourself. True wealth.</div>
+          <span class="path-badge">Generational Wealth</span>
+        </div>
+      </div>
+      <div class="path-callout">
+        Agents can begin investing at any stage, however, we encourage gaining exposure working alongside experienced investors and understanding their strategy first for optimal success.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 6 — COMPLETE ═══ -->
+  <div class="slide slide-complete" data-slide="5">
+    <div class="slide-content" style="display:flex;align-items:center;justify-content:center;min-height: auto;">
+      <div class="ack-card">
+        <div class="ack-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="ack-card-title">Orientation Complete</div>
+        <p class="ack-card-sub">
+          I understand the Myers mission, commission structure, and career path.
+        </p>
+        <label class="ack-label">
+          <input type="checkbox" id="or1-acknowledge" onchange="checkConfetti()">
+          <span>I acknowledge and agree</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.slider -->
+
+<script src="confetti.js"></script>
+<script src="../persistence.js"></script>
+<script>
+  /* ── STATE ── */
+  var currentSlide = 0;
+  var totalSlides = 6;
+  var isTransitioning = false;
+
+  var slider = document.getElementById('slider');
+  var navBtn = document.getElementById('navBtn');
+  var trackerFill = document.getElementById('trackerFill');
+  var trackerSteps = document.querySelectorAll('.tracker-step');
+
+  /* ── GO TO SLIDE ── */
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides || isTransitioning) return;
+    isTransitioning = true;
+    currentSlide = n;
+
+    /* Move slider */
+    slider.style.transform = 'translateX(-' + (n * 100) + 'vw)';
+
+    /* Update tracker */
+    updateTracker();
+    updateBackBtn();
+
+    /* Update button */
+    navBtn.classList.add('hidden');
+    setTimeout(function() {
+      if (currentSlide === totalSlides - 1) {
+        navBtn.style.display = 'none';
+      } else {
+        navBtn.innerHTML = 'Continue <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+        navBtn.style.display = '';
+        navBtn.classList.remove('hidden');
+      }
+      isTransitioning = false;
+    }, 350);
+
+    /* Animate bar fills on commission slide (slide index 2) */
+    if (n === 2) {
+      setTimeout(animateBars, 300);
+    }
+
+    /* Reset scroll of target slide */
+    var targetSlide = document.querySelector('[data-slide="' + n + '"]');
+    if (targetSlide) targetSlide.scrollTop = 0;
+  }
+
+  /* ── ADVANCE ── */
+  function advanceSlide() {
+    goToSlide(currentSlide + 1);
+  }
+
+  function updateBackBtn() {
+    var backBtn = document.getElementById('backBtn');
+    if (currentSlide > 0) { backBtn.classList.remove('hidden'); }
+    else { backBtn.classList.add('hidden'); }
+  }
+
+  /* ── TRACKER UPDATE ── */
+  function updateTracker() {
+    trackerSteps.forEach(function(step) {
+      var idx = parseInt(step.getAttribute('data-index'));
+      step.classList.remove('active', 'completed');
+      if (idx < currentSlide) {
+        step.classList.add('completed');
+      } else if (idx === currentSlide) {
+        step.classList.add('active');
+      }
+    });
+
+    /* Progress line fill */
+    var pct = totalSlides > 1 ? (currentSlide / (totalSlides - 1)) * 100 : 0;
+    trackerFill.style.width = pct + '%';
+  }
+
+  /* ── BAR ANIMATION ── */
+  function animateBars() {
+    document.querySelectorAll('.bar-fill').forEach(function(bar) {
+      var w = bar.getAttribute('data-width');
+      if (w) bar.style.width = w + '%';
+    });
+  }
+
+  /* ── KEYBOARD NAV ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (currentSlide < totalSlides - 1) advanceSlide();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToSlide(currentSlide - 1);
+    }
+  });
+
+  /* ── INIT ── */
+  updateTracker();
+  updateBackBtn();
+</script>
+
+<script>
+// ── IFRAME SLIDE SYSTEM ──
+(function(){
+  var slides = document.querySelectorAll('.slide');
+  if (!slides.length) return;
+  // Show first slide
+  slides[0].classList.add('active-slide');
+  // Kill any transform on slider
+  var sl = document.getElementById('slider');
+  if (sl) { sl.style.transform = 'none'; sl.style.display = 'block'; sl.style.width = 'auto'; }
+
+  // Patch goToSlide
+  window.goToSlide = function(n) {
+    var total = window.totalSlides || slides.length;
+    if (n < 0 || n >= total) return;
+    window.currentSlide = n;
+    if (typeof window.maxVisited !== 'undefined' && n > window.maxVisited) window.maxVisited = n;
+    slides.forEach(function(s, i) { s.classList.toggle('active-slide', i === n); });
+    if (sl) sl.style.transform = 'none';
+    window.scrollTo(0, 0);
+    if (typeof updateTracker === 'function') updateTracker();
+    if (typeof updateBackBtn === 'function') updateBackBtn();
+    if (typeof updateButton === 'function') updateButton();
+  };
+  window.nextSlide = function() { if (window.currentSlide < (window.totalSlides || slides.length) - 1) window.goToSlide(window.currentSlide + 1); };
+  window.advanceSlide = window.nextSlide;
+
+  // Make tracker steps clickable
+  document.querySelectorAll('.tracker-step').forEach(function(step, i) {
+    step.style.cursor = 'pointer';
+    step.addEventListener('click', function() {
+      window.goToSlide(parseInt(step.getAttribute('data-slide') || step.getAttribute('data-index') || i));
+    });
+  });
+})();
+</script>
+</body>
+</html>

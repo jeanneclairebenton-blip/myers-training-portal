@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Drip 2 — The Spread</title></head>
+<body style="margin:0;padding:0;background:#f2f2f2;font-family:Helvetica,Arial,sans-serif;">
+<div style="position:sticky;top:0;background:#1A1A1A;padding:12px;text-align:center;z-index:9;">
+  <button id="copyBtn" onclick="copyEmail()" style="background:#D6A73F;color:#1A1A1A;font-size:16px;font-weight:800;border:0;border-radius:10px;padding:12px 24px;cursor:pointer;">📋 Copy Email — paste into Gmail</button>
+  <div style="color:#bbb;font-size:12px;padding-top:6px;">SUBJECT: It's not 3% of the price. It's the spread. &nbsp;|&nbsp; PREVIEW: One picture. Sixty seconds.</div>
+</div>
+
+<div id="email" style="max-width:620px;margin:22px auto;background:#ffffff;padding:26px 28px;font-size:17px;color:#1A1A1A;line-height:1.55;font-family:Helvetica,Arial,sans-serif;">
+
+<p style="margin:0 0 16px 0;">Hi {FirstName},</p>
+<p style="margin:0 0 22px 0;">License school taught you the 3% model. Here is the one investors use:</p>
+
+<div style="text-align:center;font-size:26px;font-weight:900;padding-bottom:18px;">It&rsquo;s Not 3% Of The Price.<br><span style="color:#C9972C;">It&rsquo;s The Spread.</span></div>
+
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="text-align:center;">
+  <tr>
+    <td width="31%" style="border:2px solid #E3E4E8;border-radius:14px;padding:13px 4px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#6B7280;">WE BUY AT</div>
+      <div style="font-size:24px;font-weight:900;">$250,000</div>
+    </td>
+    <td width="3%" style="font-size:22px;color:#C9972C;font-weight:900;">&#8594;</td>
+    <td width="31%" style="border:2px solid #E3E4E8;border-radius:14px;padding:13px 4px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#6B7280;">WE SELL AT</div>
+      <div style="font-size:24px;font-weight:900;">$350,000</div>
+    </td>
+    <td width="3%" style="font-size:22px;color:#C9972C;font-weight:900;">&#8594;</td>
+    <td width="31%" style="border:3px solid #D6A73F;background:#FBF7EC;border-radius:14px;padding:13px 4px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#C9972C;">THE SPREAD</div>
+      <div style="font-size:24px;font-weight:900;color:#C9972C;">$100,000</div>
+    </td>
+  </tr>
+</table>
+<div style="font-size:13px;font-style:italic;color:#6B7280;text-align:center;padding:8px 0 20px 0;">Illustrative example. Spreads vary by deal.</div>
+
+<div style="text-align:center;font-size:22px;font-weight:800;padding-bottom:6px;"><span style="font-size:40px;font-weight:900;color:#C9972C;">90%</span> Of Every Spread Dollar Goes Back To Agents</div>
+<div style="text-align:center;font-size:15px;font-weight:600;color:#6B7280;padding-bottom:20px;">80% Paid Out On The Deal + 10% Into The Revenue Share Pool</div>
+
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="text-align:center;"><tr>
+  <td width="48%" style="border:3px solid #D6A73F;background:#FBF7EC;border-radius:16px;padding:14px 6px;">
+    <div style="font-size:26px;font-weight:900;">$150 <span style="font-size:15px;font-weight:700;color:#6B7280;">/ Month</span></div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:#C9972C;padding-top:3px;">TECH DUES</div>
+  </td>
+  <td width="4%"></td>
+  <td width="48%" style="border:3px solid #D6A73F;background:#FBF7EC;border-radius:16px;padding:14px 6px;">
+    <div style="font-size:26px;font-weight:900;">$105 <span style="font-size:15px;font-weight:700;color:#6B7280;">/ Transaction</span></div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:#C9972C;padding-top:3px;">TRANSACTION FEE</div>
+  </td>
+</tr></table>
+<div style="text-align:center;font-size:14px;font-weight:700;letter-spacing:1.5px;color:#4A4F57;padding:10px 0 4px 0;">THE ONLY TWO FEES.</div>
+
+<div style="text-align:center;padding:26px 0 8px 0;">
+  <a href="https://calendar.app.google/HYZr5JW9zkUSz92MA" style="display:inline-block;background:#D6A73F;color:#1A1A1A;font-size:18px;font-weight:800;text-decoration:none;border-radius:14px;padding:15px 28px;">See Your Numbers In This Model</a>
+  <div style="font-size:14px;color:#6B7280;padding-top:10px;">15 minutes. Bring your last 12 months of closings.</div>
+</div>
+
+<p style="margin:18px 0 0 0;">Jeanne Claire<br>Myers Home Buyers &middot; Addison, TX<br><a href="https://joinmyers.com" style="color:#C9972C;font-weight:700;text-decoration:none;">joinmyers.com</a></p>
+</div>
+
+<script>
+async function copyEmail(){
+  const el=document.getElementById('email');
+  try{
+    await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([el.outerHTML],{type:'text/html'}),'text/plain':new Blob([el.innerText],{type:'text/plain'})})]);
+    document.getElementById('copyBtn').textContent='✅ Copied! Paste into Gmail';
+  }catch(e){
+    const r=document.createRange();r.selectNode(el);
+    const s=getSelection();s.removeAllRanges();s.addRange(r);
+    document.execCommand('copy');s.removeAllRanges();
+    document.getElementById('copyBtn').textContent='✅ Copied! Paste into Gmail';
+  }
+}
+</script>
+</body></html>

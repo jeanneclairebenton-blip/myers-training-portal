@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myers Agent Flyer Generator</title>
+<style>
+  :root{--navy:#0a1628;--navy2:#111d35;--gold:#c8a54e;--gold2:#dbb960;--cream:#FAF8F3;--ink:#1A1A1A;--line:#e5e2da}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+  header{background:var(--navy);color:#fff;padding:18px 28px;display:flex;align-items:center;gap:14px}
+  header h1{font-size:20px;font-weight:700}
+  header h1 span{color:var(--gold)}
+  header p{font-size:12px;opacity:.7}
+  .wrap{display:grid;grid-template-columns:360px 1fr;gap:24px;padding:24px;max-width:1200px;margin:0 auto}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
+  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#8a8371;margin-bottom:12px}
+  label{display:block;font-size:12px;font-weight:600;margin:12px 0 4px}
+  input[type=text],textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px}
+  textarea{resize:vertical}
+  .tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .tpl{border:2px solid var(--line);border-radius:10px;padding:10px;cursor:pointer;text-align:center;font-size:12px;font-weight:600;background:#fff}
+  .tpl small{display:block;font-weight:400;color:#8a8371;margin-top:2px;font-size:10px}
+  .tpl.active{border-color:var(--gold);background:#fdf9ef}
+  .size-row{display:flex;gap:8px;margin-top:6px}
+  .size-row .tpl{flex:1}
+  .photo-drop{border:2px dashed var(--line);border-radius:10px;padding:16px;text-align:center;font-size:12px;color:#8a8371;cursor:pointer;margin-top:6px}
+  .photo-drop.has{border-color:var(--gold);color:var(--ink)}
+  button.dl{width:100%;margin-top:18px;padding:14px;background:var(--gold);border:none;border-radius:10px;font:inherit;font-weight:700;font-size:15px;color:var(--navy);cursor:pointer}
+  button.dl:hover{background:var(--gold2)}
+  .preview{position:sticky;top:20px}
+  canvas{width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(10,22,40,.18);background:var(--navy)}
+  .hint{font-size:11px;color:#8a8371;margin-top:8px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>MYERS <span>Agent Flyer Generator</span></h1>
+  <p>Pick a template → type → download PNG. Where agents become investors.</p>
+</header>
+<div class="wrap">
+  <div class="panel">
+    <h2>1 · Template</h2>
+    <div class="tpl-grid" id="tpls">
+      <div class="tpl active" data-t="first"><div>🏁 First Check Club</div><small>fast first closing</small></div>
+      <div class="tpl" data-t="spotlight"><div>🎤 Agent Spotlight</div><small>feature an agent</small></div>
+      <div class="tpl" data-t="welcome"><div>👋 Welcome</div><small>new agent joined</small></div>
+      <div class="tpl" data-t="win"><div>🔨 Deal Win</div><small>closed / flipped / sold</small></div>
+    </div>
+    <h2 style="margin-top:18px">2 · Size</h2>
+    <div class="size-row" id="sizes">
+      <div class="tpl active" data-s="sq">Square<small>FB + IG feed</small></div>
+      <div class="tpl" data-s="story">Story<small>IG/FB story · reel cover</small></div>
+    </div>
+    <h2 style="margin-top:18px">3 · Details</h2>
+    <label>Agent name</label><input type="text" id="name" value="Agent Name" maxlength="28">
+    <label>Headline</label><input type="text" id="head" value="Day 1: joined Myers. Day 13: CLOSED." maxlength="60">
+    <label>Sub-line</label><textarea id="sub" rows="2" maxlength="110">Real deal flow + a real mentor from day one.</textarea>
+    <label>Agent photo</label>
+    <div class="photo-drop" id="drop">Click to add a photo (square-ish headshot works best)</div>
+    <input type="file" id="file" accept="image/*" style="display:none">
+    <button class="dl" id="dl">⬇ Download PNG</button>
+  </div>
+  <div class="preview panel">
+    <h2>Preview</h2>
+    <canvas id="cv" width="1080" height="1080"></canvas>
+    <p class="hint">Downloads at full resolution (1080×1080 or 1080×1920). Post it with the matching caption from Month-1-All-Posts.</p>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let tpl='first',size='sq',photo=null;
+const NAVY='#0a1628',NAVY2='#111d35',GOLD='#c8a54e',GOLD2='#dbb960',CREAM='#FAF8F3';
+const BADGE={first:'FIRST CHECK CLUB',spotlight:'AGENT SPOTLIGHT',welcome:'WELCOME TO MYERS',win:'DEAL CLOSED'};
+const EMOJI={first:'🏁',spotlight:'🎤',welcome:'👋',win:'🔨'};
+document.getElementById('tpls').onclick=e=>{const t=e.target.closest('.tpl');if(!t)return;
+  document.querySelectorAll('#tpls .tpl').forEach(x=>x.classList.remove('active'));t.classList.add('active');tpl=t.dataset.t;
+  const d={first:['Day 1: joined Myers. Day 13: CLOSED.','Real deal flow + a real mentor from day one.'],
+    spotlight:['Building her own business. With us.','Flips, listings, rentals — one license, five income streams.'],
+    welcome:['The newest Myers investor-agent.','Mentor assigned. Deal flow live. First check loading…'],
+    win:['SOLD. Bought it, flipped it, listed it.','Full-cycle agent: purchase → rehab → market.']}[tpl];
+  document.getElementById('head').value=d[0];document.getElementById('sub').value=d[1];draw()};
+document.getElementById('sizes').onclick=e=>{const t=e.target.closest('.tpl');if(!t)return;
+  document.querySelectorAll('#sizes .tpl').forEach(x=>x.classList.remove('active'));t.classList.add('active');size=t.dataset.s;
+  cv.width=1080;cv.height=size==='sq'?1080:1920;draw()};
+['name','head','sub'].forEach(id=>document.getElementById(id).oninput=draw);
+const drop=document.getElementById('drop'),file=document.getElementById('file');
+drop.onclick=()=>file.click();
+file.onchange=()=>{const f=file.files[0];if(!f)return;const img=new Image();
+  img.onload=()=>{photo=img;drop.textContent='✓ '+f.name;drop.classList.add('has');draw()};
+  img.src=URL.createObjectURL(f)};
+function fit(text,font,max){let s=parseInt(font);ctx.font=font;
+  while(ctx.measureText(text).width>max&&s>20){s-=2;ctx.font=font.replace(/\d+px/,s+'px')}return ctx.font}
+function wrap(text,x,y,max,lh){const words=text.split(' ');let line='',yy=y;
+  for(const w of words){const t=line?line+' '+w:w;
+    if(ctx.measureText(t).width>max&&line){ctx.fillText(line,x,yy);line=w;yy+=lh}else line=t}
+  if(line)ctx.fillText(line,x,yy);return yy}
+function draw(){const W=cv.width,H=cv.height,cx=W/2,story=size==='story';
+  // background
+  const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,NAVY);g.addColorStop(1,NAVY2);
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // gold corner accents
+  ctx.strokeStyle=GOLD;ctx.lineWidth=6;
+  ctx.strokeRect(40,40,W-80,H-80);
+  ctx.fillStyle='rgba(200,165,78,.08)';ctx.beginPath();ctx.arc(W,0,W*.45,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(0,H,W*.35,0,7);ctx.fill();
+  const top=story?200:120;
+  // badge
+  ctx.fillStyle=GOLD;ctx.font='700 34px Inter,Arial';ctx.textAlign='center';
+  const b=EMOJI[tpl]+'  '+BADGE[tpl];const bw=ctx.measureText(b).width+80;
+  ctx.strokeStyle=GOLD;ctx.lineWidth=3;
+  roundRect(cx-bw/2,top,bw,72,36);ctx.stroke();
+  ctx.fillText(b,cx,top+48);
+  // photo circle
+  const pr=story?240:190,py=top+(story?200:160)+pr;
+  ctx.save();ctx.beginPath();ctx.arc(cx,py,pr,0,7);ctx.closePath();ctx.clip();
+  if(photo){const s=Math.max(pr*2/photo.width,pr*2/photo.height);
+    ctx.drawImage(photo,cx-photo.width*s/2,py-photo.height*s/2,photo.width*s,photo.height*s)}
+  else{ctx.fillStyle='#1e2d4a';ctx.fillRect(cx-pr,py-pr,pr*2,pr*2);
+    ctx.fillStyle=GOLD;ctx.font='700 '+pr+'px Georgia';ctx.fillText('?',cx,py+pr*.35)}
+  ctx.restore();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=8;ctx.beginPath();ctx.arc(cx,py,pr+6,0,7);ctx.stroke();
+  // name
+  ctx.fillStyle='#fff';
+  ctx.font=fit(document.getElementById('name').value,'700 72px Georgia,serif',W-220);
+  ctx.fillText(document.getElementById('name').value,cx,py+pr+95);
+  // headline
+  ctx.fillStyle=GOLD2;ctx.font='800 58px Inter,Arial';
+  let hy=wrap(document.getElementById('head').value.toUpperCase(),cx,py+pr+195,W-220,70);
+  // sub
+  ctx.fillStyle='rgba(255,255,255,.85)';ctx.font='400 40px Inter,Arial';
+  wrap(document.getElementById('sub').value,cx,hy+80,W-260,52);
+  // footer
+  ctx.fillStyle=GOLD;ctx.font='700 40px Georgia,serif';
+  ctx.fillText('MYERS',cx,H-(story?170:130));
+  ctx.fillStyle='rgba(255,255,255,.75)';ctx.font='400 30px Inter,Arial';
+  ctx.fillText('Where agents become investors',cx,H-(story?120:84));
+}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+document.getElementById('dl').onclick=()=>{const a=document.createElement('a');
+  a.download='myers-'+tpl+'-'+size+'.png';a.href=cv.toDataURL('image/png');a.click()};
+draw();
+</script>
+</body>
+</html>

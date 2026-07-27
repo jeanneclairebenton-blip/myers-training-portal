@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Showing Checklist: The Disclosure Run</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9972C;--gdeep:#A87B1F;--glight:#E8BC5E;--ink:#1A1A1A;--gray:#6b7280;--cream:#FBF6EA;--green:#2E7D32;--red:#B3402A;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(180deg,#FFFFFF 0%,#FAF7F1 100%);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:44px 20px;}
+.stage{width:100%;max-width:820px;}
+h1{font-size:clamp(25px,4.4vw,40px);font-weight:800;text-align:center;line-height:1.15;letter-spacing:-0.5px;}
+h1 b{color:var(--gold);}
+.sub{text-align:center;color:var(--gold);font-size:clamp(15px,2.2vw,19px);font-weight:600;margin-top:6px;}
+.card{background:#fff;border-radius:26px;padding:34px;margin-top:22px;box-shadow:0 2px 6px rgba(26,26,26,.04), 0 16px 44px rgba(26,26,26,.08);}
+.hidden{display:none !important;}
+.center{text-align:center;}
+.coin{width:104px;height:104px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.startbtn{display:inline-block;margin-top:24px;background:var(--gold);color:#fff;border:none;font-family:'Poppins';font-weight:700;font-size:18px;padding:16px 48px;border-radius:99px;cursor:pointer;box-shadow:0 8px 22px rgba(201,151,44,.35);transition:all .15s;}
+.startbtn:hover{transform:translateY(-2px);}
+.dots{display:flex;justify-content:center;gap:9px;margin-top:24px;}
+.dot{width:30px;height:6px;border-radius:99px;background:#ECE6D9;transition:all .25s;}
+.dot.now{background:var(--gold);}
+.dot.win{background:var(--glight);}
+.dot.lose{background:#D6DADF;}
+.scen{background:#F6F6F7;border-radius:18px;padding:22px 26px;}
+.scen .who{font-size:12px;font-weight:700;letter-spacing:.14em;color:#9CA3AF;}
+.scen p{font-size:clamp(17px,2.5vw,22px);font-weight:700;color:#374151;margin-top:4px;line-height:1.45;}
+.ring{font-size:13px;font-weight:700;color:var(--gray);letter-spacing:.14em;margin-bottom:14px;text-align:center;}
+.duo{display:flex;gap:14px;margin-top:20px;}
+.duo button{flex:1;font-family:'Poppins';font-weight:800;font-size:clamp(15px,2.2vw,19px);padding:20px 10px;border-radius:16px;cursor:pointer;transition:all .15s;letter-spacing:.04em;}
+.duo .a{background:#fff;border:2px solid var(--gold);color:var(--gdeep);}
+.duo .b{background:#fff;border:2px solid #C9CDD3;color:#6b7280;}
+.duo button:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(26,26,26,.10);}
+.duo button.right{background:#EFF7EF;border-color:var(--green);color:var(--green);}
+.duo button.wrong{background:#FBF0ED;border-color:var(--red);color:var(--red);}
+.duo button:disabled{cursor:default;transform:none;}
+.fb{display:none;margin-top:18px;border-radius:16px;padding:20px 24px;animation:pop .3s ease;}
+@keyframes pop{0%{transform:scale(.95);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.fb.good{display:block;background:var(--cream);}
+.fb.bad{display:block;background:#F6F6F7;}
+.fb h3{font-size:clamp(17px,2.4vw,21px);font-weight:700;}
+.fb.good h3{color:var(--gdeep);}
+.fb.bad h3{color:#4b5563;}
+.fb p{font-size:clamp(14px,2vw,17px);color:#374151;font-weight:500;margin-top:6px;line-height:1.5;}
+.fb .line{margin-top:10px;background:#fff;border-left:4px solid var(--gold);padding:12px 16px;border-radius:0 10px 10px 0;font-size:clamp(14px,2vw,17px);font-weight:700;}
+.nextbtn{display:none;margin:20px auto 0;background:var(--gold);color:#fff;border:none;font-family:'Poppins';font-weight:700;font-size:17px;padding:14px 40px;border-radius:99px;cursor:pointer;box-shadow:0 6px 18px rgba(201,151,44,.35);}
+.nextbtn.show{display:block;}
+.tally{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gray);text-align:center;margin-top:14px;}
+.tally b{color:var(--gdeep);}
+.big{font-size:clamp(46px,8vw,80px);font-weight:800;color:var(--gdeep);text-align:center;line-height:1;}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}
+.chip{font-family:'Poppins';font-weight:700;font-size:clamp(14px,2vw,17px);padding:14px 20px;border-radius:99px;border:2px solid #E7DFCE;background:#fff;color:var(--ink);cursor:pointer;transition:all .15s;}
+.chip:hover{border-color:var(--gold);background:var(--cream);transform:translateY(-1px);}
+.chip.got{background:var(--gold);border-color:var(--gold);color:#fff;pointer-events:none;}
+.chip.bad{animation:shake .35s;border-color:var(--red);background:#FBF0ED;color:var(--red);pointer-events:none;opacity:.7;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+.confetti{position:fixed;top:-12px;border-radius:2px;pointer-events:none;z-index:99;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9;}}
+
+.found{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+.frow{display:flex;gap:12px;align-items:flex-start;background:var(--cream);border-radius:12px;padding:11px 16px;animation:pop .25s ease;}
+.frow svg{flex:0 0 24px;margin-top:2px;}
+.frow h4{font-size:clamp(14px,2vw,16.5px);font-weight:700;}
+.frow p{font-size:clamp(12.5px,1.8vw,14.5px);color:#4b5563;font-weight:500;line-height:1.4;}
+</style></head><body>
+<div class="stage">
+<h1>Pre-Showing Checklist <b>The Disclosure Run</b></h1>
+<div class="sub">Your investor is meeting you at the property. Tap everything you disclose before the showing.</div>
+<div class="card center" id="scrStart">
+  <div class="coin"><svg viewBox="0 0 24 24" width="50" height="50" fill="none" stroke="#C9972C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2" fill="#C9972C" fill-opacity="0.10"/><path d="m8.5 9 2 2 4-4.5M8.5 16.5h7"/></svg></div>
+  <h3 style="font-size:24px;font-weight:700;">Six disclosures. Three traps.</h3>
+  <p style="font-size:16.5px;color:var(--gray);font-weight:500;margin-top:10px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;">Nine cards below. Six belong in the pre-showing conversation. Three should never leave your mouth. Tap only what you disclose.</p>
+  <button class="startbtn" onclick="start()">Start the Run</button>
+</div>
+<div class="card hidden" id="scrGame">
+  <div class="ring">TAP ONLY WHAT YOU DISCLOSE</div>
+  <div class="chips" id="chips"></div>
+  <div class="found" id="found"></div>
+  <div class="fb" id="fb"></div>
+  <div class="tally" id="tally"></div>
+</div>
+<div class="card center hidden" id="scrEnd">
+  <div class="coin" style="width:120px;height:120px;"><svg viewBox="0 0 24 24" width="70" height="70" fill="none" stroke="url(#gt)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<defs><linearGradient id="gt" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8BC5E"/><stop offset="1" stop-color="#A87B1F"/></linearGradient></defs>
+<path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" fill="#C9972C" fill-opacity="0.16" stroke="none"/>
+<path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/>
+<path d="M18 9h1.5a1 1 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6 9H4.5a1 1 0 0 1 0-5H6"/>
+<path d="M3.8 2.2 2.6 1" stroke="#C9972C"/><path d="M20.2 2.2 21.4 1" stroke="#C9972C"/></svg></div>
+  <div class="big" id="score"></div>
+  <h3 id="endTitle" style="font-size:25px;font-weight:700;margin-top:10px;"></h3>
+  <p id="endNote" style="font-size:16.5px;color:var(--gray);font-weight:500;margin-top:8px;line-height:1.6;max-width:540px;margin-left:auto;margin-right:auto;"></p>
+  <button class="startbtn" onclick="restart()">Run It Again</button>
+</div>
+</div>
+<script>
+const ITEMS=[
+ {t:"The $5,000 deposit",d:"It is not earnest money; it&rsquo;s paid directly to Myers.",good:true},
+ {t:"The showing timeline",d:"Showing window (1 hour) &middot; bidding closes 1 hour after the showing ends &middot; the winner has 2 hours after bidding ends to submit wire + contract. Say it out loud up front.",good:true},
+ {t:"Higher closing costs",d:"Have them budget ~3% of purchase price (higher as a % on cheaper homes; a $10k home still carries a $200&ndash;400 escrow fee).",good:true},
+ {t:"Financing / funding source",d:"Cash, line of credit, or hard money. If hard money: experience, lender, requirements, and confirm no appraisal (an appraisal means the lender needs further access).",good:true},
+ {t:"Closing timeline",d:"And their ability to perform on time.",good:true},
+ {t:"Leasebacks / lease transfers",d:"If the seller is staying or a tenant is moving out, disclose terms and dates up front.",good:true},
+ {t:"Your spread on the deal",good:false},
+ {t:"The seller&rsquo;s bottom line",good:false},
+ {t:"Other investors&rsquo; bids",good:false},
+];
+let got=0,misses=0;
+function start(){document.getElementById('scrStart').classList.add('hidden');document.getElementById('scrGame').classList.remove('hidden');
+got=0;misses=0;document.getElementById('found').innerHTML='';document.getElementById('fb').className='fb';document.getElementById('fb').innerHTML='';
+const box=document.getElementById('chips');box.innerHTML='';
+shuffle(ITEMS.slice()).forEach(it=>{const b=document.createElement('button');b.className='chip';b.innerHTML=it.t;
+b.onclick=()=>pick(b,it);box.appendChild(b);});update();}
+function pick(btn,it){const fb=document.getElementById('fb');
+if(it.good){btn.classList.add('got');got++;confetti(12);
+document.getElementById('found').innerHTML+='<div class="frow"><svg viewBox="0 0 24 24" width="24" height="24"><rect x="2.5" y="2.5" width="19" height="19" rx="5" fill="#C9972C"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h4>'+it.t+'</h4>'+(it.d?'<p>'+it.d+'</p>':'')+'</div></div>';
+fb.className='fb';fb.innerHTML='';
+if(got===6)finish();}
+else{btn.classList.add('bad');misses++;
+fb.className='fb bad';fb.innerHTML='<h3>Never.</h3><p>That stays confidential. It is not part of the pre-showing disclosure.</p>';}
+update();}
+function update(){document.getElementById('tally').innerHTML='DISCLOSED &nbsp;<b>'+got+'</b> / 6 &nbsp;&nbsp;&middot;&nbsp;&nbsp; TRAPS HIT &nbsp;<b>'+misses+'</b>';}
+function finish(){setTimeout(()=>{
+document.getElementById('scrGame').classList.add('hidden');document.getElementById('scrEnd').classList.remove('hidden');
+const t=document.getElementById('endTitle'),n=document.getElementById('endNote');
+document.getElementById('score').textContent=misses===0?'Clean run':misses+(misses===1?' trap hit':' traps hit');
+if(misses===0){t.textContent='All six disclosed. Nothing leaked.';n.textContent='This is the conversation that makes the showing go smooth and the deposit land on time.';confetti(120);}
+else{t.textContent='You disclosed what you should never say.';n.textContent='The spread, the seller&rsquo;s bottom line, and other bids stay confidential. Run it again clean.';}},450);}
+function restart(){document.getElementById('scrEnd').classList.add('hidden');start();}
+function confetti(n){const colors=['#C9972C','#E8BC5E','#A87B1F','#FBF6EA','#1A1A1A'];
+for(let k=0;k<n;k++){const c=document.createElement('div');c.className='confetti';const s=6+Math.random()*8;
+c.style.cssText='left:'+(Math.random()*100)+'vw;width:'+s+'px;height:'+(s*0.5)+'px;background:'+colors[k%colors.length]+';animation-duration:'+(1.6+Math.random()*1.6)+'s;animation-delay:'+(Math.random()*0.4)+'s;';
+document.body.appendChild(c);setTimeout(()=>c.remove(),3600);}}
+function shuffle(a){for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]];}return a;}
+</script></body></html>

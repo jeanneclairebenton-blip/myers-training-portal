@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day One Loadout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0F0F11;
+            --surface-color: #1A1A1F;
+            --text-primary: #F0EDE8;
+            --text-dim: rgba(240, 237, 232, 0.5);
+            --accent-gold: #C8962E;
+            --accent-bright: #E5B44A;
+            --border-glow: rgba(200, 150, 46, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 0%, rgba(200, 150, 46, 0.05) 0%, transparent 50%);
+        }
+
+        .slide-container {
+            width: 1440px;
+            height: 810px;
+            padding: 80px 120px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .headline {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--accent-gold);
+            letter-spacing: 0.5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: auto;
+        }
+
+        .card {
+            background-color: var(--surface-color);
+            border: 1.5px solid var(--border-glow);
+            border-left: 6px solid var(--accent-gold);
+            border-radius: 14px;
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(200, 150, 46, 0.15), 0 4px 8px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .card-text {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .kicker {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 40px;
+            letter-spacing: 0.5px;
+        }
+
+        .kicker .gold {
+            color: var(--accent-bright);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1 class="headline">Your Day One Loadout</h1>
+            <div class="subtitle">Everything Handed to You Before Your First Deal</div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Myers University</div>
+                <div class="card-text">Self-paced certification. First certificate in week one.</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Weekly Live Classes</div>
+                <div class="card-text">Deal reviews and script practice with agents who close.</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Your Own Brand</div>
+                <div class="card-text">Your name. Your website. Your leads. Myers powers the backend.</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Tech Stack</div>
+                <div class="card-text">Carrot website, CRM, AI tools, deal board. All mobile.</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Your Team</div>
+                <div class="card-text">Named mentor. Slack cohort. Monthly socials.</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Full Brokerage</div>
+                <div class="card-text">Contracts reviewed. Compliance handled. You focus on selling.</div>
+            </div>
+        </div>
+
+        <div class="kicker">
+            Most brokerages take months to get you started. <span class="gold">At Myers, you launch day one.</span>
+        </div>
+    </div>
+</body>
+</html>

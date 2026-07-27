@@ -1,0 +1,36 @@
+MYERS LMS ICON SETS
+Library base: Lucide (lucide.dev), ISC license, free for commercial use. Poppins + gold branding.
+Style rule: pick ONE folder per surface and never mix sets side by side.
+
+1-Classic-Line ... flat brand gold #C9972C, 2px stroke. Cleanest, smallest, best at tiny sizes (under 18px).
+2-Duotone-Gold ... gradient stroke (#E8BC5E to #A87B1F) + soft gold fills. Premium feel for cards and menus.
+3-Dynamic-Gold ... duotone base + motion accents (speed lines, sparks, typing dots, alarm rings,
+                   ground ripple, notification dot, keyhole, dashed route). The signature set:
+                   use for feature moments like the dashboard, badges, and celebrations.
+
+RECOMMENDED USE
+Tab bars / tiny UI ........ 1-Classic-Line
+Cards, menus, lists ....... 2-Duotone-Gold
+Dashboard, badges, hero ... 3-Dynamic-Gold
+
+Inactive state: change strokes/fills to gray #6B6B6B (fills at ~8% opacity).
+
+FILE = WHERE IT'S USED (same names in every folder)
+Home-home ............... Home tab / dashboard
+Certificate-award ....... Certificate section + earned badge
+Lesson-play ............. Lesson tab, video play (speed lines in Dynamic)
+Path-map ................ Progress board (dashed route in Dynamic)
+Profile-user ............ Profile tab
+Cohort-users ............ Cohort cards (recruiting plus sign in Dynamic)
+Streak-flame ............ Streak counter (sparks in Dynamic)
+Refresher-mail .......... Weekly refresher (notification dot in Dynamic)
+Mentor-Chat-message-circle  Mentor / help (typing dots in Dynamic)
+Streak-Repair-life-buoy . Streak repair card
+Reminder-clock .......... Reminders (alarm rings in Dynamic)
+You-Are-Here-map-pin .... Progress board pin (ground ripple in Dynamic)
+Your-Role-compass ....... Your Role badge (filled needle)
+Certification-trophy .... Final certification (sparks in Dynamic)
+Locked-lock ............. Locked modules (keyhole in Dynamic)
+Complete-check .......... Completed modules (echo swoosh in Dynamic)
+
+Each folder has an Icon-Preview.html showing all 16 at once.

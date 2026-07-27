@@ -1,0 +1,17 @@
+<!-- @license lucide-static v1.26.0 - ISC -->
+<svg
+  class="lucide lucide-lock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="url(#g-lock)"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+<defs><linearGradient id="g-lock" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8BC5E"/><stop offset="1" stop-color="#A87B1F"/></linearGradient></defs><rect width="18" height="11" x="3" y="11" rx="2" ry="2" fill="#C9972C" fill-opacity="0.14" stroke="none"/>
+  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+<circle cx="12" cy="15.4" r="1.15" fill="#C9972C" stroke="none"/><path d="M12 16.6v1.9" stroke="#C9972C" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>

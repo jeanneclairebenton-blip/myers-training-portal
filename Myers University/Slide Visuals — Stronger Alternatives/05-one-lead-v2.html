@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Lead. Four Ways to Win.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0F0F11;
+            --surface: #1A1A1F;
+            --border: rgba(200,150,46,0.25);
+            --text: #F0EDE8;
+            --accent: #C8962E;
+            --accent-bright: #E5B44A;
+            --dim: rgba(240,237,232,0.5);
+            --gold-glow: rgba(200,150,46,0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 1440px;
+            height: 810px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* SECTION 1 */
+        .section-1 {
+            flex: 0 0 55%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(240,237,232,0.1);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hub-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .diamond {
+            width: 70px;
+            height: 70px;
+            background-color: var(--surface);
+            border: 2px solid var(--accent);
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 0 20px var(--gold-glow);
+            z-index: 2;
+        }
+
+        .diamond span {
+            transform: rotate(-45deg);
+            color: var(--accent-bright);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cards-row {
+            display: flex;
+            gap: 2rem;
+            z-index: 2;
+        }
+
+        .exit-card {
+            background-color: var(--surface);
+            border: 1.5px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 14px;
+            padding: 1.5rem;
+            width: 240px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .exit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--gold-glow);
+        }
+
+        .exit-card-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .exit-card-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-bright);
+        }
+
+        .section-1-text {
+            color: var(--dim);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* SECTION 2 */
+        .section-2 {
+            flex: 0 0 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .contrast-bar {
+            background-color: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 40px;
+            padding: 0.75rem 2.5rem;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .contrast-traditional {
+            color: var(--dim);
+            font-size: 1.1rem;
+        }
+
+        .contrast-myers {
+            color: var(--accent-bright);
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline {
+            width: 70%;
+            max-width: 900px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-node {
+            position: relative;
+            top: -9px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background-color: var(--bg);
+            border: 3px solid var(--accent);
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .timeline-time {
+            color: var(--accent-bright);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-action {
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .buy-it-now {
+            background-color: rgba(200,150,46,0.08);
+            border: 1px solid var(--accent);
+            color: var(--accent-bright);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* KICKER */
+        .kicker {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+
+        .kicker span {
+            color: var(--accent-bright);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        
+        <div class="section-1">
+            <h1>One Lead. Four Ways to Win.</h1>
+            
+            <div class="hub-container">
+                <div class="diamond">
+                    <span>The<br>Deal</span>
+                </div>
+                
+                <div class="cards-row">
+                    <div class="exit-card">
+                        <div class="exit-card-title">Flip</div>
+                        <div class="exit-card-value">$30K–$80K spread</div>
+                    </div>
+                    <div class="exit-card">
+                        <div class="exit-card-title">Wholesale</div>
+                        <div class="exit-card-value">$5K–$25K fee</div>
+                    </div>
+                    <div class="exit-card">
+                        <div class="exit-card-title">Brokerage</div>
+                        <div class="exit-card-value">3% commission</div>
+                    </div>
+                    <div class="exit-card">
+                        <div class="exit-card-title">Rentals</div>
+                        <div class="exit-card-value">$200–$800/mo</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-1-text">No lead is wasted. Every deal finds its best exit.</div>
+        </div>
+
+        <div class="section-2">
+            <h2>Won in Hours, Not Days</h2>
+            
+            <div class="contrast-bar">
+                <div class="contrast-traditional">Traditional: 30–90 days</div>
+                <div class="contrast-myers">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Myers: 4 hours
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">0:00</div>
+                    <div class="timeline-action">Showing</div>
+                </div>
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">1:00</div>
+                    <div class="timeline-action">Submit Bid</div>
+                </div>
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">3:00</div>
+                    <div class="timeline-action">Wire + Contract</div>
+                </div>
+            </div>
+
+            <div class="buy-it-now">
+                Buy It Now: skip the auction, pay the posted price.
+            </div>
+        </div>
+
+        <div class="kicker">
+            The Myers Advantage: <span>Speed & Execution.</span>
+        </div>
+
+    </div>
+</body>
+</html>
