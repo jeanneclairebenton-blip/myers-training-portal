@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Know Your Parent Is Okay — Without Watching Them</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F3F6F9;--ink:#15202B;--muted:#5B6B7A;--line:#D3DBE3;--card:#fff;--slate:#1E3A5F;--ok:#2F9E6B;--warn:#E0A100;--bad:#D64545;--wall:#C9D3DD;--floor:#FAFBFC;--glow:rgba(30,58,95,.18);--btn:#1E3A5F;--btn-ink:#fff;
+    box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F151B;--ink:#E8EEF3;--muted:#9FB0BF;--line:#2A3945;--card:#171F27;--slate:#9CC0EA;--wall:#3A4A58;--floor:#1C2630;--glow:rgba(156,192,234,.25);--btn:#9CC0EA;--btn-ink:#0F151B}}
+  :root[data-theme="dark"]{--bg:#0F151B;--ink:#E8EEF3;--muted:#9FB0BF;--line:#2A3945;--card:#171F27;--slate:#9CC0EA;--wall:#3A4A58;--floor:#1C2630;--glow:rgba(156,192,234,.25);--btn:#9CC0EA;--btn-ink:#0F151B}
+  html{scroll-padding-top:env(safe-area-inset-top,0px)} *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.45}
+  .ui{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:1040px;margin:0 auto;padding:36px 20px 80px}
+  h1{font-weight:500;font-size:clamp(32px,5.2vw,50px);line-height:1.1;margin:0 0 8px;letter-spacing:-.01em;max-width:760px}
+  h2{font-weight:600;font-size:24px;margin:0 0 10px}
+  .sub{color:var(--muted);font-size:20px;margin:0 0 24px;max-width:600px}
+  .sec{margin-top:44px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px}
+  .cap{font-size:14px;color:var(--muted);text-align:center;margin:8px 0 0;font-style:italic}
+
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:var(--card);margin-bottom:16px}
+  .toggle button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:16px;padding:9px 16px;border-radius:999px;cursor:pointer}
+  .toggle button[aria-pressed="true"]{background:var(--slate);color:var(--btn-ink)}
+  button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+
+  .stage{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+  @media (max-width:820px){.stage{grid-template-columns:1fr}}
+  .plan{padding:14px 14px 10px;position:relative}
+  .plan svg{width:100%;height:auto;display:block}
+  .lbl{font-size:15px;fill:var(--muted)}
+  .sensor{fill:var(--slate)} .ring{fill:none;stroke:var(--slate);stroke-width:1.2;opacity:.18}
+  .clock{position:absolute;top:12px;right:14px;font-size:15px;color:var(--muted)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin:8px 2px 0}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--slate);display:inline-block}
+  .dot.p{background:var(--slate);width:8px;height:14px;border-radius:4px}
+  .dot.f{background:var(--bad);width:16px;height:8px;border-radius:4px}
+  .dot.o{background:transparent;border:2px solid var(--slate);box-sizing:border-box}
+  #person .glow{fill:var(--glow)} #person .body{fill:var(--slate)}
+  #person.down .body{fill:var(--bad)}
+  #person.hide{opacity:0}
+  .still{fill:none;stroke:var(--bad);stroke-width:3;stroke-dasharray:6 6;opacity:0} .still.on{opacity:1}
+  .outtag{opacity:0} .outtag.on{opacity:1}
+
+  .phone{border-radius:28px;padding:14px 12px 16px;box-shadow:0 18px 40px rgba(21,32,43,.10);display:flex;flex-direction:column}
+  .ptime{text-align:center;font-size:13px;color:var(--muted);margin-bottom:10px}
+  .ptitle{font-size:17px;font-weight:600;margin:0 0 10px}
+  .status{border-radius:14px;padding:12px;display:flex;gap:12px;align-items:center;transition:background .25s}
+  .status .big{width:14px;height:14px;border-radius:50%;flex:none}
+  .status.ok{background:rgba(47,158,107,.12)} .status.ok .big{background:var(--ok)}
+  .status.out{background:rgba(30,58,95,.10)} .status.out .big{background:var(--slate)}
+  .status.warn{background:rgba(224,161,0,.12)} .status.warn .big{background:var(--warn);animation:pulse 1s infinite}
+  .status.bad{background:rgba(214,69,69,.12)} .status.bad .big{background:var(--bad);animation:pulse .7s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+  @media (prefers-reduced-motion:reduce){.status .big{animation:none!important}}
+  .status b{display:block;font-size:16px} .status span{font-size:14px;color:var(--muted)}
+  .last{font-size:13px;color:var(--muted);margin:10px 2px 0}
+  .chain{display:flex;align-items:center;gap:4px;margin:10px 0 0;font-size:11px}
+  .chain .st{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);text-align:center;line-height:1.15}
+  .chain .st i{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:11px;color:var(--muted);background:var(--card)}
+  .chain .st.done i{background:var(--slate);border-color:var(--slate);color:var(--btn-ink)}
+  .chain .st.live i{border-color:var(--bad);color:var(--bad);animation:pulse .9s infinite}
+  .chain .st.done,.chain .st.live{color:var(--ink)}
+  .chain .ar{color:var(--line);font-size:14px;margin-bottom:14px}
+  .alert{margin-top:10px;border-left:5px solid var(--bad);background:rgba(214,69,69,.08);border-radius:12px;padding:10px;display:none}
+  .alert.on{display:block} .alert b{display:block;font-size:15px;margin-bottom:4px} .alert p{margin:0 0 8px;font-size:14px;line-height:1.35}
+  .acts{display:flex;gap:6px} .acts span{flex:1;text-align:center;font-size:12px;padding:7px 4px;border-radius:9px;border:1px solid var(--line);background:var(--card)}
+  .acts span.pri{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .week{margin-top:auto;padding-top:12px;font-size:13px;color:var(--muted)} .days{display:flex;gap:5px;margin-top:5px} .days i{flex:1;height:7px;border-radius:4px;background:var(--ok);opacity:.55} .days i.t{opacity:1;background:var(--slate)}
+  .nothing{font-size:14px;color:var(--muted);margin:8px 0 0;text-align:center}
+
+  .ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  @media (max-width:820px){.ladder{grid-template-columns:1fr}}
+  .rung{padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:center}
+  .rung i{grid-row:1/3;font-style:normal;font-weight:700;width:30px;height:30px;border-radius:50%;background:var(--slate);color:var(--btn-ink);display:flex;align-items:center;justify-content:center;font-size:15px}
+  .rung b{font-size:16px} .rung span{font-size:14px;color:var(--muted)}
+
+  .timeline{margin-top:14px;padding:12px 16px}
+  .tl{display:flex;align-items:center;gap:12px}
+  .play{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;font:inherit;font-size:16px;cursor:pointer}
+  input[type=range]{flex:1;accent-color:var(--slate)}
+  .tll{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:6px 0 0 86px}
+  .narr{margin:8px 2px 0;font-size:15px;min-height:1.4em;color:var(--ink)}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:820px){.grid3{grid-template-columns:1fr}}
+  .fact{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .ic{width:48px;height:48px;padding:11px;border-radius:50%;background:rgba(30,58,95,.10);display:block;margin-bottom:10px;stroke:var(--slate);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .fact b{display:block;font-size:19px;font-weight:600;margin-bottom:3px} .fact p{margin:0;color:var(--muted);font-size:16px}
+
+  .two{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;align-items:start}
+  .two.r{grid-template-columns:1fr 1.3fr;align-items:center}
+  @media (max-width:820px){.two,.two.r{grid-template-columns:1fr}}
+  .heat{padding:14px} .heat svg{width:100%;height:auto;display:block} .heat .hl{font-size:12px;fill:var(--muted)}
+  .iconlist{list-style:none;padding:0;margin:10px 0 0}
+  .iconlist li{display:flex;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:16px;color:var(--muted)}
+  .iconlist li:first-child{border-top:0}
+  .iconlist svg{width:26px;height:26px;flex:none;stroke:var(--slate);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .iconlist.no svg{stroke:var(--bad)}
+
+  .device{padding:16px} .device svg{width:100%;height:auto;display:block}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:520px){.steps{grid-template-columns:1fr}}
+  .step{padding:14px} .step .ic{width:44px;height:44px} .step b{display:block;font-size:16px;margin-bottom:3px} .step span{font-size:14px;color:var(--muted)}
+
+  .screens{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:12px}
+  @media (max-width:1100px){.screens{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:980px){.screens{grid-template-columns:repeat(2,1fr)}} @media (max-width:560px){.screens{grid-template-columns:1fr}}
+  .scr{border-radius:24px;padding:12px 12px 14px;box-shadow:0 12px 28px rgba(21,32,43,.08);display:flex;flex-direction:column;min-height:320px}
+  .scr .bar{font-size:12px;color:var(--muted);text-align:center;margin-bottom:8px} .scr h4{margin:0 0 8px;font-size:15px}
+  .scr .cap{margin-top:auto;padding-top:10px;font-family:"Newsreader",Georgia,serif;font-size:13px}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:13px} .row.f{border-top:0}
+  .sw{width:34px;height:20px;border-radius:10px;background:var(--ok);position:relative;flex:none} .sw::after{content:"";position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff} .sw.off{background:var(--line)} .sw.off::after{right:auto;left:2px}
+  .pill{padding:2px 8px;border-radius:999px;background:rgba(30,58,95,.10);color:var(--slate);font-size:12px}
+  .ms{border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center;font-size:13px} .ms i{width:12px;height:12px;border-radius:50%;flex:none}
+  .ms.ok{background:rgba(47,158,107,.12)} .ms.ok i{background:var(--ok)} .ms b{display:block;font-size:14px} .ms span{color:var(--muted);font-size:12px}
+  .ma{border-left:5px solid var(--bad);background:rgba(214,69,69,.08);border-radius:10px;padding:9px;font-size:12px} .ma b{display:block;font-size:14px;margin-bottom:3px}
+  .al{padding:8px 0;border-top:1px solid var(--line);font-size:12px} .al.f{border-top:0} .al b{display:block;font-size:13px} .al span{color:var(--muted)} .al .ok{color:var(--ok)} .al .bad{color:var(--bad)}
+
+  .bubble{max-width:88%;padding:8px 11px;border-radius:14px;font-size:13px;line-height:1.35;margin:5px 0}
+  .bubble.ai{background:rgba(30,58,95,.10);border-bottom-left-radius:4px} .bubble.mom{background:var(--line);margin-left:auto;border-bottom-right-radius:4px}
+  .summary{margin-top:10px;border-radius:12px;padding:9px 11px;background:rgba(224,161,0,.10);border-left:5px solid var(--warn);font-size:12px} .summary b{display:block;font-size:13px;margin-bottom:3px} .summary div{margin:2px 0}
+
+  .reserve{margin-top:20px;padding:24px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+  @media (max-width:820px){.reserve{grid-template-columns:1fr}}
+  .price{font-size:44px;font-weight:500;line-height:1} .price small{font-size:17px;color:var(--muted);margin-left:8px;font-weight:400}
+  .reserve p{margin:6px 0 0;color:var(--muted);font-size:16px}
+  .btn{display:inline-block;padding:15px 26px;border-radius:12px;background:var(--btn);color:var(--btn-ink);text-decoration:none;font-size:19px;font-weight:600;white-space:nowrap}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500;font-size:16px;padding:11px 16px}
+  .code{grid-column:1/-1;font-size:14px;color:var(--muted);margin-top:-6px} .code b{color:var(--ink)} .code.missing{color:var(--warn)}
+  .feedback{margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+  footer{margin-top:32px;font-size:13px;color:var(--muted)}
+  @media print{body{background:#fff;color:#000} .timeline,.toggle{display:none} .phone,.scr{box-shadow:none} .btn{border:1px solid #000;background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<main>
+  <div style="background:rgba(224,161,0,.12);border:1px solid var(--warn);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:15px;line-height:1.5;color:var(--ink)" class="ui">
+    <strong style="display:block;margin-bottom:4px">📋 Disclosure</strong>
+    This survey is being conducted for a class project to evaluate a hypothetical business concept, not through Graduate Student Enrollment &amp; Engagement. We are not launching a food service or implementing an actual campus initiative.
+  </div>
+  <h1>Know Your Parent Is Okay — Without Watching Them</h1>
+  <p class="sub">Four radar globes on the ceiling. No camera, no microphone, no monthly fee. Silent on a normal day. If she falls, it knows instantly and help is on the way in minutes.</p>
+
+  <div class="toggle ui" role="group" aria-label="Choose a Scenario">
+    <button id="scNormal" aria-pressed="true">A Normal Tuesday</button>
+    <button id="scWrong" aria-pressed="false">The Morning She Falls</button>
+  </div>
+
+  <div class="stage">
+    <div class="plan card">
+      <div class="clock ui" id="clock">6:00 AM</div>
+      <svg viewBox="0 0 600 420" role="img" aria-label="Floor Plan with a Radar Sensor in Each Room and a Figure Showing Where She Is">
+        <rect x="20" y="20" width="560" height="360" rx="14" fill="var(--floor)" stroke="var(--wall)" stroke-width="6"/>
+        <line x1="300" y1="20" x2="300" y2="380" stroke="var(--wall)" stroke-width="6"/>
+        <line x1="20" y1="200" x2="580" y2="200" stroke="var(--wall)" stroke-width="6"/>
+        <line x1="300" y1="90" x2="300" y2="140" stroke="var(--floor)" stroke-width="8"/>
+        <line x1="300" y1="260" x2="300" y2="310" stroke="var(--floor)" stroke-width="8"/>
+        <line x1="120" y1="200" x2="170" y2="200" stroke="var(--floor)" stroke-width="8"/>
+        <line x1="420" y1="200" x2="470" y2="200" stroke="var(--floor)" stroke-width="8"/>
+        <!-- front door on the living-room bottom wall -->
+        <line x1="60" y1="380" x2="110" y2="380" stroke="var(--floor)" stroke-width="8"/>
+        <path d="M60 380 A50 50 0 0 1 110 380" fill="none" stroke="var(--line)" stroke-width="2"/>
+        <text x="85" y="402" text-anchor="middle" class="lbl" font-size="13">Front Door</text>
+        <rect x="50" y="60" width="130" height="90" rx="8" fill="none" stroke="var(--line)" stroke-width="2"/><text x="115" y="110" text-anchor="middle" class="lbl" font-size="12">Bed</text>
+        <rect x="340" y="50" width="60" height="120" rx="8" fill="none" stroke="var(--line)" stroke-width="2"/><text x="370" y="115" text-anchor="middle" class="lbl" font-size="12">Tub</text>
+        <rect x="330" y="250" width="200" height="40" rx="6" fill="none" stroke="var(--line)" stroke-width="2"/><text x="430" y="275" text-anchor="middle" class="lbl" font-size="12">Counter</text>
+        <rect x="60" y="270" width="150" height="60" rx="10" fill="none" stroke="var(--line)" stroke-width="2"/><text x="135" y="305" text-anchor="middle" class="lbl" font-size="12">Sofa</text>
+        <text x="40" y="48" class="lbl">Bedroom</text><text x="320" y="48" class="lbl">Bathroom</text><text x="320" y="228" class="lbl">Kitchen</text><text x="40" y="228" class="lbl">Living Room</text>
+        <g class="sensor"><circle cx="160" cy="110" r="5"/><circle class="ring" cx="160" cy="110" r="70"/></g>
+        <g class="sensor"><circle cx="440" cy="110" r="5"/><circle class="ring" cx="440" cy="110" r="70"/></g>
+        <g class="sensor"><circle cx="440" cy="290" r="5"/><circle class="ring" cx="440" cy="290" r="70"/></g>
+        <g class="sensor"><circle cx="160" cy="290" r="5"/><circle class="ring" cx="160" cy="290" r="70"/></g>
+        <circle id="still" class="still" cx="440" cy="110" r="46"/>
+        <g class="outtag" id="outtag"><rect x="30" y="392" width="0" height="0"/><text x="140" y="402" class="lbl" font-size="13" fill="var(--slate)">Out · Front Door Opened</text></g>
+        <g id="person" transform="translate(115,110)">
+          <circle class="glow" r="30"/>
+          <g id="fig">
+            <circle class="body" cx="0" cy="-12" r="6"/>
+            <rect class="body" x="-5" y="-5" width="10" height="20" rx="5"/>
+          </g>
+        </g>
+      </svg>
+      <div class="legend ui"><span><i class="dot"></i>Radar Sensor</span><span><i class="dot p"></i>Where She Is</span><span><i class="dot f"></i>On the Floor</span><span><i class="dot o"></i>Out of the House</span></div>
+      <p class="narr ui" id="narr">Press a scenario above to watch it play.</p>
+    </div>
+
+    <div class="phone card ui" aria-live="polite">
+      <div class="ptime" id="ptime">6:00 AM</div>
+      <p class="ptitle">Parent's House</p>
+      <div class="status ok" id="status"><i class="big"></i><div><b id="sT">All Normal</b><span id="sS">Quiet night. Usual morning.</span></div></div>
+      <p class="last" id="last">Last Movement: Bedroom, just now</p>
+      <div class="chain" aria-label="If She Falls: It Calls Parent, Then Alerts You, Then Your Backup"><div class="st" id="c1"><i>1</i>Calls Parent</div><span class="ar">›</span><div class="st" id="c2"><i>2</i>Alerts You</div><span class="ar">›</span><div class="st" id="c3"><i>3</i>Then Neighbor</div><span class="ar">›</span><div class="st" id="c4"><i>4</i>Then 911</div></div>
+      <div class="alert" id="alert"><b>Someone on the Bathroom Floor</b><p id="alertMsg">Since 6:02 AM. Called her twice. No answer.</p><div class="acts"><span class="pri">Call Parent</span><span>Call 911</span><span>Call Neighbor</span></div></div>
+      <div class="week">This Week<div class="days"><i></i><i></i><i></i><i></i><i></i><i></i><i class="t"></i></div></div>
+      <p class="nothing" id="nothing">On a normal day, it sends nothing.</p>
+    </div>
+  </div>
+
+
+
+  <section class="reserve card" id="reserve">
+    <div><div class="price">$249<small>One Time, No Subscription</small></div><p>Four globes, the hub, the app. No payment now. Withdraw anytime.</p></div>
+    <a class="btn" id="reserveBtn" href="#" rel="noopener">Reserve One</a>
+  </section>
+  <div class="feedback ui"><a class="btn ghost" id="feedbackBtn" href="#" rel="noopener">Tell Us What You Think</a><span>Two minutes. Especially if you wouldn't reserve one.</span></div>
+
+  </div>
+
+  <div class="sec">
+    <h2>Safe at Home, on Her Terms</h2>
+    <div class="grid3">
+      <div class="fact"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><b>Help Even If She Can't Reach a Phone</b><p>A fall at 3 a.m. is noticed at 3 a.m. and someone is alerted within a minute, without a button to press.</p></div>
+      <div class="fact"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><b>Nothing to Wear, Nothing to Charge</b><p>No pendant, no watch, no reminder that she's being looked after.</p></div>
+      <div class="fact"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><b>Knows Where She Was Last</b><p>Live: one line, Last Movement, Kitchen, 4 min ago. Evening: a five-line summary of her day and the weekly call.</p></div>
+      <div class="fact"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/><path d="M15 3a6 6 0 0 1 6 6M15 7a2 2 0 0 1 2 2"/></svg><b>Can Call 911 for You</b><p>Turn it on, and if no one responds within minutes, it calls for help itself.</p></div>
+      <div class="fact"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M12 8v5M12 16h.01"/></svg><b>She's Never Alone With It</b><p>Every alert names a person who's coming: you, the neighbor, or 911.</p></div>
+    </div>
+  </div>
+
+  <div class="sec two">
+    <div class="heat card"><svg viewBox="0 0 520 220" id="heat" role="img" aria-label="Two Weeks of Learned Daily Rhythm with One Unusual Morning"></svg><p class="cap">Two Weeks In. Darker Means the House Is Usually Moving. Amber Is the Morning That Didn't Match.</p></div>
+    <div>
+      <h2>Learns Her Rhythm, Notices What Breaks It</h2>
+      <p style="margin:0;color:var(--muted);font-size:16px">A small on-device model learns her days. Nothing leaves the house except an alert. Out of the ordinary:</p>
+      <ul class="iconlist ui">
+        <li><svg viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="8" rx="2"/><path d="M3 14h18M7 10V7h10v3"/></svg>No One Out of Bed by Her Usual Hour</li>
+        <li><svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 1 0 7 7 6 6 0 0 1-7-7z"/></svg>Up in the Kitchen at 3 a.m., Three Nights Running</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 12h16M7 12v6M17 12v6M9 5c1 2 5 2 6 0"/></svg>A Shower Far Past Her Usual Twenty Minutes</li>
+        <li><svg viewBox="0 0 24 24"><circle cx="5" cy="14" r="2.5"/><rect x="9" y="12" width="12" height="5" rx="2.5"/></svg>A Person on the Floor, Any Room, Over a Minute</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 8h16M4 12h10M4 16h6"/></svg>A Quiet House on a Day That Should Be Busy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec two r">
+    <div class="device card">
+      <svg viewBox="0 0 300 250" role="img" aria-label="The Radar Globe Pressed to the Ceiling with the Extendable Stick from the Box">
+        <defs><radialGradient id="g" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#E9EEF3"/><stop offset="1" stop-color="#CBD5DF"/></radialGradient></defs>
+        <rect x="20" y="20" width="260" height="210" rx="16" fill="var(--floor)"/>
+        <rect x="20" y="20" width="260" height="14" fill="var(--wall)"/>
+        <text x="150" y="30" text-anchor="middle" font-size="9" fill="var(--floor)" font-family="-apple-system,Segoe UI,Roboto,sans-serif">CEILING</text>
+        <rect x="128" y="34" width="44" height="5" rx="2.5" fill="var(--wall)"/>
+        <path d="M120 39 A30 30 0 0 0 180 39 Z" fill="url(#g)" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="150" cy="56" r="3" fill="var(--slate)"/>
+        <path d="M150 62 L88 215" stroke="var(--slate)" stroke-width="1" opacity=".16"/><path d="M150 62 L212 215" stroke="var(--slate)" stroke-width="1" opacity=".16"/>
+        <path d="M112 150 A45 45 0 0 0 188 150" fill="none" stroke="var(--slate)" stroke-width="1.5" opacity=".2"/>
+        <line x1="150" y1="72" x2="150" y2="205" stroke="var(--slate)" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+        <line x1="150" y1="150" x2="150" y2="205" stroke="var(--slate)" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+        <path d="M138 64 A14 14 0 0 0 162 64" fill="none" stroke="var(--slate)" stroke-width="4" opacity=".85"/>
+        <circle cx="150" cy="212" r="10" fill="var(--wall)"/>
+        <text x="150" y="238" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="-apple-system,Segoe UI,Roboto,sans-serif">Extendable Stick, in the Box · Globe About the Size of a Tennis Ball</text>
+      </svg>
+    </div>
+    <div>
+      <h2>Ten Minutes to Install. No Ladder, No Tools.</h2>
+      <div class="steps ui">
+        <div class="step card"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg><b>1. Unbox Four Globes</b><span>Already paired to the hub.</span></div>
+        <div class="step card"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M12 4v7"/><circle cx="12" cy="15" r="4"/></svg><b>2. Press One to Each Ceiling</b><span>Extend the stick, press, hold ten seconds.</span></div>
+        <div class="step card"><svg class="ic" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/><path d="M9 8l2 2 4-4"/></svg><b>3. Name the Rooms</b><span>Add yourself and a backup. Done.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>The Whole App: Home, Summary, Alert, History, Setup</h2>
+    <div class="screens ui">
+      <div class="scr card"><div class="bar">9:41 AM</div><h4>Parent's House</h4>
+        <div class="ms ok"><i></i><div><b>All Normal</b><span>Moving around as usual.</span></div></div>
+        <div class="row f" style="margin-top:8px"><span>Last Movement</span><span>Kitchen, 4 min ago</span></div>
+        <div class="row"><span>Globes</span><span class="pill">4 of 4 Online</span></div>
+        <div class="row"><span>Learning</span><span>Complete</span></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">This Week</div><div class="days"><i></i><i></i><i></i><i></i><i></i><i></i><i class="t"></i></div>
+        <div class="cap">Home. 364 Days a Year.</div></div>
+      <div class="scr card"><div class="bar">8:00 PM · Evening Summary</div><h4>Parent's Day</h4>
+        <div class="al f"><b>Up at 6:40</b><span>Usual bathroom, coffee by 7.</span></div>
+        <div class="al"><b>Out 10:00 – 11:50</b><span>Front door. Back before lunch.</span></div>
+        <div class="al"><b>Kitchen at Noon and 6</b><span>Both meals on schedule.</span></div>
+        <div class="al"><b>Settled by 9:00</b><span>Bedroom. All normal.</span></div>
+        <div class="al"><b>Sunday Call</b><span>Mentioned her knee twice. Said she's fine.</span></div>
+        <div class="cap">Summary. Five Lines, Once a Day.</div></div>
+      <div class="scr card"><div class="bar">6:03 AM</div><h4>Parent's House</h4>
+        <div class="ma"><b>Someone on the Bathroom Floor</b>Since 6:02 AM. Called instantly, no answer. Neighbor at 6:05, 911 at 6:08, unless someone responds.<div class="acts" style="margin-top:8px"><span class="pri">Call Parent</span><span>Call 911</span><span>I'm on It</span></div></div>
+        <div class="row" style="margin-top:8px"><span>Last Movement</span><span>Bathroom, 6:02 AM</span></div>
+        <div class="row"><span>Backup</span><span>Neighbor · Standing By</span></div>
+        <div class="cap">Alert. The Screen It Exists For.</div></div>
+      <div class="scr card"><div class="bar">Alerts</div><h4>This Year</h4>
+        <div class="al f"><b><i class="bad">●</i> Sep 12 · Bathroom</b><span>On the floor. No answer. Neighbor went over. 911 not needed.</span></div>
+        <div class="al"><b><i class="ok">●</i> Aug 30 · Bedroom</b><span>Not up by her usual hour. She answered: slept in.</span></div>
+        <div class="al"><b><i class="ok">●</i> Jul 3 · Kitchen</b><span>Up at night three nights running. Pattern flagged, no alert.</span></div>
+        <div class="al"><b><i class="ok">●</i> May 18 · Living Room</b><span>Globe battery. Replaced.</span></div>
+        <div class="cap">History. Four in a Year. Exceptions Only.</div></div>
+      <div class="scr card"><div class="bar">Setup</div><h4>Rooms and People</h4>
+        <div class="row f"><span>Bedroom</span><span class="pill">Globe 1</span></div><div class="row"><span>Bathroom</span><span class="pill">Globe 2</span></div><div class="row"><span>Kitchen</span><span class="pill">Globe 3</span></div><div class="row"><span>Living Room</span><span class="pill">Globe 4</span></div>
+        <div class="row"><span>Call Parent First</span><i class="sw"></i></div><div class="row"><span>Backup: Neighbor</span><i class="sw"></i></div><div class="row"><span>Weekly Check-In Call</span><i class="sw"></i></div><div class="row"><span>Auto-Call 911 If No One Responds</span><i class="sw"></i></div><div class="row"><span>Evening Summary</span><i class="sw"></i></div><div class="row"><span>Minute-by-Minute Timeline</span><i class="sw off"></i></div>
+        <div class="cap">Setup. Once. Summary On, Timeline Off, 911 Your Choice.</div></div>
+    </div>
+  </div>
+
+  <div class="sec two r">
+    <div class="scr card ui" style="min-height:0"><div class="bar">Sunday · 10:00 AM · Weekly Check-In Call</div><h4>What Your Parent Hears</h4>
+      <div class="bubble ai">Good morning, Ruth. How did the week go?</div>
+      <div class="bubble mom">Oh, fine. Same as always.</div>
+      <div class="bubble ai">Anything that felt harder than usual?</div>
+      <div class="bubble mom">The stairs. And I had a little slip in the kitchen, but it was nothing.</div>
+      <div class="bubble ai">Glad you're okay. Did anything hurt afterward?</div>
+      <div class="bubble mom">My knee, a bit.</div>
+      <div class="summary"><b>What You Get: Two Lines, No Recording</b><div>Mentioned the stairs and her knee, twice.</div><div>Had a slip in the kitchen. Said it was nothing.</div></div>
+      <div class="cap">Optional. Needs Her Okay.</div></div>
+    <div>
+      <h2>A Weekly Call for the Things She'd Never Bring Up</h2>
+      <ul class="iconlist ui">
+        <li><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M9 10a3 3 0 1 1 3 3v2M12 18h.01"/></svg>Asks Open Questions, Then Listens</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg>Notices What She Mentions and What She Leaves Out</li>
+        <li><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/></svg>Spots Patterns Across Weeks</li>
+        <li><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 12h8"/></svg>She Can Skip It, End It, or Turn It Off</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>What It Won't Do</h2>
+    <ul class="iconlist no ui" style="max-width:640px">
+
+
+      <li><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/><line x1="4" y1="4" x2="20" y2="20"/></svg>Know She's in Pain, Skipped a Meal, or Missed a Pill.</li>
+      <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><line x1="4" y1="4" x2="20" y2="20"/></svg>See or Record Anything. Radar Senses Shape, Never an Image.</li>
+      <li><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v6"/><line x1="4" y1="4" x2="20" y2="20"/></svg>Keep a Map or a Minute-by-Minute Timeline. You Get a Five-Line Summary, Once a Day.</li>
+    </ul>
+  </div>
+
+
+  <div class="sec" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><a class="btn" id="reserveBtn2" href="#" rel="noopener">Reserve One · $249</a><a class="btn ghost" id="feedbackBtn2" href="#" rel="noopener">Tell Us What You Think</a></div>
+
+  <footer>Early offer. Price and details are planned, not final. Floor plan, globes, and app screens are illustrations.</footer>
+</main>
+
+<script>
+(function(){
+  var FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSeodnSgLdn9kIeqLCqyKLt0ZXjARxZnF5mudXc6cnllr2sygg/viewform", CODE_FIELD="";
+  var FEEDBACK_URL="https://docs.google.com/forms/d/e/1FAIpQLSeqJKiiL5weP8eqIujP-WB3agiNhvTvfN-aiaE_En2IxRCl1w/viewform", FEEDBACK_CODE_FIELD="";
+
+  var R={bed:[115,110],bath:[440,110],kit:[440,290],liv:[135,300],door:[85,372],out:[85,372]};
+  var names={bed:'Bedroom',bath:'Bathroom',kit:'Kitchen',liv:'Living Room',door:'Front Door',out:'Out'};
+  var normal=[[0,'bed','Asleep. The globes have seen this a hundred mornings.'],[40,'bath','6:40 — Up. Bathroom, the usual twenty minutes.'],[60,'kit','7:00 — Coffee.'],[120,'liv','Morning in the living room.'],[235,'door','9:55 — Front door.'],[240,'out','10:00 — Out. The app shows Out Since 10:00. That\'s all.'],[350,'door','11:50 — Back.'],[360,'kit','Noon. Lunch.'],[420,'liv','Afternoon.'],[660,'kit','Dinner.'],[720,'liv','Evening.'],[900,'bed','9:00 PM — Bed. A normal day: you heard nothing, because nothing happened.']];
+  var wrong=[[0,'bed','Asleep.'],[1,'bath','6:01 — Up. Bathroom.'],[2,'bath','6:02 — A fall. The globe sees a person on the floor and calls her phone instantly.'],[3,'bath','6:03 — No answer. You get the alert.'],[5,'bath','6:05 — No response from you. The neighbor gets it too.'],[8,'bath','6:08 — No one has responded. Auto-911 is on, so it calls for help itself.'],[10,'bath','Help is on the way. Fall to first alert: one minute.']];
+  var scenario=normal, wrongMode=false, timer=null;
+  var person=document.getElementById('person'), fig=document.getElementById('fig'), still=document.getElementById('still'), outtag=document.getElementById('outtag');
+  var status=document.getElementById('status'), sT=document.getElementById('sT'), sS=document.getElementById('sS'), last=document.getElementById('last');
+  var alertEl=document.getElementById('alert'), alertMsg=document.getElementById('alertMsg'), nothing=document.getElementById('nothing'), C=[document.getElementById('c1'),document.getElementById('c2'),document.getElementById('c3'),document.getElementById('c4')];
+  function chain(a,b,c,d){C[0].className='st '+a;C[1].className='st '+b;C[2].className='st '+c;C[3].className='st '+(d||'');}
+  var clock=document.getElementById('clock'), ptime=document.getElementById('ptime'), narr=document.getElementById('narr'); var range={value:0,max:960,step:10}; var play={textContent:''};
+  function fmt(m){var h=6+Math.floor(m/60),mm=m%60,ap=h>=12?'PM':'AM';var hh=h>12?h-12:h;return hh+':'+(mm<10?'0':'')+mm+' '+ap;}
+  function stateAt(m){var c=scenario[0];for(var i=0;i<scenario.length;i++){if(m>=scenario[i][0])c=scenario[i];}return c;}
+  function set(cls,t,s){status.className='status '+cls;sT.textContent=t;sS.textContent=s;}
+  function render(m){
+    var st=stateAt(m),room=st[1],c=R[room];
+    person.setAttribute('transform','translate('+c[0]+','+c[1]+')');
+    clock.textContent=fmt(m);ptime.textContent=fmt(m);narr.textContent=st[2];
+    var down=wrongMode&&m>=2, out=room==='out';
+    person.classList.toggle('down',down); person.classList.toggle('hide',out);
+    fig.setAttribute('transform',down?'rotate(90) translate(0,0)':'');
+    still.classList.toggle('on',down); outtag.classList.toggle('on',out);
+    last.textContent=down?'Last Movement: Bathroom, 6:02 AM':(out?'Out Since 10:00 AM · Front Door':'Last Movement: '+names[room]+', just now');
+    if(wrongMode){
+      if(m>=8)chain('done','done','done','done');else if(m>=5)chain('done','done','done','live');else if(m>=3)chain('done','done','live');else if(m>=2)chain('done','live','');else chain('','','');
+      if(m>=8){set('bad','911 Called','No response from anyone. Auto-911 placed the call.');alertMsg.textContent='Since 6:02 AM. No answer from your parent, you, or the neighbor. 911 called at 6:08.';alertEl.classList.add('on');nothing.style.visibility='hidden';}
+      else if(m>=5){set('bad','Neighbor Alerted','No response from you. The neighbor was alerted.');alertMsg.textContent='Since 6:02 AM. No answer. Neighbor alerted 6:05. 911 at 6:08 if no one responds.';alertEl.classList.add('on');nothing.style.visibility='hidden';}
+      else if(m>=3){set('bad','Alert Sent','Someone on the bathroom floor. No answer.');alertMsg.textContent='Since 6:02 AM. Called instantly. No answer.';alertEl.classList.add('on');nothing.style.visibility='hidden';}
+      else if(m>=2){set('warn','Checking','Fall in the bathroom. Calling your parent now.');alertEl.classList.remove('on');nothing.style.visibility='hidden';}
+      else{set('ok','All Normal','Quiet night. Usual morning.');alertEl.classList.remove('on');nothing.style.visibility='visible';}
+    }else{
+      chain('','','');alertEl.classList.remove('on');nothing.style.visibility='visible';
+      if(out) set('out','Out','Front door opened at 10:00 AM.');
+      else set('ok','All Normal',m<60?'Quiet night. Usual morning.':m<900?'Moving around as usual.':'Settled in for the night.');
+    }
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;play.textContent='▶ Play';}}
+  function start(){stop();play.textContent='❚❚ Pause';var max=wrongMode?10:960,step=wrongMode?1:10;if(+range.value>=max)range.value=0;
+    timer=setInterval(function(){var v=+range.value+step;if(v>=max){v=max;range.value=v;render(v);stop();return;}range.value=v;render(v);},wrongMode?330:80);}
+  function choose(w){wrongMode=w;scenario=w?wrong:normal;range.max=w?10:960;range.step=w?1:10;range.value=0;stop();
+    document.getElementById('scNormal').setAttribute('aria-pressed',String(!w));document.getElementById('scWrong').setAttribute('aria-pressed',String(w));render(0);start();}
+  document.getElementById('scNormal').addEventListener('click',function(){choose(false);});
+  document.getElementById('scWrong').addEventListener('click',function(){choose(true);});
+  render(0); start();
+
+  (function(){var svg=document.getElementById('heat');if(!svg)return;var NS='http://www.w3.org/2000/svg',days=14,hours=16,x0=44,y0=18,cw=28,ch=12,gap=2;
+    function typ(h){if(h<1)return .15;if(h<2)return .8;if(h<4)return .6;if(h<6)return .35;if(h<7)return .7;if(h<11)return .3;if(h<13)return .75;if(h<15)return .4;return .15;}
+    for(var d=0;d<days;d++){var lab=document.createElementNS(NS,'text');lab.setAttribute('x',4);lab.setAttribute('y',y0+d*(ch+gap)+10);lab.setAttribute('class','hl');lab.textContent=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][d%7];svg.appendChild(lab);
+      for(var h=0;h<hours;h++){var v=typ(h)*(0.75+0.5*Math.abs(Math.sin(d*3.1+h*1.7)));var r=document.createElementNS(NS,'rect');r.setAttribute('x',x0+h*cw);r.setAttribute('y',y0+d*(ch+gap));r.setAttribute('width',cw-gap);r.setAttribute('height',ch);r.setAttribute('rx',2);var odd=(d===days-1&&h<2);r.setAttribute('fill',odd?'var(--warn)':'var(--slate)');r.setAttribute('opacity',odd?1:(0.08+Math.min(v,1)*0.7).toFixed(2));svg.appendChild(r);}}
+    ['6a','8a','10a','12p','2p','4p','6p','8p'].forEach(function(t,i){var x=document.createElementNS(NS,'text');x.setAttribute('x',x0+i*2*cw+2);x.setAttribute('y',y0+days*(ch+gap)+12);x.setAttribute('class','hl');x.textContent=t;svg.appendChild(x);});})();
+
+  function wire(id,url){var b=document.getElementById(id);b.setAttribute('href',url);b.setAttribute('target','_blank');}
+  wire('reserveBtn',FORM_URL); wire('feedbackBtn',FEEDBACK_URL); wire('reserveBtn2',FORM_URL); wire('feedbackBtn2',FEEDBACK_URL);
+})();
+</script>
+</body>
+</html>
